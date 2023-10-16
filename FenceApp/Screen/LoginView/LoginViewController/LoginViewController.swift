@@ -13,12 +13,42 @@ class LoginViewController: UIViewController {
         .withBlurEffect()
         .withViewModel(viewModel)
     
+    private lazy var backgroundImage: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "Spline")
+        view.contentMode = .scaleAspectFill
+        return view
+    }()
     
+    //2. Title label
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "찾아줄개"
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 50)
+        return label
+    }()
+    
+    //3. Login button
+    private lazy var kakaoLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("KAKAO LOGIN", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(kakaoLoginButtonTapped), for: .touchUpInside)
+        return button
+    }().withBlurEffect()
+    
+    private lazy var appleLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("APPLE LOGIN", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(appleLoginButtonTapped), for: .touchUpInside)
+        return button
+    }().withBlurEffect()
     
     deinit {
         print("Successfully LoginVC has been deinitialized!")
     }
-    
 }
 
 //MARK: - ViewCycle
@@ -29,19 +59,58 @@ extension LoginViewController {
     }
 }
 
+//MARK: - Action
+extension LoginViewController {
+    
+    @objc func kakaoLoginButtonTapped() {
+        print("Successfully \(#function)")
+    }
+    
+    @objc func appleLoginButtonTapped() {
+        print("Successfully \(#function)")
+    }
+}
+
 //MARK: - Configure UI
 extension LoginViewController {
     
     func configure() {
         view.backgroundColor = .white
-        view.withBackgroundImage(named: "Spline", at: CGPoint(x: 1.0, y: 0.8), size: CGSize(width: 700, height: 1000))
-        view.addSubviews(riveView)
+        view.addSubviews(riveView,backgroundImage,kakaoLoginButton,appleLoginButton,titleLabel)
+        view.sendSubviewToBack(backgroundImage)
         configureConstraints()
     }
     
     func configureConstraints() {
+        
         riveView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(kakaoLoginButton.snp.top).offset(-60)
+        }
+        
+        kakaoLoginButton.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.7)
+            $0.height.equalTo(80)
+
+        }
+        
+        appleLoginButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(kakaoLoginButton.snp.bottom).offset(60)
+            $0.width.equalToSuperview().multipliedBy(0.7)
+            $0.height.equalTo(80)
+        }
+        
+        backgroundImage.snp.makeConstraints {
+            $0.centerX.equalToSuperview().multipliedBy(1.8)
+            $0.centerY.equalToSuperview().multipliedBy(1.7)
+            $0.width.equalTo(300)
+            $0.height.equalTo(500)
         }
     }
 }
@@ -74,26 +143,7 @@ extension UIView {
         return self
     }
     
-    func withBackgroundImage(named imageName: String, at position: CGPoint, size: CGSize? = nil) -> Self {
-        let imageView = UIImageView(image: UIImage(named: imageName))
-        imageView.contentMode = .scaleAspectFit
-        insertSubview(imageView, at: 0)
-        
-        imageView.snp.makeConstraints { make in
-            make.centerX.equalTo(snp.leading).offset(bounds.size.width * position.x)
-            make.centerY.equalTo(snp.top).offset(bounds.size.height * position.y)
-            
-            if let size = size {
-                make.width.equalTo(size.width)
-                make.height.equalTo(size.height)
-            }
-        }
-        
-        return self
-    }
-    
     func addSubviews(_ subviews: UIView...) {
         subviews.forEach { addSubview($0) }
     }
-    
 }
