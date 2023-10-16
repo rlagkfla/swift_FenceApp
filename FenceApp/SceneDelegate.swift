@@ -11,14 +11,48 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
+    let navigationController = UINavigationController()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = CustomTabBarController()
+        
+        let tabbarController = makeTabbarController()
+        navigationController.viewControllers = [tabbarController]
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
+    
+    func makeTabbarController() -> CustomTabBarController {
+        let TabbarController = CustomTabBarController(controllers: [makeMapViewVC(), makeLostViewVC(), makeCameraViewController(), makeChatViewController(), makeMyInfoViewController()])
+        return TabbarController
+    }
+    
+    func makeMapViewVC() -> MapViewController {
+        let vc = MapViewController()
+        return vc
+    }
+    
+    func makeLostViewVC() -> LostListViewController {
+        let vc = LostListViewController()
+        return vc
+    }
+    
+    func makeCameraViewController() -> CameraViewController {
+        let vc = CameraViewController()
+        return vc
+    }
 
+    func makeChatViewController() -> ChatViewController {
+        let vc = ChatViewController()
+        return vc
+    }
+    
+    func makeMyInfoViewController() -> MyInfoViewController {
+        let vc = MyInfoViewController()
+        return vc
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
