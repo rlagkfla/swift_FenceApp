@@ -7,7 +7,7 @@ import RiveRuntime
 //MARK: - Properties & Deinit
 class LoginViewController: UIViewController {
     
-    //1. Background animation
+    //MARK: Background
     private var viewModel = RiveViewModel(fileName: "background")
     private lazy var riveView = RiveView()
         .withBlurEffect()
@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    //2. Title label
+    //MARK: Title label
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "찾아줄개"
@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    //3. Login button
+    //MARK: Login button
     private lazy var kakaoLoginButton: UIButton = {
         let button = UIButton()
         button.setTitle("KAKAO LOGIN", for: .normal)
@@ -46,6 +46,7 @@ class LoginViewController: UIViewController {
         return button
     }().withBlurEffect()
     
+    //MARK: Deinit
     deinit {
         print("Successfully LoginVC has been deinitialized!")
     }
@@ -75,8 +76,8 @@ extension LoginViewController {
 extension LoginViewController {
     
     func configure() {
-        view.backgroundColor = .white
         view.addSubviews(riveView,backgroundImage,kakaoLoginButton,appleLoginButton,titleLabel)
+        view.backgroundColor = .white
         view.sendSubviewToBack(backgroundImage)
         configureConstraints()
     }
@@ -134,7 +135,6 @@ extension UIView {
         blurEffectView.frame = self.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurEffectView.isUserInteractionEnabled = false
-        
         if let button = self as? UIButton {
             button.insertSubview(blurEffectView, belowSubview: button.imageView!)
         } else {
