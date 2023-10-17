@@ -7,24 +7,21 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 class DetailView: UIView {
     
     // MARK: - UI Properties
-    lazy var imageCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    lazy var detailCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: DetailViewCompositionalLayout().configureLayout())
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
-        collectionView.decelerationRate = .fast
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(WriterInfoCollectionViewCell.self, forCellWithReuseIdentifier: WriterInfoCollectionViewCell.identifier)
+        collectionView.register(PostInfoCollectionViewCell.self, forCellWithReuseIdentifier: PostInfoCollectionViewCell.identifier)
+        collectionView.backgroundColor = .yellow
+        collectionView.showsVerticalScrollIndicator = true
         return collectionView
     }()
     
-    let pageControl = UIPageControl()
-
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,28 +37,13 @@ class DetailView: UIView {
 // MARK: - AutoLayout
 private extension DetailView {
     func configureUI() {
+        self.addSubview(detailCollectionView)
         
-        configureImageCollectionView()
-        configurePageControl()
-    }
-    
-    func configureImageCollectionView() {
-        self.addSubview(imageCollectionView)
-        
-        imageCollectionView.snp.makeConstraints {
+        detailCollectionView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             $0.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
-            $0.height.equalTo(300)
-        }
-    }
-    
-    func configurePageControl() {
-        self.addSubview(pageControl)
-        
-        pageControl.snp.makeConstraints {
-            $0.centerY.equalTo(self.safeAreaLayoutGuide.snp.top).offset(285)
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
     }
 }

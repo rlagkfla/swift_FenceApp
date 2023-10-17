@@ -11,52 +11,50 @@ class DetailViewController: UIViewController {
     
     // MARK: - Properties
     private let detailView = DetailView()
-    var nowPage: Int = 0
     
     // MARK: - Life Cycle
     override func loadView() {
         view = detailView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        view.backgroundColor = .white
+        view.backgroundColor = .white
         
-        detailView.imageCollectionView.dataSource = self
-        detailView.imageCollectionView.delegate = self
+        detailView.detailCollectionView.dataSource = self
+        detailView.detailCollectionView.delegate = self
         
-        
-        detailView.pageControl.numberOfPages = 3
-        detailView.pageControl.currentPage = 0
+        self.navigationController?.navigationBar.backgroundColor = .blue
     }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = detailView.imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: detailView.imageCollectionView.frame.width, height: detailView.imageCollectionView.frame.height)
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.x > 0 {
-            self.nowPage += 1
-        } else if velocity.x < 0 {
-            self.nowPage -= 1
-            
-            if self.nowPage < 0 {
-                self.nowPage = 0
-            }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return 1
+        } else {
+            return 1
         }
-        detailView.pageControl.currentPage = nowPage
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            let imageCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath)
+            return imageCell
+        } else if indexPath.section == 1 {
+            let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath)
+            return writerCell
+        } else {
+            let postCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath)
+            return postCell
+        }
     }
 }
