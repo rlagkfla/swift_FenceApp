@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		08206A452ADD437A00C110C0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08206A442ADD437A00C110C0 /* Model.swift */; };
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
+		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
+		D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */; };
 		D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */; };
 		D651509E2ADD0F2E002FDD04 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D651509D2ADD0F2E002FDD04 /* SnapKit */; };
 		D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		08206A442ADD437A00C110C0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
+		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -113,7 +117,9 @@
 		D651508F2ADD0CBE002FDD04 /* DetailView */ = {
 			isa = PBXGroup;
 			children = (
+				D64D76A02ADE097F00E9815B /* DetailView.swift */,
 				D65150922ADD0CE3002FDD04 /* DetailViewController */,
+				D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -342,6 +348,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
+				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
+				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
 				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
 				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
