@@ -30,6 +30,9 @@
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
+		D6EE094D2ADE9906007E8328 /* ImageSlideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094C2ADE9906007E8328 /* ImageSlideTableViewCell.swift */; };
+		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
+		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 		D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +54,9 @@
 		D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6D9A73A2ADD05EF006A5B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6D9A73C2ADD05EF006A5B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6EE094C2ADE9906007E8328 /* ImageSlideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlideTableViewCell.swift; sourceTree = "<group>"; };
+		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
+		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +126,9 @@
 				D64D76A02ADE097F00E9815B /* DetailView.swift */,
 				D65150922ADD0CE3002FDD04 /* DetailViewController */,
 				D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */,
+				D6EE094C2ADE9906007E8328 /* ImageSlideTableViewCell.swift */,
+				D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */,
+				D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -357,9 +366,12 @@
 				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
 				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
 				D65150BB2ADD1231002FDD04 /* LostListViewController.swift in Sources */,
+				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
+				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
+				D6EE094D2ADE9906007E8328 /* ImageSlideTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
