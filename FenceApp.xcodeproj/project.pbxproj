@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		08206A452ADD437A00C110C0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08206A442ADD437A00C110C0 /* Model.swift */; };
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
+		C3AC7FDC2ADE878700C9104D /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AC7FDB2ADE878700C9104D /* LostListViewCell.swift */; };
+		C3D7B1F82ADD6914007DF390 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D7B1F72ADD6914007DF390 /* LostListView.swift */; };
 		D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */; };
 		D651509E2ADD0F2E002FDD04 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D651509D2ADD0F2E002FDD04 /* SnapKit */; };
 		D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		08206A442ADD437A00C110C0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
+		C3AC7FDB2ADE878700C9104D /* LostListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
+		C3D7B1F72ADD6914007DF390 /* LostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
 		D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				D65150942ADD0CF1002FDD04 /* LostListViewController */,
+				C3D7B1F72ADD6914007DF390 /* LostListView.swift */,
+				C3AC7FDB2ADE878700C9104D /* LostListViewCell.swift */,
 			);
 			path = LostListView;
 			sourceTree = "<group>";
@@ -342,7 +348,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
+				C3AC7FDC2ADE878700C9104D /* LostListViewCell.swift in Sources */,
 				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
+				C3D7B1F82ADD6914007DF390 /* LostListView.swift in Sources */,
 				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
 				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
 				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
