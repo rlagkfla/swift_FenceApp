@@ -15,7 +15,8 @@ final class LoginViewController: UIViewController {
         .withText("찾아줄개")
         .withFont(40)
         .withFontWeight(.bold)
-        .withTextColor(.black)
+        .withTextColor(UIColor(hexCode: "524A4E"))
+        .withShadow()
     
     //1. Background animation
     private var viewModel = RiveViewModel(fileName: "background")
@@ -25,14 +26,19 @@ final class LoginViewController: UIViewController {
     
     //2. TextField for Login
     private lazy var emailTextField = UITextField()
-        .withPlaceholder("  Email")
+        .withPlaceholder("    Email")
         .withBlurEffect()
+        .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
+        .withCornerRadius(20)
+
     
     private lazy var passwordTextField = UITextField()
-        .withPlaceholder("  Password")
+        .withPlaceholder("    Password")
         .secured()
         .withBlurEffect()
-    
+        .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
+        .withCornerRadius(20)
+
     
     //3. Button for Login
     private lazy var loginButton = UIButton()
@@ -41,10 +47,12 @@ final class LoginViewController: UIViewController {
         .withTarget(self, action: #selector(loginButtonTapped))
         .withBlurEffect()
         .withCornerRadius(20)
-    
+        .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
     
     //4. Keyboard Handling
     private var emailTextFieldCenterYConstraint: Constraint?
+    
+    private let userInfoService = UserInfoService()
     
     deinit {
         print("Successfully LoginVC has been deinitialized!")
@@ -57,21 +65,14 @@ extension LoginViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        
         setupUI()
+        recognizeTapGesture()
         addNotificationObserver()
-        view.addGestureRecognizer(tapGesture)
-        
-        
     }
-    
-    
 }
 
 
 //MARK: - SetupUI
-
 private extension LoginViewController {
     
     func setupUI() {
@@ -102,7 +103,6 @@ private extension LoginViewController {
             .below(passwordTextField, 20)
             .centerX()
             .size(150, 40)
-        
     }
 }
 
@@ -111,10 +111,7 @@ private extension LoginViewController {
 private extension LoginViewController {
     
     @objc func loginButtonTapped() {
-        guard hasValidInput else {
-            showAlertButtonTapped()
-            return
-        }
+        guard hasValidInput else { showAlertButtonTapped(); return }
         authenticateUser()
     }
 }
@@ -123,9 +120,7 @@ private extension LoginViewController {
 //MARK: - Authenticate User
 private extension LoginViewController {
     
-    var hasValidInput: Bool {
-        return !(emailTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true)
-    }
+    var hasValidInput: Bool {return !(emailTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true)}
     
     func authenticateUser() {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
@@ -137,23 +132,33 @@ private extension LoginViewController {
                 print(error.localizedDescription)
                 return
             }
-            print("Successfully logged in!")
-            
-            let mapVC = MapViewController()
-            let lostListVC = UIViewController()
-            let cameraVC = UIViewController()
-            let chatVC = UIViewController()
-            let myInfoVC = UIViewController()
-            
-            let tabBarController = CustomTabBarController(controllers: [mapVC, lostListVC, cameraVC, chatVC, myInfoVC])
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let delegate = windowScene.delegate as? SceneDelegate {
-                delegate.window?.rootViewController = tabBarController
-                delegate.window?.makeKeyAndVisible()
+            print("Successfully \(#function)")
+            if let user = authResult?.user {
+                userInfoService.writeUserInfoToFirestore(email: user.email ?? "", uid: user.uid)
             }
+            assignRootView()
         }
     }
 }
+
+//MARK: - Assign tabBarController as rootView
+private extension LoginViewController {
+    func assignRootView() {
+        let mapVC = MapViewController()
+        let lostListVC = LostListViewController()
+        let cameraVC = UIViewController()
+        let chatVC = ChatViewController()
+        let myInfoVC = MyInfoViewController()
+        
+        let tabBarController = CustomTabBarController(controllers: [mapVC, lostListVC, cameraVC, chatVC, myInfoVC])
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let delegate = windowScene.delegate as? SceneDelegate {
+            delegate.window?.rootViewController = tabBarController
+            delegate.window?.makeKeyAndVisible()
+        }
+    }
+}
+
 
 //MARK: - Alert
 private extension LoginViewController {
@@ -175,8 +180,15 @@ private extension LoginViewController {
 //MARK: - Keyboard Handling
 private extension LoginViewController {
     
+    
+    func recognizeTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
+    }
+    
     func addNotificationObserver() {
-        emailTextFieldCenterYConstraint = emailTextField.centerY()
+        emailTextFieldCenterYConstraint = emailTextField.yConstraints()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
