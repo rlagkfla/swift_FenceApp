@@ -33,7 +33,7 @@ class LostListViewCell: UITableViewCell {
     let dateLabel: UILabel = {
         let lb = UILabel()
         lb.text = "test"
-        lb.font = UIFont.systemFont(ofSize: 13)
+        lb.font = UIFont.systemFont(ofSize: 14)
         lb.textColor = .black
         lb.backgroundColor = .green
         return lb
@@ -42,32 +42,12 @@ class LostListViewCell: UITableViewCell {
     let nickNameLabel: UILabel = {
         let lb = UILabel()
         lb.text = "test"
-        lb.font = UIFont.systemFont(ofSize: 13)
+        lb.font = UIFont.systemFont(ofSize: 14)
         lb.textColor = .black
         lb.backgroundColor = .yellow
         return lb
     }()
-    
-    lazy var lbStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [titleLabel, dateLabel, nickNameLabel])
-        sv.axis = .vertical
-        sv.spacing = 5
-//        sv.alignment = .fill
-//        sv.distribution = .fill
-        sv.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 5)
-        sv.isLayoutMarginsRelativeArrangement = true
-        return sv
-    }()
-    
-    lazy var totalStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [lostimgView, lbStackView])
-        sv.axis = .horizontal
-        sv.spacing = 10
-        sv.alignment = .fill
-        sv.distribution = .fill
-        return sv
-    }()
-    
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -99,33 +79,31 @@ class LostListViewCell: UITableViewCell {
 extension LostListViewCell {
     
     func configureUI(){
-        self.addSubview(totalStackView)
-        
-//        lbStackView.snp.makeConstraints {
-//            $0.top.leading.trailing.bottom.equalToSuperview()
-//        }
+        self.addSubviews(lostimgView, titleLabel, dateLabel, nickNameLabel)
         
         lostimgView.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
             $0.width.equalTo(110)
         }
         
-//        titleLabel.snp.makeConstraints {
-////            $0.top.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(20)
-//        }
-//        
-//        dateLabel.snp.makeConstraints {
-//            $0.height.equalTo(20)
-//        }
-        
-//        nickNameLabel.snp.makeConstraints {
-//            $0.top.equalTo(dateLabel.snp.bottom).offset(10)
-//        }
-        
-        totalStackView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(5)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview()
+
         }
         
+        dateLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview()
+        }
+        
+        nickNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-5)
+        }
 
     }
 }

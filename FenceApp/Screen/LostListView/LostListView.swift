@@ -23,12 +23,12 @@ class LostListView: UIView {
 //    }()
     
     // 임시 버튼
-    let testBtnn: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(systemName: "plus"), for: .normal)
-        btn.addTarget(self, action: #selector(tapPlusBtn), for: .touchUpInside)
-        return btn
-    }()
+//    let testBtnn: UIButton = {
+//        let btn = UIButton()
+//        btn.setImage(UIImage(systemName: "plus"), for: .normal)
+//        btn.addTarget(self, action: #selector(tapPlusBtn), for: .touchUpInside)
+//        return btn
+//    }()
     
     private let filterLabel: UILabel = {
         let lb = UILabel()
@@ -66,15 +66,7 @@ class LostListView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc func tapPlusBtn(){
-        print("click")
-        
-//        let enrollVC = EnrollViewController()
-        
-//        self.navigationController?.pushViewController(enrollVC, animated: true)
-        
-    }
+
     
     
 }
@@ -82,15 +74,15 @@ class LostListView: UIView {
 extension LostListView {
     
     func configureUI(){
-        self.addSubview(testBtnn)
+//        self.addSubview(testBtnn)
         self.addSubview(filterLabel)
         self.addSubview(lostTableView)
         self.addSubview(filterBtn)
         
-        testBtnn.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            $0.trailing.equalToSuperview().offset(-18)
-        }
+//        testBtnn.snp.makeConstraints {
+//            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+//            $0.trailing.equalToSuperview().offset(-18)
+//        }
         
         filterLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(105)

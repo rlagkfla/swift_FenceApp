@@ -18,7 +18,7 @@ class EnrollViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .white
         view.addSubview(testLablee)
         
         testLablee.snp.makeConstraints {

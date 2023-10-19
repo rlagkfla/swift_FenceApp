@@ -35,12 +35,16 @@ class LostListViewController: UIViewController {
         
         testBtnnn.snp.makeConstraints {
             $0.top.equalToSuperview().offset(100)
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-13)
         }
     }
     
     @objc func tapPlusBtns(){
         print("click222")
+        
+        let enrollVC = EnrollViewController()
+        
+        self.navigationController?.pushViewController(enrollVC, animated: true)
     }
 //    override func viewWillAppear(_ animated: Bool) {
 //        navigationController?.isNavigationBarHidden = false
