@@ -58,11 +58,11 @@ extension LoginViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-
+        
         setupUI()
         addNotificationObserver()
         view.addGestureRecognizer(tapGesture)
-
+        
         
     }
     
@@ -139,17 +139,21 @@ private extension LoginViewController {
             }
             print("Successfully logged in!")
             
+            let mapVC = MapViewController()
+            let lostListVC = UIViewController()
+            let cameraVC = UIViewController()
+            let chatVC = UIViewController()
+            let myInfoVC = UIViewController()
+            
+            let tabBarController = CustomTabBarController(controllers: [mapVC, lostListVC, cameraVC, chatVC, myInfoVC])
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let delegate = windowScene.delegate as? SceneDelegate {
-                let successVC = MapViewController()
-                delegate.window?.rootViewController = successVC
-                present(successVC, animated: true)
+                delegate.window?.rootViewController = tabBarController
+                delegate.window?.makeKeyAndVisible()
             }
-            
         }
     }
 }
-
 
 //MARK: - Alert
 private extension LoginViewController {
