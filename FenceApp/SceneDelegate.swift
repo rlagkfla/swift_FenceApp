@@ -6,14 +6,42 @@
 //
 
 import UIKit
+import FirebaseAuth
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
     let navigationController = UINavigationController()
+    let firebaseAuthService = FirebaseAuthService()
+    let firebaseUserService = FirebaseUserService()
+    let firebaseLostService = FirebaseLostService()
+    let firebaseFoundService = FirebaseFoundService()
+    let firebaseLostCommentService = FirebaseLostCommentService()
+    let firebaseImageUploader = FirebaseImageUploader()
+    let imageLoader = ImageLoader()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        Task {
+            do {
+                let a = try await firebaseImageUploader.uploadImage(image: UIImage(systemName: "house")!)
+                print(a)
+//                try await firebaseFoundService.createFound(found: Found.dummyFound[0])
+//                try await firebaseLostService.createLost(lost: Lost.dummyLost[0])
+//                try await firebaseLostCommentService.createComment(lostIdentifier: "a", comment: Comment.dummyComment[0])
+//                let authDataResult = try await firebaseAuthService.signUpUser(email: "bbb@gmail.com", password: "123456")
+//                try await firebaseUserService.createUser(nickname: "pingping", profileImageURL: "b", authDataResult: authDataResult)
+            } catch {
+                print(error, "@@@@@@@")
+            }
+        }
+    
+        
+        
+          // ...
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
@@ -21,15 +49,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.viewControllers = [tabbarController]
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
     }
+    
+    
     
     func makeTabbarController() -> CustomTabBarController {
         let TabbarController = CustomTabBarController(controllers: [makeMapViewVC(), makeLostViewVC(), makeCameraViewController(), makeChatViewController(), makeMyInfoViewController()])
+        
         return TabbarController
     }
     
     func makeMapViewVC() -> MapViewController {
-        let vc = MapViewController()
+        let vc = MapViewController(imageLoader: imageLoader)
+        
         return vc
     }
     
@@ -40,6 +73,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func makeCameraViewController() -> CameraViewController {
         let vc = CameraViewController()
+        
         return vc
     }
 

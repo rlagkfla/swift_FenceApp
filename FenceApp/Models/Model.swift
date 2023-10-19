@@ -43,7 +43,9 @@ struct Lost {
     let lostIdentifier: String
     var latitude: Double
     var longitude: Double
-    let user: User
+    let userIdentifier: String
+    var userProfileImageURL: String
+    var userNickname: String
     let title: String
     var postDate: Date
     let lostDate: Date
@@ -56,11 +58,13 @@ struct Lost {
     Lost(lostIdentifier: "lost1",
          latitude: 37.317399,
          longitude: 126.830014,
-         user: User.dummyUser[0],
+         userIdentifier: "a",
+         userProfileImageURL: "b",
+         userNickname: "c",
          title: "title1",
          postDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
          lostDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
-         picture: "https://mblogthumb-phinf.pstatic.net/MjAyMjAyMDdfMjEy/MDAxNjQ0MTk0Mzk2MzY3.WAeeVCu2V3vqEz_9[…]0aKX8B1w2oKQg.JPEG.41minit/1643900851960.jpg?type=w800",
+         picture: "https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg",
          petName: "pet1",
          description: "description1",
          kind: "dog"),
@@ -69,11 +73,13 @@ struct Lost {
     Lost(lostIdentifier: "lost2",
          latitude: 37.316694,
          longitude: 126.829903,
-         user: User.dummyUser[1],
+         userIdentifier: "a",
+         userProfileImageURL: "b",
+         userNickname: "c",
          title: "title2",
          postDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
          lostDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
-         picture: "https://mblogthumb-phinf.pstatic.net/MjAyMTEyMjJfNDcg/MDAxNjQwMTUwOTUzODg2.ywMUl6KPyDdljDTu[…]DPvsie3hsrzog.JPEG.41minit/1640142789090.jpg?type=w800",
+         picture: "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_3x2.jpg",
          petName: "pet2",
          description: "description2",
          kind: "dog"),
@@ -81,11 +87,13 @@ struct Lost {
     Lost(lostIdentifier: "lost3",
          latitude: 37.316703,
          longitude: 126.830925,
-         user: User.dummyUser[2],
+         userIdentifier: "a",
+         userProfileImageURL: "b",
+         userNickname: "c",
          title: "title3",
          postDate: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
          lostDate: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
-         picture: "https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjZfMTUw/MDAxNjExNjM3NTgwMTE5.op7Uxlhw2azjEKH3[…]tndCaC0g.JPEG.yoonsu3454/20201231_115330.jpg?type=w800",
+         picture: "https://images.pexels.com/photos/2607544/pexels-photo-2607544.jpeg?cs=srgb&dl=pexels-simona-kidri%C4%8D-2607544.jpg&fm=jpg",
          petName: "pet3",
          description: "description3",
          kind: "dog"),
@@ -93,7 +101,9 @@ struct Lost {
     Lost(lostIdentifier: "lost4",
          latitude: 37.317363,
          longitude: 126.830993,
-         user: User.dummyUser[3],
+         userIdentifier: "a",
+         userProfileImageURL: "b",
+         userNickname: "c",
          title: "title4",
          postDate: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
          lostDate: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
@@ -105,7 +115,9 @@ struct Lost {
     Lost(lostIdentifier: "lost5",
          latitude: 37.317010,
          longitude: 126.830442,
-         user: User.dummyUser[4],
+         userIdentifier: "a",
+         userProfileImageURL: "b",
+         userNickname: "c",
          title: "title5",
          postDate: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
          lostDate: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
@@ -117,15 +129,20 @@ struct Lost {
 }
 
 struct Comment {
-    var user: User
+    
+    let commentIdentifier: String
+    let userIdentifier: String
+    var userProfileImageURL: String
+    var userNickname: String
     var description: String
     let date: Date
     
     static var dummyComment: [Comment] = [
-        Comment(user: User.dummyUser[0], description: "description1", date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!),
-        Comment(user: User.dummyUser[1], description: "description2", date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!),
-        Comment(user: User.dummyUser[2], description: "description3", date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!),
-        Comment(user: User.dummyUser[3], description: "description4", date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!),
-        Comment(user: User.dummyUser[4], description: "description5", date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!),
+        Comment(commentIdentifier: "comment1", userIdentifier: "user1", userProfileImageURL: "url1", userNickname: "nickname1", description: "description1", date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!)
+//        Comment(user: User.dummyUser[0], description: "description1", date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!),
+//        Comment(user: User.dummyUser[1], description: "description2", date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!),
+//        Comment(user: User.dummyUser[2], description: "description3", date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!),
+//        Comment(user: User.dummyUser[3], description: "description4", date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!),
+//        Comment(user: User.dummyUser[4], description: "description5", date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!),
     ]
 }
