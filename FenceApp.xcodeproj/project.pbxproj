@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		08206A452ADD437A00C110C0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08206A442ADD437A00C110C0 /* Model.swift */; };
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
+		C334F80B2AE0BF5D00ACB6FB /* EnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C334F80A2AE0BF5D00ACB6FB /* EnrollView.swift */; };
+		C334F8112AE1634500ACB6FB /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C334F8102AE1634500ACB6FB /* CustomBtnView.swift */; };
 		C36668FB2ADFEEE400FB8875 /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36668FA2ADFEEE400FB8875 /* EnrollViewController.swift */; };
 		C3AC7FDC2ADE878700C9104D /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AC7FDB2ADE878700C9104D /* LostListViewCell.swift */; };
 		C3D7B1F82ADD6914007DF390 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D7B1F72ADD6914007DF390 /* LostListView.swift */; };
@@ -38,6 +40,8 @@
 /* Begin PBXFileReference section */
 		08206A442ADD437A00C110C0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
+		C334F80A2AE0BF5D00ACB6FB /* EnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollView.swift; sourceTree = "<group>"; };
+		C334F8102AE1634500ACB6FB /* CustomBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
 		C36668FA2ADFEEE400FB8875 /* EnrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollViewController.swift; sourceTree = "<group>"; };
 		C3AC7FDB2ADE878700C9104D /* LostListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
 		C3D7B1F72ADD6914007DF390 /* LostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				C36668F92ADFEEC100FB8875 /* EnrollViewController */,
+				C334F80A2AE0BF5D00ACB6FB /* EnrollView.swift */,
+				C334F8102AE1634500ACB6FB /* CustomBtnView.swift */,
 			);
 			path = EnrollView;
 			sourceTree = "<group>";
@@ -366,9 +372,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C334F80B2AE0BF5D00ACB6FB /* EnrollView.swift in Sources */,
 				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
 				C3AC7FDC2ADE878700C9104D /* LostListViewCell.swift in Sources */,
 				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
+				C334F8112AE1634500ACB6FB /* CustomBtnView.swift in Sources */,
 				C3D7B1F82ADD6914007DF390 /* LostListView.swift in Sources */,
 				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
 				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,

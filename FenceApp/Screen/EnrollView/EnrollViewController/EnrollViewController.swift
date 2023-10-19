@@ -10,32 +10,41 @@ import SnapKit
 
 class EnrollViewController: UIViewController {
 
-    let testLablee: UILabel = {
-        let lb = UILabel()
-        lb.text = "EnrollView"
-        return lb
-    }()
+    private let enrollView = EnrollView()
+    
+    override func loadView() {
+        view = enrollView
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(testLablee)
         
-        testLablee.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
-        }
+        configureNavBar()
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @objc func tapRightBarBtn(){
+        print("clickRight")
     }
-    */
+    
+    @objc func tapLeftBarBtn(){
+        self.navigationController?.popViewController(animated: true)
+    }
+}
 
+extension EnrollViewController {
+    func configureNavBar(){
+        self.title = "게시글 등록"
+        let appearance = UINavigationBarAppearance()
+        // 불투명한 색상의 백그라운드 생성 (불투명한 그림자를 한겹을 쌓는다)
+        appearance.configureWithOpaqueBackground()
+        // 우측 버튼
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(tapRightBarBtn))
+        // NavigationItem back 버튼 숨기기
+        navigationItem.hidesBackButton = true
+        // 좌측 버튼
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(tapLeftBarBtn))
+    }
 }

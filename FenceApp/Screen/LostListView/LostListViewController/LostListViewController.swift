@@ -18,7 +18,7 @@ class LostListViewController: UIViewController {
     }
     
     // 임시 버튼
-    let testBtnnn: UIButton = {
+    lazy var testBtnnn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "plus"), for: .normal)
         btn.addTarget(self, action: #selector(tapPlusBtns), for: .touchUpInside)
@@ -40,8 +40,6 @@ class LostListViewController: UIViewController {
     }
     
     @objc func tapPlusBtns(){
-        print("click222")
-        
         let enrollVC = EnrollViewController()
         
         self.navigationController?.pushViewController(enrollVC, animated: true)
