@@ -43,8 +43,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
 
-    func makeChatViewController() -> ChatViewController {
-        let vc = ChatViewController()
+    func makeChatViewController() -> DetailViewController {
+        let vc = DetailViewController()
         return vc
     }
     
