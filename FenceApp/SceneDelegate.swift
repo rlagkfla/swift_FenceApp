@@ -34,10 +34,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print(error, "@@@@@@@")
             }
         }
-
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = LoginViewController()
+        window?.rootViewController = makeTabbarController()
         window?.makeKeyAndVisible()
         
         setNavigationControllers()
