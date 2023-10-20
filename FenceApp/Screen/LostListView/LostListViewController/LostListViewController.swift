@@ -28,6 +28,7 @@ class LostListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.backgroundColor = .white
 //        self.navigationController?.navigationItem.title = "test"
 //        self.navigationItem.title = "test"
