@@ -26,6 +26,10 @@ class CommentDetailViewController: UIViewController {
         commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
         
         commentDetailView.commentTableView.dataSource = self
+        commentDetailView.commentTableView.delegate = self
+        
+        commentDetailView.commentTableView.estimatedRowHeight = 60
+        commentDetailView.commentTableView.rowHeight = UITableView.automaticDimension
         
         commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
