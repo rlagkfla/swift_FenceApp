@@ -15,8 +15,6 @@ class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         
         configureTabBarControllers()
-        
-        
     }
     
     init(controllers: [UIViewController]) {
