@@ -7,16 +7,6 @@
 
 import UIKit
 
-enum PetError: Error {
-    case invalidURL
-    case invalidServerResponse
-    case unsuppoertedImage
-    case failTask
-    case noData
-    case invalidImage
-    case noUser
-}
-
 struct ImageLoader {
     
     func fetchPhoto(urlString: String) async throws -> UIImage {

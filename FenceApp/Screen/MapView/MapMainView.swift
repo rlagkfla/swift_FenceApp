@@ -19,7 +19,7 @@ class MapMainView: UIView {
         
         mapView.delegate = self
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
-        mapView.register(LocationDataMapClusterView.self, forAnnotationViewWithReuseIdentifier: LocationDataMapClusterView.identifier)
+        
         
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
         return mapView

@@ -15,7 +15,7 @@ class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         
         configureTabBarControllers()
-        self.navigationItem.title = "제목을 바꿔요 손모가지 검"
+        
         
     }
     
