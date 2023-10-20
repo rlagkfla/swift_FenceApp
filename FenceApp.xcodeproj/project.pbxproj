@@ -32,13 +32,25 @@
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
 		D6E10E6C2ADF83A60098F05D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6E10E6B2ADF83A60098F05D /* GoogleService-Info.plist */; };
-		D6E10E6E2ADFCDC90098F05D /* FirebaseImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E6D2ADFCDC90098F05D /* FirebaseImageUploader.swift */; };
+		D6E10E6E2ADFCDC90098F05D /* FirebaseImageUploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E6D2ADFCDC90098F05D /* FirebaseImageUploadService.swift */; };
 		D6E10E702ADFD1EF0098F05D /* FirebaseUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E6F2ADFD1EF0098F05D /* FirebaseUserService.swift */; };
 		D6E10E722ADFD3740098F05D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E712ADFD3740098F05D /* Constant.swift */; };
 		D6E10E742ADFE1940098F05D /* FirebaseLostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E732ADFE1940098F05D /* FirebaseLostService.swift */; };
 		D6E10E762ADFE76B0098F05D /* FirebaseFoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E752ADFE76B0098F05D /* FirebaseFoundService.swift */; };
 		D6E10E782ADFEA080098F05D /* FirebaseLostCommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E772ADFEA070098F05D /* FirebaseLostCommentService.swift */; };
 		D6E10E7A2AE005300098F05D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D6E10E792AE005300098F05D /* FirebaseStorage */; };
+		D6E10E7E2AE0E9B10098F05D /* UserStoringDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E7D2AE0E9B10098F05D /* UserStoringDTO.swift */; };
+		D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E7F2AE0EDA90098F05D /* UserResponseDTO.swift */; };
+		D6E10E822AE0EE330098F05D /* LostStoringDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E812AE0EE330098F05D /* LostStoringDTO.swift */; };
+		D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */; };
+		D6E10E862AE0F1950098F05D /* FoundStoringDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E852AE0F1950098F05D /* FoundStoringDTO.swift */; };
+		D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E872AE0F1E90098F05D /* FoundResponseDTO.swift */; };
+		D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E892AE0FF220098F05D /* CommentResponseDTO.swift */; };
+		D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E8C2AE1022F0098F05D /* PetError.swift */; };
+		D6E10E8F2AE2073A0098F05D /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E8E2AE2073A0098F05D /* MapPin.swift */; };
+		D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E902AE208010098F05D /* ClusterAnnotationView.swift */; };
+		D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E922AE208890098F05D /* CustomAnnotationView.swift */; };
+		D6E10E962AE24ABD0098F05D /* FB.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E952AE24ABD0098F05D /* FB.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 		D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */; };
 /* End PBXBuildFile section */
@@ -62,12 +74,24 @@
 		D6D9A73A2ADD05EF006A5B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6D9A73C2ADD05EF006A5B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D6E10E6B2ADF83A60098F05D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D6E10E6D2ADFCDC90098F05D /* FirebaseImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImageUploader.swift; sourceTree = "<group>"; };
+		D6E10E6D2ADFCDC90098F05D /* FirebaseImageUploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImageUploadService.swift; sourceTree = "<group>"; };
 		D6E10E6F2ADFD1EF0098F05D /* FirebaseUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserService.swift; sourceTree = "<group>"; };
 		D6E10E712ADFD3740098F05D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D6E10E732ADFE1940098F05D /* FirebaseLostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLostService.swift; sourceTree = "<group>"; };
 		D6E10E752ADFE76B0098F05D /* FirebaseFoundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFoundService.swift; sourceTree = "<group>"; };
 		D6E10E772ADFEA070098F05D /* FirebaseLostCommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLostCommentService.swift; sourceTree = "<group>"; };
+		D6E10E7D2AE0E9B10098F05D /* UserStoringDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoringDTO.swift; sourceTree = "<group>"; };
+		D6E10E7F2AE0EDA90098F05D /* UserResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseDTO.swift; sourceTree = "<group>"; };
+		D6E10E812AE0EE330098F05D /* LostStoringDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostStoringDTO.swift; sourceTree = "<group>"; };
+		D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostResponseDTO.swift; sourceTree = "<group>"; };
+		D6E10E852AE0F1950098F05D /* FoundStoringDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundStoringDTO.swift; sourceTree = "<group>"; };
+		D6E10E872AE0F1E90098F05D /* FoundResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundResponseDTO.swift; sourceTree = "<group>"; };
+		D6E10E892AE0FF220098F05D /* CommentResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponseDTO.swift; sourceTree = "<group>"; };
+		D6E10E8C2AE1022F0098F05D /* PetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetError.swift; sourceTree = "<group>"; };
+		D6E10E8E2AE2073A0098F05D /* MapPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
+		D6E10E902AE208010098F05D /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
+		D6E10E922AE208890098F05D /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
+		D6E10E952AE24ABD0098F05D /* FB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FB.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,7 +122,7 @@
 			children = (
 				D646B5602ADE322E00F653C3 /* ImageLoader.swift */,
 				D646B5642ADF773100F653C3 /* FirebaseAuthService.swift */,
-				D6E10E6D2ADFCDC90098F05D /* FirebaseImageUploader.swift */,
+				D6E10E6D2ADFCDC90098F05D /* FirebaseImageUploadService.swift */,
 				D6E10E6F2ADFD1EF0098F05D /* FirebaseUserService.swift */,
 				D6E10E732ADFE1940098F05D /* FirebaseLostService.swift */,
 				D6E10E752ADFE76B0098F05D /* FirebaseFoundService.swift */,
@@ -118,8 +142,11 @@
 		D651508C2ADD0CA3002FDD04 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
+				D6E10E8E2AE2073A0098F05D /* MapPin.swift */,
 				D65150952ADD0CF7002FDD04 /* MapViewController */,
 				D646B5622ADE9A9A00F653C3 /* MapMainView.swift */,
+				D6E10E902AE208010098F05D /* ClusterAnnotationView.swift */,
+				D6E10E922AE208890098F05D /* CustomAnnotationView.swift */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
@@ -248,6 +275,10 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6E10E942AE24A630098F05D /* Constants */,
+				D6E10E8B2AE102220098F05D /* Error */,
+				D6E10E7C2AE0E9580098F05D /* StoringDTO */,
+				D6E10E7B2AE0D8AF0098F05D /* ResponseDTO */,
 				D6FAD9E02ADD2AA6001EDABC /* Screen */,
 				D65150992ADD0E20002FDD04 /* Asset */,
 				D646B55F2ADE321F00F653C3 /* Service */,
@@ -259,9 +290,46 @@
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
 				D6E10E6B2ADF83A60098F05D /* GoogleService-Info.plist */,
-				D6E10E712ADFD3740098F05D /* Constant.swift */,
 			);
 			path = FenceApp;
+			sourceTree = "<group>";
+		};
+		D6E10E7B2AE0D8AF0098F05D /* ResponseDTO */ = {
+			isa = PBXGroup;
+			children = (
+				D6E10E7F2AE0EDA90098F05D /* UserResponseDTO.swift */,
+				D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */,
+				D6E10E872AE0F1E90098F05D /* FoundResponseDTO.swift */,
+				D6E10E892AE0FF220098F05D /* CommentResponseDTO.swift */,
+			);
+			path = ResponseDTO;
+			sourceTree = "<group>";
+		};
+		D6E10E7C2AE0E9580098F05D /* StoringDTO */ = {
+			isa = PBXGroup;
+			children = (
+				D6E10E7D2AE0E9B10098F05D /* UserStoringDTO.swift */,
+				D6E10E812AE0EE330098F05D /* LostStoringDTO.swift */,
+				D6E10E852AE0F1950098F05D /* FoundStoringDTO.swift */,
+			);
+			path = StoringDTO;
+			sourceTree = "<group>";
+		};
+		D6E10E8B2AE102220098F05D /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D6E10E8C2AE1022F0098F05D /* PetError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		D6E10E942AE24A630098F05D /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				D6E10E712ADFD3740098F05D /* Constant.swift */,
+				D6E10E952AE24ABD0098F05D /* FB.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
@@ -375,23 +443,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */,
 				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
+				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
+				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
+				D6E10E7E2AE0E9B10098F05D /* UserStoringDTO.swift in Sources */,
+				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E742ADFE1940098F05D /* FirebaseLostService.swift in Sources */,
 				D646B5612ADE322E00F653C3 /* ImageLoader.swift in Sources */,
-				D6E10E6E2ADFCDC90098F05D /* FirebaseImageUploader.swift in Sources */,
+				D6E10E6E2ADFCDC90098F05D /* FirebaseImageUploadService.swift in Sources */,
+				D6E10E822AE0EE330098F05D /* LostStoringDTO.swift in Sources */,
 				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
+				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
 				D6E10E702ADFD1EF0098F05D /* FirebaseUserService.swift in Sources */,
 				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
 				D6E10E762ADFE76B0098F05D /* FirebaseFoundService.swift in Sources */,
+				D6E10E862AE0F1950098F05D /* FoundStoringDTO.swift in Sources */,
 				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
 				D646B5652ADF773100F653C3 /* FirebaseAuthService.swift in Sources */,
 				D6E10E782ADFEA080098F05D /* FirebaseLostCommentService.swift in Sources */,
+				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
+				D6E10E8F2AE2073A0098F05D /* MapPin.swift in Sources */,
 				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
+				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,
 				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
 				D65150BB2ADD1231002FDD04 /* LostListViewController.swift in Sources */,
 				D646B5632ADE9A9A00F653C3 /* MapMainView.swift in Sources */,
+				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
