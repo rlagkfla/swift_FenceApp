@@ -80,6 +80,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08E537B72AE25467001F08B2 /* SignUpViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignUpViewController;
+			sourceTree = "<group>";
+		};
 		D65150882ADD0C72002FDD04 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +137,7 @@
 		D65150902ADD0CC4002FDD04 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
+				08E537B72AE25467001F08B2 /* SignUpViewController */,
 				D65150912ADD0CDC002FDD04 /* LoginViewController */,
 			);
 			path = LoginView;

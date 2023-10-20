@@ -111,7 +111,7 @@ private extension LoginViewController {
 private extension LoginViewController {
     
     @objc func loginButtonTapped() {
-        guard hasValidInput else { showAlertButtonTapped(); return }
+        guard hasValidInput else { showAlertButton(); return }
         authenticateUser()
     }
 }
@@ -122,13 +122,14 @@ private extension LoginViewController {
     
     var hasValidInput: Bool {return !(emailTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true)}
     
-    func authenticateUser() {
+    func authenticateUser()  {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
+            
             if let error = error {
-                self.showAlertButtonTapped()
+                self.showAlertButton()
                 print(error.localizedDescription)
                 return
             }
@@ -162,7 +163,7 @@ private extension LoginViewController {
 
 //MARK: - Alert
 private extension LoginViewController {
-    func showAlertButtonTapped() {
+    func showAlertButton() {
         Alert.show(on: self,
                    title: "Alert Title",
                    message: "This is an alert with a blurred background.",
