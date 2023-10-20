@@ -20,6 +20,7 @@ class UserInfoService {
         let userRef = db.collection("users").document(uid)
         let document = try await userRef.getDocument()
         
+        
         guard let userEmail = document.data()?["email"] as? String else {return nil}
         print("Successfully \(#function)")
         return userEmail

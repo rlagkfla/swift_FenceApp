@@ -30,7 +30,7 @@ final class LoginViewController: UIViewController {
         .withBlurEffect()
         .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
         .withCornerRadius(20)
-
+    
     
     private lazy var passwordTextField = UITextField()
         .withPlaceholder("    Password")
@@ -38,7 +38,7 @@ final class LoginViewController: UIViewController {
         .withBlurEffect()
         .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
         .withCornerRadius(20)
-
+    
     
     //3. Button for Login
     private lazy var loginButton = UIButton()
@@ -49,10 +49,23 @@ final class LoginViewController: UIViewController {
         .withCornerRadius(20)
         .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
     
+    private lazy var signUpButton = UIButton()
+        .withTitle("Sign Up")
+        .withTextColor(.black)
+        .withTarget(self, action: #selector(showRegistrationPopUp))
+    
+    
     //4. Keyboard Handling
     private var emailTextFieldCenterYConstraint: Constraint?
     
+    //6. UserInfoService
     private let userInfoService = UserInfoService()
+    
+    
+    
+    private lazy var allUIElements: [UIView] = [titleLabel,emailTextField, passwordTextField, loginButton, signUpButton]
+    
+    
     
     deinit {
         print("Successfully LoginVC has been deinitialized!")
@@ -78,7 +91,7 @@ private extension LoginViewController {
     func setupUI() {
         view.backgroundColor = .white
         view.withBackgroundImage(named: "Spline", at: CGPoint(x: 1.8, y: 1.8), size: CGSize(width: 700, height: 1000))
-        view.addSubviews(riveView,emailTextField,titleLabel,passwordTextField,loginButton)
+        view.addSubviews(riveView,emailTextField,titleLabel,passwordTextField,loginButton,signUpButton)
         setupConstraints()
     }
     
@@ -103,6 +116,11 @@ private extension LoginViewController {
             .below(passwordTextField, 20)
             .centerX()
             .size(150, 40)
+        
+        signUpButton
+            .below(loginButton, 10)
+            .centerX()
+            .size(150, 40)
     }
 }
 
@@ -110,9 +128,27 @@ private extension LoginViewController {
 //MARK: - Button Action
 private extension LoginViewController {
     
-    @objc func loginButtonTapped() {
+    @objc func loginButtonTapped() async {
         guard hasValidInput else { showAlertButton(); return }
-        authenticateUser()
+        await authenticateUser()
+    }
+    
+    
+    @objc func showRegistrationPopUp() {
+        
+        allUIElements.forEach { $0.isHidden = true }
+        
+        let popUp = SignUpView()
+        view.addSubview(popUp)
+        popUp.alpha = 0.0
+        popUp
+            .centerX()
+            .centerY()
+            .size(200, 200)
+        UIView.animate(withDuration: 0.3) {
+            popUp.alpha = 1.0
+        }
+        
     }
 }
 
@@ -122,19 +158,18 @@ private extension LoginViewController {
     
     var hasValidInput: Bool {return !(emailTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true)}
     
-    func authenticateUser()  {
-        
+    func authenticateUser() async {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
-        
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let self = self else { return }
-            guard error == nil else {showAlertButton();print("Failed to \(#function)");return}
-            guard let user = authResult?.user else { return }
-            
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            let user = result.user
             userInfoService.writeUserInfoToFirestore(email: user.email ?? "", uid: user.uid)
             print("Successfully \(#function)")
-            assignRootView()
+        } catch {
+            showAlertButton()
+            print("Failed to \(#function)")
         }
+        assignRootView()
     }
 }
 
