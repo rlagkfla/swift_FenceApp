@@ -77,7 +77,7 @@ private extension LoginViewController {
     
     func setupUI() {
         view.backgroundColor = .white
-        view.withBackgroundImage(named: "Spline", at: CGPoint(x: 1.0, y: 0.8), size: CGSize(width: 700, height: 1000))
+        view.withBackgroundImage(named: "Spline", at: CGPoint(x: 1.8, y: 1.8), size: CGSize(width: 700, height: 1000))
         view.addSubviews(riveView,emailTextField,titleLabel,passwordTextField,loginButton)
         setupConstraints()
     }
@@ -123,20 +123,16 @@ private extension LoginViewController {
     var hasValidInput: Bool {return !(emailTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true)}
     
     func authenticateUser()  {
+        
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let self = self else { return }
+            guard error == nil else {showAlertButton();print("Failed to \(#function)");return}
+            guard let user = authResult?.user else { return }
             
-            if let error = error {
-                self.showAlertButton()
-                print(error.localizedDescription)
-                return
-            }
+            userInfoService.writeUserInfoToFirestore(email: user.email ?? "", uid: user.uid)
             print("Successfully \(#function)")
-            if let user = authResult?.user {
-                userInfoService.writeUserInfoToFirestore(email: user.email ?? "", uid: user.uid)
-            }
             assignRootView()
         }
     }

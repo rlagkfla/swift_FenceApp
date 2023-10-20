@@ -11,6 +11,7 @@
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
 		08E47AFD2AE0FE4F005EDC8C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08E47AFC2AE0FE4F005EDC8C /* GoogleService-Info.plist */; };
 		08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */; };
+		08E537BD2AE276EF001F08B2 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpViewController.swift */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
 		D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */; };
@@ -41,6 +42,7 @@
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
 		08E47AFC2AE0FE4F005EDC8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoService.swift; sourceTree = "<group>"; };
+		08E537BC2AE276EF001F08B2 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtentsion.swift; sourceTree = "<group>"; };
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		08FBFFAC2AE0FC68004CEB1A /* FenceApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceApp.entitlements; sourceTree = "<group>"; };
@@ -80,13 +82,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08E537B72AE25467001F08B2 /* SignUpViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SignUpViewController;
-			sourceTree = "<group>";
-		};
 		D65150882ADD0C72002FDD04 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,7 +132,6 @@
 		D65150902ADD0CC4002FDD04 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
-				08E537B72AE25467001F08B2 /* SignUpViewController */,
 				D65150912ADD0CDC002FDD04 /* LoginViewController */,
 			);
 			path = LoginView;
@@ -146,6 +140,7 @@
 		D65150912ADD0CDC002FDD04 /* LoginViewController */ = {
 			isa = PBXGroup;
 			children = (
+				08E537BC2AE276EF001F08B2 /* SignUpViewController.swift */,
 				D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */,
 				08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */,
 				08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */,
@@ -373,6 +368,7 @@
 				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
 				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
 				08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */,
+				08E537BD2AE276EF001F08B2 /* SignUpViewController.swift in Sources */,
 				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
 				D65150BB2ADD1231002FDD04 /* LostListViewController.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
