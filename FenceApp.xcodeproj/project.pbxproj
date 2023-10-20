@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		08206A452ADD437A00C110C0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08206A442ADD437A00C110C0 /* Model.swift */; };
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
-		C3F5C31E2AE226AE00D6DA16 /* LostListView in Resources */ = {isa = PBXBuildFile; fileRef = C3F5C31D2AE226AE00D6DA16 /* LostListView */; };
+		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
+		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
+		C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
@@ -40,9 +42,6 @@
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
-		D6EABCB32AE2230F00047219 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EABCB02AE2230F00047219 /* LostListViewController.swift */; };
-		D6EABCB42AE2230F00047219 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EABCB12AE2230F00047219 /* LostListView.swift */; };
-		D6EABCB52AE2230F00047219 /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EABCB22AE2230F00047219 /* LostListViewCell.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
@@ -52,7 +51,9 @@
 /* Begin PBXFileReference section */
 		08206A442ADD437A00C110C0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
-		C3F5C31D2AE226AE00D6DA16 /* LostListView */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LostListView; sourceTree = "<group>"; };
+		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
+		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
+		C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -75,9 +76,6 @@
 		D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6D9A73A2ADD05EF006A5B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6D9A73C2ADD05EF006A5B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D6EABCB02AE2230F00047219 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
-		D6EABCB12AE2230F00047219 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
-		D6EABCB22AE2230F00047219 /* LostListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +103,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C3F5C3212AE227AE00D6DA16 /* LostListView */ = {
+			isa = PBXGroup;
+			children = (
+				C3F5C3222AE227AE00D6DA16 /* LostListViewController */,
+				C3F5C3242AE227AE00D6DA16 /* LostListView.swift */,
+				C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */,
+			);
+			path = LostListView;
+			sourceTree = "<group>";
+		};
+		C3F5C3222AE227AE00D6DA16 /* LostListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */,
+			);
+			path = LostListViewController;
+			sourceTree = "<group>";
+		};
 		D61368682AE2130D00DE18DF /* Comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,35 +310,15 @@
 			path = FenceApp;
 			sourceTree = "<group>";
 		};
-		D6EABCAE2AE2230F00047219 /* LostListView */ = {
-			isa = PBXGroup;
-			children = (
-				D6EABCAF2AE2230F00047219 /* LostListViewController */,
-				D6EABCB12AE2230F00047219 /* LostListView.swift */,
-				D6EABCB22AE2230F00047219 /* LostListViewCell.swift */,
-			);
-			name = LostListView;
-			path = ../../../../Downloads/Fence_App/FenceApp/Screen/LostListView;
-			sourceTree = "<group>";
-		};
-		D6EABCAF2AE2230F00047219 /* LostListViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D6EABCB02AE2230F00047219 /* LostListViewController.swift */,
-			);
-			path = LostListViewController;
-			sourceTree = "<group>";
-		};
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
 			isa = PBXGroup;
 			children = (
 				D651508F2ADD0CBE002FDD04 /* DetailView */,
 				D65150972ADD0DDD002FDD04 /* ChatView */,
+				C3F5C3212AE227AE00D6DA16 /* LostListView */,
 				D651508E2ADD0CB8002FDD04 /* MyInfoView */,
 				D65150B72ADD11AE002FDD04 /* CameraView */,
 				D6D2739B2AE224E900ED3E2F /* EnrollView */,
-				D6EABCAE2AE2230F00047219 /* LostListView */,
-				C3F5C31D2AE226AE00D6DA16 /* LostListView */,
 				D651508C2ADD0CA3002FDD04 /* MapView */,
 				D65150902ADD0CC4002FDD04 /* LoginView */,
 			);
@@ -413,7 +409,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				08206A472ADD43A000C110C0 /* background.riv in Resources */,
-				C3F5C31E2AE226AE00D6DA16 /* LostListView in Resources */,
 				D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */,
 				D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */,
 			);
@@ -428,20 +423,20 @@
 			files = (
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
-				D6EABCB52AE2230F00047219 /* LostListViewCell.swift in Sources */,
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
+				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
+				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
 				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
 				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
 				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
 				D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */,
-				D6EABCB42AE2230F00047219 /* LostListView.swift in Sources */,
 				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
+				C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */,
 				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
-				D6EABCB32AE2230F00047219 /* LostListViewController.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
