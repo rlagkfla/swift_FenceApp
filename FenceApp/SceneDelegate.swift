@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
-
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -75,7 +73,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeCameraViewController() -> CameraViewController {
         let vc = CameraViewController()
-        
         return vc
     }
 
@@ -93,4 +90,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
