@@ -27,7 +27,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     let lostTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "잃어버린 시간: \(Date())"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.backgroundColor = .yellow
         return label

@@ -17,6 +17,7 @@ class DetailView: UIView {
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.register(WriterInfoCollectionViewCell.self, forCellWithReuseIdentifier: WriterInfoCollectionViewCell.identifier)
         collectionView.register(PostInfoCollectionViewCell.self, forCellWithReuseIdentifier: PostInfoCollectionViewCell.identifier)
+        collectionView.register(CommentCollectionViewCell.self, forCellWithReuseIdentifier: CommentCollectionViewCell.identifier)
         collectionView.backgroundColor = .yellow
         collectionView.showsVerticalScrollIndicator = true
         return collectionView
