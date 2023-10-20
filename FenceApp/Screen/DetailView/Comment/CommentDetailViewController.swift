@@ -27,6 +27,10 @@ class CommentDetailViewController: UIViewController {
         commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
         
         commentDetailView.commentTableView.dataSource = self
+        commentDetailView.commentTableView.delegate = self
+        
+        commentDetailView.commentTableView.estimatedRowHeight = 50
+        commentDetailView.commentTableView.rowHeight = UITableView.automaticDimension
         
         commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
@@ -81,14 +85,15 @@ extension CommentDetailViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension CommentDetailViewController: UITableViewDataSource {
+extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath)
-        
+        cell.backgroundColor = .blue
         return cell
     }
+
 }

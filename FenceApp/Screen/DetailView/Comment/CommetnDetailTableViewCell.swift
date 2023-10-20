@@ -14,13 +14,24 @@ class CommentDetailTableViewCell: UITableViewCell {
     
     // MARK: - UI Properties
     let commentUserProfileImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "코주부 원숭이"))
+        let imageView = UIImageView()
+        imageView.backgroundColor = .yellow
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleToFill
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
     }()
+    
+    let commentTextLabel: UILabel = {
+        let label = UILabel()
+        label.text = "발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~"
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    private var commentTextLabelBottomConstraint: NSLayoutConstraint!
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -35,7 +46,7 @@ class CommentDetailTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        commentUserProfileImageView.layer.cornerRadius = 12.5
+        commentUserProfileImageView.layer.cornerRadius = 15
     }
 }
 
@@ -43,6 +54,7 @@ class CommentDetailTableViewCell: UITableViewCell {
 private extension CommentDetailTableViewCell {
     func configureUI() {
         configureCommentUserProfileImageView()
+        configureCommentTextLabel()
     }
     
     func configureCommentUserProfileImageView() {
@@ -51,7 +63,18 @@ private extension CommentDetailTableViewCell {
         commentUserProfileImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(25)
+            $0.width.height.equalTo(30)
+        }
+    }
+    
+    func configureCommentTextLabel() {
+        contentView.addSubview(commentTextLabel)
+        
+        commentTextLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview().inset(-10)
+            $0.bottom.equalToSuperview().offset(-5)
         }
     }
 }
