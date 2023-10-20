@@ -24,6 +24,7 @@ class CommentDetailViewController: UIViewController {
         view.backgroundColor = .white
         
         commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
         
         commentDetailView.commentTableView.dataSource = self
         
@@ -45,8 +46,6 @@ class CommentDetailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    
 }
 
 // MARK: - Actions
@@ -74,6 +73,10 @@ extension CommentDetailViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc func commentSendButtonTapped() {
+        print(#function)
     }
 }
 
