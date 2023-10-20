@@ -19,13 +19,16 @@ class CustomBtnView: UIView {
 
     private let cameraImgView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .center
+        imageView.image = UIImage(systemName: "camera.fill")
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
     private let label: UILabel = {
         let label = UILabel()
+        label.text = "0/5"
         label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
     
@@ -39,6 +42,11 @@ class CustomBtnView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    func setup(image: UIImage, text: String) {
+//        cameraImgView.image = image
+//        label.text = text
+//    }
     
 }
 
@@ -54,8 +62,12 @@ extension CustomBtnView {
         }
 
         cameraImgView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(containerView.snp.height).dividedBy(2)
+//            $0.top.leading.trailing.equalToSuperview()
+//            $0.height.equalTo(containerView.snp.height).dividedBy(1.5)
+            $0.top.equalToSuperview().offset(7)
+            $0.leading.trailing.equalToSuperview()
+            $0.width.equalTo(25) // 원하는 이미지 너비로 설정
+            $0.height.equalTo(25) // 원하는 이미지 높이로 설정
         }
 
         label.snp.makeConstraints {
@@ -63,10 +75,5 @@ extension CustomBtnView {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-    
-    func setup(image: UIImage, text: String) {
-        cameraImgView.image = image
-        label.text = text
-    }
-    
+   
 }

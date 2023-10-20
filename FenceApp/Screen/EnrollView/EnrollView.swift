@@ -21,7 +21,9 @@ class EnrollView: UIView {
     
     lazy var customBtnView: CustomBtnView = {
         let view = CustomBtnView()
-        view.setup(image: UIImage(systemName: "camera.fill")!, text: "0 / 10")
+//        view.setup(image: UIImage(systemName: "camera.fill")!, text: "0 / 5")
+        view.layer.cornerRadius = 10
+        view.layer.masksToBounds = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(customButtonTapped))
         view.addGestureRecognizer(tapGesture)
         view.isUserInteractionEnabled = true
@@ -59,7 +61,8 @@ extension EnrollView {
         
         customBtnView.snp.makeConstraints {
             $0.top.equalTo(scrollView.snp.top).offset(10)
-            $0.width.height.equalTo(100)
+            $0.leading.equalToSuperview().offset(8)
+            $0.width.height.equalTo(60)
         }
 
     }
