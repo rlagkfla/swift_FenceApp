@@ -176,19 +176,9 @@ private extension LoginViewController {
 //MARK: - Assign tabBarController as rootView
 private extension LoginViewController {
     func assignRootView() {
-        let mapVC = MapViewController()
-        let lostListVC = LostListViewController()
-        let cameraVC = UIViewController()
-        let chatVC = ChatViewController()
-        let myInfoVC = MyInfoViewController()
-        
-        let tabBarController = CustomTabBarController(controllers: [mapVC, lostListVC, cameraVC, chatVC, myInfoVC])
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let delegate = windowScene.delegate as? SceneDelegate {
-            delegate.window?.rootViewController = tabBarController
-            delegate.window?.makeKeyAndVisible()
+        print("Move to MainVC")
         }
-    }
+    
 }
 
 
