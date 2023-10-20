@@ -37,6 +37,15 @@ class LostListViewController: UIViewController {
             $0.top.equalToSuperview().offset(100)
             $0.trailing.equalToSuperview().offset(-13)
         }
+        
+        
+        // 클로저를 설정하여 셀 선택 시 이벤트 처리
+        lostListView.didSelectRow = { [weak self] indexPath in
+        let detailViewController = DetailViewController()
+        // 데이터 설정 등을 수행
+        self?.navigationController?.pushViewController(detailViewController, animated: true)
+        }
+        
     }
     
     @objc func tapPlusBtns(){
@@ -66,3 +75,5 @@ class LostListViewController: UIViewController {
 //    }
 
 }
+
+

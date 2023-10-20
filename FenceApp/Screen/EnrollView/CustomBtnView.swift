@@ -43,11 +43,6 @@ class CustomBtnView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    func setup(image: UIImage, text: String) {
-//        cameraImgView.image = image
-//        label.text = text
-//    }
-    
 }
 
 extension CustomBtnView {
@@ -62,9 +57,7 @@ extension CustomBtnView {
         }
 
         cameraImgView.snp.makeConstraints {
-//            $0.top.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(containerView.snp.height).dividedBy(1.5)
-            $0.top.equalToSuperview().offset(7)
+            $0.top.equalToSuperview().offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.width.equalTo(25) // 원하는 이미지 너비로 설정
             $0.height.equalTo(25) // 원하는 이미지 높이로 설정

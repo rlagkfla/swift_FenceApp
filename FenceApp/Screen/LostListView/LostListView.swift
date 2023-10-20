@@ -22,13 +22,7 @@ class LostListView: UIView {
 //        return nav
 //    }()
     
-    // 임시 버튼
-//    let testBtnn: UIButton = {
-//        let btn = UIButton()
-//        btn.setImage(UIImage(systemName: "plus"), for: .normal)
-//        btn.addTarget(self, action: #selector(tapPlusBtn), for: .touchUpInside)
-//        return btn
-//    }()
+    var didSelectRow: ((IndexPath) -> Void)?
     
     private let filterLabel: UILabel = {
         let lb = UILabel()
@@ -74,16 +68,10 @@ class LostListView: UIView {
 extension LostListView {
     
     func configureUI(){
-//        self.addSubview(testBtnn)
         self.addSubview(filterLabel)
         self.addSubview(lostTableView)
         self.addSubview(filterBtn)
-        
-//        testBtnn.snp.makeConstraints {
-//            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-//            $0.trailing.equalToSuperview().offset(-18)
-//        }
-        
+
         filterLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(105)
             $0.leading.equalToSuperview().offset(23)
@@ -125,7 +113,7 @@ extension LostListView {
 }
 
 
-extension LostListView: UITableViewDataSource, UITableViewDelegate {
+extension LostListView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -151,4 +139,29 @@ extension LostListView: UITableViewDataSource, UITableViewDelegate {
         return 110
     }
     
+}
+
+extension LostListView: UITableViewDelegate {
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+////        let detailViewController = DetailViewController()
+//        
+////        let selectedData = yourDataSource[indexPath.row]
+//        
+////        detailViewController.data = selectedData
+//        
+////        self.navigationController?.pushViewController(detailViewController, animated: true)
+//        
+//        if let parentViewController = self.parent as? LostListViewController {
+//            let detailViewController = DetailViewController()
+//            // 데이터를 설정하거나 다른 설정을 수행할 수 있습니다.
+//            parentViewController.navigationController?.pushViewController(detailViewController, animated: true)
+//        }
+//    }
+    
+    // tableView에서 셀 선택 시 해당 클로저를 호출하여 이벤트를 처리
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        didSelectRow?(indexPath)
+    }
 }
