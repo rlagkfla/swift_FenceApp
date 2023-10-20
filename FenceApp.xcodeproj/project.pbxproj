@@ -27,16 +27,21 @@
 		D65150B12ADD1078002FDD04 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B02ADD1078002FDD04 /* FirebaseAuth */; };
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
 		D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150B82ADD120F002FDD04 /* MapViewController.swift */; };
-		D65150BB2ADD1231002FDD04 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BA2ADD1231002FDD04 /* LostListViewController.swift */; };
 		D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BC2ADD123B002FDD04 /* CameraViewController.swift */; };
 		D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BE2ADD1249002FDD04 /* ChatViewController.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
 		D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */; };
 		D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */; };
+		D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739C2AE224E900ED3E2F /* EnrollView.swift */; };
+		D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */; };
+		D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */; };
 		D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */; };
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
+		D6EABCB32AE2230F00047219 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EABCB02AE2230F00047219 /* LostListViewController.swift */; };
+		D6EABCB42AE2230F00047219 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EABCB12AE2230F00047219 /* LostListView.swift */; };
+		D6EABCB52AE2230F00047219 /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EABCB22AE2230F00047219 /* LostListViewCell.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
@@ -54,18 +59,23 @@
 		D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		D65150BA2ADD1231002FDD04 /* LostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		D65150BC2ADD123B002FDD04 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
 		D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailView.swift; sourceTree = "<group>"; };
 		D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailTableViewCell.swift; sourceTree = "<group>"; };
+		D6D2739C2AE224E900ED3E2F /* EnrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollView.swift; sourceTree = "<group>"; };
+		D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollViewController.swift; sourceTree = "<group>"; };
+		D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
 		D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6D9A73A2ADD05EF006A5B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6D9A73C2ADD05EF006A5B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6EABCB02AE2230F00047219 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
+		D6EABCB12AE2230F00047219 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
+		D6EABCB22AE2230F00047219 /* LostListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -127,14 +137,6 @@
 			path = MapView;
 			sourceTree = "<group>";
 		};
-		D651508D2ADD0CAA002FDD04 /* LostListView */ = {
-			isa = PBXGroup;
-			children = (
-				D65150942ADD0CF1002FDD04 /* LostListViewController */,
-			);
-			path = LostListView;
-			sourceTree = "<group>";
-		};
 		D651508E2ADD0CB8002FDD04 /* MyInfoView */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,14 +179,6 @@
 			);
 			name = DetailViewController;
 			path = ../../Controllers/DetailViewController;
-			sourceTree = "<group>";
-		};
-		D65150942ADD0CF1002FDD04 /* LostListViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D65150BA2ADD1231002FDD04 /* LostListViewController.swift */,
-			);
-			path = LostListViewController;
 			sourceTree = "<group>";
 		};
 		D65150952ADD0CF7002FDD04 /* MapViewController */ = {
@@ -246,6 +240,24 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		D6D2739B2AE224E900ED3E2F /* EnrollView */ = {
+			isa = PBXGroup;
+			children = (
+				D6D2739C2AE224E900ED3E2F /* EnrollView.swift */,
+				D6D2739D2AE224E900ED3E2F /* EnrollViewController */,
+				D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */,
+			);
+			path = EnrollView;
+			sourceTree = "<group>";
+		};
+		D6D2739D2AE224E900ED3E2F /* EnrollViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */,
+			);
+			path = EnrollViewController;
+			sourceTree = "<group>";
+		};
 		D6D9A7222ADD05EC006A5B8B = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +292,25 @@
 			path = FenceApp;
 			sourceTree = "<group>";
 		};
+		D6EABCAE2AE2230F00047219 /* LostListView */ = {
+			isa = PBXGroup;
+			children = (
+				D6EABCAF2AE2230F00047219 /* LostListViewController */,
+				D6EABCB12AE2230F00047219 /* LostListView.swift */,
+				D6EABCB22AE2230F00047219 /* LostListViewCell.swift */,
+			);
+			name = LostListView;
+			path = ../../../../Downloads/Fence_App/FenceApp/Screen/LostListView;
+			sourceTree = "<group>";
+		};
+		D6EABCAF2AE2230F00047219 /* LostListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D6EABCB02AE2230F00047219 /* LostListViewController.swift */,
+			);
+			path = LostListViewController;
+			sourceTree = "<group>";
+		};
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,7 +318,8 @@
 				D65150972ADD0DDD002FDD04 /* ChatView */,
 				D651508E2ADD0CB8002FDD04 /* MyInfoView */,
 				D65150B72ADD11AE002FDD04 /* CameraView */,
-				D651508D2ADD0CAA002FDD04 /* LostListView */,
+				D6D2739B2AE224E900ED3E2F /* EnrollView */,
+				D6EABCAE2AE2230F00047219 /* LostListView */,
 				D651508C2ADD0CA3002FDD04 /* MapView */,
 				D65150902ADD0CC4002FDD04 /* LoginView */,
 			);
@@ -392,6 +424,7 @@
 			files = (
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
+				D6EABCB52AE2230F00047219 /* LostListViewCell.swift in Sources */,
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
@@ -401,12 +434,16 @@
 				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
 				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
 				D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */,
+				D6EABCB42AE2230F00047219 /* LostListView.swift in Sources */,
 				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
 				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
-				D65150BB2ADD1231002FDD04 /* LostListViewController.swift in Sources */,
+				D6EABCB32AE2230F00047219 /* LostListViewController.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
+				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
+				D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */,
+				D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
