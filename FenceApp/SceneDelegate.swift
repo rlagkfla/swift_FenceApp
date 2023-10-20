@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let thirdTabNavigationController = UINavigationController()
     let fourthTabNavigationController = UINavigationController()
     
-    
     lazy var firebaseFoundService = FirebaseFoundService(firebaseImageUploadService: firebaseImageUploadService)
     lazy var firebaseUserService = FirebaseUserService(firebaseImageUploader: firebaseImageUploadService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
     lazy var firebaseLostService = FirebaseLostService(firebaseImageUploader: firebaseImageUploadService)
@@ -31,9 +30,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             do {
 
                 try await firebaseUserService.editUser(userResponseDTO: UserResponseDTO(email: "q", profileImageURL: "##", identifier: "user1", nickname: "##"))
-                
-
-
             } catch {
                 print(error, "@@@@@@@")
             }
@@ -85,8 +81,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = MyInfoViewController()
         return vc
     }
-    
-  
-
-
 }
