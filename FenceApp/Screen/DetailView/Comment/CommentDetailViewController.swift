@@ -82,7 +82,7 @@ extension CommentDetailViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension CommentDetailViewController: UITableViewDataSource {
+extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
@@ -93,3 +93,5 @@ extension CommentDetailViewController: UITableViewDataSource {
         return cell
     }
 }
+
+

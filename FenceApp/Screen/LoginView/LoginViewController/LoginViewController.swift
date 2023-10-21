@@ -3,147 +3,240 @@
 import UIKit
 import SnapKit
 import RiveRuntime
+import FirebaseAuth
+import AuthenticationServices
+
 
 //MARK: - Properties & Deinit
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
-    //MARK: Background
+    //0. Title Label
+    private lazy var titleLabel = UILabel()
+        .withText("찾아줄개")
+        .withFont(40)
+        .withFontWeight(.bold)
+        .withTextColor(UIColor(hexCode: "524A4E"))
+        .withShadow()
+    
+    //1. Background animation
     private var viewModel = RiveViewModel(fileName: "background")
     private lazy var riveView = RiveView()
         .withBlurEffect()
         .withViewModel(viewModel)
     
-    private lazy var backgroundImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "Spline")
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
+    //2. TextField for Login
+    private lazy var emailTextField = UITextField()
+        .withPlaceholder("    Email")
+        .withBlurEffect()
+        .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
+        .withCornerRadius(20)
     
-    //MARK: Title label
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "찾아줄개"
-        label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 50)
-        return label
-    }()
     
-    //MARK: Login button
-    private lazy var kakaoLoginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("KAKAO LOGIN", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(kakaoLoginButtonTapped), for: .touchUpInside)
-        return button
-    }().withBlurEffect()
+    private lazy var passwordTextField = UITextField()
+        .withPlaceholder("    Password")
+        .secured()
+        .withBlurEffect()
+        .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
+        .withCornerRadius(20)
     
-    private lazy var appleLoginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("APPLE LOGIN", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(appleLoginButtonTapped), for: .touchUpInside)
-        return button
-    }().withBlurEffect()
     
-    //MARK: Deinit
+    //3. Button for Login
+    private lazy var loginButton = UIButton()
+        .withTitle("Login")
+        .withTextColor(.black)
+        .withTarget(self, action: #selector(loginButtonTapped))
+        .withBlurEffect()
+        .withCornerRadius(20)
+        .withBorder(color: UIColor(hexCode: "524A4E", alpha: 0.8), width: 2)
+    
+    private lazy var signUpButton = UIButton()
+        .withTitle("Sign Up")
+        .withTextColor(.black)
+        .withTarget(self, action: #selector(showRegistrationPopUp))
+    
+    
+    //4. Keyboard Handling
+    private var emailTextFieldCenterYConstraint: Constraint?
+    
+    //6. UserInfoService
+    private let userInfoService = UserInfoService()
+    
+    
+    
+    private lazy var allUIElements: [UIView] = [titleLabel,emailTextField, passwordTextField, loginButton, signUpButton]
+    
+    
+    
     deinit {
         print("Successfully LoginVC has been deinitialized!")
     }
 }
 
+
 //MARK: - ViewCycle
 extension LoginViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        setupUI()
+        recognizeTapGesture()
+        addNotificationObserver()
     }
 }
 
-//MARK: - Action
-extension LoginViewController {
-    
-    @objc func kakaoLoginButtonTapped() {
-        print("Successfully \(#function)")
-    }
-    
-    @objc func appleLoginButtonTapped() {
-        print("Successfully \(#function)")
-    }
-}
 
-//MARK: - Configure UI
-extension LoginViewController {
+//MARK: - SetupUI
+private extension LoginViewController {
     
-    func configure() {
-        view.addSubviews(riveView,backgroundImage,kakaoLoginButton,appleLoginButton,titleLabel)
+    func setupUI() {
         view.backgroundColor = .white
-        view.sendSubviewToBack(backgroundImage)
-        configureConstraints()
+        view.withBackgroundImage(named: "Spline", at: CGPoint(x: 1.8, y: 1.8), size: CGSize(width: 700, height: 1000))
+        view.addSubviews(riveView,emailTextField,titleLabel,passwordTextField,loginButton,signUpButton)
+        setupConstraints()
     }
     
-    func configureConstraints() {
+    func setupConstraints() {
         
-        riveView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        riveView.fullScreen()
         
-        titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(kakaoLoginButton.snp.top).offset(-60)
-        }
+        emailTextField
+            .centerX()
+            .size(250, 40)
         
-        kakaoLoginButton.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalToSuperview().multipliedBy(0.7)
-            $0.height.equalTo(80)
-
-        }
+        titleLabel
+            .centerX()
+            .above(emailTextField, 50)
         
-        appleLoginButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(kakaoLoginButton.snp.bottom).offset(60)
-            $0.width.equalToSuperview().multipliedBy(0.7)
-            $0.height.equalTo(80)
-        }
+        passwordTextField
+            .below(emailTextField, 20)
+            .centerX()
+            .size(250, 40)
         
-        backgroundImage.snp.makeConstraints {
-            $0.centerX.equalToSuperview().multipliedBy(1.8)
-            $0.centerY.equalToSuperview().multipliedBy(1.7)
-            $0.width.equalTo(300)
-            $0.height.equalTo(500)
-        }
+        loginButton
+            .below(passwordTextField, 20)
+            .centerX()
+            .size(150, 40)
+        
+        signUpButton
+            .below(loginButton, 10)
+            .centerX()
+            .size(150, 40)
     }
 }
 
 
-//MARK: - RiveView extension
-extension RiveView {
-    func withViewModel(_ viewModel: RiveViewModel) -> RiveView {
-        isUserInteractionEnabled = false
-        viewModel.setView(self)
-        return self
-    }
-}
-
-
-//MARK: - UIView extension
-extension UIView {
-    func withBlurEffect() -> Self {
-        let blurEffect = UIBlurEffect(style: .light)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurEffectView.isUserInteractionEnabled = false
-        if let button = self as? UIButton {
-            button.insertSubview(blurEffectView, belowSubview: button.imageView!)
-        } else {
-            insertSubview(blurEffectView, at: 0)
-        }
-        return self
+//MARK: - Button Action
+private extension LoginViewController {
+    
+    @objc func loginButtonTapped() async {
+        guard hasValidInput else { showAlertButton(); return }
+        await authenticateUser()
     }
     
-    func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { addSubview($0) }
+    
+    @objc func showRegistrationPopUp() {
+        
+        allUIElements.forEach { $0.isHidden = true }
+        
+        let popUp = SignUpView()
+        view.addSubview(popUp)
+        popUp.alpha = 0.0
+        popUp
+            .centerX()
+            .centerY()
+            .size(200, 200)
+        UIView.animate(withDuration: 0.3) {
+            popUp.alpha = 1.0
+        }
+        
     }
 }
+
+
+//MARK: - Authenticate User
+private extension LoginViewController {
+    
+    var hasValidInput: Bool {return !(emailTextField.text?.isEmpty ?? true) && !(passwordTextField.text?.isEmpty ?? true)}
+    
+    func authenticateUser() async {
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            let user = result.user
+            userInfoService.writeUserInfoToFirestore(email: user.email ?? "", uid: user.uid)
+            print("Successfully \(#function)")
+        } catch {
+            showAlertButton()
+            print("Failed to \(#function)")
+        }
+        assignRootView()
+    }
+}
+
+//MARK: - Assign tabBarController as rootView
+private extension LoginViewController {
+    func assignRootView() {
+        print("Move to MainVC")
+        }
+    
+}
+
+
+//MARK: - Alert
+private extension LoginViewController {
+    func showAlertButton() {
+        Alert.show(on: self,
+                   title: "Alert Title",
+                   message: "This is an alert with a blurred background.",
+                   actions: [
+                    AlertAction(title: "Cancel", style: .cancel, handler: nil),
+                    AlertAction(title: "OK", style: .default, handler: {
+                        print("OK pressed")
+                    })
+                   ]
+        )
+    }
+}
+
+
+//MARK: - Keyboard Handling
+private extension LoginViewController {
+    
+    
+    func recognizeTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
+    }
+    
+    func addNotificationObserver() {
+        emailTextFieldCenterYConstraint = emailTextField.yConstraints()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func dismissKeyboard() {
+        print("Succefully \(#function)")
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            emailTextFieldCenterYConstraint?.update(offset: -keyboardHeight/2)
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        emailTextFieldCenterYConstraint?.update(offset: 0)
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
+
