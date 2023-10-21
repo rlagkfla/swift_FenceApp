@@ -5,8 +5,6 @@
 //  Created by Woojun Lee on 10/19/23.
 //
 
-import Foundation
-
 struct UserResponseDTO {
     let email: String
     var profileImageURL: String
@@ -20,18 +18,4 @@ struct UserResponseDTO {
         UserResponseDTO(email: "ddd@gmail.com",profileImageURL: "https://i.namu.wiki/i/buRp-Z6r8egBOFmmqtsepfzhZaWGsPUiL5Tk30YJ-Pql1V2KwrGrLx51nOU5[…]PP3BzgZbXwni5AwlKtsQBk0mggfd9Q4F4qSBEGs9kEqAKgw-gS-QzzfXCw.webp", identifier: "user4", nickname: "user4"),
         UserResponseDTO(email: "eee@gmail.com",profileImageURL: "https://i.namu.wiki/i/jo4uFuxhDeR8EQWONfp3eJNuU80L918RS_3q2kDpT8mGbesLBYG1Fyj3Zw3O[…]jTeG_3Lr5oO13j6UC6JkBS18PLrxSJL4-PntO3iQ6kVwEgjqXUzIzJoSRA.webp", identifier: "user5", nickname: "user5"),
     ]
-    
-    init(email: String, profileImageURL: String, identifier: String, nickname: String) {
-        self.email = email
-        self.profileImageURL = profileImageURL
-        self.identifier = identifier
-        self.nickname = nickname
-    }
-    
-    init(dictionary: [String: Any]) {
-        self.email = dictionary[FB.User.email] as? String ?? ""
-        self.nickname = dictionary[FB.User.userNickname] as? String ?? ""
-        self.profileImageURL = dictionary[FB.User.profileImageURL] as? String ?? ""
-        self.identifier = dictionary[FB.User.useridentifier] as? String ?? ""
-    }
 }
