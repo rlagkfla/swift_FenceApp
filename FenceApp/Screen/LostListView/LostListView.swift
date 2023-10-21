@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol LostListViewDelegate: AnyObject {
+    func didSelectRow(at indexPath: IndexPath)
+}
+
 class LostListView: UIView {
 
 //    let navigationBar : UINavigationBar = {
@@ -22,7 +26,9 @@ class LostListView: UIView {
 //        return nav
 //    }()
     
-    var didSelectRow: ((IndexPath) -> Void)?
+    
+    weak var delegate: LostListViewDelegate?
+    
     
     private let filterLabel: UILabel = {
         let lb = UILabel()
@@ -143,25 +149,7 @@ extension LostListView: UITableViewDataSource {
 
 extension LostListView: UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-////        let detailViewController = DetailViewController()
-//        
-////        let selectedData = yourDataSource[indexPath.row]
-//        
-////        detailViewController.data = selectedData
-//        
-////        self.navigationController?.pushViewController(detailViewController, animated: true)
-//        
-//        if let parentViewController = self.parent as? LostListViewController {
-//            let detailViewController = DetailViewController()
-//            // 데이터를 설정하거나 다른 설정을 수행할 수 있습니다.
-//            parentViewController.navigationController?.pushViewController(detailViewController, animated: true)
-//        }
-//    }
-    
-    // tableView에서 셀 선택 시 해당 클로저를 호출하여 이벤트를 처리
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        didSelectRow?(indexPath)
+        delegate?.didSelectRow(at: indexPath)
     }
 }

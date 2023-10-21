@@ -9,9 +9,8 @@ import UIKit
 import SnapKit
 
 class LostListViewController: UIViewController {
-
-    private let lostListView = LostListView()
     
+    private let lostListView = LostListView()
     
     override func loadView() {
         view = lostListView
@@ -28,6 +27,8 @@ class LostListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lostListView.delegate = self
+        
         self.navigationController?.navigationBar.backgroundColor = .white
 //        self.navigationController?.navigationItem.title = "test"
 //        self.navigationItem.title = "test"
@@ -38,14 +39,6 @@ class LostListViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-13)
         }
         
-        
-        // 클로저를 설정하여 셀 선택 시 이벤트 처리
-        lostListView.didSelectRow = { [weak self] indexPath in
-        let detailViewController = DetailViewController()
-        // 데이터 설정 등을 수행
-        self?.navigationController?.pushViewController(detailViewController, animated: true)
-        }
-        
     }
     
     @objc func tapPlusBtns(){
@@ -53,6 +46,8 @@ class LostListViewController: UIViewController {
         
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
+    
+    
 //    override func viewWillAppear(_ animated: Bool) {
 //        navigationController?.isNavigationBarHidden = false
 //    }
@@ -76,4 +71,14 @@ class LostListViewController: UIViewController {
 
 }
 
+
+extension LostListViewController: LostListViewDelegate {
+    // LostListViewDelegate 프로토콜 메서드 구현
+    func didSelectRow(at indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        // 데이터 설정 등을 수행
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+     
+}
 
