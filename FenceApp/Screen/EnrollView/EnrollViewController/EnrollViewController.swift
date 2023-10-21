@@ -21,7 +21,7 @@ class EnrollViewController: UIViewController {
         super.viewDidLoad()
         
         configureNavBar()
-        
+
     }
     
     
@@ -32,6 +32,8 @@ class EnrollViewController: UIViewController {
     @objc func tapLeftBarBtn(){
         self.navigationController?.popViewController(animated: true)
     }
+    
+    
 }
 
 extension EnrollViewController {

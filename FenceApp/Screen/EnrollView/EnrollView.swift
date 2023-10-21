@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 class EnrollView: UIView {
   
@@ -83,6 +84,25 @@ class EnrollView: UIView {
         return lb
     }()
     
+    let mapView: MKMapView = {
+        let map = MKMapView()
+        return map
+    }()
+    
+    private let lineLabel5: UILabel = {
+        let lb = UILabel()
+        lb.layer.borderWidth = 1
+        lb.layer.borderColor = UIColor.lightGray.cgColor
+        return lb
+    }()
+    
+    private let textView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = .clear
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.lightGray.cgColor
+        return textView
+    }()
     
     
     override init(frame: CGRect) {
@@ -120,11 +140,12 @@ extension EnrollView {
     
     func configureUI(){
         self.addSubview(scrollView)
-        scrollView.addSubviews(customBtnView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4)
+        scrollView.addSubviews(customBtnView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, mapView, lineLabel5, textView)
 
         scrollView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
         }
         
         customBtnView.snp.makeConstraints {
@@ -188,7 +209,32 @@ extension EnrollView {
             $0.height.equalTo(0.7)
         }
         
+        textView.snp.makeConstraints {
+            $0.top.equalTo(lineLabel4.snp.bottom).offset(10)
+            $0.leading.equalTo(scrollView.snp.leading).offset(13)
+            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+//            $0.bottom.equalTo(scrollView.snp.bottom).offset(-10)
+            $0.width.equalTo(scrollView.snp.width).offset(-26)
+            $0.height.equalTo(250)
+        }
         
+        
+        
+        lineLabel5.snp.makeConstraints {
+            $0.top.equalTo(textView.snp.bottom).offset(10)
+            $0.leading.equalTo(scrollView.snp.leading).offset(13)
+            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+            $0.width.equalTo(scrollView.snp.width).offset(-26)
+            $0.height.equalTo(0.7)
+        }
+        
+        mapView.snp.makeConstraints {
+            $0.top.equalTo(lineLabel5.snp.bottom).offset(10)
+            $0.leading.equalTo(scrollView.snp.leading).offset(13)
+            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+            $0.bottom.equalTo(scrollView.snp.bottom).offset(-10)
+            $0.height.equalTo(250)
+        }
 
     }
     
