@@ -22,9 +22,7 @@
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
 		D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */; };
-		D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */; };
 		D651509E2ADD0F2E002FDD04 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D651509D2ADD0F2E002FDD04 /* SnapKit */; };
-		D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */; };
 		D65150A32ADD0FFB002FDD04 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D65150A22ADD0FFB002FDD04 /* FirebaseAnalytics */; };
 		D65150A52ADD0FFB002FDD04 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = D65150A42ADD0FFB002FDD04 /* FirebaseAnalyticsOnDeviceConversion */; };
 		D65150A72ADD0FFB002FDD04 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D65150A62ADD0FFB002FDD04 /* FirebaseAnalyticsSwift */; };
@@ -33,16 +31,19 @@
 		D65150AE2ADD103C002FDD04 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AD2ADD103C002FDD04 /* RiveRuntime */; };
 		D65150B12ADD1078002FDD04 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B02ADD1078002FDD04 /* FirebaseAuth */; };
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
-		D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150B82ADD120F002FDD04 /* MapViewController.swift */; };
-		D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BC2ADD123B002FDD04 /* CameraViewController.swift */; };
-		D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BE2ADD1249002FDD04 /* ChatViewController.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
 		D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */; };
 		D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */; };
+		D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BE2ADD1249002FDD04 /* ChatViewController.swift */; };
+		D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */; };
+		D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BC2ADD123B002FDD04 /* CameraViewController.swift */; };
+		D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150B82ADD120F002FDD04 /* MapViewController.swift */; };
+		D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */; };
+		D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */; };
+		D687F0972AE3F11100E98EA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */; };
 		D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739C2AE224E900ED3E2F /* EnrollView.swift */; };
 		D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */; };
 		D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */; };
-		D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */; };
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
@@ -74,7 +75,6 @@
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
-		D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -545,9 +545,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D687F0972AE3F11100E98EA4 /* AppDelegate.swift in Sources */,
+				D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */,
+				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
+				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
+				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
+				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
+				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
-				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
@@ -557,19 +563,12 @@
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
 				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */,
-				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
 				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
-				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
-				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
 				D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */,
-				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
-				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
 				D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */,
-				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
 				C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */,
 				08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */,
 				08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */,
-				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
 				D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
@@ -579,10 +578,8 @@
 				D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */,
 				D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */,
 				D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */,
-				D651509B2ADD0E4E002FDD04 /* LoginViewController.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
-				D6D9A72F2ADD05EC006A5B8B /* AppDelegate.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
@@ -745,12 +742,13 @@
 		D6D9A7402ADD05EF006A5B8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -778,12 +776,13 @@
 		D6D9A7412ADD05EF006A5B8B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -9,9 +9,8 @@ import UIKit
 import SnapKit
 
 class LostListViewController: UIViewController {
-
-    private let lostListView = LostListView()
     
+    private let lostListView = LostListView()
     
     override func loadView() {
         view = lostListView
@@ -28,6 +27,8 @@ class LostListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lostListView.delegate = self
+        
         self.navigationController?.navigationBar.backgroundColor = .white
 //        self.navigationController?.navigationItem.title = "test"
 //        self.navigationItem.title = "test"
@@ -37,6 +38,7 @@ class LostListViewController: UIViewController {
             $0.top.equalToSuperview().offset(100)
             $0.trailing.equalToSuperview().offset(-13)
         }
+        
     }
     
     @objc func tapPlusBtns(){
@@ -44,6 +46,8 @@ class LostListViewController: UIViewController {
         
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
+    
+    
 //    override func viewWillAppear(_ animated: Bool) {
 //        navigationController?.isNavigationBarHidden = false
 //    }
@@ -66,3 +70,15 @@ class LostListViewController: UIViewController {
 //    }
 
 }
+
+
+extension LostListViewController: LostListViewDelegate {
+    // LostListViewDelegate 프로토콜 메서드 구현
+    func didSelectRow(at indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        // 데이터 설정 등을 수행
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
+     
+}
+
