@@ -19,17 +19,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let thirdTabNavigationController = UINavigationController()
     let fourthTabNavigationController = UINavigationController()
     
-    lazy var firebaseFoundService = FirebaseFoundService(firebaseImageUploadService: firebaseImageUploadService)
-    lazy var firebaseUserService = FirebaseUserService(firebaseImageUploader: firebaseImageUploadService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
-    lazy var firebaseLostService = FirebaseLostService(firebaseImageUploader: firebaseImageUploadService)
-    lazy var firebaseLostCommentService = FirebaseLostCommentService(firebaseImageUploadService: firebaseImageUploadService)
+    let userResponseDTOMapper = UserResponseDTOMapper()
+    let lostResponseDTOMapper = LostResponseDTOMapper()
+    let commentResponseDTOMapper = CommentResponseDTOMapper()
+    let foundResponseDTOMapper = FoundResponseDTOMapper()
+    
+    lazy var firebaseFoundService = FirebaseFoundService(foundResponseDTOMapper: foundResponseDTOMapper)
+    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, userResponseDTOMapper: userResponseDTOMapper)
+    lazy var firebaseLostService = FirebaseLostService(lostResponseDTOMapper: lostResponseDTOMapper, firebaseLostCommentService: firebaseLostCommentService)
+    lazy var firebaseLostCommentService = FirebaseLostCommentService(commentResponseDTOMapper: commentResponseDTOMapper)
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         Task {
             do {
+                
+                try await firebaseLostService.deleteLost(lostIdentifier: LostResponseDTO.dummyLost[0].lostIdentifier)
+                
 
-                try await firebaseUserService.editUser(userResponseDTO: UserResponseDTO(email: "q", profileImageURL: "##", identifier: "user1", nickname: "##"))
             } catch {
                 print(error, "@@@@@@@")
             }

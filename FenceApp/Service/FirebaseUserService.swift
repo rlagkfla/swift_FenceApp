@@ -5,73 +5,67 @@
 //  Created by Woojun Lee on 10/18/23.
 //
 
-import Foundation
-import FirebaseAuth
-import FirebaseFirestore
 
 
 struct FirebaseUserService {
     
-    let firebaseImageUploader: FirebaseImageUploadService
+    //MARK: - Properties
+    
     let firebaseLostService: FirebaseLostService
     let firebaseLostCommentService: FirebaseLostCommentService
+    let userResponseDTOMapper: UserResponseDTOMapper
     
-    func createUser(userStoringDTO: UserStoringDTO) async throws {
+    func createUser(userResponseDTO: UserResponseDTO) async throws {
+                
+        let dictionary = userResponseDTOMapper.makeDictionary(from: userResponseDTO)
         
-        let profileImageURL = try await firebaseImageUploader.uploadProfileImage(image: userStoringDTO.profileImage)
-        
-        let userResponseDTO = UserResponseDTO(email: userStoringDTO.email, profileImageURL: profileImageURL, identifier: userStoringDTO.identifier, nickname: userStoringDTO.nickname)
-        
-        try await _createUser(userResponseDTO: userResponseDTO)
+        try await COLLECTION_USERS.document(userResponseDTO.identifier).setData(dictionary)
     }
     
     func fetchUser(userIdentifier: String) async throws -> UserResponseDTO {
         
         guard let dictionary = try await COLLECTION_USERS.document(userIdentifier).getDocument().data() else { throw PetError.noSnapshotDocument }
         
-        let userDTO = UserResponseDTO(dictionary: dictionary)
+        let userDTO = userResponseDTOMapper.makeUserResponseDTO(from: dictionary)
         
         return userDTO
     }
     
     func editUser(userResponseDTO: UserResponseDTO) async throws {
         
-        let batch = Firestore.firestore().batch()
+        let batchController = BatchController()
         
-        _editUser(userResponseDTO: userResponseDTO, batch: batch)
+        _editUser(userResponseDTO: userResponseDTO, batchController: batchController)
         
         await withThrowingTaskGroup(of: type(of: ())) { group in
             
                 group.addTask {
-                    try await firebaseLostService.editUserInformationOnLostDTO(with: userResponseDTO, batch: batch)
-                    try await firebaseLostCommentService.editUserInformationOnComments(with: userResponseDTO, batch: batch)
+                    try await firebaseLostService.editUserInformationOnLostDTO(with: userResponseDTO, batchController: batchController)
+                    try await firebaseLostCommentService.editUserInformationOnComments(with: userResponseDTO, batchController: batchController)
                 }
             }
         
-        try await batch.commit()
+        try await batchController.batch.commit()
     }
     
-    private func _editUser(userResponseDTO: UserResponseDTO, batch: WriteBatch) {
-        let ref = COLLECTION_USERS.document(userResponseDTO.identifier)
+    init(firebaseLostService: FirebaseLostService,
+         firebaseLostCommentService: FirebaseLostCommentService,
+         userResponseDTOMapper: UserResponseDTOMapper) {
         
-        batch.updateData([FB.User.profileImageURL: userResponseDTO.profileImageURL, FB.User.userNickname: userResponseDTO.nickname], forDocument: ref)
-        
-    }
-    
-    private func _createUser(userResponseDTO: UserResponseDTO) async throws {
-                
-        let data: [String: Any] = [FB.User.email: userResponseDTO.email,
-                                   FB.User.userNickname: userResponseDTO.nickname,
-                                   FB.User.profileImageURL: userResponseDTO.profileImageURL,
-                                   FB.User.useridentifier: userResponseDTO.identifier]
-        
-        try await COLLECTION_USERS.document(userResponseDTO.identifier).setData(data)
-    }
-    
-    
-    init(firebaseImageUploader: FirebaseImageUploadService, firebaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService) {
-        self.firebaseImageUploader = firebaseImageUploader
         self.firebaseLostService = firebaseLostService
         self.firebaseLostCommentService = firebaseLostCommentService
+        self.userResponseDTOMapper = userResponseDTOMapper
     }
+    
+    //MARK: - Helper
+    
+    private func _editUser(userResponseDTO: UserResponseDTO, batchController: BatchController) {
+        let ref = COLLECTION_USERS.document(userResponseDTO.identifier)
+        
+        let dictionary = userResponseDTOMapper.makeDictionary(from: userResponseDTO)
+        
+            batchController.batch.updateData(dictionary, forDocument: ref)
+        
+    }
+   
 }
