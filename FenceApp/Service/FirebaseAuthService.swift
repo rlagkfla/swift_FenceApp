@@ -16,5 +16,11 @@ struct FirebaseAuthService {
         return authResult
         
     }
+    
+    func sendPasswordReset(withEmail: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: withEmail)
+    }
+    
+   
 
 }

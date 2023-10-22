@@ -5,9 +5,8 @@
 //  Created by Woojun Lee on 10/19/23.
 //
 
-//dto ntt                      // storingModel 저장할때 한번쓰는 모델 // dto 데이터베이스에서 받아오는거 // 모델
 import Foundation
-import FirebaseFirestore
+
 struct LostResponseDTO {
     
     let lostIdentifier: String
@@ -16,53 +15,23 @@ struct LostResponseDTO {
     var userIdentifier: String
     var userProfileImageURL: String
     var userNickName: String
-    let title: String
-    var postDate: Date
-    let lostDate: Date
+    var title: String
+    let postDate: Date
+    var lostDate: Date
     var pictureURL: String
     var petName: String
     var description: String
     var kind: String
+
     
-    init(lostIdentifier: String, latitude: Double, longitude: Double, userIdentifier: String, userProfileURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String) {
-        self.lostIdentifier = lostIdentifier
-        self.latitude = latitude
-        self.longitude = longitude
-        self.userIdentifier = userIdentifier
-        self.userProfileImageURL = userProfileURL
-        self.userNickName = userNickName
-        self.title = title
-        self.postDate = postDate
-        self.lostDate = lostDate
-        self.pictureURL = pictureURL
-        self.petName = petName
-        self.description = description
-        self.kind = kind
-        
-    }
-    
-    init(dictionary: [String: Any]) {
-        self.lostIdentifier = dictionary["lostIdentifier"] as? String ?? ""
-        self.latitude = dictionary["latitude"] as? Double ?? 0
-        self.longitude = dictionary["longitude"] as? Double ?? 0
-        self.userIdentifier = dictionary["userIdentifier"] as? String ?? ""
-        self.userProfileImageURL = dictionary["userProfileImageURL"] as? String ?? ""
-        self.userNickName = dictionary["userNickname"] as? String ?? ""
-        self.title = dictionary["title"] as? String ?? ""
-        self.postDate = (dictionary["posdtDate"] as? Timestamp)?.dateValue() ?? Date()
-        self.lostDate = (dictionary["lostDate"] as? Timestamp)?.dateValue() ?? Date()
-        self.pictureURL = dictionary["pictureURL"] as? String ?? ""
-        self.petName = dictionary["petName"] as? String ?? ""
-        self.description = dictionary["description"] as? String ?? ""
-        self.kind = dictionary["kind"] as? String ?? ""
-    }
+ 
     
     static var dummyLost: [LostResponseDTO] = [
         LostResponseDTO(lostIdentifier: "lost1",
                 latitude: 37.317399,
                 longitude: 126.830014,
                 userIdentifier: UserResponseDTO.dummyUser[0].identifier,
-                userProfileURL: UserResponseDTO.dummyUser[0].profileImageURL,
+                        userProfileImageURL: UserResponseDTO.dummyUser[0].profileImageURL,
                 userNickName: UserResponseDTO.dummyUser[0].nickname,
                 title: "title1",
                 postDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
@@ -77,7 +46,7 @@ struct LostResponseDTO {
                 latitude: 37.316694,
                 longitude: 126.829903,
                 userIdentifier: UserResponseDTO.dummyUser[1].identifier,
-                userProfileURL: UserResponseDTO.dummyUser[1].profileImageURL,
+                        userProfileImageURL: UserResponseDTO.dummyUser[1].profileImageURL,
                 userNickName: UserResponseDTO.dummyUser[1].nickname,
                 title: "title2",
                 postDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
@@ -91,7 +60,7 @@ struct LostResponseDTO {
                 latitude: 37.316703,
                 longitude: 126.830925,
                 userIdentifier: UserResponseDTO.dummyUser[2].identifier,
-                userProfileURL: UserResponseDTO.dummyUser[2].profileImageURL,
+                        userProfileImageURL: UserResponseDTO.dummyUser[2].profileImageURL,
                 userNickName: UserResponseDTO.dummyUser[2].nickname,
                 title: "title3",
                 postDate: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
@@ -105,7 +74,7 @@ struct LostResponseDTO {
                 latitude: 37.317363,
                 longitude: 126.830993,
                 userIdentifier: UserResponseDTO.dummyUser[3].identifier,
-                userProfileURL: UserResponseDTO.dummyUser[3].profileImageURL,
+                        userProfileImageURL: UserResponseDTO.dummyUser[3].profileImageURL,
                 userNickName: UserResponseDTO.dummyUser[3].nickname,
                 title: "title4",
                 postDate: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
@@ -119,7 +88,7 @@ struct LostResponseDTO {
                 latitude: 37.317010,
                 longitude: 126.830442,
                 userIdentifier: UserResponseDTO.dummyUser[4].identifier,
-                userProfileURL: UserResponseDTO.dummyUser[4].profileImageURL,
+                        userProfileImageURL: UserResponseDTO.dummyUser[4].profileImageURL,
                 userNickName: UserResponseDTO.dummyUser[4].nickname,
                 title: "title5",
                 postDate: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestore
+
 struct FoundResponseDTO {
     
     var latitude: Double
@@ -25,14 +25,7 @@ struct FoundResponseDTO {
         self.foundIdentifier = foundIdentifier
     }
    
-    init(dictionary: [String: Any]) {
-        self.latitude = dictionary[FB.Found.latitude] as? Double ?? 0
-        self.longitude = dictionary[FB.Found.longitude] as? Double ?? 0
-        self.imageURL = dictionary[FB.Found.imageURL] as? String ?? ""
-        self.date = (dictionary[FB.Found.date] as? Timestamp)?.dateValue() ?? Date()
-        self.userIdentifier = dictionary[FB.Found.userIdentifier] as? String ?? ""
-        self.foundIdentifier = dictionary[FB.Found.foundIdentifier] as? String ?? ""
-    }
+   
     
 
     static var dummyFoundDTO: [FoundResponseDTO] = [
