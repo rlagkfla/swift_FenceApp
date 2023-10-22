@@ -33,38 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
-                
-//                try await firebaseAuthService.signUpUser(email: "zoaal22@gmail.com", password: "123456")
-                try await firebaseAuthService.sendPasswordReset(withEmail: "zoaal22@gmail.com")
-                //                try await firebaseLostService.createLost(lostResponseDTO: LostResponseDTO.dummyLost[0])
-                //                firebaseLostService.listenToUpdateOn(userIdentifier: "user1") { result in
-                //                    switch result {
-                //                    case .failure(let error):
-                //                        print(error)
-                //                    case .success(let userResponseDTOs):
-                //                        print(userResponseDTOs)
-                //                    }
-                //                }
-//                firebaseFoundService.listenToUpdateOn(userIdentifier: "user1") { result in
-//                    switch result {
-//                    case .failure(let error):
-//                        print(error)
-//                    case .success(let userFoundDTOs):
-//                        print(userFoundDTOs)
-//                    }
-//                }
-                //                firebaseUserService.listenToUpdateOn(userIdentifier: "user1") { result in
-                //                    switch result {
-                //                    case .failure(let error):
-                //                        print(error)
-                //                    case .success(let userResponseDTO):
-                //                        print(userResponseDTO)
-                //                    }
-                //                }
-                //                firebaseFoundService.listenOnFound()
-                //                firebaseFoundService.listenOnFoundDocument()
-                //                try await firebaseLostService.deleteLost(lostIdentifier: LostResponseDTO.dummyLost[0].lostIdentifier)
-                
+
                 
             } catch {
                 print(error, "@@@@@@@@")

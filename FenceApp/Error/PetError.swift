@@ -18,4 +18,5 @@ enum PetError: Error {
     case noPictureInLost
     case noPictureURLInLost
     case noSnapshotDocument
+    case noEmail
 }
