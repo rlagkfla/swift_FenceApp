@@ -50,6 +50,34 @@ struct FirebaseLostService {
         
     }
     
+    func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<[LostResponseDTO],Error>) -> Void) {
+        COLLECTION_LOST.whereField(FB.Lost.userIdentifier, isEqualTo: userIdentifier).addSnapshotListener { snapshot, error in
+            
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
+            
+            guard let documents = snapshot?.documents else {
+                completion(.failure(PetError.noSnapshotDocument))
+                return
+            }
+            
+            let lostResponseDTOs = documents.map { document in
+                
+                let dictionary = document.data()
+                
+                return lostResponseDTOMapper.makeLostResponseDTO(from: dictionary)
+            }
+            
+            completion(.success(lostResponseDTOs))
+
+        
+        }
+        
+    }
+    
     init(lostResponseDTOMapper: LostResponseDTOMapper, firebaseLostCommentService: FirebaseLostCommentService) {
         self.lostResponseDTOMapper = lostResponseDTOMapper
         self.firebaseLostCommentService = firebaseLostCommentService

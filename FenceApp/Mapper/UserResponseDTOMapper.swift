@@ -15,7 +15,7 @@ struct UserResponseDTOMapper {
                         nickname: dictionary[FB.User.useridentifier] as? String ?? "")
     }
     
-    func makeUserResponseDTOs(with dictionaries: [[String: Any]]) -> [UserResponseDTO] {
+    func makeUserResponseDTOs(from dictionaries: [[String: Any]]) -> [UserResponseDTO] {
         return dictionaries.map { dictionary in
             makeUserResponseDTO(from: dictionary)
         }

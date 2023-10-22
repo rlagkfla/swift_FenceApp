@@ -48,6 +48,27 @@ struct FirebaseUserService {
         try await batchController.batch.commit()
     }
     
+    func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<UserResponseDTO,Error>) -> Void) {
+        COLLECTION_USERS.document(userIdentifier).addSnapshotListener { snapshot, error in
+            
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let dictionary = snapshot?.data() else {
+                completion(.failure(PetError.noSnapshotDocument))
+                return
+            }
+            
+            let userResponseDTO = userResponseDTOMapper.makeUserResponseDTO(from: dictionary)
+            
+            completion(.success(userResponseDTO))
+        
+        }
+        
+    }
+    
     init(firebaseLostService: FirebaseLostService,
          firebaseLostCommentService: FirebaseLostCommentService,
          userResponseDTOMapper: UserResponseDTOMapper) {

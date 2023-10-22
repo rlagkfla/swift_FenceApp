@@ -6,6 +6,7 @@
 //
 
 struct UserResponseDTO {
+    
     let email: String
     var profileImageURL: String
     let identifier: String
