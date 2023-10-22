@@ -29,7 +29,6 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         label.text = "코주부 원숭이"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .left
-        label.backgroundColor = .red
         return label
     }()
     
@@ -39,7 +38,6 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .systemGray
         label.textAlignment = .center
-        label.backgroundColor = .yellow
         return label
     }()
     

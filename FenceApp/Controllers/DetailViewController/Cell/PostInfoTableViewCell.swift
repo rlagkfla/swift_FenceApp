@@ -20,7 +20,6 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         label.text = "강아지 찾아주세요"
         label.font = UIFont.systemFont(ofSize: 24)
         label.textAlignment = .left
-        label.backgroundColor = .red
         return label
     }()
     
@@ -29,7 +28,6 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         label.text = "잃어버린 시간: \(Date())"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
-        label.backgroundColor = .yellow
         return label
     }()
     
@@ -39,7 +37,6 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 18)
-        label.backgroundColor = .red
         return label
     }()
     

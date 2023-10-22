@@ -22,10 +22,12 @@ class DetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        self.title = "디테일"
+    }
+    
+    func configureCollectionView() {
         detailView.detailCollectionView.dataSource = self
         detailView.detailCollectionView.delegate = self
-        
-        self.navigationController?.navigationBar.backgroundColor = .blue
     }
     
     // MARK: - Action
