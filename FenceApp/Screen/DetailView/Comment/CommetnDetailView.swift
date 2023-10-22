@@ -31,14 +31,13 @@ class CommentDetailView: UIView {
     
     lazy var commentTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemPink
         tableView.register(CommentDetailTableViewCell.self, forCellReuseIdentifier: CommentDetailTableViewCell.identifier)
         return tableView
     }()
     
     let myCommentTextView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(hexCode: "5DDFDE")
         return view
     }()
     
@@ -55,13 +54,13 @@ class CommentDetailView: UIView {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.layer.cornerRadius = 5
-        textView.backgroundColor = .yellow
         return textView
     }()
     
     let commentSendButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        button.tintColor = .white
         return button
     }()
     

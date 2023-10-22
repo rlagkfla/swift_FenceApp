@@ -23,23 +23,12 @@ class CommentDetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
-        commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
-        
-        commentDetailView.commentTableView.dataSource = self
-        commentDetailView.commentTableView.delegate = self
-        
-        commentDetailView.commentTableView.estimatedRowHeight = 50
-        commentDetailView.commentTableView.rowHeight = UITableView.automaticDimension
-        
-        commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        configureTalbeView()
+        configureActions()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        commentDetailView.commentTableView.reloadData()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -49,6 +38,21 @@ class CommentDetailViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func configureActions() {
+        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
+        
+        commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+    
+    private func configureTalbeView() {
+        commentDetailView.commentTableView.dataSource = self
+        commentDetailView.commentTableView.delegate = self
+        
+        commentDetailView.commentTableView.estimatedRowHeight = 50
+        commentDetailView.commentTableView.rowHeight = UITableView.automaticDimension
     }
 }
 
@@ -92,7 +96,6 @@ extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath)
-        cell.backgroundColor = .blue
         return cell
     }
 

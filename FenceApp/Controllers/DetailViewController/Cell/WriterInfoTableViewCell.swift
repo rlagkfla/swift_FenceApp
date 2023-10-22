@@ -20,7 +20,6 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
-        
         return imageView
     }()
     
