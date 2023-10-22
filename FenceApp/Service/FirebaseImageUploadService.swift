@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseStorage
 
 struct FirebaseImageUploadService {
     
@@ -15,7 +14,7 @@ struct FirebaseImageUploadService {
         
         let fileName = UUID().uuidString
         
-        let ref = Storage.storage().reference(withPath: "/profile_images/\(fileName)")
+        let ref = IMAGE_STORAGE.reference(withPath: "/profile_images/\(fileName)")
         
         let _ = try await ref.putDataAsync(imageData)
         
@@ -29,7 +28,7 @@ struct FirebaseImageUploadService {
         
         let fileName = UUID().uuidString
         
-        let ref = Storage.storage().reference(withPath: "/lost_images/\(fileName)")
+        let ref = IMAGE_STORAGE.reference(withPath: "/lost_images/\(fileName)")
         
         let _ = try await ref.putDataAsync(imageData)
         
@@ -43,7 +42,7 @@ struct FirebaseImageUploadService {
         
         let fileName = UUID().uuidString
         
-        let ref = Storage.storage().reference(withPath: "/lost_images/\(fileName)")
+        let ref = IMAGE_STORAGE.reference(withPath: "/lost_images/\(fileName)")
         
         let _ = try await ref.putDataAsync(imageData)
         

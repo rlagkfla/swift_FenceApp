@@ -5,8 +5,6 @@
 //  Created by Woojun Lee on 10/20/23.
 //
 
-import Foundation
-
 struct FB {
     
     struct User {
