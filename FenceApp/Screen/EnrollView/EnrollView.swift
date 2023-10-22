@@ -43,6 +43,7 @@ class EnrollView: UIView {
         tf.isUserInteractionEnabled = true
         tf.backgroundColor = .cyan
 //        tf.delegate = self
+//        tf.inputAccessoryView = UIView()  // 키보드 위에 Done 버튼 추가 (선택 사항)
         return tf
     }()
     
@@ -104,12 +105,22 @@ class EnrollView: UIView {
         return textView
     }()
     
+    // 키보드 외 영역 클릭 시 키보드 사라지게 하기
+    private let tapGestureRecognizer: UITapGestureRecognizer = {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        gestureRecognizer.cancelsTouchesInView = false
+        return gestureRecognizer
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
         configureUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -134,6 +145,43 @@ class EnrollView: UIView {
         print("Selected Date: \(selectedDate)")
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            scrollView.contentInset = contentInset
+            scrollView.scrollIndicatorInsets = contentInset
+
+            // UITextView가 키보드 아래에 가려지지 않도록 조정
+            if let selectedRange = textView.selectedTextRange {
+                let caretRect = textView.caretRect(for: selectedRange.start)
+                let caretY = caretRect.origin.y
+                let visibleY = textView.frame.height - keyboardSize.height
+                if caretY > visibleY {
+                    let offsetY = caretY - visibleY
+                    scrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+                }
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        let contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        // 터치된 지점이 UITextView 내에 있는지 확인
+        if !textView.frame.contains(sender.location(in: textView)) {
+            // 터치된 지점이 UITextView 외부에 있으면 키보드를 숨깁니다.
+            textView.resignFirstResponder()
+        }
+//        if !titleTextField.frame.contains(sender.location(in: titleTextField)) {
+//            // 터치된 지점이 titleTextField 외부에 있으면 키보드를 숨깁니다.
+//            titleTextField.resignFirstResponder()
+//        }
+    }
+    
 }
 
 extension EnrollView {
@@ -141,7 +189,9 @@ extension EnrollView {
     func configureUI(){
         self.addSubview(scrollView)
         scrollView.addSubviews(customBtnView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, mapView, lineLabel5, textView)
-
+        scrollView.addGestureRecognizer(tapGestureRecognizer)
+        
+        
         scrollView.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview()
