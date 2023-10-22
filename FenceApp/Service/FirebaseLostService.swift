@@ -78,6 +78,19 @@ struct FirebaseLostService {
         
     }
     
+    func fetchLosts() async throws -> [LostResponseDTO] {
+        
+        let documents = try await COLLECTION_LOST.getDocuments().documents
+        
+        let lostResponseDTOs = documents.map { document in
+            return lostResponseDTOMapper.makeLostResponseDTO(from: document.data())
+        }
+        
+        return lostResponseDTOs
+        
+        
+    }
+    
     init(lostResponseDTOMapper: LostResponseDTOMapper, firebaseLostCommentService: FirebaseLostCommentService) {
         self.lostResponseDTOMapper = lostResponseDTOMapper
         self.firebaseLostCommentService = firebaseLostCommentService
@@ -85,7 +98,7 @@ struct FirebaseLostService {
     
     //MARK: - Helper
     
-    private func _fetchLosts(with userIdentifier: String) async throws -> [String] {
+    func _fetchLosts(with userIdentifier: String) async throws -> [String] {
         
         let query = COLLECTION_LOST.whereField(FB.Lost.userIdentifier, isEqualTo: userIdentifier)
         
