@@ -25,6 +25,9 @@ class CommentDetailViewController: UIViewController {
         
         configureTalbeView()
         configureActions()
+        
+        commentDetailView.commentTableView.separatorStyle = .singleLine
+        commentDetailView.commentTableView.separatorColor = .red
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,9 +53,6 @@ class CommentDetailViewController: UIViewController {
     private func configureTalbeView() {
         commentDetailView.commentTableView.dataSource = self
         commentDetailView.commentTableView.delegate = self
-        
-        commentDetailView.commentTableView.estimatedRowHeight = 50
-        commentDetailView.commentTableView.rowHeight = UITableView.automaticDimension
     }
 }
 
@@ -98,7 +98,6 @@ extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegat
         let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath)
         return cell
     }
-
 }
 
 

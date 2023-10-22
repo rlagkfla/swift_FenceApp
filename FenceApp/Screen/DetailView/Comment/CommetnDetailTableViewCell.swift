@@ -23,6 +23,22 @@ class CommentDetailTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    let commenterNickName: UILabel = {
+        let label = UILabel()
+        label.text = "스폰지밥"
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    let commentDate: UILabel = {
+        let label = UILabel()
+        label.text = "3분 전"
+        label.textColor = .darkGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
     let commentTextLabel: UILabel = {
         let label = UILabel()
         label.text = "발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~"
@@ -31,18 +47,15 @@ class CommentDetailTableViewCell: UITableViewCell {
         return label
     }()
     
-    private var commentTextLabelBottomConstraint: NSLayoutConstraint!
-
     // MARK: - Life Cycle
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func layoutSubviews() {
@@ -54,6 +67,8 @@ class CommentDetailTableViewCell: UITableViewCell {
 private extension CommentDetailTableViewCell {
     func configureUI() {
         configureCommentUserProfileImageView()
+        configureCommenterNickName()
+        configureCommentDate()
         configureCommentTextLabel()
     }
     
@@ -61,9 +76,31 @@ private extension CommentDetailTableViewCell {
         contentView.addSubview(commentUserProfileImageView)
         
         commentUserProfileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            
             $0.leading.equalToSuperview().offset(10)
             $0.width.height.equalTo(30)
+        }
+    }
+    
+    func configureCommenterNickName() {
+        contentView.addSubview(commenterNickName)
+        
+        commenterNickName.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
+            $0.width.equalTo(80)
+            $0.height.equalTo(16)
+        }
+    }
+    
+    func configureCommentDate() {
+        contentView.addSubview(commentDate)
+        
+        commentDate.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(50)
+            $0.height.equalTo(16)
         }
     }
     
@@ -71,10 +108,10 @@ private extension CommentDetailTableViewCell {
         contentView.addSubview(commentTextLabel)
         
         commentTextLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalTo(commenterNickName.snp.bottom).offset(3)
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().inset(-10)
-            $0.bottom.equalToSuperview().offset(-5)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(5)
         }
     }
 }
