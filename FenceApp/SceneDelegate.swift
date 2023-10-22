@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let firebaseImageUploadService = FirebaseImageUploadService()
     let imageLoader = ImageLoader()
-    let firebaseAuthService = FirebaseAuthService()
+    
     let firstTabNavigationController = UINavigationController()
     let secondTabNavigationController = UINavigationController()
     let thirdTabNavigationController = UINavigationController()
@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let commentResponseDTOMapper = CommentResponseDTOMapper()
     let foundResponseDTOMapper = FoundResponseDTOMapper()
     
+    lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     lazy var firebaseFoundService = FirebaseFoundService(foundResponseDTOMapper: foundResponseDTOMapper)
     lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, userResponseDTOMapper: userResponseDTOMapper)
     lazy var firebaseLostService = FirebaseLostService(lostResponseDTOMapper: lostResponseDTOMapper, firebaseLostCommentService: firebaseLostCommentService)
@@ -33,8 +34,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
-
-                
+//                try await firebaseAuthService.signUpUser(email: "zoaal222@gmail.com", password: "123456")
+//                try await firebaseAuthService.signInUser(email: "zoaal222@gmail.com", password: "123456")
+//                let user = try firebaseAuthService.getCurrentUser()
+//                print(user.email, "성공")
             } catch {
                 print(error, "@@@@@@@@")
             }

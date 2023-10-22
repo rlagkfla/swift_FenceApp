@@ -21,7 +21,21 @@ struct FirebaseFoundService {
         return foundResponseDTO
     }
     
-    
+    func deleteFounds(writtenBy userIdentifier: String, batchController: BatchController) async throws {
+        
+        let ref = COLLECTION_FOUND.whereField(FB.Found.userIdentifier, isEqualTo: userIdentifier)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        for document in documents {
+            
+            let foundIdentifier = document.data()[FB.Found.foundIdentifier] as? String ?? ""
+            
+            let ref = COLLECTION_FOUND.document(foundIdentifier)
+            
+            batchController.batch.deleteDocument(ref)
+        }
+    }
     func createFound(foundResponseDTO: FoundResponseDTO) async throws {
         
         let dictionary = foundResponseDTOMapper.makeDictionary(foundResponseDTO: foundResponseDTO)

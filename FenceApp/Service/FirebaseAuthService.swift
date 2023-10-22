@@ -10,8 +10,14 @@ import FirebaseAuth
 
 struct FirebaseAuthService {
     
+    let firebaseUserService: FirebaseUserService
+    let firebaseLostService: FirebaseLostService
+    let firebaseLostCommentService: FirebaseLostCommentService
+    let firebaseFoundService: FirebaseFoundService
+    
     func signUpUser(email: String, password: String) async throws -> AuthDataResult {
         let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+        
         
         return authResult
         
@@ -46,13 +52,27 @@ struct FirebaseAuthService {
     
     func deleteUser(email: String, password: String) async throws {
         
+        let batchController = BatchController()
+        
         let user = try getCurrentUser()
         
         let credential = EmailAuthProvider.credential(withEmail: email, password: password)
         
         try await user.reauthenticate(with: credential)
         
+        // group task 추가해야함
+        
         try await user.delete()
+        
+        try await firebaseUserService.deleteUser(userIdentifier: user.uid, batchController: batchController)
+        
+        try await firebaseLostService.deleteLosts(writtenBy: user.uid, batchController: batchController)
+        
+        try await firebaseLostCommentService.deleteComments(writtenBy: user.uid, batchController: batchController)
+        
+        try await firebaseFoundService.deleteFounds(writtenBy: user.uid, batchController: batchController)
+        
+        try await batchController.batch.commit()
     }
    
     func updatePassword(currentPassword: String, newPassword: String) async throws {
@@ -66,6 +86,8 @@ struct FirebaseAuthService {
         try await user.reauthenticate(with: credential)
         
         try await user.updatePassword(to: newPassword)
+        
+        
     }
     
     private func authenticateUser(email: String, currentPassword: String) -> AuthCredential {
@@ -73,6 +95,11 @@ struct FirebaseAuthService {
         return EmailAuthProvider.credential(withEmail: email, password: currentPassword)
     }
     
-    
+    init(firebaseUserService: FirebaseUserService, firebaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseFoundService: FirebaseFoundService) {
+        self.firebaseUserService = firebaseUserService
+        self.firebaseLostService = firebaseLostService
+        self.firebaseLostCommentService = firebaseLostCommentService
+        self.firebaseFoundService = firebaseFoundService
+    }
 
 }

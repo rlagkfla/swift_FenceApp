@@ -56,6 +56,19 @@ struct FirebaseLostCommentService {
         try await ref.delete()
     }
     
+    func deleteComments(writtenBy userIdentifier: String, batchController: BatchController) async throws {
+       
+        let tuples = try await _fetchCommentIdentifiers(with: userIdentifier)
+        
+        for (lostIdentifier, commentIdentifier) in tuples {
+            
+            let ref = COLLECTION_LOST.document(lostIdentifier).collection(FB.Collection.commentList).document(commentIdentifier)
+            
+            batchController.batch.deleteDocument(ref)
+        }
+       
+    }
+    
     func deleteComments(lostIdentifier: String, batchController: BatchController) async throws {
         
         let query = COLLECTION_LOST.document(lostIdentifier).collection(FB.Collection.commentList)
