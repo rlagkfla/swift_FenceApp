@@ -48,6 +48,13 @@ struct FirebaseUserService {
         try await batchController.batch.commit()
     }
     
+    func deleteUser(userIdentifier: String, batchController: BatchController) async throws {
+        let ref = COLLECTION_USERS.document(userIdentifier)
+        
+        batchController.batch.deleteDocument(ref)
+        
+    }
+    
     func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<UserResponseDTO,Error>) -> Void) {
         COLLECTION_USERS.document(userIdentifier).addSnapshotListener { snapshot, error in
             
