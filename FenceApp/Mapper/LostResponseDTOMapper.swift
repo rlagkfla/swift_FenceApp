@@ -45,7 +45,7 @@ struct LostResponseDTOMapper {
                                    FB.Lost.title: lostResponseDTO.title,
                                    FB.Lost.postDate: Timestamp(date: lostResponseDTO.postDate),
                                    FB.Lost.lostDate: Timestamp(date: lostResponseDTO.lostDate),
-                                   FB.Lost.pictureURL: lostResponseDTO.pictureURL,
+                                   FB.Lost.pictureURL: lostResponseDTO.imageURL,
                                    FB.Lost.petName: lostResponseDTO.petName,
                                    FB.Lost.lostDescription: lostResponseDTO.description,
                                    FB.Lost.kind: lostResponseDTO.kind]
