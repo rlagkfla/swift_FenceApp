@@ -71,16 +71,6 @@ class LostListViewController: UIViewController {
 }
 
 
-extension LostListViewController: LostListViewDelegate {
-    // LostListViewDelegate 프로토콜 메서드 구현
-    func didSelectRow(at indexPath: IndexPath) {
-        let detailViewController = DetailViewController()
-        // 데이터 설정 등을 수행
-        navigationController?.pushViewController(detailViewController, animated: true)
-    }
-     
-}
-
 extension LostListViewController {
     
     func configureNavBar() {
@@ -136,8 +126,8 @@ extension LostListViewController: UITableViewDataSource {
 extension LostListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        delegate?.didSelectRow(at: indexPath)
-        
+        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row])
+        self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }
 

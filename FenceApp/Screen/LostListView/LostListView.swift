@@ -8,10 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol LostListViewDelegate: AnyObject {
-    func didSelectRow(at indexPath: IndexPath)
-}
-
 class LostListView: UIView {
 
 //    let navigationBar : UINavigationBar = {
@@ -25,10 +21,6 @@ class LostListView: UIView {
 //        
 //        return nav
 //    }()
-    
-    
-    weak var delegate: LostListViewDelegate?
-    
     
     private let filterLabel: UILabel = {
         let lb = UILabel()

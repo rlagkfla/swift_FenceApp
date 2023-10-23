@@ -12,6 +12,17 @@ class DetailViewController: UIViewController {
     // MARK: - Properties
     private let detailView = DetailView()
     
+    let lostDTO: LostResponseDTO
+    
+    init(lostDTO: LostResponseDTO) {
+        self.lostDTO = lostDTO
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = detailView
@@ -26,6 +37,8 @@ class DetailViewController: UIViewController {
         detailView.detailCollectionView.delegate = self
         
         self.navigationController?.navigationBar.backgroundColor = .blue
+        
+        print(lostDTO)
     }
     
     // MARK: - Action
