@@ -58,7 +58,7 @@ class CustomTabBarController: UITabBarController {
 
 extension CustomTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        guard let fromView = self.selectedViewController?.view, let toView = self.view else { return false }
+        guard let fromView = tabBarController.selectedViewController?.view, let toView = viewController.view else { return false }
         
         if fromView == toView {
             return false
