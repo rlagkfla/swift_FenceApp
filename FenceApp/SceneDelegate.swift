@@ -34,10 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
-//                try await firebaseAuthService.signUpUser(email: "zoaal222@gmail.com", password: "123456")
-//                try await firebaseAuthService.signInUser(email: "zoaal222@gmail.com", password: "123456")
-//                let user = try firebaseAuthService.getCurrentUser()
-//                print(user.email, "성공")
+                                
             } catch {
                 print(error, "@@@@@@@@")
             }
