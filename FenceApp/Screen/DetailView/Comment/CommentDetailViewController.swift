@@ -23,22 +23,15 @@ class CommentDetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        configureTalbeView()
+        configureActions()
         
-        commentDetailView.commentTableView.dataSource = self
-        commentDetailView.commentTableView.delegate = self
-        
-        commentDetailView.commentTableView.estimatedRowHeight = 60
-        commentDetailView.commentTableView.rowHeight = UITableView.automaticDimension
-        
-        commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        commentDetailView.commentTableView.separatorStyle = .singleLine
+        commentDetailView.commentTableView.separatorColor = .red
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        commentDetailView.commentTableView.reloadData()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -50,7 +43,17 @@ class CommentDetailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    private func configureActions() {
+        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
+        
+        commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
     
+    private func configureTalbeView() {
+        commentDetailView.commentTableView.dataSource = self
+        commentDetailView.commentTableView.delegate = self
+    }
 }
 
 // MARK: - Actions
@@ -79,17 +82,20 @@ extension CommentDetailViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc func commentSendButtonTapped() {
+        print(#function)
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath)
-        
         return cell
     }
 }

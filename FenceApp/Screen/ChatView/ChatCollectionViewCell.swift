@@ -9,14 +9,18 @@ import UIKit
 
 class ChatCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
     static let identifier: String = "ChatCell"
+    private let imageLoader: ImageLoader = ImageLoader()
     
-    let foundImageView: UIImageView = {
+    // MARK: - UI Properties
+    private let foundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
         return imageView
     }()
     
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -27,6 +31,18 @@ class ChatCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setImage(urlString: String) {
+        Task {
+            do {
+                let image = try await imageLoader.fetchPhoto(urlString: urlString)
+                foundImageView.image = image
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - AutoLayout
     private func configureFoundImageView() {
         contentView.addSubview(foundImageView)
         

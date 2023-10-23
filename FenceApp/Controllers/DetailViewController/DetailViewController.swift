@@ -33,6 +33,12 @@ class DetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        self.title = "디테일"
+        
+        configureCollectionView()
+    }
+    
+    private func configureCollectionView() {
         detailView.detailCollectionView.dataSource = self
         detailView.detailCollectionView.delegate = self
         

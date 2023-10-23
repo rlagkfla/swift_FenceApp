@@ -29,16 +29,15 @@ class CommentDetailView: UIView {
         return button
     }()
     
-    lazy var commentTableView: UITableView = {
+    let commentTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemPink
         tableView.register(CommentDetailTableViewCell.self, forCellReuseIdentifier: CommentDetailTableViewCell.identifier)
         return tableView
     }()
     
     let myCommentTextView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(hexCode: "5DDFDE")
         return view
     }()
     
@@ -51,12 +50,19 @@ class CommentDetailView: UIView {
         return imageView
     }()
     
+    
     let writeCommentTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.layer.cornerRadius = 5
-        textView.backgroundColor = .yellow
         return textView
+    }()
+    
+    let commentSendButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        button.tintColor = .white
+        return button
     }()
     
     // MARK: - Life Cycle
@@ -105,7 +111,7 @@ private extension CommentDetailView {
         commentTableView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(112)
+            $0.bottom.equalToSuperview().inset(100)
         }
     }
     
@@ -118,6 +124,7 @@ private extension CommentDetailView {
         }
         
         configureMyProfileImageView()
+        configureCommentSendButton()
         configureMyCommentTextField()
     }
     
@@ -125,8 +132,18 @@ private extension CommentDetailView {
         myCommentTextView.addSubview(myProfileImageView)
         
         myProfileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(30)
+            $0.top.equalToSuperview().offset(20)
             $0.leading.equalToSuperview().offset(10)
+            $0.width.height.equalTo(35)
+        }
+    }
+    
+    func configureCommentSendButton() {
+        myCommentTextView.addSubview(commentSendButton)
+        
+        commentSendButton.snp.makeConstraints {
+            $0.centerY.equalTo(myProfileImageView.snp.centerY)
+            $0.trailing.equalToSuperview().inset(20)
             $0.width.height.equalTo(35)
         }
     }
@@ -137,8 +154,8 @@ private extension CommentDetailView {
         writeCommentTextView.snp.makeConstraints {
             $0.centerY.equalTo(myProfileImageView.snp.centerY)
             $0.leading.equalTo(myProfileImageView.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(60)
+            $0.trailing.equalTo(commentSendButton.snp.leading).offset(-10)
+            $0.height.equalTo(50)
         }
     }
 }

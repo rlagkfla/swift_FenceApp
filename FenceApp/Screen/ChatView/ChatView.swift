@@ -8,7 +8,8 @@
 import UIKit
 
 class ChatView: UIView {
-
+    
+    // MARK: - UI Properties
     let foundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -16,10 +17,10 @@ class ChatView: UIView {
         layout.minimumInteritemSpacing = 2
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: ChatCollectionViewCell.identifier)
-        collectionView.backgroundColor = .yellow
         return collectionView
     }()
     
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -32,6 +33,7 @@ class ChatView: UIView {
     
 }
 
+// MARK: - AutoLayout
 private extension ChatView {
     func configureUI() {
         configureFoundCollectionView()

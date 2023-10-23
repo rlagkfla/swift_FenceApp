@@ -20,16 +20,13 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         label.text = "강아지 찾아주세요"
         label.font = UIFont.systemFont(ofSize: 24)
         label.textAlignment = .left
-        label.backgroundColor = .red
         return label
     }()
     
     let lostTimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "잃어버린 시간: \(Date())"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
-        label.backgroundColor = .yellow
         return label
     }()
     
@@ -39,7 +36,6 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 18)
-        label.backgroundColor = .red
         return label
     }()
     
@@ -47,16 +43,19 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         let mapView = MKMapView()
         return mapView
     }()
-    
+
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setLabel(lostTime: String) {
+        lostTimeLabel.text = "잃어버린 시간: \(lostTime)"
     }
 }
 
