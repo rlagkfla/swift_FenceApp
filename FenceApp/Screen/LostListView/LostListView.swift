@@ -40,8 +40,6 @@ class LostListView: UIView {
     
     lazy var lostTableView: UITableView = {
         let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(LostListViewCell.self, forCellReuseIdentifier: "LostListViewCell")
 //        tableView.backgroundColor = .gray
         return tableView
@@ -119,37 +117,3 @@ extension LostListView {
 }
 
 
-extension LostListView: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
-        
-        cell.titleLabel.text = "강아지를 찾아주세요"
-        cell.dateLabel.text = "10 / 17 AM 3:30"
-        cell.nickNameLabel.text = "나비주인"
-//        tableView.reloadData()
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // 여기에서 각 행에 대한 높이를 동적으로 반환합니다.
-        return 110
-    }
-    
-}
-
-extension LostListView: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectRow(at: indexPath)
-    }
-}

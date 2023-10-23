@@ -27,6 +27,7 @@ class EnrollViewController: UIViewController {
     
     @objc func tapRightBarBtn(){
         print("clickRight")
+        
     }
     
     @objc func tapLeftBarBtn(){

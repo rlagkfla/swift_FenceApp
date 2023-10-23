@@ -12,6 +12,18 @@ class LostListViewController: UIViewController {
     
     private let lostListView = LostListView()
     
+    let fireBaseLostService: FirebaseLostService
+    var lostList: [LostResponseDTO] = []
+    
+    init(fireBaseLostService: FirebaseLostService) {
+        self.fireBaseLostService = fireBaseLostService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         view = lostListView
     }
@@ -19,8 +31,10 @@ class LostListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        lostListView.delegate = self
+//        lostListView.delegate = self
 
+        configureTableView()
+        
         configureNavBar()
         
     }
@@ -36,7 +50,20 @@ class LostListViewController: UIViewController {
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
 
-
+    private func configureTableView(){
+        lostListView.lostTableView.dataSource = self
+        lostListView.lostTableView.delegate = self
+    }
+    
+    func getLostList(){
+        Task {
+            do{
+                lostList = fireBaseLostService.fet
+            }catch{
+                
+            }
+        }
+    }
     
 
 }
@@ -76,5 +103,38 @@ extension LostListViewController {
 //        self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+}
+
+extension LostListViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
+        
+        cell.titleLabel.text = "강아지를 찾아주세요"
+        cell.dateLabel.text = "10 / 17 AM 3:30"
+        cell.nickNameLabel.text = "나비주인"
+//        tableView.reloadData()
+        return cell
+    }
+
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // 여기에서 각 행에 대한 높이를 동적으로 반환합니다.
+        return 110
+    }
+    
+}
+
+extension LostListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        delegate?.didSelectRow(at: indexPath)
+        
+    }
 }
 

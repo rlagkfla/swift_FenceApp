@@ -99,7 +99,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeLostViewVC() -> LostListViewController {
-        let vc = LostListViewController()
+        let vc = LostListViewController(fireBaseLostService: firebaseLostService)
         return vc
     }
     
