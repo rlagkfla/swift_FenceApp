@@ -21,17 +21,20 @@ class EnrollViewController: UIViewController {
         super.viewDidLoad()
         
         configureNavBar()
-        
+
     }
     
     
     @objc func tapRightBarBtn(){
         print("clickRight")
+        
     }
     
     @objc func tapLeftBarBtn(){
         self.navigationController?.popViewController(animated: true)
     }
+    
+    
 }
 
 extension EnrollViewController {
