@@ -18,7 +18,6 @@ struct FirebaseAuthService {
     func signUpUser(email: String, password: String) async throws -> AuthDataResult {
         let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
         
-        
         return authResult
         
     }
