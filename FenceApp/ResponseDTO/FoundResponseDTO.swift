@@ -24,15 +24,21 @@ struct FoundResponseDTO {
         self.userIdentifier = userIdentifier
         self.foundIdentifier = foundIdentifier
     }
-   
-   
     
-
+    init(latitude: Double, longitude: Double, imageURL: String, date: Date, userIdentifier: String) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.imageURL = imageURL
+        self.date = date
+        self.userIdentifier = userIdentifier
+        self.foundIdentifier = UUID().uuidString
+    }
+   
     static var dummyFoundDTO: [FoundResponseDTO] = [
-        FoundResponseDTO(latitude: 37.319562, longitude: 126.830221, imageURL: "https://mblogthumb-phinf.pstatic.net/MjAyMjAyMDdfMjEy/MDAxNjQ0MTk0Mzk2MzY3.WAeeVCu2V3vqEz_9[…]0aKX8B1w2oKQg.JPEG.41minit/1643900851960.jpg?type=w800", date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!, userIdentifier: "user1", foundIdentifier: "found1"),
-        FoundResponseDTO(latitude: 37.319228, longitude: 126.830198, imageURL: "https://mblogthumb-phinf.pstatic.net/MjAyMTEyMjJfNDcg/MDAxNjQwMTUwOTUzODg2.ywMUl6KPyDdljDTu[…]DPvsie3hsrzog.JPEG.41minit/1640142789090.jpg?type=w800", date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, userIdentifier: "user2", foundIdentifier: "found2"),
-        FoundResponseDTO(latitude: 37.319203, longitude: 126.831058, imageURL: "https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjZfMTUw/MDAxNjExNjM3NTgwMTE5.op7Uxlhw2azjEKH3[…]tndCaC0g.JPEG.yoonsu3454/20201231_115330.jpg?type=w800", date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, userIdentifier: "user3", foundIdentifier: "found3"),
-        FoundResponseDTO(latitude: 37.319552, longitude: 127.831137, imageURL: "https://cdn.salgoonews.com/news/photo/202105/2904_7323_220.jpg", date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, userIdentifier: "user4", foundIdentifier: "found4"),
-        FoundResponseDTO(latitude: 37.319400, longitude: 126.830649, imageURL: "https://www.fitpetmall.com/wp-content/uploads/2023/02/CK_tc02730000546-edited-scaled.jpg", date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, userIdentifier: "user5", foundIdentifier: "found5"),
+        FoundResponseDTO(latitude: 38.319562, longitude: 126.830221, imageURL: "https://blog.kakaocdn.net/dn/l3nYw/btq0pwrPxwK/1SrUH9SL8Ijjtd3JYr3Dr1/img.jpg", date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!, userIdentifier: UserResponseDTO.dummyUser[0].identifier),
+        FoundResponseDTO(latitude: 38.319228, longitude: 126.830198, imageURL: "https://blog.kakaocdn.net/dn/bHMBgc/btqzfFiNJrC/6cwv9ckq37x5qKsmKwkFg1/img.jpg", date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, userIdentifier: UserResponseDTO.dummyUser[1].identifier),
+        FoundResponseDTO(latitude: 38.319203, longitude: 126.831058, imageURL: "https://mblogthumb-phinf.pstatic.net/MjAyMTAyMTRfMTA5/MDAxNjEzMjg3MDUzNzkz.wZSobWsO3288JabgK70kRDzY0MaAbMhQ9vvmX047ty8g.JE7vozp7bz_z9X1hUWBr0CywxfWqJrOLSFMxqC2gGm4g.JPEG.qlsqls0203/output_1990378801.jpg?type=w800", date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, userIdentifier: UserResponseDTO.dummyUser[2].identifier),
+        FoundResponseDTO(latitude: 38.319552, longitude: 127.831137, imageURL: "https://d2v80xjmx68n4w.cloudfront.net/gigs/9Ul5L1690523558.jpg", date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, userIdentifier: UserResponseDTO.dummyUser[3].identifier),
+        FoundResponseDTO(latitude: 38.319400, longitude: 126.830649, imageURL: "https://d1bg8rd1h4dvdb.cloudfront.net/upload/imgServer/storypick/editor/2020062615503065168.jpg", date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, userIdentifier: UserResponseDTO.dummyUser[4].identifier),
     ]
 }

@@ -20,7 +20,7 @@ struct FirebaseLostService {
     
     func editUserInformationOnLostDTO(with userResponseDTO: UserResponseDTO, batchController: BatchController) async throws {
         
-        let identifiers = try await _fetchLosts(with: userResponseDTO.identifier)
+        let identifiers = try await _fetchLostsIdentifier(with: userResponseDTO.identifier)
         
         identifiers.forEach { identifier in
             batchController.batch.updateData([FB.Lost.userProfileImageURL: userResponseDTO.profileImageURL,
@@ -50,6 +50,29 @@ struct FirebaseLostService {
         
     }
     
+    func deleteLosts(writtenBy userIdentifier: String, batchController: BatchController) async throws {
+        
+        let lostIdentifiers = try await _fetchLostsIdentifier(with: userIdentifier)
+        
+        await withThrowingTaskGroup(of: type(of: ())) { group in
+            for lostIdentifier in lostIdentifiers {
+                
+                let ref = COLLECTION_LOST.document(lostIdentifier)
+                
+                batchController.batch.deleteDocument(ref)
+                
+                group.addTask {
+                    try await firebaseLostCommentService.deleteComments(lostIdentifier: lostIdentifier, batchController: batchController)
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
     func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<[LostResponseDTO],Error>) -> Void) {
         COLLECTION_LOST.whereField(FB.Lost.userIdentifier, isEqualTo: userIdentifier).addSnapshotListener { snapshot, error in
             
@@ -72,8 +95,8 @@ struct FirebaseLostService {
             }
             
             completion(.success(lostResponseDTOs))
-
-        
+            
+            
         }
         
     }
@@ -98,7 +121,7 @@ struct FirebaseLostService {
     
     //MARK: - Helper
     
-    func _fetchLosts(with userIdentifier: String) async throws -> [String] {
+    func _fetchLostsIdentifier(with userIdentifier: String) async throws -> [String] {
         
         let query = COLLECTION_LOST.whereField(FB.Lost.userIdentifier, isEqualTo: userIdentifier)
         
