@@ -19,8 +19,8 @@ struct FirebaseAuthService {
         let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
         
         return authResult
-        
     }
+    
     
     func signInUser(email: String, password: String) async throws {
         let result = try await Auth.auth().signIn(withEmail: email, password: password)
@@ -33,14 +33,17 @@ struct FirebaseAuthService {
         
     }
     
+    
     func signOutUser() throws {
         try Auth.auth().signOut()
     }
+    
     
     func checkIfUserLoggedIn() -> Bool  {
         
         return Auth.auth().currentUser == nil ? false : true
     }
+    
     
     func getCurrentUser() throws -> User {
         
@@ -48,6 +51,7 @@ struct FirebaseAuthService {
         
         return user
     }
+    
     
     func deleteUser(email: String, password: String) async throws {
         
@@ -59,21 +63,25 @@ struct FirebaseAuthService {
         
         try await user.reauthenticate(with: credential)
         
-        // group task 추가해야함
-        
-        try await user.delete()
-        
-        try await firebaseUserService.deleteUser(userIdentifier: user.uid, batchController: batchController)
-        
-        try await firebaseLostService.deleteLosts(writtenBy: user.uid, batchController: batchController)
-        
-        try await firebaseLostCommentService.deleteComments(writtenBy: user.uid, batchController: batchController)
-        
-        try await firebaseFoundService.deleteFounds(writtenBy: user.uid, batchController: batchController)
+        await withThrowingTaskGroup(of: type(of: ())) { group in
+            
+            group.addTask {
+                try await user.delete()
+                
+                try await firebaseUserService.deleteUser(userIdentifier: user.uid, batchController: batchController)
+                
+                try await firebaseLostService.deleteLosts(writtenBy: user.uid, batchController: batchController)
+                
+                try await firebaseLostCommentService.deleteComments(writtenBy: user.uid, batchController: batchController)
+                
+                try await firebaseFoundService.deleteFounds(writtenBy: user.uid, batchController: batchController)
+            }
+        }
         
         try await batchController.batch.commit()
     }
-   
+    
+    
     func updatePassword(currentPassword: String, newPassword: String) async throws {
         
         let user = try getCurrentUser()
@@ -89,6 +97,7 @@ struct FirebaseAuthService {
         
     }
     
+    
     private func authenticateUser(email: String, currentPassword: String) -> AuthCredential {
         
         return EmailAuthProvider.credential(withEmail: email, password: currentPassword)
@@ -100,5 +109,5 @@ struct FirebaseAuthService {
         self.firebaseLostCommentService = firebaseLostCommentService
         self.firebaseFoundService = firebaseFoundService
     }
-
+    
 }
