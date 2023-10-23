@@ -7,14 +7,14 @@
 
 struct FirebaseLostCommentService {
     
-    let commentResponseDTOMapper: CommentResponseDTOMapper
     
     func createComment(commentResponseDTO: CommentResponseDTO) async throws {
         
-        let dictionary = commentResponseDTOMapper.makeDictionary(commentResponseDTO: commentResponseDTO)
+        let dictionary = CommentResponseDTOMapper.makeDictionary(commentResponseDTO: commentResponseDTO)
         
         try await COLLECTION_LOST.document(commentResponseDTO.lostIdentifier).collection(FB.Collection.commentList).document(commentResponseDTO.commentIdentifier).setData(dictionary)
     }
+    
     
     func editUserInformationOnComments(with userResponseDTO: UserResponseDTO, batchController: BatchController) async throws {
         
@@ -27,15 +27,17 @@ struct FirebaseLostCommentService {
 
     }
     
+    
     func editComment(on commentResponseDTO: CommentResponseDTO) async throws {
        
         let ref = COLLECTION_LOST.document(commentResponseDTO.lostIdentifier).collection(FB.Collection.commentList).document(commentResponseDTO.commentIdentifier)
         
-        let dictionary = commentResponseDTOMapper.makeDictionary(commentResponseDTO: commentResponseDTO)
+        let dictionary = CommentResponseDTOMapper.makeDictionary(commentResponseDTO: commentResponseDTO)
         
         try await ref.updateData(dictionary)
         
     }
+    
     
     func fetchComments(lostIdentifier: String) async throws -> [CommentResponseDTO] {
         
@@ -43,11 +45,12 @@ struct FirebaseLostCommentService {
         
         let comments = documents.map { document in
             
-            commentResponseDTOMapper.makeCommentResponseDTO(dictionary: document.data())
+            CommentResponseDTOMapper.makeCommentResponseDTO(dictionary: document.data())
         }
        
         return comments
     }
+    
     
     func deleteComment(lostIdentifier: String, commentIdentifier: String) async throws {
         
@@ -55,6 +58,7 @@ struct FirebaseLostCommentService {
         
         try await ref.delete()
     }
+    
     
     func deleteComments(writtenBy userIdentifier: String, batchController: BatchController) async throws {
        
@@ -68,6 +72,7 @@ struct FirebaseLostCommentService {
         }
        
     }
+    
     
     func deleteComments(lostIdentifier: String, batchController: BatchController) async throws {
         
@@ -88,6 +93,7 @@ struct FirebaseLostCommentService {
     
     //MARK: - Helper
     
+    
    private func _fetchCommentIdentifiers(with userIdentifier: String) async throws -> [(String, String)] {
         
         let query = COLLECTION_GROUP_COMMENTS.whereField(FB.Comment.userIdentifier, isEqualTo: userIdentifier)
@@ -104,10 +110,5 @@ struct FirebaseLostCommentService {
         
         return tuples
     }
-    
-    init(commentResponseDTOMapper: CommentResponseDTOMapper) {
-        self.commentResponseDTOMapper = commentResponseDTOMapper
-    }
-    
     
 }

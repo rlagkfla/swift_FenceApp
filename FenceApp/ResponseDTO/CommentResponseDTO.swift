@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct CommentResponseDTO {
     
     let lostIdentifier: String
@@ -17,7 +18,11 @@ struct CommentResponseDTO {
     var commentDescription: String
     let commentDate: Date
     
-    init(lostIdentifier: String, commentIdentifier: String, userIdentifier: String, userProfileImageURL: String, userNickname: String, commentDescription: String, commentDate: Date) {
+    
+    
+    /// 얘는 받아올때 쓰는용도
+    
+    init(lostIdentifier: String, commentIdentifier: String = UUID().uuidString, userIdentifier: String, userProfileImageURL: String, userNickname: String, commentDescription: String, commentDate: Date) {
         self.lostIdentifier = lostIdentifier
         self.commentIdentifier = commentIdentifier
         self.userIdentifier = userIdentifier
@@ -27,6 +32,7 @@ struct CommentResponseDTO {
         self.commentDate = commentDate
     }
     
+    /// 저장할때 쓰는용도
     init(lostIdentifier: String, userIdentifier: String, userProfileImageURL: String, userNickname: String, commentDescription: String, commentDate: Date) {
         
         self.commentIdentifier = UUID().uuidString
@@ -41,6 +47,7 @@ struct CommentResponseDTO {
    
     
     static var dummyComment: [CommentResponseDTO] = [
+        
         CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[0].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[0].identifier, userProfileImageURL: UserResponseDTO.dummyUser[0].profileImageURL, userNickname: UserResponseDTO.dummyUser[0].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!),
         
         CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[1].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[1].identifier, userProfileImageURL: UserResponseDTO.dummyUser[1].profileImageURL, userNickname: UserResponseDTO.dummyUser[1].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!),

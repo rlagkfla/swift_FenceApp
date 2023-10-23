@@ -11,24 +11,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    let firebaseImageUploadService = FirebaseImageUploadService()
-    let imageLoader = ImageLoader()
-    
     let firstTabNavigationController = UINavigationController()
     let secondTabNavigationController = UINavigationController()
     let thirdTabNavigationController = UINavigationController()
     let fourthTabNavigationController = UINavigationController()
     
-    let userResponseDTOMapper = UserResponseDTOMapper()
-    let lostResponseDTOMapper = LostResponseDTOMapper()
-    let commentResponseDTOMapper = CommentResponseDTOMapper()
-    let foundResponseDTOMapper = FoundResponseDTOMapper()
+    let locationManager = LocationManager()
+    let firebaseFoundService = FirebaseFoundService()
+    let firebaseLostCommentService = FirebaseLostCommentService()
     
     lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
-    lazy var firebaseFoundService = FirebaseFoundService(foundResponseDTOMapper: foundResponseDTOMapper)
-    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, userResponseDTOMapper: userResponseDTOMapper)
-    lazy var firebaseLostService = FirebaseLostService(lostResponseDTOMapper: lostResponseDTOMapper, firebaseLostCommentService: firebaseLostCommentService)
-    lazy var firebaseLostCommentService = FirebaseLostCommentService(commentResponseDTOMapper: commentResponseDTOMapper)
+    
+    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
+    lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService)
+    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -40,6 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         print(error)
                     case .success(let userResponseDTO):
                         print(userResponseDTO.email, "!!!!!!!")
+                       
                        
                     }
                 }
@@ -70,7 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeMapViewVC() -> MapViewController {
-        let vc = MapViewController(imageLoader: imageLoader, firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
+        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
         return vc
     }
