@@ -42,7 +42,7 @@ struct FirebaseImageUploadService {
         
         let fileName = UUID().uuidString
         
-        let ref = IMAGE_STORAGE.reference(withPath: "/lost_images/\(fileName)")
+        let ref = IMAGE_STORAGE.reference(withPath: "/found_images/\(fileName)")
         
         let _ = try await ref.putDataAsync(imageData)
         

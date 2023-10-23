@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LostResponseDTO {
+struct LostResponseDTO: Pinable {
     
     let lostIdentifier: String
     var latitude: Double
@@ -18,16 +18,51 @@ struct LostResponseDTO {
     var title: String
     let postDate: Date
     var lostDate: Date
-    var pictureURL: String
+    var imageURL: String
     var petName: String
     var description: String
     var kind: String
 
     
+    // lostIdentifier가 자동으로 주어짐 데이터베이스 불러온 객체를 만듬
+    
+    init(lostIdentifier: String, latitude: Double, longitude: Double, userIdentifier: String, userProfileImageURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String) {
+        self.lostIdentifier = lostIdentifier
+        self.latitude = latitude
+        self.longitude = longitude
+        self.userIdentifier = userIdentifier
+        self.userProfileImageURL = userProfileImageURL
+        self.userNickName = userNickName
+        self.title = title
+        self.postDate = postDate
+        self.lostDate = lostDate
+        self.imageURL = pictureURL
+        self.petName = petName
+        self.description = description
+        self.kind = kind
+    }
+    
+    // lostIdentifier가 자동으로 주어짐 저장하는 객체를 만들때 사용
+    
+    init(latitude: Double, longitude: Double, userIdentifier: String, userProfileImageURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String) {
+        self.lostIdentifier = UUID().uuidString
+        self.latitude = latitude
+        self.longitude = longitude
+        self.userIdentifier = userIdentifier
+        self.userProfileImageURL = userProfileImageURL
+        self.userNickName = userNickName
+        self.title = title
+        self.postDate = postDate
+        self.lostDate = lostDate
+        self.imageURL = pictureURL
+        self.petName = petName
+        self.description = description
+        self.kind = kind
+    }
  
     
     static var dummyLost: [LostResponseDTO] = [
-        LostResponseDTO(lostIdentifier: "lost1",
+        LostResponseDTO(
                 latitude: 37.317399,
                 longitude: 126.830014,
                 userIdentifier: UserResponseDTO.dummyUser[0].identifier,
@@ -42,7 +77,7 @@ struct LostResponseDTO {
                 kind: "dog"),
         
         
-        LostResponseDTO(lostIdentifier: "lost2",
+        LostResponseDTO(
                 latitude: 37.316694,
                 longitude: 126.829903,
                 userIdentifier: UserResponseDTO.dummyUser[1].identifier,
@@ -56,7 +91,7 @@ struct LostResponseDTO {
                 description: "description2",
                 kind: "dog"),
         
-        LostResponseDTO(lostIdentifier: "lost3",
+        LostResponseDTO(
                 latitude: 37.316703,
                 longitude: 126.830925,
                 userIdentifier: UserResponseDTO.dummyUser[2].identifier,
@@ -70,7 +105,7 @@ struct LostResponseDTO {
                 description: "description3",
                 kind: "dog"),
         
-        LostResponseDTO(lostIdentifier: "lost4",
+        LostResponseDTO(
                 latitude: 37.317363,
                 longitude: 126.830993,
                 userIdentifier: UserResponseDTO.dummyUser[3].identifier,
@@ -84,7 +119,7 @@ struct LostResponseDTO {
                 description: "description4",
                 kind: "dog"),
         
-        LostResponseDTO(lostIdentifier: "lost5",
+        LostResponseDTO(
                 latitude: 37.317010,
                 longitude: 126.830442,
                 userIdentifier: UserResponseDTO.dummyUser[4].identifier,
