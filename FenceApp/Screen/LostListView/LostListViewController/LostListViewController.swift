@@ -32,11 +32,12 @@ class LostListViewController: UIViewController {
         super.viewDidLoad()
                 
 //        lostListView.delegate = self
-
+        getLostList()
+        
         configureTableView()
         
         configureNavBar()
-        
+       
     }
     
     //    override func viewWillAppear(_ animated: Bool) {
@@ -58,9 +59,10 @@ class LostListViewController: UIViewController {
     func getLostList(){
         Task {
             do{
-                lostList = fireBaseLostService.fet
+                lostList = try await fireBaseLostService.fetchLosts()
+                lostListView.lostTableView.reloadData()
             }catch{
-                
+                print(error)
             }
         }
     }
@@ -109,15 +111,16 @@ extension LostListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 5
+        return lostList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
         
-        cell.titleLabel.text = "강아지를 찾아주세요"
-        cell.dateLabel.text = "10 / 17 AM 3:30"
-        cell.nickNameLabel.text = "나비주인"
+        cell.setImage(urlString: lostList[indexPath.row].imageURL)
+        cell.titleLabel.text = lostList[indexPath.row].title
+        cell.dateLabel.text = "\(lostList[indexPath.row].lostDate)"
+        cell.nickNameLabel.text = lostList[indexPath.row].userNickName
 //        tableView.reloadData()
         return cell
     }
