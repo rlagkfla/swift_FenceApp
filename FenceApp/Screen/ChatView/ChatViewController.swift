@@ -22,7 +22,7 @@ class ChatViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        self.title = "FoundList"
+        self.navigationItem.title = "FoundList"
     }
     
     private func configurefoundCollectionView() {
