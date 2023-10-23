@@ -22,14 +22,14 @@ class CommentDetailView: UIView {
         return label
     }()
     
-    private let rightButtonItem: UIButton = {
+    let rightButtonItem: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .black
         return button
     }()
     
-    private let commentTableView: UITableView = {
+    let commentTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CommentDetailTableViewCell.self, forCellReuseIdentifier: CommentDetailTableViewCell.identifier)
         return tableView
@@ -50,6 +50,7 @@ class CommentDetailView: UIView {
         return imageView
     }()
     
+    
     let writeCommentTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 18)
@@ -57,7 +58,7 @@ class CommentDetailView: UIView {
         return textView
     }()
     
-    private let commentSendButton: UIButton = {
+    let commentSendButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.tintColor = .white
