@@ -13,6 +13,7 @@
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
+		C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */; };
 		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
 		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
 		C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */; };
@@ -86,6 +87,7 @@
 		08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtentsion.swift; sourceTree = "<group>"; };
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		08FBFFAC2AE0FC68004CEB1A /* FenceApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceApp.entitlements; sourceTree = "<group>"; };
+		C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
 		C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				D6D2739C2AE224E900ED3E2F /* EnrollView.swift */,
 				D6D2739D2AE224E900ED3E2F /* EnrollViewController */,
 				D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */,
+				C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */,
 			);
 			path = EnrollView;
 			sourceTree = "<group>";
@@ -583,19 +586,15 @@
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
-				D6FAD9EA2ADD2BC2001EDABC /* MyInfoViewController.swift in Sources */,
 				D6E10E9D2AE2A8CD0098F05D /* FirebaseImageUploadService.swift in Sources */,
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
-				D65150BF2ADD1249002FDD04 /* ChatViewController.swift in Sources */,
-				D65150A02ADD0F9F002FDD04 /* CustomTabBarController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
+				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
 				D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */,
 				D6E10E8F2AE2073A0098F05D /* MapPin.swift in Sources */,
-				D65150B92ADD120F002FDD04 /* MapViewController.swift in Sources */,
 				D6E10EAD2AE383FC0098F05D /* UserResponseDTOMapper.swift in Sources */,
 				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,
-				D65150BD2ADD123B002FDD04 /* CameraViewController.swift in Sources */,
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,

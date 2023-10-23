@@ -8,9 +8,14 @@
 import UIKit
 import SnapKit
 import MapKit
+import PhotosUI
 
 class EnrollView: UIView {
   
+    // camera
+    var images: [UIImage] = []
+    
+    
     private let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.backgroundColor = .clear
@@ -28,6 +33,14 @@ class EnrollView: UIView {
         view.addGestureRecognizer(tapGesture)
         view.isUserInteractionEnabled = true
         return view
+    }()
+    
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal // 수평 스크롤
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
     }()
     
     private let lineLabel: UILabel = {
@@ -118,8 +131,11 @@ class EnrollView: UIView {
         
         configureUI()
         
+        configureCollectionView()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         
     }
     
@@ -127,10 +143,8 @@ class EnrollView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func customButtonTapped() {
-        print("Custom Button Tapped")
-        // 원하는 작업을 여기에 추가
-    }
+    
+   
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         let selectedIndex = sender.selectedSegmentIndex
@@ -182,13 +196,100 @@ class EnrollView: UIView {
 //        }
     }
     
+    
+    
 }
+
+
+extension EnrollView: PHPickerViewControllerDelegate {
+    
+    @objc func customButtonTapped() {
+        // PHPicker 구성
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 0 // 0은 제한 없음을 의미
+
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+
+        // PHPicker 화면 표시
+        if let viewController = self.findViewController() {
+            viewController.present(picker, animated: true, completion: nil)
+        }
+    }
+
+    
+    // picker가 종료되면 동작 합니다.
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        // 선택한 이미지 처리
+        for result in results {
+            // 이미지 아이템 제공자에서 이미지를 가져옵니다.
+            result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                if let image = image as? UIImage {
+                    // 이미지를 배열에 추가
+                    self.images.append(image)
+
+                    // 컬렉션 뷰 새로 고침
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    
+}
+
+extension EnrollView: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    private func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell") // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스입니다.
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10) // 셀 간 여백 설정
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return images.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCollectionViewCell
+        
+        cell.backgroundColor = .white
+        
+        // images 배열에서 해당 인덱스의 이미지를 가져와서 셀에 표시
+        let image = images[indexPath.row]
+        cell.imageView.image = image
+        
+        return cell
+    }
+}
+
+// camera
+extension UIView {
+    func findViewController() -> UIViewController? {
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let viewController = responder as? UIViewController {
+                return viewController
+            }
+            responder = responder?.next
+        }
+        return nil
+    }
+}
+
 
 extension EnrollView {
     
     func configureUI(){
         self.addSubview(scrollView)
-        scrollView.addSubviews(customBtnView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, mapView, lineLabel5, textView)
+        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, mapView, lineLabel5, textView)
         scrollView.addGestureRecognizer(tapGestureRecognizer)
         
         
@@ -202,6 +303,13 @@ extension EnrollView {
             $0.top.equalTo(scrollView.snp.top).offset(15)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
             $0.width.height.equalTo(70)
+        }
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(customBtnView.snp.top)
+            $0.leading.equalTo(customBtnView.snp.trailing).offset(10) // 컬렉션뷰와 버튼 사이 여백 설정
+            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+            $0.height.equalTo(70) // 셀의 높이에 따라 조정
         }
         
         lineLabel.snp.makeConstraints {
