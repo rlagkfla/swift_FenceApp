@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 struct LostResponseDTOMapper {
     
-    func makeLostResponseDTO(from dictionary: [String: Any]) -> LostResponseDTO {
+    static func makeLostResponseDTO(from dictionary: [String: Any]) -> LostResponseDTO {
         
         return LostResponseDTO(lostIdentifier: dictionary[FB.Lost.lostIdentifier] as? String ?? "",
                                latitude: dictionary[FB.Lost.latitude] as? Double ?? 0,
@@ -27,14 +27,14 @@ struct LostResponseDTOMapper {
                                kind: dictionary[FB.Lost.kind] as? String ?? "")
     }
     
-    func makeLostResponseDTOs(from dictionaries: [[String: Any]]) -> [LostResponseDTO] {
+    static func makeLostResponseDTOs(from dictionaries: [[String: Any]]) -> [LostResponseDTO] {
         
         return dictionaries.map { dictionary in
             makeLostResponseDTO(from: dictionary)
         }
     }
     
-    func makeDictionary(from lostResponseDTO: LostResponseDTO) -> [String: Any] {
+    static func makeDictionary(from lostResponseDTO: LostResponseDTO) -> [String: Any] {
         
         let data: [String: Any] = [FB.Lost.lostIdentifier: lostResponseDTO.lostIdentifier,
                                    FB.Lost.latitude: lostResponseDTO.latitude,
