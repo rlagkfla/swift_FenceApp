@@ -22,14 +22,14 @@ class CommentDetailView: UIView {
         return label
     }()
     
-    let rightButtonItem: UIButton = {
+    private let rightButtonItem: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .black
         return button
     }()
     
-    lazy var commentTableView: UITableView = {
+    private let commentTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CommentDetailTableViewCell.self, forCellReuseIdentifier: CommentDetailTableViewCell.identifier)
         return tableView
@@ -57,7 +57,7 @@ class CommentDetailView: UIView {
         return textView
     }()
     
-    let commentSendButton: UIButton = {
+    private let commentSendButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.tintColor = .white
