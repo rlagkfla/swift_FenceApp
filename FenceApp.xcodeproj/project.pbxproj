@@ -32,6 +32,8 @@
 		D65150AE2ADD103C002FDD04 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AD2ADD103C002FDD04 /* RiveRuntime */; };
 		D65150B12ADD1078002FDD04 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B02ADD1078002FDD04 /* FirebaseAuth */; };
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
+		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
+		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
 		D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */; };
 		D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */; };
@@ -73,6 +75,7 @@
 		D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EB02AE38F270098F05D /* BatchController.swift */; };
 		D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC52AE39E7A0098F05D /* FoundResponseDTOMapper.swift */; };
 		D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */; };
+		D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ECB2AE613F80098F05D /* DummyCreator.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
@@ -101,6 +104,8 @@
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D65150BC2ADD123B002FDD04 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
 		D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailView.swift; sourceTree = "<group>"; };
 		D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -137,6 +142,7 @@
 		D6E10EB02AE38F270098F05D /* BatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchController.swift; sourceTree = "<group>"; };
 		D6E10EC52AE39E7A0098F05D /* FoundResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundResponseDTOMapper.swift; sourceTree = "<group>"; };
 		D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponseDTOMapper.swift; sourceTree = "<group>"; };
+		D6E10ECB2AE613F80098F05D /* DummyCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCreator.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -288,7 +294,9 @@
 		D65150972ADD0DDD002FDD04 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
-				D65150BE2ADD1249002FDD04 /* ChatViewController.swift */,
+				D664704F2AE5F48E0041643E /* ChatView.swift */,
+				D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */,
+				D66470512AE5F6FE0041643E /* ChatViewController */,
 			);
 			path = ChatView;
 			sourceTree = "<group>";
@@ -323,6 +331,14 @@
 				D65150B62ADD1195002FDD04 /* CameraController */,
 			);
 			path = CameraView;
+			sourceTree = "<group>";
+		};
+		D66470512AE5F6FE0041643E /* ChatViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D65150BE2ADD1249002FDD04 /* ChatViewController.swift */,
+			);
+			name = ChatViewController;
 			sourceTree = "<group>";
 		};
 		D66B12C22AE0E47A006A9245 /* Cell */ = {
@@ -392,6 +408,7 @@
 				D6E10EA92AE2AC1C0098F05D /* GoogleService-Info.plist */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
+				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
 			);
 			path = FenceApp;
 			sourceTree = "<group>";
@@ -552,6 +569,7 @@
 				D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */,
 				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
+				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
 				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
@@ -570,6 +588,7 @@
 				D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */,
 				D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */,
 				C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */,
+				D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */,
 				08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */,
 				08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
@@ -581,6 +600,7 @@
 				D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */,
 				D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */,
 				D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */,
+				D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,

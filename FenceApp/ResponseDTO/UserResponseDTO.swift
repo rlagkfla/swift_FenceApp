@@ -5,6 +5,10 @@
 //  Created by Woojun Lee on 10/19/23.
 //
 
+import UIKit
+
+
+
 struct UserResponseDTO {
     
     let email: String
@@ -13,10 +17,12 @@ struct UserResponseDTO {
     var nickname: String
     
     static var dummyUser: [UserResponseDTO] = [
-        UserResponseDTO(email: "aaa@gmail.com",profileImageURL: "https://i.namu.wiki/i/Qi6-ujIIuSfOQ5sh06m9T8umR8lLf_ryzzS9f7qmat0Npe9KLXSDxvovYGjj[…]gcqn9mgD0cUumJ27NyAf9hEiFBCSKgpjLh3p-Okl8Mn413VsGz-dodb6gA.webp", identifier: "user1", nickname: "user1"),
-        UserResponseDTO(email: "bbb@gmail.com",profileImageURL: "https://i.namu.wiki/i/XGKcLALgTFEOwBFIC1PXIfjab1EKO53yGBXhKMEPeDQItwXjtZzCNUoijH4G[…]gbjhV9HTWN9j2-PZ6kB5Ap-UyB2m2gD_tlaYu7ImuiDJMeIywBeeEMl8Kw.webp", identifier: "user2", nickname: "user2"),
-        UserResponseDTO(email: "ccc@gmail.com",profileImageURL: "https://i.namu.wiki/i/-5LMNb2M9lxLETGtKKHa6Nv1NfEiAvHMz38rb7dyZQCkcoqHsthPAYucW0jC[…]7ZNcaBdEiwgrg0NpFP5EXThsf31tIkc7d8gKaaDer8n7mo0NBfN9PpY_gw.webp", identifier: "user3", nickname: "user3"),
-        UserResponseDTO(email: "ddd@gmail.com",profileImageURL: "https://i.namu.wiki/i/buRp-Z6r8egBOFmmqtsepfzhZaWGsPUiL5Tk30YJ-Pql1V2KwrGrLx51nOU5[…]PP3BzgZbXwni5AwlKtsQBk0mggfd9Q4F4qSBEGs9kEqAKgw-gS-QzzfXCw.webp", identifier: "user4", nickname: "user4"),
-        UserResponseDTO(email: "eee@gmail.com",profileImageURL: "https://i.namu.wiki/i/jo4uFuxhDeR8EQWONfp3eJNuU80L918RS_3q2kDpT8mGbesLBYG1Fyj3Zw3O[…]jTeG_3Lr5oO13j6UC6JkBS18PLrxSJL4-PntO3iQ6kVwEgjqXUzIzJoSRA.webp", identifier: "user5", nickname: "user5"),
+        UserResponseDTO(email: "aaa@gmail.com",profileImageURL: "https://i.pinimg.com/1200x/2c/2c/60/2c2c60b20cb817a80afd381ae23dab05.jpg", identifier: "t8lGZWXAJvOkNT3fKtEdVSFbJ7c2", nickname: "user1"),
+        UserResponseDTO(email: "bbb@gmail.com",profileImageURL: "https://biz.chosun.com/resizer/CSzzWDpK-XmTF_MKD5PZ43dHI8U=/530x662/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/VFK4J3A7JYKU6YW25IPOHLMWUY.jpg", identifier: "045RhOisSFgjp0AjR2DusTpDsyb2", nickname: "user2"),
+        UserResponseDTO(email: "ccc@gmail.com",profileImageURL: "https://mblogthumb-phinf.pstatic.net/MjAxNzAyMTJfNzYg/MDAxNDg2ODI3OTI0MzU3.AcuS1ZBkN9YjL0sJVrKKie8YQxuyczNxjWFeCjSWsPIg.WCCpi1pDNq4LT02Uob6F-fOQQBxeekEICsQv0Tz0v2gg.JPEG.jejuwg/%EB%B0%B0%EC%9A%B0%ED%94%84%EB%A1%9C%ED%95%84%EC%82%AC%EC%A7%84_DSC_7014.jpg?type=w800", identifier: "uL1EmjrRjCdUeaFNwXWzbXGTW0H3", nickname: "user3"),
+        UserResponseDTO(email: "ddd@gmail.com",profileImageURL: "https://image.fnnews.com/resource/media/image/2021/08/13/202108131238497606_l.jpg", identifier: "yHxBDaHDNpNGfE6XcPxmC2gdXZk1", nickname: "user4"),
+        UserResponseDTO(email: "eee@gmail.com",profileImageURL: "https://file.mk.co.kr/meet/neds/2022/08/image_readtop_2022_727059_16607099995139757.jpg", identifier: "W8fVgEGBNuSpvOGBK9Z3mPKp6a33", nickname: "user5"),
     ]
+    
+    
 }
