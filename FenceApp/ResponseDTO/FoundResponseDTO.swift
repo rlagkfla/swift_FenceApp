@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct FoundResponseDTO {
+struct FoundResponseDTO: Pinable {
     
     var latitude: Double
     var longitude: Double
-    let imageURL: String
+    var imageURL: String
     let date: Date
     let userIdentifier: String
     let foundIdentifier: String

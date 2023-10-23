@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LostResponseDTO {
+struct LostResponseDTO: Pinable {
     
     let lostIdentifier: String
     var latitude: Double
@@ -18,7 +18,7 @@ struct LostResponseDTO {
     var title: String
     let postDate: Date
     var lostDate: Date
-    var pictureURL: String
+    var imageURL: String
     var petName: String
     var description: String
     var kind: String
@@ -36,7 +36,7 @@ struct LostResponseDTO {
         self.title = title
         self.postDate = postDate
         self.lostDate = lostDate
-        self.pictureURL = pictureURL
+        self.imageURL = pictureURL
         self.petName = petName
         self.description = description
         self.kind = kind
@@ -54,7 +54,7 @@ struct LostResponseDTO {
         self.title = title
         self.postDate = postDate
         self.lostDate = lostDate
-        self.pictureURL = pictureURL
+        self.imageURL = pictureURL
         self.petName = petName
         self.description = description
         self.kind = kind
