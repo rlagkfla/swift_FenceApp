@@ -12,7 +12,14 @@ class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "ImageCell"
     
+    var imageUrl: String = ""
+    
     var nowPage: Int = 0
+    
+    func getImageUrl(urlString: String) {
+        imageUrl = urlString
+    }
+    
     
     // MARK: - UI Properties
     lazy var imageCollectionView: UICollectionView = {
@@ -82,7 +89,8 @@ extension ImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageViewCollectionViewCell.identifier, for: indexPath)
+        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageViewCollectionViewCell.identifier, for: indexPath) as! ImageViewCollectionViewCell
+        cell.imageView.kf.setImage(with: URL(string: imageUrl))
         return cell
     }
     

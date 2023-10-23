@@ -13,10 +13,12 @@ class LostListViewController: UIViewController {
     private let lostListView = LostListView()
     
     let fireBaseLostService: FirebaseLostService
+    let firebaseLostCommentService: FirebaseLostCommentService
     var lostList: [LostResponseDTO] = []
     
-    init(fireBaseLostService: FirebaseLostService) {
+    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService) {
         self.fireBaseLostService = fireBaseLostService
+        self.firebaseLostCommentService = firebaseLostCommentService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -126,7 +128,7 @@ extension LostListViewController: UITableViewDataSource {
 extension LostListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row])
+        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService)
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }

@@ -13,6 +13,20 @@ class CommentDetailViewController: UIViewController {
     // MARK: - Properties
     private let commentDetailView = CommentDetailView()
     
+    let lostIdentifier: String
+    let firebaseCommentService: FirebaseLostCommentService
+    var commentList: [CommentResponseDTO] = []
+    
+    init(firebaseCommentService: FirebaseLostCommentService, lostIdentifier: String) {
+        self.firebaseCommentService = firebaseCommentService
+        self.lostIdentifier = lostIdentifier
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = commentDetailView
@@ -20,6 +34,8 @@ class CommentDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getCommentList()
         
         view.backgroundColor = .white
         
@@ -53,6 +69,17 @@ class CommentDetailViewController: UIViewController {
     private func configureTalbeView() {
         commentDetailView.commentTableView.dataSource = self
         commentDetailView.commentTableView.delegate = self
+    }
+    
+    func getCommentList() {
+        Task {
+            do {
+                commentList = try await firebaseCommentService.fetchComments(lostIdentifier: lostIdentifier)
+                commentDetailView.commentTableView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
@@ -91,11 +118,16 @@ extension CommentDetailViewController {
 // MARK: - UITableViewDataSource
 extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return commentList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath)
+        let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath) as! CommentDetailTableViewCell
+        let comment = commentList[indexPath.row]
+        cell.commenterNickName.text = comment.userNickname
+        cell.commentUserProfileImageView.kf.setImage(with: URL(string: comment.userProfileImageURL))
+        cell.commentTextLabel.text = comment.commentDescription
+        cell.commentDate.text = "\(comment.commentDate)"
         return cell
     }
 }
