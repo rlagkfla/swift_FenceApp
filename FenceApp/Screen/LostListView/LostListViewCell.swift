@@ -10,6 +10,8 @@ import SnapKit
 
 class LostListViewCell: UITableViewCell {
     
+    let imageLoader: ImageLoader = ImageLoader()
+    
     let lostimgView: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(systemName: "person")
@@ -71,7 +73,16 @@ class LostListViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    func setImage(urlString: String){
+        Task{
+            do{
+                let image = try await imageLoader.fetchPhoto(urlString: urlString)
+                lostimgView.image = image
+            }catch{
+                print(error)
+            }
+        }
+    }
     
     
 }
