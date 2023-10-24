@@ -28,51 +28,35 @@ class EnrollViewController: UIViewController {
         
         configureNavBar()
 
-        configureBtnTapped()
+        configureAction()
         
         configureCollectionView()
         
-        configureSegmentedControl()
-        
-        configureDatePicker()
-        
-        configureKeyboardWillShow()
-        
-//        configurekeyboardWillHide()
-        
-        configureKeyboardDismiss()
+        configureKeyboard()
     }
     
     
-    func configureBtnTapped(){
+    func configureAction(){
+        // 사진 추가 버튼 클릭 시
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(customButtonTapped))
         enrollView.customBtnView.addGestureRecognizer(tapGesture)
-    }
-    
-    func configureSegmentedControl(){
+        // 세그먼트 클릭 시
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
-    }
-    
-    func configureDatePicker(){
+        // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+
     }
     
-    
-    func configureKeyboardWillShow(){
+    func configureKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
-    
-    func configurekeyboardWillHide(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    func configureKeyboardDismiss(){
         
         // 키보드 외 영역 클릭 시 키보드 사라지게 하기
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGestureRecognizer.cancelsTouchesInView = false
         enrollView.addGestureRecognizer(tapGestureRecognizer)
     }
+
     
     @objc func customButtonTapped() {
         // PHPicker 구성
