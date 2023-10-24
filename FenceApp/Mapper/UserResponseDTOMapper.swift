@@ -7,7 +7,7 @@
 
 struct UserResponseDTOMapper {
     
-    func makeUserResponseDTO(from dictionary: [String: Any]) -> UserResponseDTO {
+    static func makeUserResponseDTO(from dictionary: [String: Any]) -> UserResponseDTO {
         
         UserResponseDTO(email: dictionary[FB.User.email] as? String ?? "",
                         profileImageURL: dictionary[FB.User.userNickname] as? String ?? "",
@@ -15,13 +15,13 @@ struct UserResponseDTOMapper {
                         nickname: dictionary[FB.User.useridentifier] as? String ?? "")
     }
     
-    func makeUserResponseDTOs(from dictionaries: [[String: Any]]) -> [UserResponseDTO] {
+    static func makeUserResponseDTOs(from dictionaries: [[String: Any]]) -> [UserResponseDTO] {
         return dictionaries.map { dictionary in
             makeUserResponseDTO(from: dictionary)
         }
     }
     
-    func makeDictionary(from userResponseDTO: UserResponseDTO) -> [String: Any] {
+    static func makeDictionary(from userResponseDTO: UserResponseDTO) -> [String: Any] {
         
         let data: [String: Any] = [FB.User.email: userResponseDTO.email,
                                    FB.User.userNickname: userResponseDTO.nickname,

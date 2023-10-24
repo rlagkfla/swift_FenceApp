@@ -7,16 +7,16 @@
 
 struct FirebaseLostService {
     
-    let lostResponseDTOMapper: LostResponseDTOMapper
     
     let firebaseLostCommentService: FirebaseLostCommentService
     
     func createLost(lostResponseDTO: LostResponseDTO) async throws {
         
-        let dictionary = lostResponseDTOMapper.makeDictionary(from: lostResponseDTO)
+        let dictionary = LostResponseDTOMapper.makeDictionary(from: lostResponseDTO)
         
         try await COLLECTION_LOST.document(lostResponseDTO.lostIdentifier).setData(dictionary)
     }
+    
     
     func editUserInformationOnLostDTO(with userResponseDTO: UserResponseDTO, batchController: BatchController) async throws {
         
@@ -28,6 +28,7 @@ struct FirebaseLostService {
                                              forDocument: COLLECTION_LOST.document(identifier))
         }
     }
+    
     
     func deleteLost(lostIdentifier: String) async throws {
         
@@ -42,13 +43,15 @@ struct FirebaseLostService {
         try await batchController.batch.commit()
     }
     
+    
     func editLost(on lostResponseDTO: LostResponseDTO) async throws {
         
-        let dictionary = lostResponseDTOMapper.makeDictionary(from: lostResponseDTO)
+        let dictionary = LostResponseDTOMapper.makeDictionary(from: lostResponseDTO)
         
         try await COLLECTION_LOST.document(lostResponseDTO.lostIdentifier).updateData(dictionary)
         
     }
+    
     
     func deleteLosts(writtenBy userIdentifier: String, batchController: BatchController) async throws {
         
@@ -64,14 +67,10 @@ struct FirebaseLostService {
                 group.addTask {
                     try await firebaseLostCommentService.deleteComments(lostIdentifier: lostIdentifier, batchController: batchController)
                 }
-                
             }
-            
-            
-            
         }
-        
     }
+    
     
     func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<[LostResponseDTO],Error>) -> Void) {
         COLLECTION_LOST.whereField(FB.Lost.userIdentifier, isEqualTo: userIdentifier).addSnapshotListener { snapshot, error in
@@ -91,7 +90,7 @@ struct FirebaseLostService {
                 
                 let dictionary = document.data()
                 
-                return lostResponseDTOMapper.makeLostResponseDTO(from: dictionary)
+                return LostResponseDTOMapper.makeLostResponseDTO(from: dictionary)
             }
             
             completion(.success(lostResponseDTOs))
@@ -101,12 +100,13 @@ struct FirebaseLostService {
         
     }
     
+    
     func fetchLosts() async throws -> [LostResponseDTO] {
         
         let documents = try await COLLECTION_LOST.getDocuments().documents
         
         let lostResponseDTOs = documents.map { document in
-            return lostResponseDTOMapper.makeLostResponseDTO(from: document.data())
+            return LostResponseDTOMapper.makeLostResponseDTO(from: document.data())
         }
         
         return lostResponseDTOs
@@ -114,8 +114,9 @@ struct FirebaseLostService {
         
     }
     
-    init(lostResponseDTOMapper: LostResponseDTOMapper, firebaseLostCommentService: FirebaseLostCommentService) {
-        self.lostResponseDTOMapper = lostResponseDTOMapper
+    
+    init(firebaseLostCommentService: FirebaseLostCommentService) {
+        
         self.firebaseLostCommentService = firebaseLostCommentService
     }
     
@@ -133,10 +134,10 @@ struct FirebaseLostService {
         
         return identifiers
     }
-    
-    
-    
-    
-    
-    
 }
+    
+    
+    
+    
+    
+

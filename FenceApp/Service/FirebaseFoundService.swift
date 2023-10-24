@@ -9,28 +9,29 @@ import Foundation
 
 struct FirebaseFoundService {
     
-    let foundResponseDTOMapper: FoundResponseDTOMapper
     
     
     func fetchFound(foundIdentifier: String) async throws -> FoundResponseDTO {
         
         guard let dictionary = try await COLLECTION_FOUND.document(foundIdentifier).getDocument().data() else { throw PetError.noSnapshotDocument}
         
-        let foundResponseDTO = foundResponseDTOMapper.makeFoundResponseDTOs(dictionary: dictionary)
+        let foundResponseDTO = FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: dictionary)
         
         return foundResponseDTO
     }
+    
     
     func fetchFounds() async throws -> [FoundResponseDTO] {
         
         let documents = try await COLLECTION_FOUND.getDocuments().documents
         
         let foundResponseDTOs = documents.map { document in
-            foundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+            FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
         }
         
         return foundResponseDTOs
     }
+    
     
     func deleteFounds(writtenBy userIdentifier: String, batchController: BatchController) async throws {
         
@@ -47,12 +48,15 @@ struct FirebaseFoundService {
             batchController.batch.deleteDocument(ref)
         }
     }
+    
+    
     func createFound(foundResponseDTO: FoundResponseDTO) async throws {
         
-        let dictionary = foundResponseDTOMapper.makeDictionary(foundResponseDTO: foundResponseDTO)
+        let dictionary = FoundResponseDTOMapper.makeDictionary(foundResponseDTO: foundResponseDTO)
         
         try await COLLECTION_FOUND.document(foundResponseDTO.foundIdentifier).setData(dictionary)
     }
+    
     
     func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<[FoundResponseDTO],Error>) -> Void) {
         
@@ -73,19 +77,15 @@ struct FirebaseFoundService {
                 
                 let dictionary = document.data()
                 
-                return foundResponseDTOMapper.makeFoundResponseDTOs(dictionary: dictionary)
+                return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: dictionary)
             }
             
             completion(.success(lostResponseDTOs))
-            
-            
         }
     }
     
     
-    init(foundResponseDTOMapper: FoundResponseDTOMapper) {
-        self.foundResponseDTOMapper = foundResponseDTOMapper
-    }
+  
 }
 
 
