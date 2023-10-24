@@ -40,6 +40,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
         pageControl.numberOfPages = 3
         pageControl.currentPage = 0
         pageControl.isUserInteractionEnabled = false
+        pageControl.currentPageIndicatorTintColor = UIColor(hexCode: "5DDFDE")
+        pageControl.backgroundStyle = .prominent
+        pageControl.pageIndicatorTintColor = .black
         return pageControl
     }()
     
@@ -77,7 +80,7 @@ private extension ImageCollectionViewCell {
         
         pageControl.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(275)
+            $0.top.equalToSuperview().offset(270)
         }
     }
 }

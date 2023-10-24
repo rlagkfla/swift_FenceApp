@@ -43,11 +43,8 @@ class DetailViewController: UIViewController {
     private func configureCollectionView() {
         detailView.detailCollectionView.dataSource = self
         detailView.detailCollectionView.delegate = self
-        
-        self.navigationController?.navigationBar.backgroundColor = .blue
+    
         self.navigationItem.title = "Detail"
-        
-        print(lostDTO)
     }
     
     func getFirstComment() {
@@ -102,15 +99,15 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else if indexPath.section == 1 {
             let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
             writerCell.writerNickNameLabel.text = lostDTO.userNickName
-            writerCell.postWriteTimeLabel.text = "\(lostDTO.postDate)"
+            writerCell.setPostWriteTime(postTime: "\(lostDTO.postDate)")
             writerCell.writerProfileImageView.kf.setImage(with: URL(string: lostDTO.userProfileImageURL))
             return writerCell
         } else if indexPath.section == 2 {
             let postCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
             postCell.postTitleLabel.text = lostDTO.title
             postCell.postDescriptionLabel.text = lostDTO.description
-            postCell.setLabel(lostTime: "\(lostDTO.lostDate)")
-            postCell.setMapViewRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude)
+            postCell.setLabel(lostTime: lostDTO.lostDate)
+            postCell.setMapPinRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude, petName: lostDTO.petName)
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell

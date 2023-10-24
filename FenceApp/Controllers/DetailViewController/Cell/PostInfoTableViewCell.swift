@@ -26,7 +26,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     let lostTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
     
@@ -39,9 +39,11 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let mapView: MKMapView = {
+    lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.showsUserLocation = true
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
+        mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
         return mapView
     }()
 
@@ -55,11 +57,18 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLabel(lostTime: String) {
-        lostTimeLabel.text = "잃어버린 시간: \(lostTime)"
+    func setLabel(lostTime: Date) {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+        
+        let converDate = formatter.string(from: lostTime)
+        
+        lostTimeLabel.text = "잃어버린 시간: \(String(describing: converDate))"
     }
     
-    func setMapViewRegion(latitude: Double, longitude: Double) {
+    func setMapPinRegion(latitude: Double, longitude: Double, petName: String
+    ) {
         let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
         let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
         let region = MKCoordinateRegion(center: center, span: span)
@@ -68,7 +77,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         let mark = MKPointAnnotation()
         
         mark.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        mark.title = "Mark"
+        mark.title = "\(petName)"
         
         mapView.addAnnotation(mark)
     }
@@ -127,3 +136,4 @@ private extension PostInfoCollectionViewCell {
         }
     }
 }
+

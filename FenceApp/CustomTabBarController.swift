@@ -15,7 +15,6 @@ class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         
         configureTabBarControllers()
-        self.delegate = self
     }
     
     init(controllers: [UIViewController]) {
@@ -53,18 +52,5 @@ class CustomTabBarController: UITabBarController {
           
         self.tabBar.barTintColor = UIColor(red: 93, green: 223, blue: 222, alpha: 1)
         self.tabBar.unselectedItemTintColor = .gray
-    }
-}
-
-extension CustomTabBarController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        guard let fromView = tabBarController.selectedViewController?.view, let toView = viewController.view else { return false }
-        
-        if fromView == toView {
-            return false
-        } else {
-            UIView.transition(from: fromView, to: toView, duration: 0.5, options: .transitionCrossDissolve)
-            return true
-        }
     }
 }
