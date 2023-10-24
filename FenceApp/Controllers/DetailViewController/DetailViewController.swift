@@ -37,7 +37,6 @@ class DetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        
         configureCollectionView()
     }
     
@@ -111,6 +110,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             postCell.postTitleLabel.text = lostDTO.title
             postCell.postDescriptionLabel.text = lostDTO.description
             postCell.setLabel(lostTime: "\(lostDTO.lostDate)")
+            postCell.setMapViewRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude)
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
