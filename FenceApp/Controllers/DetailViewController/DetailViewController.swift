@@ -60,7 +60,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Action
     @objc func tapped() {
-        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lostIdentifier: lostDTO.lostIdentifier)
+        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lostResponseDTO: lostDTO)
         commentVC.modalTransitionStyle = .coverVertical
         commentVC.modalPresentationStyle = .pageSheet
         
