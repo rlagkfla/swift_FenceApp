@@ -83,8 +83,6 @@ class LostListViewCell: UITableViewCell {
             }
         }
     }
-    
-    
 }
 
 extension LostListViewCell {

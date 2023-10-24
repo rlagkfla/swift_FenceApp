@@ -9,7 +9,7 @@ import FirebaseFirestore
 
 struct FoundResponseDTOMapper {
     
-    func makeFoundResponseDTOs(dictionary: [String: Any]) -> FoundResponseDTO {
+    static func makeFoundResponseDTOs(dictionary: [String: Any]) -> FoundResponseDTO {
         
         FoundResponseDTO(latitude: dictionary[FB.Found.latitude] as? Double ?? 0,
                          longitude: dictionary[FB.Found.longitude] as? Double ?? 0,
@@ -19,14 +19,14 @@ struct FoundResponseDTOMapper {
                          foundIdentifier: dictionary[FB.Found.foundIdentifier] as? String ?? "")
     }
     
-    func makeFoundResponseDTOs(dictionaries: [[String: Any]]) -> [FoundResponseDTO] {
+    static func makeFoundResponseDTOs(dictionaries: [[String: Any]]) -> [FoundResponseDTO] {
         
         return dictionaries.map { dictionary in
             makeFoundResponseDTOs(dictionary: dictionary)
         }
     }
     
-    func makeDictionary(foundResponseDTO: FoundResponseDTO) -> [String: Any] {
+    static func makeDictionary(foundResponseDTO: FoundResponseDTO) -> [String: Any] {
         
         let data: [String: Any] = [FB.Found.latitude: foundResponseDTO.latitude,
                                    FB.Found.longitude: foundResponseDTO.longitude,

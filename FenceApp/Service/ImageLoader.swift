@@ -9,7 +9,7 @@ import UIKit
 
 struct ImageLoader {
     
-    func fetchPhoto(urlString: String) async throws -> UIImage {
+    static func fetchPhoto(urlString: String) async throws -> UIImage {
         
         guard let url = URL(string: urlString) else { throw PetError.invalidURL }
         

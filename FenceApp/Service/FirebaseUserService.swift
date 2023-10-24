@@ -13,23 +13,25 @@ struct FirebaseUserService {
     
     let firebaseLostService: FirebaseLostService
     let firebaseLostCommentService: FirebaseLostCommentService
-    let userResponseDTOMapper: UserResponseDTOMapper
+    
     
     func createUser(userResponseDTO: UserResponseDTO) async throws {
                 
-        let dictionary = userResponseDTOMapper.makeDictionary(from: userResponseDTO)
+        let dictionary = UserResponseDTOMapper.makeDictionary(from: userResponseDTO)
         
         try await COLLECTION_USERS.document(userResponseDTO.identifier).setData(dictionary)
     }
+    
     
     func fetchUser(userIdentifier: String) async throws -> UserResponseDTO {
         
         guard let dictionary = try await COLLECTION_USERS.document(userIdentifier).getDocument().data() else { throw PetError.noSnapshotDocument }
         
-        let userDTO = userResponseDTOMapper.makeUserResponseDTO(from: dictionary)
+        let userDTO = UserResponseDTOMapper.makeUserResponseDTO(from: dictionary)
         
         return userDTO
     }
+    
     
     func editUser(userResponseDTO: UserResponseDTO) async throws {
         
@@ -48,12 +50,14 @@ struct FirebaseUserService {
         try await batchController.batch.commit()
     }
     
+    
     func deleteUser(userIdentifier: String, batchController: BatchController) async throws {
         let ref = COLLECTION_USERS.document(userIdentifier)
         
         batchController.batch.deleteDocument(ref)
         
     }
+    
     
     func listenToUpdateOn(userIdentifier: String, completion: @escaping (Result<UserResponseDTO,Error>) -> Void) {
         COLLECTION_USERS.document(userIdentifier).addSnapshotListener { snapshot, error in
@@ -68,7 +72,7 @@ struct FirebaseUserService {
                 return
             }
             
-            let userResponseDTO = userResponseDTOMapper.makeUserResponseDTO(from: dictionary)
+            let userResponseDTO = UserResponseDTOMapper.makeUserResponseDTO(from: dictionary)
             
             completion(.success(userResponseDTO))
         
@@ -76,13 +80,12 @@ struct FirebaseUserService {
         
     }
     
+    
     init(firebaseLostService: FirebaseLostService,
-         firebaseLostCommentService: FirebaseLostCommentService,
-         userResponseDTOMapper: UserResponseDTOMapper) {
+         firebaseLostCommentService: FirebaseLostCommentService) {
         
         self.firebaseLostService = firebaseLostService
         self.firebaseLostCommentService = firebaseLostCommentService
-        self.userResponseDTOMapper = userResponseDTOMapper
     }
     
     //MARK: - Helper
@@ -90,7 +93,7 @@ struct FirebaseUserService {
     private func _editUser(userResponseDTO: UserResponseDTO, batchController: BatchController) {
         let ref = COLLECTION_USERS.document(userResponseDTO.identifier)
         
-        let dictionary = userResponseDTOMapper.makeDictionary(from: userResponseDTO)
+        let dictionary = UserResponseDTOMapper.makeDictionary(from: userResponseDTO)
         
             batchController.batch.updateData(dictionary, forDocument: ref)
         
