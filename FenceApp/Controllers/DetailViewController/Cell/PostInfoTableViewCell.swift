@@ -41,6 +41,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     
     let mapView: MKMapView = {
         let mapView = MKMapView()
+        mapView.showsUserLocation = true
         return mapView
     }()
 
