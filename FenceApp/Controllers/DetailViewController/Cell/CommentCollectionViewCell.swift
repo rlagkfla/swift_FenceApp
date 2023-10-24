@@ -40,7 +40,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
     }()
     
     let commentImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "코주부 원숭이"))
+        let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
@@ -50,7 +50,6 @@ class CommentCollectionViewCell: UICollectionViewCell {
     
     let commentTextLabel: UILabel = {
         let label = UILabel()
-        label.text = "암낭ㄴ망ㄴ망ㄴ망ㄴ마안ㅁ람날ㄴ말ㄴ말암낭ㄴ망ㄴ망ㄴ망ㄴ마안ㅁ람날ㄴ말ㄴ말암낭ㄴ망ㄴ망ㄴ망ㄴ마안ㅁ람날ㄴ말ㄴ말암낭ㄴ망ㄴ망ㄴ망ㄴ마안ㅁ람날ㄴ말ㄴ말"
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .left
         label.numberOfLines = 2
