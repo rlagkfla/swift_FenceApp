@@ -7,16 +7,19 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class LostListViewController: UIViewController {
     
     private let lostListView = LostListView()
     
     let fireBaseLostService: FirebaseLostService
+    let firebaseLostCommentService: FirebaseLostCommentService
     var lostList: [LostResponseDTO] = []
     
-    init(fireBaseLostService: FirebaseLostService) {
+    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService) {
         self.fireBaseLostService = fireBaseLostService
+        self.firebaseLostCommentService = firebaseLostCommentService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -106,8 +109,7 @@ extension LostListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
-        
-        cell.setImage(urlString: lostList[indexPath.row].imageURL)
+        cell.lostimgView.kf.setImage(with: URL(string: lostList[indexPath.row].imageURL))
         cell.titleLabel.text = lostList[indexPath.row].title
         cell.dateLabel.text = "\(lostList[indexPath.row].lostDate)"
         cell.nickNameLabel.text = lostList[indexPath.row].userNickName
@@ -126,7 +128,7 @@ extension LostListViewController: UITableViewDataSource {
 extension LostListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row])
+        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService)
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }

@@ -57,6 +57,20 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     func setLabel(lostTime: String) {
         lostTimeLabel.text = "잃어버린 시간: \(lostTime)"
     }
+    
+    func setMapViewRegion(latitude: Double, longitude: Double) {
+        let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+        let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
+        let region = MKCoordinateRegion(center: center, span: span)
+        mapView.setRegion(region, animated: true)
+        
+        let mark = MKPointAnnotation()
+        
+        mark.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        mark.title = "Mark"
+        
+        mapView.addAnnotation(mark)
+    }
 }
 
 // MARK: - AutoLayout
