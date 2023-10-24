@@ -9,18 +9,6 @@ import UIKit
 import SnapKit
 
 class LostListView: UIView {
-
-//    let navigationBar : UINavigationBar = {
-//        let nav = UINavigationBar()
-//        nav.translatesAutoresizingMaskIntoConstraints = false
-////        nav.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
-//        let navItem = UINavigationItem(title: "Lost")
-//        let rightButton = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(tapPlusBtn))
-//        navItem.rightBarButtonItem = rightButton
-//        nav.setItems([navItem], animated: true)
-//        
-//        return nav
-//    }()
     
     private let filterLabel: UILabel = {
         let lb = UILabel()
@@ -90,19 +78,6 @@ extension LostListView {
         }
         
     }
-    
-//    func configureNavi(){
-//        self.addSubview(navigationBar)
-//        
-//        navigationBar.snp.makeConstraints {
-//            $0.top.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(150)
-//        }
-//    }
-//    
-//    @objc func tapPlusBtn(){
-//        print("click")
-//    }
     
 
     
