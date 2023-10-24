@@ -11,10 +11,9 @@ class ChatCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "ChatCell"
-    private let imageLoader: ImageLoader = ImageLoader()
     
     // MARK: - UI Properties
-    private let foundImageView: UIImageView = {
+    let foundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
         return imageView
@@ -29,17 +28,6 @@ class ChatCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setImage(urlString: String) {
-        Task {
-            do {
-                let image = try await imageLoader.fetchPhoto(urlString: urlString)
-                foundImageView.image = image
-            } catch {
-                print(error)
-            }
-        }
     }
     
     // MARK: - AutoLayout

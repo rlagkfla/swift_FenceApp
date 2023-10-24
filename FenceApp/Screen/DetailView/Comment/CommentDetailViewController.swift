@@ -41,9 +41,6 @@ class CommentDetailViewController: UIViewController {
         
         configureTalbeView()
         configureActions()
-        
-        commentDetailView.commentTableView.separatorStyle = .singleLine
-        commentDetailView.commentTableView.separatorColor = .red
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -83,7 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeChatViewController() -> ChatViewController {
-        let vc = ChatViewController(firebaseFoundService: firebaseFoundService, imageLoader: imageLoader)
+        let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
         return vc
     }
     

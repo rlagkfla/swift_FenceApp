@@ -6,20 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ChatViewController: UIViewController {
     
     private let chatView = ChatView()
     
-    let imageLoader: ImageLoader
     let firebaseFoundService: FirebaseFoundService
     var foundList: [FoundResponseDTO] = []
     
-    var url = UIImage()
-    
-    init(firebaseFoundService: FirebaseFoundService, imageLoader: ImageLoader) {
+    init(firebaseFoundService: FirebaseFoundService) {
         self.firebaseFoundService = firebaseFoundService
-        self.imageLoader = imageLoader
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +63,7 @@ extension ChatViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = chatView.foundCollectionView.dequeueReusableCell(withReuseIdentifier: ChatCollectionViewCell.identifier, for: indexPath) as! ChatCollectionViewCell
-        cell.setImage(urlString: foundList[indexPath.item].imageURL)
+        cell.foundImageView.kf.setImage(with: URL(string: foundList[indexPath.row].imageURL))
         return cell
     }
     

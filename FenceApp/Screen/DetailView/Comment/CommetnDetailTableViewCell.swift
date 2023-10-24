@@ -25,7 +25,6 @@ class CommentDetailTableViewCell: UITableViewCell {
     
     let commenterNickName: UILabel = {
         let label = UILabel()
-        label.text = "스폰지밥"
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
         return label
@@ -33,7 +32,6 @@ class CommentDetailTableViewCell: UITableViewCell {
     
     let commentDate: UILabel = {
         let label = UILabel()
-        label.text = "3분 전"
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
         return label
@@ -41,7 +39,6 @@ class CommentDetailTableViewCell: UITableViewCell {
     
     let commentTextLabel: UILabel = {
         let label = UILabel()
-        label.text = "발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~발견했어요~~"
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
         return label
