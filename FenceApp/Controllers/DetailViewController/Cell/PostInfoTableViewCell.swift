@@ -16,6 +16,8 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     
     let locationManager = LocationManager()
     
+//    let pin: MapPin?
+    
     // MARK: - UI Properties
     let postTitleLabel: UILabel = {
         let label = UILabel()
@@ -61,7 +63,15 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLabel(lostTime: Date) {
+    func configureCell(postTitle: String, postDescription: String, lostTime: Date, lostDTO: LostResponseDTO) {
+        postTitleLabel.text = postTitle
+        postDescriptionLabel.text = postDescription
+        setLabel(lostTime: lostTime)
+        setPin(pinable: lostDTO)
+        centerViewOnUserLocation()
+    }
+    
+    private func setLabel(lostTime: Date) {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
@@ -85,7 +95,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
 ////        mapView.addAnnotation(mark)
 //    }
     
-    func centerViewOnUserLocation() {
+    private func centerViewOnUserLocation() {
         
         guard let location = locationManager.fetchLocation() else { return }
         
@@ -95,7 +105,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func setPin(pinable: Pinable) {
+    private func setPin(pinable: Pinable) {
         let pin = MapPin(pinable: pinable)
         mapView.addAnnotation(pin)
         print("@@@@@@@@@@")

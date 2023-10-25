@@ -7,7 +7,11 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, CommentDetailViewControllerDelegate {
+    func dismissCommetnDetailViewController() {
+        print("asd")
+    }
+    
     
     // MARK: - Properties
     private let detailView = DetailView()
@@ -33,7 +37,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        getFirstComment()
+        getFirstComment()
         
         view.backgroundColor = .white
         
@@ -47,22 +51,22 @@ class DetailViewController: UIViewController {
         self.navigationItem.title = "Detail"
     }
     
-//    func getFirstComment() {
-//        Task {
-//            do {
-//                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
-////                detailView.detailCollectionView.reloadData()
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
+    func getFirstComment() {
+        Task {
+            do {
+                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
+            } catch {
+                print(error)
+            }
+        }
+    }
     
     // MARK: - Action
     @objc func tapped() {
         let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lostResponseDTO: lostDTO)
         commentVC.modalTransitionStyle = .coverVertical
         commentVC.modalPresentationStyle = .pageSheet
+        commentVC.delegate = self
         
         if let sheet = commentVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
@@ -98,19 +102,11 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return imageCell
         } else if indexPath.section == 1 {
             let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
-            writerCell.writerNickNameLabel.text = lostDTO.userNickName
-            writerCell.setPostWriteTime(postTime: "\(lostDTO.postDate)")
-            writerCell.writerProfileImageView.kf.setImage(with: URL(string: lostDTO.userProfileImageURL))
+            writerCell.configureCell(userNickName: lostDTO.userNickName, userProfileImageURL: lostDTO.userProfileImageURL, postTime: "\(lostDTO.postDate)")
             return writerCell
         } else if indexPath.section == 2 {
             let postCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
-            postCell.postTitleLabel.text = lostDTO.title
-            postCell.postDescriptionLabel.text = lostDTO.description
-            postCell.setLabel(lostTime: lostDTO.lostDate)
-//            postCell.setMapPinRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude)
-            postCell.setPin(pinable: lostDTO)
-            postCell.centerViewOnUserLocation()
-            
+            postCell.configureCell(postTitle: lostDTO.title, postDescription: lostDTO.description, lostTime: lostDTO.lostDate, lostDTO: lostDTO)
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
@@ -121,4 +117,3 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
 }
-
