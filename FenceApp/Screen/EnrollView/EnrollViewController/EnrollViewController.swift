@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import PhotosUI
+import MapKit
 
 class EnrollViewController: UIViewController {
 
@@ -15,8 +16,21 @@ class EnrollViewController: UIViewController {
     
     // camera
     var images: [UIImage] = []
-    
     var pickerViewController: PHPickerViewController?
+    
+    // 확인필요
+//    let locationManager: LocationManager
+    let currentLocation = LocationManager().fetchLocation()
+    
+//    init(locationManager: LocationManager) {
+//        self.locationManager = locationManager
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
     
     override func loadView() {
         view = enrollView
@@ -32,7 +46,13 @@ class EnrollViewController: UIViewController {
         
         configureCollectionView()
         
+        configureMap()
+        
         configureKeyboard()
+        
+        print("latitude - \(currentLocation!.latitude)")
+        print("longitude - \(currentLocation!.longitude)")
+
     }
     
     
@@ -44,7 +64,16 @@ class EnrollViewController: UIViewController {
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-
+        
+    }
+    
+    func configureMap(){
+        if let location = currentLocation {
+            let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02) // 지도 확대/축소 정도를 조절할 수 있습니다.
+            let region = MKCoordinateRegion(center: center, span: span)
+            enrollView.mapView.setRegion(region, animated: true)
+        }
     }
     
     func configureKeyboard(){
