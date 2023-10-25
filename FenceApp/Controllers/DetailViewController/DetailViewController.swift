@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFirstComment()
+//        getFirstComment()
         
         view.backgroundColor = .white
         
@@ -47,16 +47,16 @@ class DetailViewController: UIViewController {
         self.navigationItem.title = "Detail"
     }
     
-    func getFirstComment() {
-        Task {
-            do {
-                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
-                detailView.detailCollectionView.reloadData()
-            } catch {
-                print(error)
-            }
-        }
-    }
+//    func getFirstComment() {
+//        Task {
+//            do {
+//                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
+////                detailView.detailCollectionView.reloadData()
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
     
     // MARK: - Action
     @objc func tapped() {
@@ -110,6 +110,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //            postCell.setMapPinRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude)
             postCell.setPin(pinable: lostDTO)
             postCell.centerViewOnUserLocation()
+            
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
