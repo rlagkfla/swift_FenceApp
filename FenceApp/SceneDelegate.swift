@@ -61,7 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeTabbarController() -> CustomTabBarController {
-        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeCameraViewController(), thirdTabNavigationController, fourthTabNavigationController])
+        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController])
         
         return TabbarController
     }
@@ -73,17 +73,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeLostViewVC() -> LostListViewController {
-        let vc = LostListViewController()
+        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
         return vc
     }
     
-    private func makeCameraViewController() -> CameraViewController {
-        let vc = CameraViewController()
+    private func makeDummyViewController() -> UIViewController {
+        let vc = UIViewController()
         return vc
     }
     
     private func makeChatViewController() -> ChatViewController {
-        let vc = ChatViewController()
+        let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
         return vc
     }
     

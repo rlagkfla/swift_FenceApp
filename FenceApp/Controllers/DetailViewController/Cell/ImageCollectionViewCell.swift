@@ -12,7 +12,14 @@ class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "ImageCell"
     
+    var imageUrl: String = ""
+    
     var nowPage: Int = 0
+    
+    func getImageUrl(urlString: String) {
+        imageUrl = urlString
+    }
+    
     
     // MARK: - UI Properties
     lazy var imageCollectionView: UICollectionView = {
@@ -33,6 +40,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
         pageControl.numberOfPages = 3
         pageControl.currentPage = 0
         pageControl.isUserInteractionEnabled = false
+        pageControl.currentPageIndicatorTintColor = UIColor(hexCode: "5DDFDE")
+        pageControl.backgroundStyle = .prominent
+        pageControl.pageIndicatorTintColor = .black
         return pageControl
     }()
     
@@ -70,7 +80,7 @@ private extension ImageCollectionViewCell {
         
         pageControl.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(275)
+            $0.top.equalToSuperview().offset(270)
         }
     }
 }
@@ -82,7 +92,8 @@ extension ImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageViewCollectionViewCell.identifier, for: indexPath)
+        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageViewCollectionViewCell.identifier, for: indexPath) as! ImageViewCollectionViewCell
+        cell.imageView.kf.setImage(with: URL(string: imageUrl))
         return cell
     }
     
