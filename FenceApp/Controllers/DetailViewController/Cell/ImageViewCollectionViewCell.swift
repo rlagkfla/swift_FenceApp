@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class ImageViewCollectionViewCell: UICollectionViewCell {
     
@@ -39,5 +40,11 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        imageView.kf.setImage(with: url)
     }
 }

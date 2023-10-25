@@ -9,26 +9,6 @@ import UIKit
 import SnapKit
 
 class LostListView: UIView {
-
-//    let navigationBar : UINavigationBar = {
-//        let nav = UINavigationBar()
-//        nav.translatesAutoresizingMaskIntoConstraints = false
-////        nav.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150)
-//        let navItem = UINavigationItem(title: "Lost")
-//        let rightButton = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(tapPlusBtn))
-//        navItem.rightBarButtonItem = rightButton
-//        nav.setItems([navItem], animated: true)
-//        
-//        return nav
-//    }()
-    
-    // 임시 버튼
-//    let testBtnn: UIButton = {
-//        let btn = UIButton()
-//        btn.setImage(UIImage(systemName: "plus"), for: .normal)
-//        btn.addTarget(self, action: #selector(tapPlusBtn), for: .touchUpInside)
-//        return btn
-//    }()
     
     private let filterLabel: UILabel = {
         let lb = UILabel()
@@ -40,8 +20,6 @@ class LostListView: UIView {
     
     lazy var lostTableView: UITableView = {
         let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(LostListViewCell.self, forCellReuseIdentifier: "LostListViewCell")
 //        tableView.backgroundColor = .gray
         return tableView
@@ -74,16 +52,10 @@ class LostListView: UIView {
 extension LostListView {
     
     func configureUI(){
-//        self.addSubview(testBtnn)
         self.addSubview(filterLabel)
         self.addSubview(lostTableView)
         self.addSubview(filterBtn)
-        
-//        testBtnn.snp.makeConstraints {
-//            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-//            $0.trailing.equalToSuperview().offset(-18)
-//        }
-        
+
         filterLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(105)
             $0.leading.equalToSuperview().offset(23)
@@ -107,48 +79,8 @@ extension LostListView {
         
     }
     
-//    func configureNavi(){
-//        self.addSubview(navigationBar)
-//        
-//        navigationBar.snp.makeConstraints {
-//            $0.top.leading.trailing.equalToSuperview()
-//            $0.height.equalTo(150)
-//        }
-//    }
-//    
-//    @objc func tapPlusBtn(){
-//        print("click")
-//    }
-    
 
     
 }
 
 
-extension LostListView: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
-        
-        cell.titleLabel.text = "강아지를 찾아주세요"
-        cell.dateLabel.text = "10 / 17 AM 3:30"
-        cell.nickNameLabel.text = "나비주인"
-//        tableView.reloadData()
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // 여기에서 각 행에 대한 높이를 동적으로 반환합니다.
-        return 110
-    }
-    
-}
