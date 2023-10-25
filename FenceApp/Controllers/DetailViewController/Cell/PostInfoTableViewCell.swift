@@ -15,6 +15,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "PostInfoCell"
     
     let locationManager = LocationManager()
+    var mapPin: MapPin!
     
 //    let pin: MapPin?
     
@@ -81,20 +82,6 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         lostTimeLabel.text = "잃어버린 시간: \(String(describing: converDate))"
     }
     
-//    func setMapPinRegion(latitude: Double, longitude: Double) {
-//        let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-//        let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
-//        let region = MKCoordinateRegion(center: center, span: span)
-//        mapView.setRegion(region, animated: true)
-//        
-////        let mark = MKPointAnnotation()
-////        
-////        mark.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-////        mark.title = "\(petName)"
-////        
-////        mapView.addAnnotation(mark)
-//    }
-    
     private func centerViewOnUserLocation() {
         
         guard let location = locationManager.fetchLocation() else { return }
@@ -102,13 +89,11 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 10000, longitudinalMeters: 10000)
         
         mapView.setRegion(region, animated: true)
-        
     }
     
     private func setPin(pinable: Pinable) {
-        let pin = MapPin(pinable: pinable)
-        mapView.addAnnotation(pin)
-        print("@@@@@@@@@@")
+        mapPin = MapPin(pinable: pinable)
+        mapView.addAnnotation(mapPin)
     }
 }
 

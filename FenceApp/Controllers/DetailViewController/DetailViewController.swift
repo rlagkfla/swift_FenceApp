@@ -8,10 +8,10 @@
 import UIKit
 
 class DetailViewController: UIViewController, CommentDetailViewControllerDelegate {
-    func dismissCommetnDetailViewController() {
-        print("asd")
+    func dismissCommetnDetailViewController(firstCommentDTO: CommentResponseDTO) {
+        commentDTOFirst = firstCommentDTO
+        self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
     }
-    
     
     // MARK: - Properties
     private let detailView = DetailView()
@@ -37,11 +37,11 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFirstComment()
-        
         view.backgroundColor = .white
         
         configureCollectionView()
+        
+        getFirstComment()
     }
     
     private func configureCollectionView() {

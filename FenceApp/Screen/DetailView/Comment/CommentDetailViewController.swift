@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol CommentDetailViewControllerDelegate: AnyObject {
-    func dismissCommetnDetailViewController()
+    func dismissCommetnDetailViewController(firstCommentDTO: CommentResponseDTO)
 }
 
 class CommentDetailViewController: UIViewController {
@@ -62,6 +62,8 @@ class CommentDetailViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        delegate?.dismissCommetnDetailViewController(firstCommentDTO: commentList.first!)
     }
     
     private func configureActions() {
