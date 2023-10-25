@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFirstComment()
+//        getFirstComment()
         
         view.backgroundColor = .white
         
@@ -47,16 +47,16 @@ class DetailViewController: UIViewController {
         self.navigationItem.title = "Detail"
     }
     
-    func getFirstComment() {
-        Task {
-            do {
-                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
-                detailView.detailCollectionView.reloadData()
-            } catch {
-                print(error)
-            }
-        }
-    }
+//    func getFirstComment() {
+//        Task {
+//            do {
+//                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
+////                detailView.detailCollectionView.reloadData()
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
     
     // MARK: - Action
     @objc func tapped() {
@@ -98,9 +98,11 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return imageCell
         } else if indexPath.section == 1 {
             let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
+            
             writerCell.writerNickNameLabel.text = lostDTO.userNickName
             writerCell.setPostWriteTime(postTime: "\(lostDTO.postDate)")
             writerCell.writerProfileImageView.kf.setImage(with: URL(string: lostDTO.userProfileImageURL))
+            
             return writerCell
         } else if indexPath.section == 2 {
             let postCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
@@ -110,6 +112,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //            postCell.setMapPinRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude)
             postCell.setPin(pinable: lostDTO)
             postCell.centerViewOnUserLocation()
+            
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
