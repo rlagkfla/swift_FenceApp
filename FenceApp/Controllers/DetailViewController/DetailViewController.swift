@@ -107,7 +107,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             postCell.postTitleLabel.text = lostDTO.title
             postCell.postDescriptionLabel.text = lostDTO.description
             postCell.setLabel(lostTime: lostDTO.lostDate)
-            postCell.setMapPinRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude, petName: lostDTO.petName)
+//            postCell.setMapPinRegion(latitude: lostDTO.latitude, longitude: lostDTO.longitude)
+            postCell.setPin(pinable: lostDTO)
+            postCell.centerViewOnUserLocation()
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
@@ -118,3 +120,4 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
 }
+

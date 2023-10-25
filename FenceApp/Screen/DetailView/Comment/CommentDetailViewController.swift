@@ -43,8 +43,6 @@ class CommentDetailViewController: UIViewController {
         configureActions()
         
         commentDetailView.myProfileImageView.kf.setImage(with: URL(string: lostResponseDTO.userProfileImageURL))
-        
-        deleteCommet()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,31 +110,21 @@ extension CommentDetailViewController {
     }
     
     @objc func commentSendButtonTapped() {
-        Task {
-            do {
-                try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: lostResponseDTO.userIdentifier, userProfileImageURL: lostResponseDTO.userProfileImageURL, userNickname: lostResponseDTO.userNickName, commentDescription: commentDetailView.writeCommentTextView.text, commentDate: Date()))
-                
-                commentDetailView.commentTableView.reloadData()
-                
-            } catch {
-                print(error)
+        if commentDetailView.writeCommentTextView.text == "" {
+            return
+        } else {
+            Task {
+                do {
+                    try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: lostResponseDTO.userIdentifier, userProfileImageURL: lostResponseDTO.userProfileImageURL, userNickname: lostResponseDTO.userNickName, commentDescription: commentDetailView.writeCommentTextView.text, commentDate: Date()))
+                    
+                    getCommentList()
+                    
+                    commentDetailView.writeCommentTextView.text = ""
+                } catch {
+                    print(error)
+                }
             }
         }
-        commentDetailView.writeCommentTextView.text = ""
-        print(#function)
-    }
-    
-    func deleteCommet() {
-        Task {
-            do {
-                try await firebaseCommentService.deleteComments(lostIdentifier: lostResponseDTO.lostIdentifier, batchController: BatchController())
-                commentDetailView.commentTableView.reloadData()
-            } catch {
-                print(error)
-            }
-        }
-        
-        print(#function)
     }
 }
 
@@ -152,7 +140,7 @@ extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegat
         cell.commenterNickName.text = comment.userNickname
         cell.commentUserProfileImageView.kf.setImage(with: URL(string: comment.userProfileImageURL))
         cell.commentTextLabel.text = comment.commentDescription
-        cell.commentDate.text = "\(comment.commentDate)"
+        cell.setCommentWriteTime(commentTime: "\(comment.commentDate)")
         return cell
     }
 }

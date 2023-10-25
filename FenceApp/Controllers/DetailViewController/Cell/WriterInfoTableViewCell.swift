@@ -54,6 +54,8 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     func setPostWriteTime(postTime: String) {
         print(postTime)
         let formatter = DateFormatter()
