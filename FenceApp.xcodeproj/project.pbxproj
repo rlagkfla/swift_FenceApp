@@ -35,6 +35,7 @@
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
 		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
 		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
+		D665C5442AE8F65B004D1B73 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D665C5432AE8F65B004D1B73 /* DummyViewController.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
 		D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */; };
 		D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */; };
@@ -77,7 +78,6 @@
 		D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC52AE39E7A0098F05D /* FoundResponseDTOMapper.swift */; };
 		D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */; };
 		D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ECB2AE613F80098F05D /* DummyCreator.swift */; };
-		D6E10ECF2AE66BF40098F05D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D6E10ECE2AE66BF40098F05D /* Kingfisher */; };
 		D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
@@ -109,6 +109,7 @@
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		D665C5432AE8F65B004D1B73 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
 		D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailView.swift; sourceTree = "<group>"; };
 		D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -410,6 +411,7 @@
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
+				D665C5432AE8F65B004D1B73 /* DummyViewController.swift */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6E10EA92AE2AC1C0098F05D /* GoogleService-Info.plist */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
@@ -590,6 +592,7 @@
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
+				D665C5442AE8F65B004D1B73 /* DummyViewController.swift in Sources */,
 				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */,
 				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
