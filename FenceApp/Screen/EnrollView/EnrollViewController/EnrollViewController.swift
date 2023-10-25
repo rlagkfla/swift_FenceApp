@@ -18,9 +18,12 @@ class EnrollViewController: UIViewController {
     var images: [UIImage] = []
     var pickerViewController: PHPickerViewController?
     
+    // map
     // 확인필요
 //    let locationManager: LocationManager
-    let currentLocation = LocationManager().fetchLocation()
+    let currentLocation = LocationManager().fetchLocation() // 현재 위치
+    var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
+    let annotation = MKPointAnnotation() // 지도 마커
     
 //    init(locationManager: LocationManager) {
 //        self.locationManager = locationManager
@@ -39,6 +42,8 @@ class EnrollViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // mapView의 delegate 설정
+        enrollView.mapView.delegate = self
         
         configureNavBar()
 
@@ -49,9 +54,6 @@ class EnrollViewController: UIViewController {
         configureMap()
         
         configureKeyboard()
-        
-        print("latitude - \(currentLocation!.latitude)")
-        print("longitude - \(currentLocation!.longitude)")
 
     }
     
@@ -65,15 +67,6 @@ class EnrollViewController: UIViewController {
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         
-    }
-    
-    func configureMap(){
-        if let location = currentLocation {
-            let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02) // 지도 확대/축소 정도를 조절할 수 있습니다.
-            let region = MKCoordinateRegion(center: center, span: span)
-            enrollView.mapView.setRegion(region, animated: true)
-        }
     }
     
     func configureKeyboard(){
@@ -168,6 +161,29 @@ class EnrollViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func handleMapTap(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            // 탭한 포인트를 지도의 좌표로 변환
+            let point = sender.location(in: enrollView.mapView)
+            let coordinate = enrollView.mapView.convert(point, toCoordinateFrom: enrollView.mapView)
+            
+            // 선택한 위치 저장
+            selectedCoordinate = coordinate
+            print("location - \(selectedCoordinate)")
+            
+            // 이후에 선택한 위치를 지도 중앙에 유지하려면 다음과 같이 지도 중앙을 설정합니다.
+            enrollView.mapView.setCenter(coordinate, animated: true)
+            
+            if var selectedCoordinate = selectedCoordinate {
+                annotation.coordinate = selectedCoordinate
+                annotation.title = "옮긴 위치"
+            }
+            
+            // 마커를 지도 뷰에 추가합니다.
+            enrollView.mapView.addAnnotation(annotation)
+        }
+    }
+    
 }
 
 extension EnrollViewController {
@@ -239,3 +255,34 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
     
 }
 
+extension EnrollViewController: MKMapViewDelegate {
+    
+    func configureMap(){
+        if let location = currentLocation {
+            let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005) // 지도 확대/축소 정도
+            let region = MKCoordinateRegion(center: center, span: span)
+            enrollView.mapView.setRegion(region, animated: true)
+            
+//            // 현재 위치에 대한 지도 주석을 만듭니다.
+//            let annotation = MKPointAnnotation()
+            annotation.coordinate = center
+            annotation.title = "현재 위치"
+            
+            // 주석을 지도 뷰에 추가합니다.
+            enrollView.mapView.addAnnotation(annotation)
+            
+            // 마커를 가운데에 고정하기 / 확인필요
+//            enrollView.mapView.setUserTrackingMode(.follow, animated: true)
+            
+            // 탭 제스처 인식기를 생성하고 지도 뷰에 추가
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleMapTap))
+            enrollView.mapView.addGestureRecognizer(tapGesture)
+        }
+        
+        
+        
+    }
+    
+  
+}
