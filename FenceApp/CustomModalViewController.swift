@@ -11,7 +11,7 @@ class CustomModalViewController: UIViewController {
     
     let navigationBar = UINavigationBar()
     
-//    lazy var startDate = self.startDatePicker.date
+    lazy var startDate = self.startDatePicker.date
 //    lazy var endDate = self.endDatePicker.date
 
     lazy var currentRangeLabel: UILabel = {
@@ -56,7 +56,7 @@ class CustomModalViewController: UIViewController {
     }()
     
     lazy var startDatePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
+        var datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
         let currnetDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
@@ -76,7 +76,7 @@ class CustomModalViewController: UIViewController {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
-        datePicker.minimumDate = Date()
+        datePicker.minimumDate = self.startDate
         return datePicker
     }()
 
@@ -86,8 +86,6 @@ class CustomModalViewController: UIViewController {
         setSelf()
         configureUI()
         configureNavigationBarItem()
-        
-        
     }
     
     func setSelf() {
