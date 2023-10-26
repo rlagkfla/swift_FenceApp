@@ -148,8 +148,8 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (lostCollectionView.bounds.width - 40) / 2 // 컬렉션 뷰의 너비를 절반으로 나눈 값으로 설정합니다.
         return CGSize(width: width, height: width) // 너비와 높이를 같은 값으로 반환하여 정사각형 모양으로 만듭니다.
-        
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2 // 컬렉션뷰의 섹션 개수를 2개로 설정합니다.
     }
@@ -157,7 +157,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1 // 하나의 셀만 표시하도록 개수를 1로 설정합니다.
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
@@ -172,6 +171,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 0 {
             return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)

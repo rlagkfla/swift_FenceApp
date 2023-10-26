@@ -49,6 +49,7 @@
 		D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739C2AE224E900ED3E2F /* EnrollView.swift */; };
 		D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */; };
 		D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */; };
+		D6D806302AE9FF780002AE3A /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */; };
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
@@ -116,6 +117,7 @@
 		D6D2739C2AE224E900ED3E2F /* EnrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollView.swift; sourceTree = "<group>"; };
 		D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollViewController.swift; sourceTree = "<group>"; };
 		D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
+		D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
 				D665C5432AE8F65B004D1B73 /* DummyViewController.swift */,
+				D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6E10EA92AE2AC1C0098F05D /* GoogleService-Info.plist */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
@@ -628,6 +631,7 @@
 				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,
 				D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */,
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
+				D6D806302AE9FF780002AE3A /* CustomModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
@@ -894,14 +898,6 @@
 				minimumVersion = 5.3.2;
 			};
 		};
-		D6E10ECD2AE66BF40098F05D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.9.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -964,11 +960,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D65150A12ADD0FFB002FDD04 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
-		};
-		D6E10ECE2AE66BF40098F05D /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D6E10ECD2AE66BF40098F05D /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

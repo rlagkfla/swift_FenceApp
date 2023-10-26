@@ -8,10 +8,10 @@
 import UIKit
 
 class DetailViewController: UIViewController, CommentDetailViewControllerDelegate {
-    func dismissCommetnDetailViewController() {
-        print("asd")
+    func dismissCommetnDetailViewController(firstCommentDTO: CommentResponseDTO) {
+        commentDTOFirst = firstCommentDTO
+        self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
     }
-    
     
     // MARK: - Properties
     private let detailView = DetailView()
@@ -37,11 +37,9 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFirstComment()
-        
-        view.backgroundColor = .white
-        
         configureCollectionView()
+        
+        getFirstComment()
     }
     
     private func configureCollectionView() {
@@ -49,6 +47,9 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
         detailView.detailCollectionView.delegate = self
     
         self.navigationItem.title = "Detail"
+        self.navigationController?.navigationBar.backgroundColor = .white
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground() // 불투명으로
     }
     
     func getFirstComment() {
