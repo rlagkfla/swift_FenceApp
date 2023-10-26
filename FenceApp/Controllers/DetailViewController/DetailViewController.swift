@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
     
     let firebaseCommentService: FirebaseLostCommentService
     let lostDTO: LostResponseDTO
-    var lastCommentDTO: CommentResponseDTO? = nil
+    var lastCommentDTO: CommentResponseDTO?
     
     init(lostDTO: LostResponseDTO, firebaseCommentService: FirebaseLostCommentService) {
         self.lostDTO = lostDTO

@@ -57,29 +57,9 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     func configureCell(userNickName: String, userProfileImageURL: String, postTime: String) {
         writerNickNameLabel.text = userNickName
         writerProfileImageView.kf.setImage(with: URL(string: userProfileImageURL))
-        setPostWriteTime(postTime: "\(postTime)")
-    }
-    
-    private func setPostWriteTime(postTime: String) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        formatter.locale = Locale(identifier: "ko_KR")
         
-        guard let publishedDate = formatter.date(from: postTime) else { return print("에러") }
-        let result = Date().timeIntervalSince1970 - publishedDate.timeIntervalSince1970
-        
-        switch result {
-        case ..<60:
-            postWriteTimeLabel.text = "방금"
-        case 60..<3600:
-            postWriteTimeLabel.text = "\(Int(result / 60))분 전"
-        case 3600..<86400:
-            postWriteTimeLabel.text = "\(Int(result / 3600))시간 전"
-        case 86400...:
-            postWriteTimeLabel.text = "\(Int(result / 86400))일 전"
-        default:
-            postWriteTimeLabel.text = "날자 Parshing 오류"
-        }
+        let postWriteTime = postTime.getHowLongAgo()
+        postWriteTimeLabel.text = postWriteTime
     }
 }
 
