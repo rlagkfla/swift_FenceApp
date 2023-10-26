@@ -15,7 +15,6 @@ class ChatCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Properties
     let foundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
         return imageView
     }()
     

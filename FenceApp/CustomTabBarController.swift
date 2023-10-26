@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
+class CustomTabBarController: UITabBarController{
 
     let controllers: [UIViewController]
     let locationManager: LocationManager
@@ -29,9 +29,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
         
         self.delegate = self
         
-        configureTabBarControllers()
-        setBackgroundColor()
-        configureCameraButton()
+        configure()
     }
     
     init(controllers: [UIViewController], locationManager: LocationManager, firebaseFoundSerivce: FirebaseFoundService) {
@@ -45,8 +43,33 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureTabBarControllers() {
+    func configure() {
+        self.delegate = self
+        
+        configureTabBarControllers()
+        setBackgroundColor()
+        configureCameraButton()
+    }
+    
+    // MARK: - Action
+    @objc func cameraButtonTapped() {
+        let camera = UIImagePickerController()
+        
+        camera.sourceType = .camera
+        camera.allowsEditing = true
+        camera.cameraDevice = .rear
+        camera.cameraCaptureMode = .photo
+        camera.delegate = self
+        
+        present(camera, animated: true)
+    }
+    
+    
+}
 
+// MARK: - Private Method
+extension CustomTabBarController {
+    private func configureTabBarControllers() {
         let mapTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "map"), tag: 0)
         mapTabBarItem.selectedImage = UIImage(systemName: "map.fill")
         controllers[0].tabBarItem = mapTabBarItem
@@ -67,11 +90,9 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
         controllers[4].tabBarItem = myInfoTabBarItem
     
         self.viewControllers = controllers
-          
-        
     }
     
-    func setBackgroundColor() {
+    private func setBackgroundColor() {
         self.tabBar.backgroundColor = .white
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
@@ -84,32 +105,21 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
         self.tabBar.scrollEdgeAppearance = appearance
     }
     
-    func configureCameraButton() {
+    private func configureCameraButton() {
         self.tabBar.addSubview(cameraButton)
         cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 25, y: -20, width: 50, height: 50)
     }
-    
-    @objc func cameraButtonTapped() {
-        let camera = UIImagePickerController()
-        
-        camera.sourceType = .camera
-        camera.allowsEditing = true
-        camera.cameraDevice = .rear
-        camera.cameraCaptureMode = .photo
-        camera.delegate = self
-        
-        present(camera, animated: true)
-    }
-    
+}
+
+// MARK: - UITabBarControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate
+extension CustomTabBarController: UITabBarControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController == controllers[2] {
             return false
         }
         return true
     }
-}
-
-extension CustomTabBarController: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage else { return }
         

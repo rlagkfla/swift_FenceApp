@@ -12,10 +12,8 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "WriterInfoCell"
 
-   
-    
     // MARK: - UI Properties
-    let writerProfileImageView: UIImageView = {
+    private let writerProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "코주부 원숭이")
         imageView.contentMode = .scaleToFill
@@ -25,7 +23,7 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let writerNickNameLabel: UILabel = {
+    private let writerNickNameLabel: UILabel = {
         let label = UILabel()
         label.text = "코주부 원숭이"
         label.font = UIFont.systemFont(ofSize: 20)
@@ -33,7 +31,7 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let postWriteTimeLabel: UILabel = {
+    private let postWriteTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .systemGray
@@ -47,8 +45,6 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         
         configureUI()
     }
-    
-   
     
     override func layoutSubviews() {
         writerProfileImageView.layer.cornerRadius = 25
@@ -64,8 +60,7 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         setPostWriteTime(postTime: "\(postTime)")
     }
     
-    func setPostWriteTime(postTime: String) {
-        print(postTime)
+    private func setPostWriteTime(postTime: String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
         formatter.locale = Locale(identifier: "ko_KR")

@@ -147,10 +147,7 @@ extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath) as! CommentDetailTableViewCell
         let comment = commentList[indexPath.row]
-        cell.commenterNickName.text = comment.userNickname
-        cell.commentUserProfileImageView.kf.setImage(with: URL(string: comment.userProfileImageURL))
-        cell.commentTextLabel.text = comment.commentDescription
-        cell.setCommentWriteTime(commentTime: "\(comment.commentDate)")
+        cell.configureCell(commentUserNickName: comment.userNickname, commentUserProfileImageUrl: comment.userProfileImageURL, commentDescription: comment.commentDescription, commentTime: "\(comment.commentDate)")
         return cell
     }
 }
