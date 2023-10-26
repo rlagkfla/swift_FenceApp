@@ -76,6 +76,11 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         configureNavigationBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)]
+    }
+    
     private func configureUI(){
         configureProfileImage()
         configureNickName()
@@ -86,7 +91,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private func configureNavigationBar() {
         navigationItem.title = "마이페이지"
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func configureLostCollectionView(){
