@@ -71,12 +71,22 @@ class CustomModalViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        view.backgroundColor = .white
         
+        setSelf()
         configureUI()
         configureNavigationBarItem()
+        
+        
+    }
+    
+    func setSelf() {
+        self.view.backgroundColor = .white
+        self.modalTransitionStyle = .coverVertical
+        self.modalPresentationStyle = .pageSheet
+        if let sheet = self.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+        }
     }
     
     func configureNavigationBarItem() {
@@ -85,7 +95,7 @@ class CustomModalViewController: UIViewController {
     }
     
     @objc func applyButtonTapped() {
-        print(#function)
+        dismiss(animated: true)
     }
     
     @objc func sliderValueChanged(_ sender: UISlider) {

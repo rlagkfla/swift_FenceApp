@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
     
-    let filterTapped: () -> Void
+    var filterTapped: (() -> Void)?
     
     lazy var mainView: MapMainView = {
         let view = MapMainView()
@@ -42,9 +42,10 @@ class MapViewController: UIViewController {
        
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts()
-                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
-                pinTogether = lostResponseDTOs + foundResponseDTOs
+                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 10, postDate: Calendar.current.date(byAdding: .day, value: -5, to: Date())!)
+//                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
+//                pinTogether = lostResponseDTOs + foundResponseDTOs
+                pinTogether = lostResponseDTOs
                 setPinUsingMKAnnotation(pinables: pinTogether)
             } catch {
                 print(error)
@@ -55,12 +56,11 @@ class MapViewController: UIViewController {
       
     }
     
-    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager, filterTapped: @escaping () -> Void) {
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
         
         self.firebaseLostService = firebaseLostService
         self.firebaseFoundService = firebaseFoundService
         self.locationManager = locationManager
-        self.filterTapped = filterTapped
         print("I am inited")
         super.init(nibName: nil, bundle: nil)
     }
@@ -96,13 +96,13 @@ class MapViewController: UIViewController {
 
 extension MapViewController: mapMainViewDelegate {
     func filterImageViewTapped() {
-        filterTapped()
+        filterTapped?()
 
     }
     
     func locationImageViewTapped() {
         centerViewOnUserLocation()
-        print("aaaaaaaaa")
+        
     }
     
     

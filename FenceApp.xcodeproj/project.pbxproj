@@ -80,6 +80,7 @@
 		D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */; };
 		D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ECB2AE613F80098F05D /* DummyCreator.swift */; };
 		D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */; };
+		D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
@@ -149,6 +150,7 @@
 		D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponseDTOMapper.swift; sourceTree = "<group>"; };
 		D6E10ECB2AE613F80098F05D /* DummyCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCreator.swift; sourceTree = "<group>"; };
 		D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCaculator.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
+				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
+				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
 				D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */,
 			);
