@@ -58,7 +58,11 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    func configureCell(userNickName: String, userProfileImageURL: String, postTime: String) {
+        writerNickNameLabel.text = userNickName
+        writerProfileImageView.kf.setImage(with: URL(string: userProfileImageURL))
+        setPostWriteTime(postTime: "\(postTime)")
+    }
     
     func setPostWriteTime(postTime: String) {
         print(postTime)

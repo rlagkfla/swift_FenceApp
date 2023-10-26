@@ -65,6 +65,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
           
         self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
         self.tabBar.unselectedItemTintColor = .black
+        self.tabBar.backgroundColor = .white
     }
     
     func configureCameraButton() {
