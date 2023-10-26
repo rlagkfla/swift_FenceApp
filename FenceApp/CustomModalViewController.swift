@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol CustomModelViewControllerDelegate: AnyObject {
+    func applyTapped(within: Double, fromDate: Date, toDate: Date)
+}
+
 class CustomModalViewController: UIViewController {
     
     let navigationBar = UINavigationBar()
     
+    var delegate: CustomModelViewControllerDelegate?
 //    lazy var startDate = self.startDatePicker.date
 //    lazy var endDate = self.endDatePicker.date
 
@@ -40,8 +45,8 @@ class CustomModalViewController: UIViewController {
         let slider = UISlider()
         slider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
         slider.minimumValue = 1
-        slider.maximumValue = 10
-        slider.value = 5.5
+        slider.maximumValue = 500
+        slider.value = 250
         slider.thumbTintColor = UIColor(hexCode: "5DDFDE")
         slider.minimumTrackTintColor = UIColor(hexCode: "5DDFDE")
         slider.maximumTrackTintColor = .darkGray
@@ -106,6 +111,7 @@ class CustomModalViewController: UIViewController {
     }
     
     @objc func applyButtonTapped() {
+        delegate?.applyTapped(within: Double(rangeSlider.value), fromDate: startDatePicker.date, toDate: endDatePicker.date)
         dismiss(animated: true)
     }
     
