@@ -118,6 +118,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             if let lastCommentDescription = lastCommentDTO?.commentDescription {
                 let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
                 commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lostDTO.userProfileImageURL)
+                commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
                 return commentCell
             }
             return commentCell
