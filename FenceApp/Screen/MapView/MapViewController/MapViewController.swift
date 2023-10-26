@@ -19,35 +19,27 @@ class MapViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
     
-    let mapMainView = MapMainView()
+    var filterTapped: (() -> Void)?
     
-    lazy var mapView: MKMapView = {
-        let mapView = MKMapView()
-        mapView.showsUserLocation = true
-        mapView.delegate = self
-        
-        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
-        mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
-        mapView.register(MKUserLocationView.self, forAnnotationViewWithReuseIdentifier: "user")
-        return mapView
+    lazy var mainView: MapMainView = {
+        let view = MapMainView()
+        view.delegate = self
+        return view
     }()
     
     let locationManager: LocationManager
     
+   
+    
     //MARK: - Lifecycle
     
-//    override func loadView() {
-//        view = mapMainView
-//    }
+    override func loadView() {
+        view = mainView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "제목을 바꿔요 손모가지 검"
-        
-                
-        configureUI()
        
-        
         Task {
             do {
                 lostResponseDTOs = try await firebaseLostService.fetchLosts()
@@ -59,7 +51,7 @@ class MapViewController: UIViewController {
             }
         }
         
-        centerViewOnUserLocation()
+        
       
     }
     
@@ -82,21 +74,10 @@ class MapViewController: UIViewController {
     
     //MARK: - UI
     
-    private func configureUI() {
-        configureMapView()
-    }
-    
-    private func configureMapView() {
-        view.addSubview(mapView)
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
     private func setPinUsingMKAnnotation(pinables: [Pinable]) {
         pinables.forEach { pinable in
             let pin1 = MapPin(pinable: pinable)
-            mapView.addAnnotations([pin1])
+            mainView.mapView.addAnnotations([pin1])
             
         }
     }
@@ -107,50 +88,21 @@ class MapViewController: UIViewController {
         
         let region = MKCoordinateRegion(center: location, latitudinalMeters: 10000, longitudinalMeters: 10000)
         
-        mapView.setRegion(region, animated: true)
+        mainView.mapView.setRegion(region, animated: true)
         
     }
 }
 
-extension MapViewController: MKMapViewDelegate {
+extension MapViewController: mapMainViewDelegate {
+    func filterImageViewTapped() {
+        filterTapped?()
+
+    }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func locationImageViewTapped() {
+        centerViewOnUserLocation()
         
-        
-                if annotation is MKClusterAnnotation {
-                    //            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "mapItem", for: annotation) as! MKAnnotationView
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ClusterAnnotationView.identifier, for: annotation) as! ClusterAnnotationView
-                    let count = (annotation as! MKClusterAnnotation).memberAnnotations.count
-                    annotationView.setTitle(count: count)
-        
-                    print(count)
-        
-                    return annotationView
-                } else if annotation is MKUserLocation {
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
-//                    annotationView.displayPriority = .defaultHigh
-                    return annotationView
-                } else {
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
-                    //            annotationView.clusteringIdentifier = String(describing: LocationDataMapAnnotationView.self)
-        
-                    
-                    
-                    Task {
-                        do {
-                            
-                            let image = try await ImageLoader.fetchPhoto(urlString: (annotation as! MapPin).pinable.imageURL)
-        
-                            annotationView.setImage(image: image)
-        
-                        } catch {
-                            print(error)
-                        }
-                    }
-        
-                    return annotationView
-                }
-            }
+    }
+    
     
 }
-

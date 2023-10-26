@@ -12,6 +12,8 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "WriterInfoCell"
 
+   
+    
     // MARK: - UI Properties
     let writerProfileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -45,6 +47,8 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         
         configureUI()
     }
+    
+   
     
     override func layoutSubviews() {
         writerProfileImageView.layer.cornerRadius = 25

@@ -30,16 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
-                firebaseUserService.listenToUpdateOn(userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2") { result in
-                    switch result {
-                    case .failure(let error):
-                        print(error)
-                    case .success(let userResponseDTO):
-                        print(userResponseDTO.email, "!!!!!!!")
-                       
-                       
-                    }
-                }
+                let a = firebaseAuthService.checkIfUserLoggedIn()
+                print(a)
             } catch {
                 print(error, "@@@@@@@@")
             }
@@ -67,8 +59,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeMapViewVC() -> MapViewController {
-        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
+        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
+        vc.filterTapped = {
+            let viewController = CustomModalViewController()
+            vc.present(viewController, animated: true)
+        }
         return vc
     }
     
