@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configure()
     }
     
@@ -113,14 +113,14 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             postCell.configureCell(postTitle: lostDTO.title, postDescription: lostDTO.description, lostTime: lostDTO.lostDate, lostDTO: lostDTO)
             return postCell
         } else {
-            if let lastComment = lastCommentDTO?.commentDescription {
-                
+            let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
+            commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+            if let lastCommentDescription = lastCommentDTO?.commentDescription {
                 let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-                commentCell.configureCell(lastCommetString: lastComment, userProfileImageUrl: lostDTO.userProfileImageURL)
-                commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lostDTO.userProfileImageURL)
                 return commentCell
             }
-            return UICollectionViewCell()
+            return commentCell
         }
     }
 }
