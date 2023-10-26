@@ -93,7 +93,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    func setPinUsingMKAnnotation(pinables: [Pinable]) {
+    private func setPinUsingMKAnnotation(pinables: [Pinable]) {
         pinables.forEach { pinable in
             let pin1 = MapPin(pinable: pinable)
             mapView.addAnnotations([pin1])

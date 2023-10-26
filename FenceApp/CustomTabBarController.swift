@@ -7,15 +7,28 @@
 
 import UIKit
 
-class CustomTabBarController: UITabBarController {
+class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     let controllers: [UIViewController]
+    
+    lazy var cameraButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        button.setImage(UIImage(systemName: "camera"), for: .normal)
+        button.tintColor = .black
+        button.backgroundColor = UIColor(hexCode: "5DDFDE")
+        button.layer.cornerRadius = 20
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTabBarControllers()
         self.delegate = self
+        
+        configureTabBarControllers()
+        configureCameraButton()
     }
     
     init(controllers: [UIViewController]) {
@@ -37,9 +50,8 @@ class CustomTabBarController: UITabBarController {
         lostListTabBarItem.selectedImage = UIImage(systemName: "menucard.fill")
         controllers[1].tabBarItem = lostListTabBarItem
         
-        let cameraTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "camera"), tag: 2)
-        cameraTabBarItem.selectedImage = UIImage(systemName: "camera.fill")
-        controllers[2].tabBarItem = cameraTabBarItem
+        let dummyTabBarItem = UITabBarItem(title: nil, image: nil, tag: 2)
+        controllers[2].tabBarItem = dummyTabBarItem
         
         let chatTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "message"), tag: 3)
         chatTabBarItem.selectedImage = UIImage(systemName: "message.fill")
@@ -51,20 +63,24 @@ class CustomTabBarController: UITabBarController {
     
         self.viewControllers = controllers
           
-        self.tabBar.barTintColor = UIColor(red: 93, green: 223, blue: 222, alpha: 1)
-        self.tabBar.unselectedItemTintColor = .gray
+        self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
+        self.tabBar.unselectedItemTintColor = .black
+        self.tabBar.backgroundColor = .white
     }
-}
-
-extension CustomTabBarController: UITabBarControllerDelegate {
+    
+    func configureCameraButton() {
+        self.tabBar.addSubview(cameraButton)
+        cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 25, y: -20, width: 50, height: 50)
+    }
+    
+    @objc func cameraButtonTapped() {
+        print(#function)
+    }
+    
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        guard let fromView = tabBarController.selectedViewController?.view, let toView = viewController.view else { return false }
-        
-        if fromView == toView {
+        if viewController == controllers[2] {
             return false
-        } else {
-            UIView.transition(from: fromView, to: toView, duration: 0.5, options: .transitionCrossDissolve)
-            return true
         }
+        return true
     }
 }
