@@ -18,7 +18,7 @@ class MapViewController: UIViewController {
     var pinTogether: [Pinable] = []
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
-    
+    var pins: [MapPin] = []
     var filterTapped: (() -> Void)?
     
     lazy var mainView: MapMainView = {
@@ -42,7 +42,7 @@ class MapViewController: UIViewController {
        
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 10)
+                lostResponseDTOs = try await firebaseLostService.fetchLosts()
 //                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
 //                pinTogether = lostResponseDTOs + foundResponseDTOs
                 pinTogether = lostResponseDTOs
@@ -76,11 +76,16 @@ class MapViewController: UIViewController {
     //MARK: - UI
     
     private func setPinUsingMKAnnotation(pinables: [Pinable]) {
-        pinables.forEach { pinable in
-            let pin1 = MapPin(pinable: pinable)
-            mainView.mapView.addAnnotations([pin1])
-            
-        }
+        pins = pinables.map({ pinable in
+            MapPin(pinable: pinable)
+        })
+        
+        mainView.mapView.addAnnotations(pins)
+//        pinables.forEach { pinable in
+//            let pin1 = MapPin(pinable: pinable)
+//            mainView.mapView.addAnnotations([pin1])
+//            
+//        }
     }
     
     private func centerViewOnUserLocation() {
@@ -103,6 +108,37 @@ extension MapViewController: mapMainViewDelegate {
     func locationImageViewTapped() {
         centerViewOnUserLocation()
         
+    }
+    
+    
+}
+
+extension MapViewController: CustomModelViewControllerDelegate {
+    func applyTapped(within: Double, fromDate: Date, toDate: Date) {
+        
+        Task {
+            
+            print(within, fromDate, toDate, "@@@@@@@@@")
+            let a = try await firebaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
+            print(a.count, "!!!!!!")
+//
+//            var pins = pinTogether.map { MapPin(pinable: $0)}
+            mainView.mapView.removeAnnotations(pins)
+            pins = a.map { MapPin(pinable: $0)}
+            mainView.mapView.addAnnotations(pins)
+            
+            
+        }
+        
+    }
+    
+    func applyTapped() {
+        print("Tapped")
+        
+//        Task {
+//            
+//            firebaseLostService.fetchLosts(within: <#T##Double#>, fromDate: <#T##Date#>, toDate: <#T##Date#>)
+//        }
     }
     
     
