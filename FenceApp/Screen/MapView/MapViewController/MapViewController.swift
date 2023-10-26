@@ -42,7 +42,7 @@ class MapViewController: UIViewController {
        
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 10, postDate: Calendar.current.date(byAdding: .day, value: -5, to: Date())!)
+                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 10)
 //                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
 //                pinTogether = lostResponseDTOs + foundResponseDTOs
                 pinTogether = lostResponseDTOs
