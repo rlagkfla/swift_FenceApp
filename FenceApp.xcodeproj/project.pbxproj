@@ -35,7 +35,6 @@
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
 		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
 		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
-		D665C5442AE8F65B004D1B73 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D665C5432AE8F65B004D1B73 /* DummyViewController.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
 		D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */; };
 		D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */; };
@@ -50,6 +49,7 @@
 		D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */; };
 		D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */; };
 		D6D806302AE9FF780002AE3A /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */; };
+		D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D806352AEA52D90002AE3A /* String+Ext.swift */; };
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
@@ -80,6 +80,7 @@
 		D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */; };
 		D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ECB2AE613F80098F05D /* DummyCreator.swift */; };
 		D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */; };
+		D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
@@ -109,7 +110,6 @@
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
-		D665C5432AE8F65B004D1B73 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
 		D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailView.swift; sourceTree = "<group>"; };
 		D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -117,6 +117,8 @@
 		D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollViewController.swift; sourceTree = "<group>"; };
 		D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
 		D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		D6D806312AEA33870002AE3A /* FenceAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceAppDebug.entitlements; sourceTree = "<group>"; };
+		D6D806352AEA52D90002AE3A /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 		D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponseDTOMapper.swift; sourceTree = "<group>"; };
 		D6E10ECB2AE613F80098F05D /* DummyCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCreator.swift; sourceTree = "<group>"; };
 		D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCaculator.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +230,7 @@
 				D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
+				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -380,6 +384,14 @@
 			path = EnrollViewController;
 			sourceTree = "<group>";
 		};
+		D6D806342AEA52B70002AE3A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D6D806352AEA52D90002AE3A /* String+Ext.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		D6D9A7222ADD05EC006A5B8B = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +412,7 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6D806312AEA33870002AE3A /* FenceAppDebug.entitlements */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
 				D6E10E942AE24A630098F05D /* Constants */,
 				D6E10E8B2AE102220098F05D /* Error */,
@@ -411,8 +424,8 @@
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
-				D665C5432AE8F65B004D1B73 /* DummyViewController.swift */,
 				D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */,
+				D6D806342AEA52B70002AE3A /* Extension */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6E10EA92AE2AC1C0098F05D /* GoogleService-Info.plist */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
@@ -593,7 +606,6 @@
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
-				D665C5442AE8F65B004D1B73 /* DummyViewController.swift in Sources */,
 				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */,
 				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
@@ -605,6 +617,7 @@
 				08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
 				D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */,
+				D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
@@ -634,6 +647,7 @@
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
+				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
 				D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */,
 			);
@@ -778,12 +792,13 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceAppDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7YZAJX9R5S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 필요하다";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 필요하다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 필요하다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -819,6 +834,7 @@
 				DEVELOPMENT_TEAM = 7YZAJX9R5S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 필요하다";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 필요하다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 필요하다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

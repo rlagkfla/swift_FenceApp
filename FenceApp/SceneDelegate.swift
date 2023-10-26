@@ -41,6 +41,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                    }
 //                }
                 try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
+                let a = firebaseAuthService.checkIfUserLoggedIn()
+                print(a)
             } catch {
                 print(error, "@@@@@@@@")
             }
@@ -62,14 +64,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeTabbarController() -> CustomTabBarController {
-        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController])
+        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
         return TabbarController
     }
     
     private func makeMapViewVC() -> MapViewController {
-        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
+        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
+        vc.filterTapped = {
+            let viewController = CustomModalViewController()
+            vc.present(viewController, animated: true)
+        }
         return vc
     }
     

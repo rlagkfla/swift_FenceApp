@@ -6,6 +6,12 @@
 	<array>
 		<dict/>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>카메라 필요하다</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>위치 필요하다</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>위치 필요하다</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

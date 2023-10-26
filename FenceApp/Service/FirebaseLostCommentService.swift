@@ -41,7 +41,7 @@ struct FirebaseLostCommentService {
     
     func fetchComments(lostIdentifier: String) async throws -> [CommentResponseDTO] {
         
-        let documents = try await COLLECTION_LOST.document(lostIdentifier).collection(FB.Collection.commentList).getDocuments().documents
+        let documents = try await COLLECTION_LOST.document(lostIdentifier).collection(FB.Collection.commentList).order(by: FB.Comment.commentDate).getDocuments().documents
         
         let comments = documents.map { document in
             
