@@ -37,8 +37,6 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
         configureCollectionView()
         
         getFirstComment()
@@ -49,6 +47,9 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
         detailView.detailCollectionView.delegate = self
     
         self.navigationItem.title = "Detail"
+        self.navigationController?.navigationBar.backgroundColor = .white
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground() // 불투명으로
     }
     
     func getFirstComment() {
