@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
     
-    let filterTapped: () -> Void
+    var filterTapped: (() -> Void)?
     
     lazy var mainView: MapMainView = {
         let view = MapMainView()
@@ -55,12 +55,11 @@ class MapViewController: UIViewController {
       
     }
     
-    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager, filterTapped: @escaping () -> Void) {
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
         
         self.firebaseLostService = firebaseLostService
         self.firebaseFoundService = firebaseFoundService
         self.locationManager = locationManager
-        self.filterTapped = filterTapped
         print("I am inited")
         super.init(nibName: nil, bundle: nil)
     }
@@ -96,13 +95,13 @@ class MapViewController: UIViewController {
 
 extension MapViewController: mapMainViewDelegate {
     func filterImageViewTapped() {
-        filterTapped()
+        filterTapped?()
 
     }
     
     func locationImageViewTapped() {
         centerViewOnUserLocation()
-        print("aaaaaaaaa")
+        
     }
     
     
