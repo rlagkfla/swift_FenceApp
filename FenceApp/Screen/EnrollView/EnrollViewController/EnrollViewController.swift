@@ -14,25 +14,32 @@ class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
     
+    let firebaseAuthService: FirebaseAuthService
+    let firebaseLostService: FirebaseLostService
+    let firebaseUserService: FirebaseUserService
+    var lostList: [LostResponseDTO] = []
+    
     // camera
     var images: [UIImage] = []
     var pickerViewController: PHPickerViewController?
     
     // map
     // 확인필요
-//    let locationManager: LocationManager
     let currentLocation = LocationManager().fetchLocation() // 현재 위치
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
-//    init(locationManager: LocationManager) {
-//        self.locationManager = locationManager
-//        super.init(nibName: nil, bundle: nil)
-//    }
+    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService) {
+        self.firebaseAuthService = firebaseAuthService
+        self.firebaseLostService = firebaseLostService
+        self.firebaseUserService = firebaseUserService
+        super.init(nibName: nil, bundle: nil)
+    }
+
     
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func loadView() {
@@ -98,6 +105,7 @@ class EnrollViewController: UIViewController {
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         let selectedIndex = sender.selectedSegmentIndex
+        
         print("Selected Index: \(selectedIndex)")
         // 선택된 항목에 따라 원하는 작업을 수행할 수 있습니다.
     }
@@ -152,10 +160,6 @@ class EnrollViewController: UIViewController {
         enrollView.endEditing(true)
     }
     
-    @objc func tapRightBarBtn(){
-        print("clickRight")
-        
-    }
     
     @objc func tapLeftBarBtn(){
         self.navigationController?.popViewController(animated: true)
@@ -169,12 +173,12 @@ class EnrollViewController: UIViewController {
             
             // 선택한 위치 저장
             selectedCoordinate = coordinate
-            print("location - \(selectedCoordinate)")
+            print("location - \(selectedCoordinate!)")
             
             // 이후에 선택한 위치를 지도 중앙에 유지하려면 다음과 같이 지도 중앙을 설정합니다.
             enrollView.mapView.setCenter(coordinate, animated: true)
             
-            if var selectedCoordinate = selectedCoordinate {
+            if let selectedCoordinate = selectedCoordinate {
                 annotation.coordinate = selectedCoordinate
                 annotation.title = "옮긴 위치"
             }
@@ -182,6 +186,34 @@ class EnrollViewController: UIViewController {
             // 마커를 지도 뷰에 추가합니다.
             enrollView.mapView.addAnnotation(annotation)
         }
+    }
+    
+    
+    @objc func tapRightBarBtn(){
+        print("clickRight")
+        
+        guard let selectedCoordinate else {return}
+        
+        Task{
+            do {
+                let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+                let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+                let picture = images[0]
+                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollView.titleTextField.text!, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollView.nameTextField.text!, description: enrollView.textView.text, kind: enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)
+                
+                try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
+                
+                print("lostResponseDTO - \(lostResponseDTO)")
+            }catch{
+                print(error)
+            }
+        }
+        
+        
+       
+
+        
     }
     
 }

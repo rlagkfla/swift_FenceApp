@@ -43,7 +43,7 @@ class EnrollView: UIView {
         return lb
     }()
     
-    private let titleTextField: UITextField = {
+    let titleTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "제목을 입력하세요."
         tf.isUserInteractionEnabled = true
@@ -61,7 +61,7 @@ class EnrollView: UIView {
     }()
     
     lazy var segmentedControl: UISegmentedControl = {
-        let items = ["강아지", "고양이", "기타 동물"]
+        let items = ["dog", "cat", "etc"]
         let control = UISegmentedControl(items: items)
         control.selectedSegmentIndex = 0 // 초기 선택 항목 설정
         control.tintColor = .blue // 세그먼트 컨트롤 색상 설정

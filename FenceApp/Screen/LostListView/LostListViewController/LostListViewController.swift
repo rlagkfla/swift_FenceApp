@@ -17,9 +17,14 @@ class LostListViewController: UIViewController {
     let firebaseLostCommentService: FirebaseLostCommentService
     var lostList: [LostResponseDTO] = []
     
-    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService) {
+    let firebaseAuthService: FirebaseAuthService
+    let firebaseUserService: FirebaseUserService
+    
+    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService) {
         self.fireBaseLostService = fireBaseLostService
         self.firebaseLostCommentService = firebaseLostCommentService
+        self.firebaseAuthService = firebaseAuthService
+        self.firebaseUserService = firebaseUserService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,7 +54,7 @@ class LostListViewController: UIViewController {
 
     
     @objc func tapRightBarBtn(){
-        let enrollVC = EnrollViewController()
+        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService)
         
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
