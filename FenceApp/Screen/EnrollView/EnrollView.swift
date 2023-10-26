@@ -11,6 +11,8 @@ import MapKit
 
 class EnrollView: UIView {
     
+    let enrollViewCell = PhotoCollectionViewCell()
+
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.backgroundColor = .clear
@@ -155,10 +157,10 @@ extension EnrollView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(customBtnView.snp.top)
+            $0.top.equalTo(scrollView.snp.top)
             $0.leading.equalTo(customBtnView.snp.trailing).offset(10) // 컬렉션뷰와 버튼 사이 여백 설정
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
-            $0.height.equalTo(70) // 셀의 높이에 따라 조정
+            $0.bottom.equalTo(lineLabel.snp.top)
         }
         
         lineLabel.snp.makeConstraints {

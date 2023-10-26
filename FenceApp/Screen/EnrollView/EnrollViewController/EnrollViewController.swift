@@ -10,16 +10,23 @@ import SnapKit
 import PhotosUI
 import MapKit
 
+protocol EnrollViewControllerDelegate: AnyObject {
+    func popEnrollViewController()
+}
+
 class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
-    private let lostListView = LostListView()
+//    private let enrollViewCell = PhotoCollectionViewCell()
+//    private let lostListView = LostListView()
     
     let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
     let firebaseUserService: FirebaseUserService
     let firebaseLostCommentService: FirebaseLostCommentService
     var lostList: [LostResponseDTO] = []
+    
+    weak var delegate: EnrollViewControllerDelegate?
     
     // camera
     var images: [UIImage] = []
@@ -76,7 +83,9 @@ class EnrollViewController: UIViewController {
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-        
+        // 이미지 삭제
+        enrollView.enrollViewCell.deleteButton.addTarget(self, action: #selector(tapDeleteImageButton), for: .touchUpInside)
+
     }
     
     func configureKeyboard(){
@@ -104,6 +113,12 @@ class EnrollViewController: UIViewController {
         // PHPicker 화면 표시
         self.present(picker, animated: true, completion: nil)
         
+    }
+    
+    @objc func tapDeleteImageButton(){
+        print("image delete")
+//        images.remove(at: index)
+//        enrollView.collectionView.reloadData()
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -197,27 +212,29 @@ class EnrollViewController: UIViewController {
         guard let selectedCoordinate else {return}
         guard let enrollTitle = enrollView.titleTextField.text else {return}
         guard let enrollName = enrollView.nameTextField.text else {return}
-//        guard let enrollSeg = enrollView.segmentedControl.titleForSegment else {return}
+        guard let enrollSeg = enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex) else {return}
+        
         Task{
             do {
                 let userIdentifier = try firebaseAuthService.getCurrentUser().uid
                 let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
                 let picture = images[0]
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: enrollSeg)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 
                 print("lostResponseDTO - \(lostResponseDTO)")
-                print("latitude - \(lostResponseDTO.latitude) / longitude - \(lostResponseDTO.longitude)")
-                print("kind - \(enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)")
-                print("lostDate - \(enrollView.datePicker.date)")
+                
+                self.navigationController?.popViewController(animated: true)
+                
+                // custom delegate dismiss
+                delegate?.popEnrollViewController()
             }catch{
                 print(error)
             }
         }
         
-        print("저장 완료")
     }
     
 }
