@@ -13,10 +13,12 @@ import MapKit
 class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
+    private let lostListView = LostListView()
     
     let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
     let firebaseUserService: FirebaseUserService
+    let firebaseLostCommentService: FirebaseLostCommentService
     var lostList: [LostResponseDTO] = []
     
     // camera
@@ -29,10 +31,11 @@ class EnrollViewController: UIViewController {
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
-    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService) {
+    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService) {
         self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
         self.firebaseUserService = firebaseUserService
+        self.firebaseLostCommentService = firebaseLostCommentService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -190,30 +193,31 @@ class EnrollViewController: UIViewController {
     
     
     @objc func tapRightBarBtn(){
-        print("clickRight")
         
         guard let selectedCoordinate else {return}
-        
+        guard let enrollTitle = enrollView.titleTextField.text else {return}
+        guard let enrollName = enrollView.nameTextField.text else {return}
+//        guard let enrollSeg = enrollView.segmentedControl.titleForSegment else {return}
         Task{
             do {
                 let userIdentifier = try firebaseAuthService.getCurrentUser().uid
                 let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
                 let picture = images[0]
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollView.titleTextField.text!, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollView.nameTextField.text!, description: enrollView.textView.text, kind: enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 
                 print("lostResponseDTO - \(lostResponseDTO)")
+                print("latitude - \(lostResponseDTO.latitude) / longitude - \(lostResponseDTO.longitude)")
+                print("kind - \(enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)")
+                print("lostDate - \(enrollView.datePicker.date)")
             }catch{
                 print(error)
             }
         }
         
-        
-       
-
-        
+        print("저장 완료")
     }
     
 }
@@ -233,13 +237,14 @@ extension EnrollViewController {
     }
 }
 
-extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private func configureCollectionView() {
         enrollView.collectionView.delegate = self
         enrollView.collectionView.dataSource = self
-        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell") // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스입니다.
-        enrollView.collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10) // 셀 간 여백 설정
+        
+        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell") // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스
+        enrollView.collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 셀 간 여백 설정
     }
     
     
@@ -258,6 +263,16 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // UICollectionView의 크기를 가져와서 사용
+        let collectionViewHeight = collectionView.bounds.height
+        let collectionViewWidth = collectionViewHeight
+
+        // 각 셀의 크기를 UICollectionView의 크기와 일치하도록 설정
+        return CGSize(width: collectionViewWidth, height: collectionViewHeight)
+    }
+    
 }
 
 extension EnrollViewController: PHPickerViewControllerDelegate {

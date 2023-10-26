@@ -48,13 +48,15 @@ class LostListViewController: UIViewController {
        
     }
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        navigationController?.isNavigationBarHidden = false
-    //    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        lostListView.lostTableView.reloadData()
+    }
 
     
     @objc func tapRightBarBtn(){
-        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService)
+        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService)
         
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
