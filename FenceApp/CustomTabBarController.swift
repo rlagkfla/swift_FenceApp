@@ -113,6 +113,8 @@ extension CustomTabBarController: UIImagePickerControllerDelegate & UINavigation
                 print(error)
             }
         }
+        
+        picker.dismiss(animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
