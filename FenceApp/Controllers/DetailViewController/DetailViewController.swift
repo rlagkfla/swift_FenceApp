@@ -8,8 +8,8 @@
 import UIKit
 
 class DetailViewController: UIViewController, CommentDetailViewControllerDelegate {
-    func dismissCommetnDetailViewController(firstCommentDTO: CommentResponseDTO) {
-        commentDTOFirst = firstCommentDTO
+    func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
+        lastCommentDTO = lastComment
         self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
     }
     
@@ -17,7 +17,7 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
     private let detailView = DetailView()
     let firebaseCommentService: FirebaseLostCommentService
     let lostDTO: LostResponseDTO
-    var commentDTOFirst: CommentResponseDTO? = nil
+    var lastCommentDTO: CommentResponseDTO? = nil
     
     init(lostDTO: LostResponseDTO, firebaseCommentService: FirebaseLostCommentService) {
         self.lostDTO = lostDTO
@@ -48,14 +48,12 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
     
         self.navigationItem.title = "Detail"
         self.navigationController?.navigationBar.backgroundColor = .white
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground() // 불투명으로
     }
     
     func getFirstComment() {
         Task {
             do {
-                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
+                lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).last
             } catch {
                 print(error)
             }
@@ -112,7 +110,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
             commentCell.commentImageView.kf.setImage(with: URL(string: lostDTO.userProfileImageURL))
-            commentCell.commentTextLabel.text = commentDTOFirst?.commentDescription
+            commentCell.commentTextLabel.text = lastCommentDTO?.commentDescription
             commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
             return commentCell
         }

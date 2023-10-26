@@ -30,6 +30,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
         self.delegate = self
         
         configureTabBarControllers()
+        setBackgroundColor()
         configureCameraButton()
     }
     
@@ -67,9 +68,20 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
     
         self.viewControllers = controllers
           
+        
+    }
+    
+    func setBackgroundColor() {
+        self.tabBar.backgroundColor = .white
+        self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
         self.tabBar.unselectedItemTintColor = .black
-        self.tabBar.backgroundColor = .white
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = .white
+        self.tabBar.standardAppearance = appearance
+        self.tabBar.scrollEdgeAppearance = appearance
     }
     
     func configureCameraButton() {
@@ -79,6 +91,7 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
     
     @objc func cameraButtonTapped() {
         let camera = UIImagePickerController()
+        
         camera.sourceType = .camera
         camera.allowsEditing = true
         camera.cameraDevice = .rear
