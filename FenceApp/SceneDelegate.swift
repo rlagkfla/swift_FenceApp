@@ -59,7 +59,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeMapViewVC() -> MapViewController {
-        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
+        let filterTapped = { print("Tapped") }
+        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager, filterTapped: filterTapped)
         
         return vc
     }
