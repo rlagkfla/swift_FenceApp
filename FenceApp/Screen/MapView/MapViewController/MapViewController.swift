@@ -42,9 +42,10 @@ class MapViewController: UIViewController {
        
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts()
-                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
-                pinTogether = lostResponseDTOs + foundResponseDTOs
+                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 10)
+//                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
+//                pinTogether = lostResponseDTOs + foundResponseDTOs
+                pinTogether = lostResponseDTOs
                 setPinUsingMKAnnotation(pinables: pinTogether)
             } catch {
                 print(error)
