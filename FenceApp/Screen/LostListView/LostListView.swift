@@ -21,14 +21,15 @@ class LostListView: UIView {
     lazy var lostTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(LostListViewCell.self, forCellReuseIdentifier: "LostListViewCell")
-//        tableView.backgroundColor = .gray
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0.5, left: 10, bottom: 0.5, right: 10)
+        tableView.separatorColor = .gray
         return tableView
     }()
     
     let filterBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
-//        btn.tintColor = .black
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
         return btn
@@ -78,9 +79,6 @@ extension LostListView {
         }
         
     }
-    
-
-    
 }
 
 
