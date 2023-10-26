@@ -7,9 +7,11 @@
 
 import UIKit
 
-class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
+class CustomTabBarController: UITabBarController, UITabBarControllerDelegate{
 
     let controllers: [UIViewController]
+    let locationManager: LocationManager
+    let firebaseFoundSerivce: FirebaseFoundService
     
     lazy var cameraButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -31,8 +33,10 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         configureCameraButton()
     }
     
-    init(controllers: [UIViewController]) {
+    init(controllers: [UIViewController], locationManager: LocationManager, firebaseFoundSerivce: FirebaseFoundService) {
         self.controllers = controllers
+        self.locationManager = locationManager
+        self.firebaseFoundSerivce = firebaseFoundSerivce
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -74,7 +78,14 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func cameraButtonTapped() {
-        print(#function)
+        let camera = UIImagePickerController()
+        camera.sourceType = .camera
+        camera.allowsEditing = true
+        camera.cameraDevice = .rear
+        camera.cameraCaptureMode = .photo
+        camera.delegate = self
+        
+        present(camera, animated: true)
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
@@ -82,5 +93,28 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
             return false
         }
         return true
+    }
+}
+
+extension CustomTabBarController: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage else { return }
+        
+        let currentLocation = locationManager.fetchLocation()
+        
+        guard let latitude = currentLocation?.latitude, let longitude = currentLocation?.longitude else { return }
+        
+        Task {
+            do {
+                let url = try await FirebaseImageUploadService.uploadeFoundImage(image: image)
+                let foundDTD = FoundResponseDTO(latitude: latitude, longitude: longitude, imageURL: url, date: Date(), userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2")
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

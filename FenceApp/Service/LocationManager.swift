@@ -26,6 +26,4 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func fetchLocation() -> CLLocationCoordinate2D? {
         locationManager.location?.coordinate
     }
-    
-
 }
