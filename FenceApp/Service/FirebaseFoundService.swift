@@ -32,6 +32,28 @@ struct FirebaseFoundService {
         return foundResponseDTOs
     }
     
+    func fetchFounds(within distance: Double) async throws -> [FoundResponseDTO] {
+        
+        let locationCalculator = LocationCalculator()
+        let locationManager = LocationManager()
+        
+        guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
+        let a = locationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
+        let ref = COLLECTION_LOST.whereField(FB.Found.latitude, isLessThan: a.maxLat)
+                                .whereField(FB.Found.latitude, isGreaterThan: a.minLat)
+                                .whereField(FB.Found.longitude, isLessThan: a.maxLon)
+                                .whereField(FB.Found.longitude, isGreaterThan: a.minLon)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let foundResponseDTOs = documents.map { document in
+            
+            return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        return foundResponseDTOs
+    }
+    
     
     func deleteFounds(writtenBy userIdentifier: String, batchController: BatchController) async throws {
         

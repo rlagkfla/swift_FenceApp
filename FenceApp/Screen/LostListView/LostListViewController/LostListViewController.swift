@@ -11,6 +11,7 @@ import Kingfisher
 
 class LostListViewController: UIViewController {
     
+    // MARK: - Properties
     private let lostListView = LostListView()
     
     let fireBaseLostService: FirebaseLostService
@@ -32,6 +33,7 @@ class LostListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life Cycle
     override func loadView() {
         view = lostListView
     }
@@ -76,8 +78,6 @@ class LostListViewController: UIViewController {
             }
         }
     }
-    
-
 }
 
 
@@ -110,30 +110,23 @@ extension LostListViewController {
 extension LostListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return lostList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
-        cell.lostimgView.kf.setImage(with: URL(string: lostList[indexPath.row].imageURL))
-        cell.titleLabel.text = lostList[indexPath.row].title
-        cell.dateLabel.text = "\(lostList[indexPath.row].lostDate)"
-        cell.nickNameLabel.text = lostList[indexPath.row].userNickName
-//        tableView.reloadData()
+        let lostPost = lostList[indexPath.row]
+        cell.configure(lostPostImageUrl: lostPost.imageURL, lostPostTitle: lostPost.title, lostPostDate: "\(lostPost.lostDate)", lostPostUserNickName: lostPost.userNickName)
         return cell
     }
 
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // 여기에서 각 행에 대한 높이를 동적으로 반환합니다.
-        return 110
+        return 130
     }
-    
 }
 
 extension LostListViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService)
         self.navigationController?.pushViewController(DetailVC, animated: true)

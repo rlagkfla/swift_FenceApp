@@ -5,6 +5,7 @@
 //  Created by Woojun Lee on 10/18/23.
 //
 
+
 struct FirebaseLostService {
     
     
@@ -94,10 +95,7 @@ struct FirebaseLostService {
             }
             
             completion(.success(lostResponseDTOs))
-            
-            
         }
-        
     }
     
     
@@ -112,6 +110,34 @@ struct FirebaseLostService {
         return lostResponseDTOs
         
         
+    }
+    
+    func fetchLosts(within distance: Double) async throws -> [LostResponseDTO] {
+        
+        let locationCalculator = LocationCalculator()
+        let locationManager = LocationManager()
+        guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
+        let a = locationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
+        let ref = COLLECTION_LOST.whereField(FB.Lost.latitude, isLessThan: a.maxLat)
+                                .whereField(FB.Lost.latitude, isGreaterThan: a.minLat)
+                                
+                                
+//                                .whereField(FB.Lost.longitude, isLessThan: a.maxLon)
+//            .whereField("lostTitle", isEqualTo: "ㅎㄹㅎ")
+//                                .whereField(FB.Lost.longitude, isGreaterThan: a.minLon)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let lostResponseDTOs = documents.map { document in
+            return LostResponseDTOMapper.makeLostResponseDTO(from: document.data())
+        }
+        
+        let filteredLostResponseDTOs = lostResponseDTOs.filter {
+            let range = a.minLon...a.maxLon
+            return range.contains($0.longitude)
+        }
+        
+        return filteredLostResponseDTOs
     }
     
     

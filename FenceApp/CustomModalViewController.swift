@@ -10,7 +10,7 @@ import UIKit
 class CustomModalViewController: UIViewController {
     
     let navigationBar = UINavigationBar()
-    
+
     lazy var currentRangeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
@@ -29,43 +29,53 @@ class CustomModalViewController: UIViewController {
     private let rangeLabel: UILabel = {
         let label = UILabel()
         label.text = "거리"
+        label.font = UIFont.systemFont(ofSize: 22)
         return label
     }()
     
     lazy var rangeSlider: UISlider = {
         let slider = UISlider()
-        slider.backgroundColor = .gray
-        slider.thumbTintColor = .blue
         slider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
         slider.minimumValue = 1
         slider.maximumValue = 10
         slider.value = 5.5
+        slider.thumbTintColor = UIColor(hexCode: "5DDFDE")
+        slider.minimumTrackTintColor = UIColor(hexCode: "5DDFDE")
+        slider.maximumTrackTintColor = .darkGray
         return slider
     }()
     
     private let startDateLabel: UILabel = {
         let label = UILabel()
         label.text = "from:"
+        label.font = UIFont.systemFont(ofSize: 22)
         return label
     }()
     
-    let startDatePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
+    lazy var startDatePicker: UIDatePicker = {
+        var datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
+        let currnetDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        datePicker.date = currnetDayAgo
+        datePicker.maximumDate = currnetDayAgo
+        datePicker.addTarget(self, action: #selector(startDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
     
     private let endDateLabel: UILabel = {
         let label = UILabel()
         label.text = "to:"
+        label.font = UIFont.systemFont(ofSize: 22)
         return label
     }()
     
-    let endDatePicker: UIDatePicker = {
+    lazy var endDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
+        datePicker.minimumDate = Date()
+        datePicker.addTarget(self, action: #selector(endDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
 
@@ -75,8 +85,6 @@ class CustomModalViewController: UIViewController {
         setSelf()
         configureUI()
         configureNavigationBarItem()
-        
-        
     }
     
     func setSelf() {
@@ -93,7 +101,10 @@ class CustomModalViewController: UIViewController {
         navigationBar.items = [UINavigationItem()]
         navigationBar.items?[0].setRightBarButton(UIBarButtonItem(customView: applyButton), animated: true)
     }
-    
+}
+
+// MARK: - Actions
+extension CustomModalViewController {
     @objc func applyButtonTapped() {
         dismiss(animated: true)
     }
@@ -101,6 +112,16 @@ class CustomModalViewController: UIViewController {
     @objc func sliderValueChanged(_ sender: UISlider) {
         let value = sender.value
         currentRangeLabel.text = String(Int(value)) + "km"
+    }
+    
+    @objc func startDatePickerValueChanged(_ sender: UIDatePicker) {
+        let value = sender.date
+        endDatePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: value)
+    }
+    
+    @objc func endDatePickerValueChanged(_ sender: UIDatePicker) {
+        let value = sender.date
+        startDatePicker.maximumDate = Calendar.current.date(byAdding: .day, value: -1, to: value)
     }
 }
 
@@ -132,7 +153,6 @@ private extension CustomModalViewController {
         rangeLabel.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(60)
         }
     }
     
@@ -142,7 +162,6 @@ private extension CustomModalViewController {
         currentRangeLabel.snp.makeConstraints {
             $0.centerY.equalTo(rangeLabel)
             $0.leading.equalTo(rangeLabel.snp.trailing).offset(5)
-            $0.width.height.equalTo(60)
         }
     }
     
@@ -160,9 +179,8 @@ private extension CustomModalViewController {
         view.addSubview(startDateLabel)
         
         startDateLabel.snp.makeConstraints {
-            $0.top.equalTo(rangeSlider.snp.bottom).offset(15)
+            $0.top.equalTo(rangeSlider.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(80)
         }
     }
     
@@ -180,9 +198,8 @@ private extension CustomModalViewController {
         view.addSubview(endDateLabel)
         
         endDateLabel.snp.makeConstraints {
-            $0.top.equalTo(startDateLabel.snp.bottom).offset(10)
+            $0.top.equalTo(startDateLabel.snp.bottom).offset(15)
             $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(80)
         }
     }
     
