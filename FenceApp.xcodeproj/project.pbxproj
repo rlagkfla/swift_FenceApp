@@ -49,6 +49,7 @@
 		D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */; };
 		D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */; };
 		D6D806302AE9FF780002AE3A /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */; };
+		D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D806352AEA52D90002AE3A /* String+Ext.swift */; };
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
@@ -117,6 +118,7 @@
 		D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
 		D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		D6D806312AEA33870002AE3A /* FenceAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceAppDebug.entitlements; sourceTree = "<group>"; };
+		D6D806352AEA52D90002AE3A /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -382,6 +384,14 @@
 			path = EnrollViewController;
 			sourceTree = "<group>";
 		};
+		D6D806342AEA52B70002AE3A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D6D806352AEA52D90002AE3A /* String+Ext.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		D6D9A7222ADD05EC006A5B8B = {
 			isa = PBXGroup;
 			children = (
@@ -415,6 +425,7 @@
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
 				D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */,
+				D6D806342AEA52B70002AE3A /* Extension */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6E10EA92AE2AC1C0098F05D /* GoogleService-Info.plist */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
@@ -606,6 +617,7 @@
 				08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */,
 				D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */,
+				D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
