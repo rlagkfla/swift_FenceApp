@@ -14,6 +14,8 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let img = UIImageView()
+        img.layer.cornerRadius = 10 
+        img.layer.masksToBounds = true
         return img
     }()
     
