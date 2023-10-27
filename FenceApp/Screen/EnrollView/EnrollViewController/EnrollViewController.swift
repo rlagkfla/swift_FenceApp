@@ -203,11 +203,23 @@ class EnrollViewController: UIViewController {
     
     
     @objc func tapRightBarBtn(){
-        
         guard let selectedCoordinate else {return}
         guard let enrollTitle = enrollView.titleTextField.text else {return}
         guard let enrollName = enrollView.nameTextField.text else {return}
         guard let enrollSeg = enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex) else {return}
+        
+        var kind: String
+        
+        switch enrollSeg {
+        case "강아지":
+            kind = "dog"
+        case "고양이":
+            kind = "cat"
+        case "기타 동물":
+            kind = "etc"
+        default:
+            kind = "unknown"
+        }
         
         Task{
             do {
@@ -215,7 +227,7 @@ class EnrollViewController: UIViewController {
                 let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
                 let picture = images[0]
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: enrollSeg)
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 

@@ -61,6 +61,8 @@ class LostListViewController: UIViewController {
         let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService)
         
         enrollVC.delegate = self
+        // 탭바 숨기기
+        enrollVC.hidesBottomBarWhenPushed = true
         
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
