@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct FirebaseFoundService {
     
     
@@ -31,6 +32,36 @@ struct FirebaseFoundService {
         
         return foundResponseDTOs
     }
+    
+    
+    func fetchFounds(within distance: Double, fromDate: Date, toDate: Date) async throws -> [FoundResponseDTO] {
+        
+        
+        let locationManager = LocationManager()
+        
+        guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
+        let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
+        let ref = COLLECTION_FOUND.whereField(FB.Found.latitude, isLessThan: a.maxLat)
+                                .whereField(FB.Found.latitude, isGreaterThan: a.minLat)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let foundResponseDTOs = documents.map { document in
+            
+            return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        let b = foundResponseDTOs.filter {
+
+            let range = a.minLon...a.maxLon
+            
+            return range.contains($0.longitude) && $0.date <= toDate && $0.date >= fromDate
+        }
+      
+        return b
+    }
+    
+    
     
     
     func deleteFounds(writtenBy userIdentifier: String, batchController: BatchController) async throws {

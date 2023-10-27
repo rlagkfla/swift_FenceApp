@@ -7,9 +7,11 @@
 
 import UIKit
 
-class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
+class CustomTabBarController: UITabBarController{
 
     let controllers: [UIViewController]
+    let locationManager: LocationManager
+    let firebaseFoundSerivce: FirebaseFoundService
     
     lazy var cameraButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -27,12 +29,13 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         self.delegate = self
         
-        configureTabBarControllers()
-        configureCameraButton()
+        configure()
     }
     
-    init(controllers: [UIViewController]) {
+    init(controllers: [UIViewController], locationManager: LocationManager, firebaseFoundSerivce: FirebaseFoundService) {
         self.controllers = controllers
+        self.locationManager = locationManager
+        self.firebaseFoundSerivce = firebaseFoundSerivce
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,8 +43,33 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureTabBarControllers() {
+    func configure() {
+        self.delegate = self
+        
+        configureTabBarControllers()
+        setBackgroundColor()
+        configureCameraButton()
+    }
+    
+    // MARK: - Action
+    @objc func cameraButtonTapped() {
+        let camera = UIImagePickerController()
+        
+        camera.sourceType = .camera
+        camera.allowsEditing = true
+        camera.cameraDevice = .rear
+        camera.cameraCaptureMode = .photo
+        camera.delegate = self
+        
+        present(camera, animated: true)
+    }
+    
+    
+}
 
+// MARK: - Private Method
+extension CustomTabBarController {
+    private func configureTabBarControllers() {
         let mapTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "map"), tag: 0)
         mapTabBarItem.selectedImage = UIImage(systemName: "map.fill")
         controllers[0].tabBarItem = mapTabBarItem
@@ -62,24 +90,57 @@ class CustomTabBarController: UITabBarController, UITabBarControllerDelegate {
         controllers[4].tabBarItem = myInfoTabBarItem
     
         self.viewControllers = controllers
-          
-        self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
-        self.tabBar.unselectedItemTintColor = .black
     }
     
-    func configureCameraButton() {
+    private func setBackgroundColor() {
+        self.tabBar.backgroundColor = .white
+        self.tabBar.isTranslucent = false
+        self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
+        self.tabBar.unselectedItemTintColor = .black
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = .white
+        self.tabBar.standardAppearance = appearance
+        self.tabBar.scrollEdgeAppearance = appearance
+    }
+    
+    private func configureCameraButton() {
         self.tabBar.addSubview(cameraButton)
         cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 25, y: -20, width: 50, height: 50)
     }
-    
-    @objc func cameraButtonTapped() {
-        print(#function)
-    }
-    
+}
+
+// MARK: - UITabBarControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate
+extension CustomTabBarController: UITabBarControllerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController == controllers[2] {
             return false
         }
         return true
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage else { return }
+        
+        let currentLocation = locationManager.fetchLocation()
+        
+        guard let latitude = currentLocation?.latitude, let longitude = currentLocation?.longitude else { return }
+        
+        Task {
+            do {
+                let url = try await FirebaseImageUploadService.uploadeFoundImage(image: image)
+                let foundDTD = FoundResponseDTO(latitude: latitude, longitude: longitude, imageURL: url, date: Date(), userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2")
+                try await firebaseFoundSerivce.createFound(foundResponseDTO: foundDTD)
+            } catch {
+                print(error)
+            }
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

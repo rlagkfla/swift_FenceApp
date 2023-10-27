@@ -7,17 +7,14 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, CommentDetailViewControllerDelegate {
-    func dismissCommetnDetailViewController() {
-        print("asd")
-    }
-    
+class DetailViewController: UIViewController {
     
     // MARK: - Properties
     private let detailView = DetailView()
+    
     let firebaseCommentService: FirebaseLostCommentService
     let lostDTO: LostResponseDTO
-    var commentDTOFirst: CommentResponseDTO? = nil
+    var lastCommentDTO: CommentResponseDTO?
     
     init(lostDTO: LostResponseDTO, firebaseCommentService: FirebaseLostCommentService) {
         self.lostDTO = lostDTO
@@ -37,28 +34,7 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getFirstComment()
-        
-        view.backgroundColor = .white
-        
-        configureCollectionView()
-    }
-    
-    private func configureCollectionView() {
-        detailView.detailCollectionView.dataSource = self
-        detailView.detailCollectionView.delegate = self
-    
-        self.navigationItem.title = "Detail"
-    }
-    
-    func getFirstComment() {
-        Task {
-            do {
-                commentDTOFirst = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).first
-            } catch {
-                print(error)
-            }
-        }
+        configure()
     }
     
     // MARK: - Action
@@ -74,6 +50,34 @@ class DetailViewController: UIViewController, CommentDetailViewControllerDelegat
         }
         
         present(commentVC, animated: true)
+    }
+}
+
+// MARK: - Priavte Method
+private extension DetailViewController {
+    private func configure() {
+        view.backgroundColor = .white
+        
+        self.navigationItem.title = "Detail"
+        self.navigationController?.navigationBar.backgroundColor = .white
+        
+        configureCollectionView()
+        getFirstComment()
+    }
+    
+    private func configureCollectionView() {
+        detailView.detailCollectionView.dataSource = self
+        detailView.detailCollectionView.delegate = self
+    }
+    
+    private func getFirstComment() {
+        Task {
+            do {
+                lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).last
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
@@ -110,10 +114,22 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-            commentCell.commentImageView.kf.setImage(with: URL(string: lostDTO.userProfileImageURL))
-            commentCell.commentTextLabel.text = commentDTOFirst?.commentDescription
             commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+            if let lastCommentDescription = lastCommentDTO?.commentDescription {
+                let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
+                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lostDTO.userProfileImageURL)
+                commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+                return commentCell
+            }
             return commentCell
         }
+    }
+}
+
+// MARK: - CustomDelegate
+extension DetailViewController: CommentDetailViewControllerDelegate {
+    func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
+        lastCommentDTO = lastComment
+        self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
     }
 }

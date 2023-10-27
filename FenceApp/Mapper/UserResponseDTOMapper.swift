@@ -10,9 +10,9 @@ struct UserResponseDTOMapper {
     static func makeUserResponseDTO(from dictionary: [String: Any]) -> UserResponseDTO {
         
         UserResponseDTO(email: dictionary[FB.User.email] as? String ?? "",
-                        profileImageURL: dictionary[FB.User.userNickname] as? String ?? "",
-                        identifier: dictionary[FB.User.profileImageURL] as? String ?? "",
-                        nickname: dictionary[FB.User.useridentifier] as? String ?? "")
+                        profileImageURL: dictionary[FB.User.profileImageURL] as? String ?? "",
+                        identifier: dictionary[FB.User.useridentifier] as? String ?? "",
+                        nickname: dictionary[FB.User.userNickname] as? String ?? "")
     }
     
     static func makeUserResponseDTOs(from dictionaries: [[String: Any]]) -> [UserResponseDTO] {

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol CommentDetailViewControllerDelegate: AnyObject {
-    func dismissCommetnDetailViewController()
+    func dismissCommetnDetailViewController(lastComment: CommentResponseDTO)
 }
 
 class CommentDetailViewController: UIViewController {
@@ -62,6 +62,10 @@ class CommentDetailViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        guard let lastCommet = commentList.last else { return }
+        
+        delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
     }
     
     private func configureActions() {
@@ -143,10 +147,7 @@ extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentDetailView.commentTableView.dequeueReusableCell(withIdentifier: CommentDetailTableViewCell.identifier, for: indexPath) as! CommentDetailTableViewCell
         let comment = commentList[indexPath.row]
-        cell.commenterNickName.text = comment.userNickname
-        cell.commentUserProfileImageView.kf.setImage(with: URL(string: comment.userProfileImageURL))
-        cell.commentTextLabel.text = comment.commentDescription
-        cell.setCommentWriteTime(commentTime: "\(comment.commentDate)")
+        cell.configureCell(commentUserNickName: comment.userNickname, commentUserProfileImageUrl: comment.userProfileImageURL, commentDescription: comment.commentDescription, commentTime: "\(comment.commentDate)")
         return cell
     }
 }
