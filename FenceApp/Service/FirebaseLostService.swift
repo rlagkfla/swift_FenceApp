@@ -114,13 +114,13 @@ struct FirebaseLostService {
     
     func fetchLosts(within distance: Double, fromDate: Date, toDate: Date) async throws -> [LostResponseDTO] {
         
-        let locationCalculator = LocationCalculator()
+        
         
         let locationManager = LocationManager()
         
         guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
         
-        let a = locationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
+        let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
         
         let ref = COLLECTION_LOST.whereField(FB.Lost.latitude, isLessThan: a.maxLat)
                                 .whereField(FB.Lost.latitude, isGreaterThan: a.minLat)

@@ -40,6 +40,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        centerViewOnUserLocation()
         Task {
             do {
                 lostResponseDTOs = try await firebaseLostService.fetchLosts()
@@ -92,7 +93,7 @@ class MapViewController: UIViewController {
         
         guard let location = locationManager.fetchLocation() else { return }
         
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: 2500, longitudinalMeters: 2500)
         
         mainView.mapView.setRegion(region, animated: true)
         
@@ -113,7 +114,7 @@ extension MapViewController: mapMainViewDelegate {
     
 }
 
-extension MapViewController: CustomModelViewControllerDelegate {
+extension MapViewController: CustomFilterModalViewControllerDelegate {
     func applyTapped(within: Double, fromDate: Date, toDate: Date) {
         
         Task {

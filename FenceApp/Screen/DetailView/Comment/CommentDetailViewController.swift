@@ -41,14 +41,7 @@ class CommentDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getCommentList()
-        
-        view.backgroundColor = .white
-        
-        configureTalbeView()
-        configureActions()
-        
-        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: lostResponseDTO.userProfileImageURL))
+        configure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +59,17 @@ class CommentDetailViewController: UIViewController {
         guard let lastCommet = commentList.last else { return }
         
         delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
+    }
+    
+    private func configure() {
+        getCommentList()
+        
+        view.backgroundColor = .white
+        
+        configureTalbeView()
+        configureActions()
+        
+        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: lostResponseDTO.userProfileImageURL))
     }
     
     private func configureActions() {
