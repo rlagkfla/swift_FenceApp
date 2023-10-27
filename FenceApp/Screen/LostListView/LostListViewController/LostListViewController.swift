@@ -40,8 +40,7 @@ class LostListViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-//        lostListView.delegate = self
+            
         getLostList()
         
         configureTableView()
@@ -83,7 +82,6 @@ class LostListViewController: UIViewController {
         }
     }
 }
-
 
 extension LostListViewController {
     

@@ -6,6 +6,7 @@
 //
 
 import MapKit
+import Kingfisher
 
 class CustomAnnotationView: MKAnnotationView {
     
@@ -15,7 +16,6 @@ class CustomAnnotationView: MKAnnotationView {
         didSet {
             
             clusteringIdentifier = "shop"
-            //            image = UIImage(systemName: "house")
         }
     }
     
@@ -51,8 +51,9 @@ class CustomAnnotationView: MKAnnotationView {
         }
     }
     
-    func setImage(image: UIImage) {
-        customImageView.image = image
+    func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        customImageView.kf.setImage(with: url)
     }
     
     // Annotation도 재사용을 하므로 재사용 전 값을 초기화 시켜서 다른 값이 들어가는 것을 방지

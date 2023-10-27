@@ -5,6 +5,7 @@
 //  Created by Woojun Lee on 10/18/23.
 //
 import Foundation
+import FirebaseFirestore
 
 struct FirebaseLostService {
     
@@ -112,15 +113,36 @@ struct FirebaseLostService {
         
     }
     
+    func fetchLostsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> LostWithDocument {
+        
+        var ref = COLLECTION_LOST.limit(to: int)
+        
+        if let lastDocument {
+            ref = ref.start(afterDocument: lastDocument)
+        }
+        let snapshot = try await ref.getDocuments()
+        
+        let documents = snapshot.documents
+        
+        guard let lastDocument = documents.last else { throw PetError.noSnapshotDocument }
+        
+        let lostResponseDTOs = documents.map { document in
+            return LostResponseDTOMapper.makeLostResponseDTO(from: document.data())
+        }
+        
+        return LostWithDocument(lostResponseDTOs: lostResponseDTOs, lastDocument: lastDocument)
+        
+    }
+    
     func fetchLosts(within distance: Double, fromDate: Date, toDate: Date) async throws -> [LostResponseDTO] {
         
-        let locationCalculator = LocationCalculator()
+        
         
         let locationManager = LocationManager()
         
         guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
         
-        let a = locationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
+        let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
         
         let ref = COLLECTION_LOST.whereField(FB.Lost.latitude, isLessThan: a.maxLat)
                                 .whereField(FB.Lost.latitude, isGreaterThan: a.minLat)
