@@ -16,7 +16,7 @@ class CustomTabBarController: UITabBarController{
     lazy var cameraButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         button.setImage(UIImage(systemName: "camera"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = .white
         button.backgroundColor = UIColor(hexCode: "5DDFDE")
         button.layer.cornerRadius = 20
         button.isUserInteractionEnabled = true
@@ -26,8 +26,6 @@ class CustomTabBarController: UITabBarController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.delegate = self
         
         configure()
     }
