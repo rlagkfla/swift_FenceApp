@@ -117,9 +117,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         vc.filterTapped = {
             
-            let modelViewController = CustomModalViewController()
-            modelViewController.delegate = vc
-            vc.present(modelViewController, animated: true)
+            let modalViewController = CustomFilterModalViewController()
+            modalViewController.delegate = vc
+            vc.present(modalViewController, animated: true)
             
         }
         return vc

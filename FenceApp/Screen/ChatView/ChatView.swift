@@ -17,6 +17,7 @@ class ChatView: UIView {
         layout.minimumInteritemSpacing = 2
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: ChatCollectionViewCell.identifier)
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
