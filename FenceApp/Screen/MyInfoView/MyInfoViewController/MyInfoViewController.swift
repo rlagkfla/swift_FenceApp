@@ -20,7 +20,7 @@ import UIKit
 
 class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, EditViewControllerDelegate {
 
-    let profileImageView: UIImageView = {
+    private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -30,7 +30,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         return iv
     }()
     
-    let nickname: UILabel = {
+    private let nickname: UILabel = {
         let label = UILabel()
         label.backgroundColor = .blue
         label.text = "닉네임"
@@ -39,14 +39,14 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         return label
     }()
     
-    let memo: UILabel = {
+    private let memo: UILabel = {
         let label = UILabel()
         label.backgroundColor = .red
         label.text = "간단한 메모"
         return label
     }()
     
-    let editProfileButton: UIButton = {
+    private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
         button.setTitleColor(.blue, for: .normal)
@@ -57,7 +57,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         return button
     }()
     
-    lazy var lostCollectionView: UICollectionView = {
+    private lazy var lostCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -68,8 +68,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         collectionView.isScrollEnabled = true
         return collectionView
     }()
-    
-    var editButtonTopConstraint: NSLayoutConstraint?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,14 +99,13 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         lostCollectionView.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 30).isActive = true
         lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -self.tabBarController!.tabBar.frame.height).isActive = true
+        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: self.tabBarController!.tabBar.frame.height).isActive = true
     }
     
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
-        editButtonTopConstraint = editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45)
-        editButtonTopConstraint?.isActive = true
+        editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45).isActive = true
         editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -145,7 +142,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         let view = EditViewController()
         view.delegate = self
         navigationController?.pushViewController(view, animated: true)
-        editButtonTopConstraint?.constant = 100
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -176,30 +172,30 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         if indexPath.section == 0 {
             cell.backgroundColor = .systemPink
-            if indexPath.item == 0 {
-                let lostLabel = UILabel()
-                lostLabel.text = "Lost"
-                lostLabel.textColor = .black
-                lostLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-                lostLabel.translatesAutoresizingMaskIntoConstraints = false
-                cell.addSubview(lostLabel)
-                lostLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-                lostLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
-            }
+//            if indexPath.item == 0 {
+//                let lostLabel = UILabel()
+//                lostLabel.text = "Lost"
+//                lostLabel.textColor = .black
+//                lostLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+//                lostLabel.translatesAutoresizingMaskIntoConstraints = false
+//                cell.addSubview(lostLabel)
+//                lostLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+//                lostLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
+//            }
         }
         
         if indexPath.section == 1 {
             cell.backgroundColor = .color1
-            if indexPath.item == 0 {
-                let foundLabel = UILabel()
-                foundLabel.text = "Found"
-                foundLabel.textColor = .black
-                foundLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-                foundLabel.translatesAutoresizingMaskIntoConstraints = false
-                cell.addSubview(foundLabel)
-                foundLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
-            }
+//            if indexPath.item == 0 {
+//                let foundLabel = UILabel()
+//                foundLabel.text = "Found"
+//                foundLabel.textColor = .black
+//                foundLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+//                foundLabel.translatesAutoresizingMaskIntoConstraints = false
+//                cell.addSubview(foundLabel)
+//                foundLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+//                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
+//            }
         }
         
         return cell
