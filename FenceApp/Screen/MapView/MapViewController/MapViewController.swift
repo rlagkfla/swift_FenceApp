@@ -114,7 +114,7 @@ extension MapViewController: mapMainViewDelegate {
     
 }
 
-extension MapViewController: CustomModelViewControllerDelegate {
+extension MapViewController: CustomFilterModalViewControllerDelegate {
     func applyTapped(within: Double, fromDate: Date, toDate: Date) {
         
         Task {

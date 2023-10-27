@@ -73,9 +73,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         vc.filterTapped = {
-            let modelViewController = CustomModalViewController()
-            modelViewController.delegate = vc
-            vc.present(modelViewController, animated: true)
+            let filterModalViewController = CustomFilterModalViewController()
+            filterModalViewController.delegate = vc
+            vc.present(filterModalViewController, animated: true)
         }
         return vc
     }

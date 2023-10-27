@@ -21,6 +21,7 @@
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
+		D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
@@ -49,7 +50,7 @@
 		D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739C2AE224E900ED3E2F /* EnrollView.swift */; };
 		D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */; };
 		D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */; };
-		D6D806302AE9FF780002AE3A /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */; };
+		D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */; };
 		D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D806352AEA52D90002AE3A /* String+Ext.swift */; };
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
@@ -101,6 +102,7 @@
 		C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
 		C726A7872AE30067000B8D6D /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
+		D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -118,7 +120,7 @@
 		D6D2739C2AE224E900ED3E2F /* EnrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollView.swift; sourceTree = "<group>"; };
 		D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollViewController.swift; sourceTree = "<group>"; };
 		D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
-		D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilterModalViewController.swift; sourceTree = "<group>"; };
 		D6D806312AEA33870002AE3A /* FenceAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceAppDebug.entitlements; sourceTree = "<group>"; };
 		D6D806352AEA52D90002AE3A /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FenceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,7 +428,8 @@
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
-				D6D8062F2AE9FF780002AE3A /* CustomModalViewController.swift */,
+				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
+				D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */,
 				D6D806342AEA52B70002AE3A /* Extension */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6E10EA92AE2AC1C0098F05D /* GoogleService-Info.plist */,
@@ -597,6 +600,7 @@
 				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
 				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
+				D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
 				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
@@ -645,7 +649,7 @@
 				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,
 				D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */,
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
-				D6D806302AE9FF780002AE3A /* CustomModalViewController.swift in Sources */,
+				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
 				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
