@@ -8,15 +8,42 @@
 import UIKit
 import SnapKit
 import PhotosUI
+import MapKit
 
 class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
+    private let lostListView = LostListView()
+    
+    let firebaseAuthService: FirebaseAuthService
+    let firebaseLostService: FirebaseLostService
+    let firebaseUserService: FirebaseUserService
+    let firebaseLostCommentService: FirebaseLostCommentService
+    var lostList: [LostResponseDTO] = []
     
     // camera
     var images: [UIImage] = []
-    
     var pickerViewController: PHPickerViewController?
+    
+    // map
+    // 확인필요
+    let currentLocation = LocationManager().fetchLocation() // 현재 위치
+    var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
+    let annotation = MKPointAnnotation() // 지도 마커
+    
+    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService) {
+        self.firebaseAuthService = firebaseAuthService
+        self.firebaseLostService = firebaseLostService
+        self.firebaseUserService = firebaseUserService
+        self.firebaseLostCommentService = firebaseLostCommentService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func loadView() {
         view = enrollView
@@ -25,54 +52,43 @@ class EnrollViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // mapView의 delegate 설정
+        enrollView.mapView.delegate = self
         
         configureNavBar()
 
-        configureBtnTapped()
+        configureAction()
         
         configureCollectionView()
         
-        configureSegmentedControl()
+        configureMap()
         
-        configureDatePicker()
-        
-        configureKeyboardWillShow()
-        
-//        configurekeyboardWillHide()
-        
-        configureKeyboardDismiss()
+        configureKeyboard()
+
     }
     
     
-    func configureBtnTapped(){
+    func configureAction(){
+        // 사진 추가 버튼 클릭 시
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(customButtonTapped))
         enrollView.customBtnView.addGestureRecognizer(tapGesture)
-    }
-    
-    func configureSegmentedControl(){
+        // 세그먼트 클릭 시
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
-    }
-    
-    func configureDatePicker(){
+        // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        
     }
     
-    
-    func configureKeyboardWillShow(){
+    func configureKeyboard(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
-    
-    func configurekeyboardWillHide(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    func configureKeyboardDismiss(){
         
         // 키보드 외 영역 클릭 시 키보드 사라지게 하기
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGestureRecognizer.cancelsTouchesInView = false
         enrollView.addGestureRecognizer(tapGestureRecognizer)
     }
+
     
     @objc func customButtonTapped() {
         // PHPicker 구성
@@ -92,6 +108,7 @@ class EnrollViewController: UIViewController {
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         let selectedIndex = sender.selectedSegmentIndex
+        
         print("Selected Index: \(selectedIndex)")
         // 선택된 항목에 따라 원하는 작업을 수행할 수 있습니다.
     }
@@ -146,13 +163,61 @@ class EnrollViewController: UIViewController {
         enrollView.endEditing(true)
     }
     
-    @objc func tapRightBarBtn(){
-        print("clickRight")
-        
-    }
     
     @objc func tapLeftBarBtn(){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func handleMapTap(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            // 탭한 포인트를 지도의 좌표로 변환
+            let point = sender.location(in: enrollView.mapView)
+            let coordinate = enrollView.mapView.convert(point, toCoordinateFrom: enrollView.mapView)
+            
+            // 선택한 위치 저장
+            selectedCoordinate = coordinate
+            print("location - \(selectedCoordinate!)")
+            
+            // 이후에 선택한 위치를 지도 중앙에 유지하려면 다음과 같이 지도 중앙을 설정합니다.
+            enrollView.mapView.setCenter(coordinate, animated: true)
+            
+            if let selectedCoordinate = selectedCoordinate {
+                annotation.coordinate = selectedCoordinate
+                annotation.title = "옮긴 위치"
+            }
+            
+            // 마커를 지도 뷰에 추가합니다.
+            enrollView.mapView.addAnnotation(annotation)
+        }
+    }
+    
+    
+    @objc func tapRightBarBtn(){
+        
+        guard let selectedCoordinate else {return}
+        guard let enrollTitle = enrollView.titleTextField.text else {return}
+        guard let enrollName = enrollView.nameTextField.text else {return}
+//        guard let enrollSeg = enrollView.segmentedControl.titleForSegment else {return}
+        Task{
+            do {
+                let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+                let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+                let picture = images[0]
+                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)
+                
+                try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
+                
+                print("lostResponseDTO - \(lostResponseDTO)")
+                print("latitude - \(lostResponseDTO.latitude) / longitude - \(lostResponseDTO.longitude)")
+                print("kind - \(enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex)!)")
+                print("lostDate - \(enrollView.datePicker.date)")
+            }catch{
+                print(error)
+            }
+        }
+        
+        print("저장 완료")
     }
     
 }
@@ -172,13 +237,14 @@ extension EnrollViewController {
     }
 }
 
-extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private func configureCollectionView() {
         enrollView.collectionView.delegate = self
         enrollView.collectionView.dataSource = self
-        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell") // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스입니다.
-        enrollView.collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10) // 셀 간 여백 설정
+        
+        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell") // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스
+        enrollView.collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 셀 간 여백 설정
     }
     
     
@@ -197,6 +263,16 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // UICollectionView의 크기를 가져와서 사용
+        let collectionViewHeight = collectionView.bounds.height
+        let collectionViewWidth = collectionViewHeight
+
+        // 각 셀의 크기를 UICollectionView의 크기와 일치하도록 설정
+        return CGSize(width: collectionViewWidth, height: collectionViewHeight)
+    }
+    
 }
 
 extension EnrollViewController: PHPickerViewControllerDelegate {
@@ -226,3 +302,34 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
     
 }
 
+extension EnrollViewController: MKMapViewDelegate {
+    
+    func configureMap(){
+        if let location = currentLocation {
+            let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005) // 지도 확대/축소 정도
+            let region = MKCoordinateRegion(center: center, span: span)
+            enrollView.mapView.setRegion(region, animated: true)
+            
+//            // 현재 위치에 대한 지도 주석을 만듭니다.
+//            let annotation = MKPointAnnotation()
+            annotation.coordinate = center
+            annotation.title = "현재 위치"
+            
+            // 주석을 지도 뷰에 추가합니다.
+            enrollView.mapView.addAnnotation(annotation)
+            
+            // 마커를 가운데에 고정하기 / 확인필요
+//            enrollView.mapView.setUserTrackingMode(.follow, animated: true)
+            
+            // 탭 제스처 인식기를 생성하고 지도 뷰에 추가
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleMapTap))
+            enrollView.mapView.addGestureRecognizer(tapGesture)
+        }
+        
+        
+        
+    }
+    
+  
+}

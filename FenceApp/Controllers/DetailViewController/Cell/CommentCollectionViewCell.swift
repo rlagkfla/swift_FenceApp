@@ -39,7 +39,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let commentImageView: UIImageView = {
+    private let commentImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
@@ -48,7 +48,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let commentTextLabel: UILabel = {
+    private let commentTextLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .left
@@ -56,6 +56,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -68,6 +69,11 @@ class CommentCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureCell(lastCommetString: String, userProfileImageUrl: String) {
+        commentTextLabel.text = lastCommetString
+        commentImageView.kf.setImage(with: URL(string: userProfileImageUrl))
     }
 }
 

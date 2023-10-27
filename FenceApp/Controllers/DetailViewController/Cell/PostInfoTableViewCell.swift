@@ -13,38 +13,35 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "PostInfoCell"
-    
     let locationManager = LocationManager()
     var mapPin: MapPin!
     
     //    let pin: MapPin?
     
     // MARK: - UI Properties
-    let postTitleLabel: UILabel = {
+    private let postTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "강아지 찾아주세요"
         label.font = UIFont.systemFont(ofSize: 24)
         label.textAlignment = .left
         return label
     }()
     
-    let lostTimeLabel: UILabel = {
+    private let lostTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .left
         return label
     }()
     
-    let postDescriptionLabel: UILabel = {
+    private let postDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ"
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
     
-    lazy var mapView: MKMapView = {
+    private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.showsUserLocation = true
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
@@ -69,9 +66,11 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         postDescriptionLabel.text = postDescription
         setLabel(lostTime: lostTime)
         setPin(pinable: lostDTO)
-        centerViewOnUserLocation()
     }
-    
+}
+
+// MARK: - Private Method
+private extension PostInfoCollectionViewCell {
     private func setLabel(lostTime: Date) {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
@@ -82,18 +81,13 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         lostTimeLabel.text = "잃어버린 시간: \(String(describing: converDate))"
     }
     
-    private func centerViewOnUserLocation() {
-        
-        guard let location = locationManager.fetchLocation() else { return }
-        
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 10000, longitudinalMeters: 10000)
-        
-        mapView.setRegion(region, animated: true)
-    }
-    
     private func setPin(pinable: Pinable) {
         mapPin = MapPin(pinable: pinable)
         mapView.addAnnotation(mapPin)
+        
+        let region = MKCoordinateRegion(center: mapPin.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        
+        mapView.setRegion(region, animated: true)
     }
 }
 
@@ -151,9 +145,8 @@ private extension PostInfoCollectionViewCell {
     }
 }
 
-
+// MARK: - MKMapViewDelegate
 extension PostInfoCollectionViewCell: MKMapViewDelegate {
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         

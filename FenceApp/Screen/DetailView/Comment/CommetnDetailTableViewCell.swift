@@ -13,7 +13,7 @@ class CommentDetailTableViewCell: UITableViewCell {
     static let identifier: String = "CommentDetailCell"
     
     // MARK: - UI Properties
-    let commentUserProfileImageView: UIImageView = {
+    private let commentUserProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .yellow
         imageView.clipsToBounds = true
@@ -23,21 +23,21 @@ class CommentDetailTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let commenterNickName: UILabel = {
+    private let commenterNickName: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
-    let commentDate: UILabel = {
+    private let commentDate: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
-    let commentTextLabel: UILabel = {
+    private let commentTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
@@ -59,7 +59,14 @@ class CommentDetailTableViewCell: UITableViewCell {
         commentUserProfileImageView.layer.cornerRadius = 15
     }
     
-    func setCommentWriteTime(commentTime: String) {
+    func configureCell(commentUserNickName: String, commentUserProfileImageUrl: String, commentDescription: String, commentTime: String) {
+        commenterNickName.text = commentUserNickName
+        commentUserProfileImageView.kf.setImage(with: URL(string: commentUserProfileImageUrl))
+        commentTextLabel.text = commentDescription
+        setCommentWriteTime(commentTime)
+    }
+    
+    private func setCommentWriteTime(_ commentTime: String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
         formatter.locale = Locale(identifier: "ko_KR")

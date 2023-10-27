@@ -30,6 +30,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
+//                firebaseUserService.listenToUpdateOn(userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2") { result in
+//                    switch result {
+//                    case .failure(let error):
+//                        print(error)
+//                    case .success(let userResponseDTO):
+//                        print(userResponseDTO.email, "!!!!!!!")
+//                       
+//                       
+//                    }
+//                }
+                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
                 let a = firebaseAuthService.checkIfUserLoggedIn()
                 print(a)
             } catch {
@@ -53,7 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeTabbarController() -> CustomTabBarController {
-        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController])
+        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
         return TabbarController
     }
@@ -70,7 +81,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeLostViewVC() -> LostListViewController {
-        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
+        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         return vc
     }
     

@@ -10,7 +10,7 @@ import SnapKit
 import MapKit
 
 class EnrollView: UIView {
-  
+    
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.backgroundColor = .clear
@@ -43,11 +43,11 @@ class EnrollView: UIView {
         return lb
     }()
     
-    private let titleTextField: UITextField = {
+    let titleTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "제목을 입력하세요."
         tf.isUserInteractionEnabled = true
-        tf.backgroundColor = .cyan
+        tf.backgroundColor = .clear
 //        tf.delegate = self
 //        tf.inputAccessoryView = UIView()  // 키보드 위에 Done 버튼 추가 (선택 사항)
         return tf
@@ -61,7 +61,7 @@ class EnrollView: UIView {
     }()
     
     lazy var segmentedControl: UISegmentedControl = {
-        let items = ["강아지", "고양이", "기타 동물"]
+        let items = ["dog", "cat", "etc"]
         let control = UISegmentedControl(items: items)
         control.selectedSegmentIndex = 0 // 초기 선택 항목 설정
         control.tintColor = .blue // 세그먼트 컨트롤 색상 설정
@@ -89,9 +89,22 @@ class EnrollView: UIView {
         return lb
     }()
     
-    let mapView: MKMapView = {
-        let map = MKMapView()
-        return map
+    let nameTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "반려동물의 이름을 입력하세요."
+        tf.isUserInteractionEnabled = true
+        tf.backgroundColor = .clear
+        return tf
+    }()
+    
+    let textView: UITextView = {
+        let textView = UITextView()
+        textView.autocorrectionType = .no
+        textView.backgroundColor = .clear
+        textView.font = UIFont.systemFont(ofSize: 20)
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.lightGray.cgColor
+        return textView
     }()
     
     private let lineLabel5: UILabel = {
@@ -101,20 +114,11 @@ class EnrollView: UIView {
         return lb
     }()
     
-    let textView: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.lightGray.cgColor
-        return textView
+    let mapView: MKMapView = {
+        let map = MKMapView()
+        return map
     }()
     
-    // 키보드 외 영역 클릭 시 키보드 사라지게 하기
-//    private let tapGestureRecognizer: UITapGestureRecognizer = {
-//        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//        gestureRecognizer.cancelsTouchesInView = false
-//        return gestureRecognizer
-//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -128,19 +132,6 @@ class EnrollView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
- 
-//    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-//        // 터치된 지점이 UITextView 내에 있는지 확인
-//        if !textView.frame.contains(sender.location(in: textView)) {
-//            // 터치된 지점이 UITextView 외부에 있으면 키보드를 숨깁니다.
-//            textView.resignFirstResponder()
-//        }
-////        if !titleTextField.frame.contains(sender.location(in: titleTextField)) {
-////            // 터치된 지점이 titleTextField 외부에 있으면 키보드를 숨깁니다.
-////            titleTextField.resignFirstResponder()
-////        }
-//    }
-    
 }
 
 
@@ -148,8 +139,7 @@ extension EnrollView {
     
     func configureUI(){
         self.addSubview(scrollView)
-        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, mapView, lineLabel5, textView)
-//        scrollView.addGestureRecognizer(tapGestureRecognizer)
+        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, nameTextField, textView, lineLabel5, mapView)
         
         
         scrollView.snp.makeConstraints {
@@ -226,8 +216,16 @@ extension EnrollView {
             $0.height.equalTo(0.7)
         }
         
-        textView.snp.makeConstraints {
+        nameTextField.snp.makeConstraints {
             $0.top.equalTo(lineLabel4.snp.bottom).offset(10)
+            $0.leading.equalTo(scrollView.snp.leading).offset(13)
+            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+            $0.width.equalTo(scrollView.snp.width).offset(-26)
+            $0.height.equalTo(50)
+        }
+        
+        textView.snp.makeConstraints {
+            $0.top.equalTo(nameTextField.snp.bottom).offset(10)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
 //            $0.bottom.equalTo(scrollView.snp.bottom).offset(-10)

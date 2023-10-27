@@ -61,12 +61,13 @@ class CustomModalViewController: UIViewController {
     }()
     
     lazy var startDatePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
+        var datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
         let currnetDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         datePicker.date = currnetDayAgo
         datePicker.maximumDate = currnetDayAgo
+        datePicker.addTarget(self, action: #selector(startDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
     
@@ -82,6 +83,7 @@ class CustomModalViewController: UIViewController {
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
         datePicker.minimumDate = Date()
+        datePicker.addTarget(self, action: #selector(endDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
 
@@ -91,8 +93,6 @@ class CustomModalViewController: UIViewController {
         setSelf()
         configureUI()
         configureNavigationBarItem()
-        
-        
     }
     
     func setSelf() {
@@ -109,7 +109,10 @@ class CustomModalViewController: UIViewController {
         navigationBar.items = [UINavigationItem()]
         navigationBar.items?[0].setRightBarButton(UIBarButtonItem(customView: applyButton), animated: true)
     }
-    
+}
+
+// MARK: - Actions
+extension CustomModalViewController {
     @objc func applyButtonTapped() {
         delegate?.applyTapped(within: Double(rangeSlider.value), fromDate: startDatePicker.date, toDate: endDatePicker.date)
         dismiss(animated: true)
@@ -118,6 +121,16 @@ class CustomModalViewController: UIViewController {
     @objc func sliderValueChanged(_ sender: UISlider) {
         let value = sender.value
         currentRangeLabel.text = String(Int(value)) + "km"
+    }
+    
+    @objc func startDatePickerValueChanged(_ sender: UIDatePicker) {
+        let value = sender.date
+        endDatePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: value)
+    }
+    
+    @objc func endDatePickerValueChanged(_ sender: UIDatePicker) {
+        let value = sender.date
+        startDatePicker.maximumDate = Calendar.current.date(byAdding: .day, value: -1, to: value)
     }
 }
 
