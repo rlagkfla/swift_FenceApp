@@ -16,7 +16,6 @@ class CustomAnnotationView: MKAnnotationView {
         didSet {
             
             clusteringIdentifier = "shop"
-            //            image = UIImage(systemName: "house")
         }
     }
     

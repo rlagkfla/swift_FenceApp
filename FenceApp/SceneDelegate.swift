@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -30,6 +31,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
+//                var lostWithDocument: LostWithDocument?
+//                var lostResponseArray: [LostResponseDTO] = []
+//                
+//                lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3)
+//                
+//                lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
+//                
+//                
+//                
+//                lostResponseArray.forEach { lostResponseDTO in
+//                    print(lostResponseDTO.lostIdentifier, "(((((")
+//                }
+//                lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3, lastDocument: lostWithDocument!.lastDocument)
+//                
+//                lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
+//                
+//                lostResponseArray.forEach { lostResponseDTO in
+//                    print(lostResponseDTO.lostIdentifier, "(((((")
+//                }
 //                firebaseUserService.listenToUpdateOn(userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2") { result in
 //                    switch result {
 //                    case .failure(let error):
@@ -40,9 +60,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                       
 //                    }
 //                }
-                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
-                let a = firebaseAuthService.checkIfUserLoggedIn()
-                print(a)
+//                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
+//                let a = firebaseAuthService.checkIfUserLoggedIn()
+//                print(a)
             } catch {
                 print(error, "@@@@@@@@")
             }
@@ -72,6 +92,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeMapViewVC() -> MapViewController {
         
         let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
+        
         vc.filterTapped = {
             let filterModalViewController = CustomFilterModalViewController()
             filterModalViewController.delegate = vc

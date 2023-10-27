@@ -28,6 +28,8 @@ struct LocationCalculator {
 
         return (minLat, maxLat)
     }
+      
+    
     
     static func getLocationsOfSqaure(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) {
         let R = 6371.0  // Radius of the Earth in kilometers
