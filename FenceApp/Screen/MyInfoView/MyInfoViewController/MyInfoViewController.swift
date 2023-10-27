@@ -32,6 +32,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     let nickname: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .blue
         label.text = "닉네임"
         label.textColor = UIColor.black
         label.font = UIFont.systemFont(ofSize: 20)
@@ -40,11 +41,12 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     let memo: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .red
         label.text = "간단한 메모"
         return label
     }()
     
-    let editProfileButton: UIButton = {
+    private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
         button.setTitleColor(.blue, for: .normal)
@@ -143,7 +145,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         let view = EditViewController()
         view.delegate = self
         navigationController?.pushViewController(view, animated: true)
-        editButtonTopConstraint?.constant = 100
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
