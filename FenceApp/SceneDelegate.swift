@@ -31,38 +31,60 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         Task {
             do {
-//                var lostWithDocument: LostWithDocument?
-//                var lostResponseArray: [LostResponseDTO] = []
+                //                var lostWithDocument: LostWithDocument?
+                //                var lostResponseArray: [LostResponseDTO] = []
+                //
+                //                lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3)
+                //
+                //                lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
+                //
+                //
+                //
+                //                lostResponseArray.forEach { lostResponseDTO in
+                //                    print(lostResponseDTO.lostIdentifier, "(((((")
+                //                }
+                //                lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3, lastDocument: lostWithDocument!.lastDocument)
+                //
+                //                lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
+                //
+                //                lostResponseArray.forEach { lostResponseDTO in
+                //                    print(lostResponseDTO.lostIdentifier, "(((((")
+                //                }
+                //                firebaseUserService.listenToUpdateOn(userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2") { result in
+                //                    switch result {
+                //                    case .failure(let error):
+                //                        print(error)
+                //                    case .success(let userResponseDTO):
+                //                        print(userResponseDTO.email, "!!!!!!!")
+                //
+                //
+                //                    }
+                //                }
+                //                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
+                //                let a = firebaseAuthService.checkIfUserLoggedIn()
+                //                print(a)
+                
+//                var foundWithDocument: FoundWithDocument?
+//                var foundResponseArray: [FoundResponseDTO] = []
 //                
-//                lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3)
+//                foundWithDocument = try await firebaseFoundService.fetchFoundsWithPagination(int: 3)
 //                
-//                lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
+//                foundResponseArray.append(contentsOf: foundWithDocument!.foundResponseDTOs)
 //                
-//                
-//                
-//                lostResponseArray.forEach { lostResponseDTO in
-//                    print(lostResponseDTO.lostIdentifier, "(((((")
+//                foundResponseArray.forEach { foundResponseDTO in
+//                    print(foundResponseDTO.foundIdentifier, "((((((")
 //                }
-//                lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3, lastDocument: lostWithDocument!.lastDocument)
 //                
-//                lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
+//                foundWithDocument = try await firebaseFoundService.fetchFoundsWithPagination(int: 3, lastDocument: foundWithDocument!.lastDocument)
 //                
-//                lostResponseArray.forEach { lostResponseDTO in
-//                    print(lostResponseDTO.lostIdentifier, "(((((")
+//                foundResponseArray.append(contentsOf: foundWithDocument!.foundResponseDTOs)
+//                
+//                foundResponseArray.forEach { foundResponseDTO in
+//                    print(foundResponseDTO.foundIdentifier, "(((((")
 //                }
-//                firebaseUserService.listenToUpdateOn(userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2") { result in
-//                    switch result {
-//                    case .failure(let error):
-//                        print(error)
-//                    case .success(let userResponseDTO):
-//                        print(userResponseDTO.email, "!!!!!!!")
-//                       
-//                       
-//                    }
-//                }
-//                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
-//                let a = firebaseAuthService.checkIfUserLoggedIn()
-//                print(a)
+                
+                
+                
             } catch {
                 print(error, "@@@@@@@@")
             }
@@ -94,7 +116,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
         vc.filterTapped = {
-           
+            
             let modelViewController = CustomModalViewController()
             modelViewController.delegate = vc
             vc.present(modelViewController, animated: true)
