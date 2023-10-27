@@ -14,42 +14,38 @@
 //
 //        // Do any additional setup after loading the view.
 //    }
-//    
 //
 //
-//
-//}
 import UIKit
 
+class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, EditViewControllerDelegate {
 
-class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 60
-        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.image = UIImage(named: "profile_image")
-        iv.backgroundColor = .color1
+        iv.backgroundColor = .lightGray
         return iv
     }()
     
-    let nicknameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "닉네임"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        return textField
+    let nickname: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .blue
+        label.text = "닉네임"
+        label.textColor = UIColor.black
+        label.font = UIFont.systemFont(ofSize: 20)
+        return label
     }()
     
-    let memoTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "간단한 메모"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.borderStyle = .roundedRect
-        return textField
+    let memo: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .red
+        label.text = "간단한 메모"
+        return label
     }()
-
+    
     let editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
@@ -57,126 +53,171 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
         button.layer.borderColor = UIColor.blue.cgColor
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         return button
     }()
     
-    let lostCollectionView: UICollectionView = {
+    lazy var lostCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical // 세로 방향으로 설정합니다.
+        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.backgroundColor = .lightGray
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.isScrollEnabled = true // 스크롤 활성화
+        collectionView.isScrollEnabled = true
         return collectionView
     }()
-
-    let lostLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Lost"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
+    var editButtonTopConstraint: NSLayoutConstraint?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        addProfileImage()
-        addTextFields()
-        addEditProfileButton()
-        addLostCollectionView()
-        
-        nicknameTextField.delegate = self
-        memoTextField.delegate = self
-
-        lostCollectionView.delegate = self
-        lostCollectionView.dataSource = self
+        configureUI()
+        configureNavigationBar()
     }
-
-    func addProfileImage() {
-        view.addSubview(profileImageView)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)]
+    }
+    
+    private func configureUI(){
+        configureProfileImage()
+        configureNickName()
+        configureMemo()
+        configureEditProfileButton()
+        configureLostCollectionView()
+    }
+    
+    private func configureNavigationBar() {
+        navigationItem.title = "마이페이지"
+    }
+    
+    private func configureLostCollectionView(){
+        view.addSubview(lostCollectionView)
+        lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        lostCollectionView.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 30).isActive = true
+        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -self.tabBarController!.tabBar.frame.height).isActive = true
+    }
+    
+    private func configureEditProfileButton() {
+        view.addSubview(editProfileButton)
+        editProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        editButtonTopConstraint = editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45)
+        editButtonTopConstraint?.isActive = true
+        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }
+    
+    private func configureNickName(){
+        view.addSubview(nickname)
+        nickname.translatesAutoresizingMaskIntoConstraints = false
+        nickname.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 40).isActive = true
+        nickname.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 30).isActive = true
+        nickname.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         
-        profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+    }
+    
+    private func configureMemo(){
+        view.addSubview(memo)
+        memo.translatesAutoresizingMaskIntoConstraints = false
+        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
+        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
+        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        
+    }
+    
+    private func configureProfileImage() {
+        view.addSubview(profileImageView)
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
     }
-    
-    func addTextFields() {
-        view.addSubview(nicknameTextField)
-        view.addSubview(memoTextField)
-        
-        nicknameTextField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16).isActive = true
-        nicknameTextField.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 10).isActive = true
-        nicknameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-
-        memoTextField.leadingAnchor.constraint(equalTo: nicknameTextField.leadingAnchor).isActive = true
-        memoTextField.topAnchor.constraint(equalTo: nicknameTextField.bottomAnchor, constant: 16).isActive = true
-        memoTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-    }
-    
-    func addEditProfileButton() {
-        view.addSubview(editProfileButton)
-
-        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        editProfileButton.topAnchor.constraint(equalTo: memoTextField.bottomAnchor, constant: 30).isActive = true
-        editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    }
 
     @objc func editProfile() {
-        nicknameTextField.becomeFirstResponder()
+        let view = EditViewController()
+        view.delegate = self
+        navigationController?.pushViewController(view, animated: true)
+        editButtonTopConstraint?.constant = 100
     }
 
-    func addLostCollectionView() {
-        view.addSubview(lostLabel)
-        view.addSubview(lostCollectionView)
-        
-        lostLabel.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 20).isActive = true
-        lostLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        lostCollectionView.topAnchor.constraint(equalTo: lostLabel.bottomAnchor, constant: 10).isActive = true
-        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true // 컬렉션 뷰가 화면 하단까지 닿도록 설정합니다.
-    }
-
-    // UICollectionViewDelegateFlowLayout 프로토콜을 구현하여 셀의 크기를 정의합니다.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (lostCollectionView.bounds.width - 40) / 2 // 컬렉션 뷰의 너비를 절반으로 나눈 값으로 설정합니다.
-        return CGSize(width: width, height: width) // 너비와 높이를 같은 값으로 반환하여 정사각형 모양으로 만듭니다.
+        return CGSize(width: (collectionView.bounds.width - 4)/3, height: (collectionView.bounds.width - 4)/3)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // 컬렉션뷰의 섹션 개수를 2개로 설정합니다.
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 // 하나의 셀만 표시하도록 개수를 1로 설정합니다.
+        if section == 0 {
+            return 2
+        }
+        return 9
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
         if indexPath.section == 0 {
-            cell.backgroundColor = .systemPink // 원하는 배경색으로 설정합니다.
-        }
-        if indexPath.section == 1 {
-            cell.backgroundColor = .color1 // 원하는 배경색으로 설정합니다.
+            cell.backgroundColor = .systemPink
+            if indexPath.item == 0 {
+                let lostLabel = UILabel()
+                lostLabel.text = "Lost"
+                lostLabel.textColor = .black
+                lostLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+                lostLabel.translatesAutoresizingMaskIntoConstraints = false
+                cell.addSubview(lostLabel)
+                lostLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+                lostLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
+            }
         }
         
+        if indexPath.section == 1 {
+            cell.backgroundColor = .color1
+            if indexPath.item == 0 {
+                let foundLabel = UILabel()
+                foundLabel.text = "Found"
+                foundLabel.textColor = .black
+                foundLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+                foundLabel.translatesAutoresizingMaskIntoConstraints = false
+                cell.addSubview(foundLabel)
+                foundLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
+            }
+        }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 0 {
-            return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 50, left: 0, bottom: 10, right: 0)
         } else {
             return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
+        }
+    }
+
+    func didSaveProfileInfo(nickname: String, memo: String, image: UIImage) {
+        DispatchQueue.main.async {
+            self.nickname.text = nickname
+            self.memo.text = memo
+            self.profileImageView.image = image
         }
     }
 }
