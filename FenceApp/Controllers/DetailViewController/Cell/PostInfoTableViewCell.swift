@@ -17,7 +17,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     let locationManager = LocationManager()
     var mapPin: MapPin!
     
-//    let pin: MapPin?
+    //    let pin: MapPin?
     
     // MARK: - UI Properties
     let postTitleLabel: UILabel = {
@@ -53,7 +53,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         mapView.delegate = self
         return mapView
     }()
-
+    
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -157,39 +157,32 @@ extension PostInfoCollectionViewCell: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         
-                if annotation is MKClusterAnnotation {
-                    //            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "mapItem", for: annotation) as! MKAnnotationView
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ClusterAnnotationView.identifier, for: annotation) as! ClusterAnnotationView
-                    let count = (annotation as! MKClusterAnnotation).memberAnnotations.count
-                    annotationView.setTitle(count: count)
-        
-                    print(count)
-        
-                    return annotationView
-                } else if annotation is MKUserLocation {
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
-//                    annotationView.displayPriority = .defaultHigh
-                    return annotationView
-                } else {
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
-                    //            annotationView.clusteringIdentifier = String(describing: LocationDataMapAnnotationView.self)
-        
-                    
-                    
-                    Task {
-                        do {
-                            
-                            let image = try await ImageLoader.fetchPhoto(urlString: (annotation as! MapPin).pinable.imageURL)
-        
-                            annotationView.setImage(image: image)
-        
-                        } catch {
-                            print(error)
-                        }
-                    }
-        
-                    return annotationView
-                }
-            }
+        if annotation is MKClusterAnnotation {
+            //            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "mapItem", for: annotation) as! MKAnnotationView
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ClusterAnnotationView.identifier, for: annotation) as! ClusterAnnotationView
+            
+            let count = (annotation as! MKClusterAnnotation).memberAnnotations.count
+            
+            annotationView.setTitle(count: count)
+            
+            print(count)
+            
+            return annotationView
+            
+        } else if annotation is MKUserLocation {
+            
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
+            //                    annotationView.displayPriority = .defaultHigh
+            return annotationView
+            
+        } else {
+            
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
+            
+            annotationView.setImage(urlString: (annotation as! MapPin).pinable.imageURL)
+            
+            return annotationView
+        }
+    }
     
 }
