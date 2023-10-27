@@ -12,8 +12,10 @@ class CustomBtnView: UIView {
 
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .cyan
-        
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.cornerRadius = 5
         return view
     }()
 
@@ -24,13 +26,13 @@ class CustomBtnView: UIView {
         return imageView
     }()
 
-    private let label: UILabel = {
-        let label = UILabel()
-        label.text = "0/5"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 13)
-        return label
-    }()
+//    private let label: UILabel = {
+//        let label = UILabel()
+//        label.text = "0/5"
+//        label.textAlignment = .center
+//        label.font = UIFont.systemFont(ofSize: 13)
+//        return label
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,23 +52,23 @@ extension CustomBtnView {
     private func configureUI(){
         addSubview(containerView)
         containerView.addSubview(cameraImgView)
-        containerView.addSubview(label)
+//        containerView.addSubview(label)
         
         containerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
         cameraImgView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.trailing.equalToSuperview()
-            $0.width.equalTo(25) // 원하는 이미지 너비로 설정
-            $0.height.equalTo(25) // 원하는 이미지 높이로 설정
+            $0.top.leading.equalToSuperview().offset(15)
+            $0.trailing.bottom.equalToSuperview().offset(-15)
+//            $0.width.equalTo(25) // 원하는 이미지 너비로 설정
+//            $0.height.equalTo(25) // 원하는 이미지 높이로 설정
         }
 
-        label.snp.makeConstraints {
-            $0.top.equalTo(cameraImgView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
+//        label.snp.makeConstraints {
+//            $0.top.equalTo(cameraImgView.snp.bottom)
+//            $0.leading.trailing.bottom.equalToSuperview()
+//        }
     }
    
 }

@@ -11,8 +11,6 @@ import MapKit
 
 class EnrollView: UIView {
     
-    let enrollViewCell = PhotoCollectionViewCell()
-
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.backgroundColor = .clear
@@ -133,7 +131,7 @@ class EnrollView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }
 
 

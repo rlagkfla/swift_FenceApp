@@ -60,6 +60,8 @@ class LostListViewController: UIViewController {
     @objc func tapRightBarBtn(){
         let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService)
         
+        enrollVC.delegate = self
+        
         self.navigationController?.pushViewController(enrollVC, animated: true)
     }
 
@@ -133,3 +135,8 @@ extension LostListViewController: UITableViewDelegate {
     }
 }
 
+extension LostListViewController: EnrollViewControllerDelegate {
+    func popEnrollViewController() {
+        getLostList()
+    }
+}

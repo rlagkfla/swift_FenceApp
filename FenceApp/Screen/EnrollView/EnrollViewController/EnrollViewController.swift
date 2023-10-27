@@ -83,8 +83,6 @@ class EnrollViewController: UIViewController {
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-        // 이미지 삭제
-        enrollView.enrollViewCell.deleteButton.addTarget(self, action: #selector(tapDeleteImageButton), for: .touchUpInside)
 
     }
     
@@ -100,9 +98,12 @@ class EnrollViewController: UIViewController {
 
     
     @objc func customButtonTapped() {
+        // 이미지 배열 비우기 (데이터 저장 로직 수정 후 삭제 예정)
+        images.removeAll()
+        
         // PHPicker 구성
         var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 0 // 0은 제한 없음을 의미
+        configuration.selectionLimit = 1 // 0은 제한 없음을 의미
 
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
@@ -113,12 +114,6 @@ class EnrollViewController: UIViewController {
         // PHPicker 화면 표시
         self.present(picker, animated: true, completion: nil)
         
-    }
-    
-    @objc func tapDeleteImageButton(){
-        print("image delete")
-//        images.remove(at: index)
-//        enrollView.collectionView.reloadData()
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -228,7 +223,7 @@ class EnrollViewController: UIViewController {
                 
                 self.navigationController?.popViewController(animated: true)
                 
-                // custom delegate dismiss
+                // pop시 delegate로 테이블뷰 페이지 이동
                 delegate?.popEnrollViewController()
             }catch{
                 print(error)
@@ -283,7 +278,7 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // UICollectionView의 크기를 가져와서 사용
-        let collectionViewHeight = collectionView.bounds.height
+        let collectionViewHeight = collectionView.bounds.height - 15
         let collectionViewWidth = collectionViewHeight
 
         // 각 셀의 크기를 UICollectionView의 크기와 일치하도록 설정
@@ -304,8 +299,11 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
             result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let image = image as? UIImage {
                     // 이미지를 배열에 추가
-                    self.images.append(image)
+//                    self.images.append(image)
 
+                    // 이미지 배열에 새 이미지 설정 (삭제 예정)
+                   self.images = [image]
+                    
                     // 컬렉션 뷰 새로 고침
                     DispatchQueue.main.async {
                         self.enrollView.collectionView.reloadData()
