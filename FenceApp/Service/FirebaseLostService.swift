@@ -5,6 +5,7 @@
 //  Created by Woojun Lee on 10/18/23.
 //
 import Foundation
+import FirebaseFirestore
 
 struct FirebaseLostService {
     
@@ -109,6 +110,27 @@ struct FirebaseLostService {
         
         return lostResponseDTOs
         
+        
+    }
+    
+    func fetchLostsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> LostWithDocument {
+        
+        var ref = COLLECTION_LOST.limit(to: int)
+        
+        if let lastDocument {
+            ref = ref.start(afterDocument: lastDocument)
+        }
+        let snapshot = try await ref.getDocuments()
+        
+        let documents = snapshot.documents
+        
+        guard let lastDocument = documents.last else { throw PetError.noSnapshotDocument }
+        
+        let lostResponseDTOs = documents.map { document in
+            return LostResponseDTOMapper.makeLostResponseDTO(from: document.data())
+        }
+        
+        return LostWithDocument(lostResponseDTOs: lostResponseDTOs, lastDocument: lastDocument)
         
     }
     

@@ -29,8 +29,6 @@ class MapViewController: UIViewController {
     
     let locationManager: LocationManager
     
-   
-    
     //MARK: - Lifecycle
     
     override func loadView() {
@@ -39,22 +37,22 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+    
+        setNavigationTitle()
         centerViewOnUserLocation()
+        
         Task {
             do {
                 lostResponseDTOs = try await firebaseLostService.fetchLosts()
-//                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
-//                pinTogether = lostResponseDTOs + foundResponseDTOs
-                pinTogether = lostResponseDTOs
+                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
+                //                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
+                                pinTogether = lostResponseDTOs + foundResponseDTOs
+//                pinTogether = lostResponseDTOs
                 setPinUsingMKAnnotation(pinables: pinTogether)
             } catch {
                 print(error)
             }
         }
-        
-        
-      
     }
     
     init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
@@ -82,11 +80,7 @@ class MapViewController: UIViewController {
         })
         
         mainView.mapView.addAnnotations(pins)
-//        pinables.forEach { pinable in
-//            let pin1 = MapPin(pinable: pinable)
-//            mainView.mapView.addAnnotations([pin1])
-//            
-//        }
+       
     }
     
     private func centerViewOnUserLocation() {
@@ -98,20 +92,20 @@ class MapViewController: UIViewController {
         mainView.mapView.setRegion(region, animated: true)
         
     }
+    
+    private func setNavigationTitle() {
+        self.navigationItem.title = "게시판"
+    }
 }
 
 extension MapViewController: mapMainViewDelegate {
     func filterImageViewTapped() {
         filterTapped?()
-
     }
     
     func locationImageViewTapped() {
         centerViewOnUserLocation()
-        
     }
-    
-    
 }
 
 extension MapViewController: CustomModelViewControllerDelegate {
@@ -122,25 +116,11 @@ extension MapViewController: CustomModelViewControllerDelegate {
             print(within, fromDate, toDate, "@@@@@@@@@")
             let a = try await firebaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
             print(a.count, "!!!!!!")
-//
-//            var pins = pinTogether.map { MapPin(pinable: $0)}
+            //
+            //            var pins = pinTogether.map { MapPin(pinable: $0)}
             mainView.mapView.removeAnnotations(pins)
             pins = a.map { MapPin(pinable: $0)}
             mainView.mapView.addAnnotations(pins)
-            
-            
         }
-        
     }
-    
-    func applyTapped() {
-        print("Tapped")
-        
-//        Task {
-//            
-//            firebaseLostService.fetchLosts(within: <#T##Double#>, fromDate: <#T##Date#>, toDate: <#T##Date#>)
-//        }
-    }
-    
-    
 }

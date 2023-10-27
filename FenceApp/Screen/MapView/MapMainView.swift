@@ -10,6 +10,7 @@ import SnapKit
 import MapKit
 
 protocol mapMainViewDelegate: AnyObject {
+    
     func locationImageViewTapped()
     
     func filterImageViewTapped()
@@ -26,7 +27,6 @@ class MapMainView: UIView {
         let mapView = MKMapView()
         mapView.showsUserLocation = true
         mapView.delegate = self
-        
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
         mapView.register(MKUserLocationView.self, forAnnotationViewWithReuseIdentifier: "user")
@@ -57,7 +57,6 @@ class MapMainView: UIView {
         iv.image = UIImage(systemName: "location.circle")
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(locationImageViewTapped)))
         iv.isUserInteractionEnabled = true
-        
         iv.tintColor = .gray
         return iv
     }()
@@ -66,12 +65,21 @@ class MapMainView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         configureUI()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        mapView.layer.cornerRadius = mapView.frame.height / 40
+    }
+    
+    
     
     //MARK: - Actions
     
@@ -82,8 +90,6 @@ class MapMainView: UIView {
     
     @objc func locationImageViewTapped() {
         delegate?.locationImageViewTapped()
-        
-        
     }
     
     //MARK: - Helpers
@@ -97,31 +103,37 @@ class MapMainView: UIView {
         configureOptionImageView()
     }
     
+    
     private func configureMapView() {
         addSubview(mapView)
         mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(3)
         }
     }
+    
     
     private func configureSegmentedControl() {
         addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(150)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(5)
             make.centerX.equalToSuperview()
             make.width.equalTo(150)
             make.height.equalTo(25)
         }
     }
     
+    
     private func configureLocationImageView() {
         addSubview(locationImageView)
         locationImageView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(100)
+            make.bottom.equalToSuperview().inset(20)
             make.width.height.equalTo(45)
         }
     }
+    
     
     private func configureOptionImageView() {
         addSubview(filterImageView)

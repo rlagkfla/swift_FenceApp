@@ -84,6 +84,7 @@
 		D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */; };
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
+		D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -156,6 +157,7 @@
 		D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCaculator.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
+		D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostWithDocument.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -444,6 +446,7 @@
 				D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */,
 				D6E10E872AE0F1E90098F05D /* FoundResponseDTO.swift */,
 				D6E10E892AE0FF220098F05D /* CommentResponseDTO.swift */,
+				D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */,
 			);
 			path = ResponseDTO;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
+				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
