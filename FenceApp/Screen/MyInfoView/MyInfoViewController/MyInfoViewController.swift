@@ -88,11 +88,23 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         configureEditProfileButton()
         configureLostCollectionView()
     }
-    
     private func configureNavigationBar() {
         navigationItem.title = "마이페이지"
+        let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
+        navigationItem.rightBarButtonItem = logoutButton
     }
-    
+
+    @objc func logoutTapped() {
+        let alertController = UIAlertController(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { (action) in
+            print("로그아웃 확인됨")
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     private func configureLostCollectionView(){
         view.addSubview(lostCollectionView)
         lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -138,6 +150,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
     }
 
+    
     @objc func editProfile() {
         let view = EditViewController()
         view.delegate = self
