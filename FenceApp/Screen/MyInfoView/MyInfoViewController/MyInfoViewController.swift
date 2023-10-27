@@ -32,6 +32,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     let nickname: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .blue
         label.text = "닉네임"
         label.textColor = UIColor.black
         label.font = UIFont.systemFont(ofSize: 20)
@@ -40,6 +41,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     let memo: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .red
         label.text = "간단한 메모"
         return label
     }()
