@@ -127,7 +127,7 @@ class EnrollView: UIView {
     
     private let mapLable: UILabel = {
         let lb = UILabel()
-        lb.text = "📍 잃어버린 위치"
+        lb.text = "📍 반려동물 잃어버린 위치"
         lb.font = UIFont.systemFont(ofSize: 15)
         lb.textColor = .darkGray
         return lb
@@ -139,6 +139,29 @@ class EnrollView: UIView {
         return map
     }()
     
+    private lazy var zoomInButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("+", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.layer.borderWidth = 0.7
+        button.layer.cornerRadius = 3
+        button.addTarget(self, action: #selector(zoomInButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var zoomOutButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("-", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.layer.borderWidth = 0.7
+        button.layer.cornerRadius = 3
+        button.addTarget(self, action: #selector(zoomOutButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -152,6 +175,23 @@ class EnrollView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc func zoomInButtonTapped() {
+        let region = mapView.region
+        var span = mapView.region.span
+        span.latitudeDelta *= 0.5
+        span.longitudeDelta *= 0.5
+        let newRegion = MKCoordinateRegion(center: region.center, span: span)
+        mapView.setRegion(newRegion, animated: true)
+    }
+
+    @objc func zoomOutButtonTapped() {
+        let region = mapView.region
+        var span = mapView.region.span
+        span.latitudeDelta *= 2.0
+        span.longitudeDelta *= 2.0
+        let newRegion = MKCoordinateRegion(center: region.center, span: span)
+        mapView.setRegion(newRegion, animated: true)
+    }
     
 }
 
@@ -177,7 +217,7 @@ extension EnrollView {
     
     func configureUI(){
         self.addSubview(scrollView)
-        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, nameTextField, textView, lineLabel5, mapLable, mapView)
+        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, nameTextField, textView, lineLabel5, mapLable, mapView, zoomInButton, zoomOutButton)
         
         
         scrollView.snp.makeConstraints {
@@ -226,7 +266,7 @@ extension EnrollView {
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(lineLabel2.snp.bottom).offset(10)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
-            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+//            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
             $0.height.equalTo(40)
         }
         
@@ -264,7 +304,6 @@ extension EnrollView {
             $0.top.equalTo(nameTextField.snp.bottom).offset(10)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
-//            $0.bottom.equalTo(scrollView.snp.bottom).offset(-10)
             $0.width.equalTo(scrollView.snp.width).offset(-26)
             $0.height.equalTo(200)
         }
@@ -291,6 +330,18 @@ extension EnrollView {
             $0.height.equalTo(250)
         }
 
+        zoomInButton.snp.makeConstraints {
+//            $0.top.equalTo(mapView.snp.top).offset(85)
+            $0.centerY.equalTo(mapView.snp.centerY).offset(-13)
+            $0.trailing.equalTo(mapView.snp.trailing).offset(-5)
+            $0.width.height.equalTo(30)
+        }
+
+        zoomOutButton.snp.makeConstraints {
+            $0.top.equalTo(zoomInButton.snp.bottom).offset(5)
+            $0.trailing.equalTo(mapView.snp.trailing).offset(-5)
+            $0.width.height.equalTo(30)
+        }
     }
     
 }

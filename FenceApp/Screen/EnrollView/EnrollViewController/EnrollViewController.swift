@@ -193,7 +193,6 @@ class EnrollViewController: UIViewController {
             
             if let selectedCoordinate = selectedCoordinate {
                 annotation.coordinate = selectedCoordinate
-                annotation.title = "옮긴 위치"
             }
             
             // 마커를 지도 뷰에 추가합니다.
@@ -225,6 +224,7 @@ class EnrollViewController: UIViewController {
             do {
                 let userIdentifier = try firebaseAuthService.getCurrentUser().uid
                 let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+                // 수정 예정
                 let picture = images[0]
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
                 let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
@@ -334,16 +334,14 @@ extension EnrollViewController: MKMapViewDelegate {
     func configureMap(){
         if let location = currentLocation {
             let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005) // 지도 확대/축소 정도
+            let span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002) // 지도 확대/축소 정도
             let region = MKCoordinateRegion(center: center, span: span)
             enrollView.mapView.setRegion(region, animated: true)
             
-//            // 현재 위치에 대한 지도 주석을 만듭니다.
-//            let annotation = MKPointAnnotation()
+//            // 현재 위치에 대한 지도 마커
             annotation.coordinate = center
-            annotation.title = "현재 위치"
             
-            // 주석을 지도 뷰에 추가합니다.
+            // 마커 추가
             enrollView.mapView.addAnnotation(annotation)
             
             // 마커를 가운데에 고정하기 / 확인필요
