@@ -9,7 +9,27 @@ import Foundation
 
 struct LocationCalculator {
     
-    func getLocationsOfSqaure(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) {
+    func calculateMaxMinLatitude(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double) {
+        let R = 6371.0  // Radius of the Earth in kilometers
+
+        // Convert latitude and longitude from degrees to radians
+        let latRad = lat * .pi / 180.0
+
+        // Calculate the angular distance in radians
+        let angularDistance = distance / R
+
+        // Calculate the minimum and maximum latitude
+        let minLatRad = latRad - angularDistance
+        let maxLatRad = latRad + angularDistance
+
+        // Convert radians back to degrees
+        let minLat = minLatRad * 180.0 / .pi
+        let maxLat = maxLatRad * 180.0 / .pi
+
+        return (minLat, maxLat)
+    }
+    
+    static func getLocationsOfSqaure(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) {
         let R = 6371.0  // Radius of the Earth in kilometers
 
         // Convert latitude and longitude from degrees to radians
@@ -38,7 +58,7 @@ struct LocationCalculator {
         return (minLat, maxLat, minLon, maxLon)
     }
     
-    func coordinatesWithinDistance(lat: Double, lon: Double, distance: Double) -> [(Double, Double)] {
+    static func coordinatesWithinDistance(lat: Double, lon: Double, distance: Double) -> [(Double, Double)] {
         let R = 6371.0  // Radius of the Earth in kilometers
 
         // Convert latitude and longitude from degrees to radians

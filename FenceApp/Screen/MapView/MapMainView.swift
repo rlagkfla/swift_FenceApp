@@ -57,6 +57,7 @@ class MapMainView: UIView {
         iv.image = UIImage(systemName: "location.circle")
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(locationImageViewTapped)))
         iv.isUserInteractionEnabled = true
+        
         iv.tintColor = .gray
         return iv
     }()
@@ -106,10 +107,10 @@ class MapMainView: UIView {
     private func configureSegmentedControl() {
         addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(50)
+            make.top.equalToSuperview().offset(150)
             make.centerX.equalToSuperview()
             make.width.equalTo(150)
-            make.height.equalTo(40)
+            make.height.equalTo(25)
         }
     }
     
@@ -136,35 +137,29 @@ extension MapMainView: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        
         if annotation is MKClusterAnnotation {
-            //            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "mapItem", for: annotation) as! MKAnnotationView
+            
             let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ClusterAnnotationView.identifier, for: annotation) as! ClusterAnnotationView
+            
             let count = (annotation as! MKClusterAnnotation).memberAnnotations.count
+            
             annotationView.setTitle(count: count)
             
             print(count)
             
             return annotationView
-        } else if annotation is MKUserLocation {
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
-            //                    annotationView.displayPriority = .defaultHigh
-            return annotationView
-        } else {
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
-            //            annotationView.clusteringIdentifier = String(describing: LocationDataMapAnnotationView.self)
             
-            Task {
-                do {
-                    
-                    let image = try await ImageLoader.fetchPhoto(urlString: (annotation as! MapPin).pinable.imageURL)
-                    
-                    annotationView.setImage(image: image)
-                    
-                } catch {
-                    print(error)
-                }
-            }
+        } else if annotation is MKUserLocation {
+            
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
+            
+            return annotationView
+            
+        } else {
+            
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
+            
+            annotationView.setImage(urlString: (annotation as! MapPin).pinable.imageURL)
             
             return annotationView
         }
