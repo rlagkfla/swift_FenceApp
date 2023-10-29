@@ -17,37 +17,29 @@ import FirebaseAuth
 //MARK: - Properties & Deinit
 final class LoginViewController: UIViewController {
     
-
-    //------------------------------------------------------------------------
-    
-    
-    let firstTabNavigationController = UINavigationController()
-    let secondTabNavigationController = UINavigationController()
-    let thirdTabNavigationController = UINavigationController()
-    let fourthTabNavigationController = UINavigationController()
-    
-    let locationManager = LocationManager()
-    let firebaseFoundService = FirebaseFoundService()
     let firebaseLostCommentService = FirebaseLostCommentService()
+    let firebaseLostService = FirebaseLostService(firebaseLostCommentService: FirebaseLostCommentService())
     
-    lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
+    lazy var firebaseUserService = FirebaseUserService(
+        firebaseLostService: self.firebaseLostService,
+        firebaseLostCommentService: self.firebaseLostCommentService
+    )
     
-    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
-    lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService)
-    
-    //------------------------------------------------------------------------
-    
+    lazy var firebaseAuthService = FirebaseAuthService(
+        firebaseUserService: self.firebaseUserService,
+        firebaseLostService: self.firebaseLostService,
+        firebaseLostCommentService: self.firebaseLostCommentService,
+        firebaseFoundService: FirebaseFoundService()
+    )
     
     private let alertHandler = AlertHandler()
-
     let authView = AuthenticationView()
     let signUpView = SignUpView()
     let resetPasswordView = ResetPasswordView()
     
-    
     private var disposeBag = DisposeBag()
     private var emailTextSubject = BehaviorSubject<String?>(value: nil)
-    
+
     private lazy var titleLabel = UILabel()
         .withText("찾아줄개")
         .withFont(40)
@@ -100,10 +92,8 @@ final class LoginViewController: UIViewController {
     }
 }
 
-
 //MARK: - ViewCycle
 extension LoginViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTFValidate()
@@ -114,7 +104,6 @@ extension LoginViewController {
         bindImagePicker()
     }
 }
-
 
 //MARK: - SetupUI
 private extension LoginViewController {
@@ -173,32 +162,27 @@ private extension LoginViewController {
 
     @objc func loginButtonTapped() {
         handleAlertWithError()
+        handleKeychain()
         
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text else { return }
-
+        guard let email = emailTextField.text, let password = passwordTextField.text else {return}
+        
         Task {
             do {
                 try await firebaseAuthService.signInUser(email: email, password: password)
                 print("Successfully \(#function)")
-                handleKeychain()
-                
-       
-                guard let window = UIApplication.shared.connectedScenes
-                    .filter({$0.activationState == .foregroundActive})
-                    .map({$0 as? UIWindowScene})
-                    .compactMap({$0})
-                    .first?.windows
-                    .filter({$0.isKeyWindow}).first else { return }
-                
-                let appCoordinator = EnterMainViewHandler(window: window)
-                appCoordinator.start()
+                enterMainView()
             } catch {
-                print("Error logging in: \(error)")
+                print("Login error: \(error)")
             }
         }
     }
 
+    
+    func enterMainView() {
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let viewTransitionHandler = ViewTransitionHandler(window: window)
+        viewTransitionHandler.transitionToMainView()
+    }
     
     @objc func signUpButtonTapped() {
         handleAuthenticationView()
@@ -240,7 +224,6 @@ private extension LoginViewController {
     
     func succesPhoneAuth() {
         
-        // 인증성공 후
         authView.authenticationSuccessful
             .subscribe(onNext: { [weak self, weak authView] in
 
@@ -348,22 +331,6 @@ extension LoginViewController {
                 
             })
             .disposed(by: disposeBag)
-    }
-}
-    
-    
-//MARK: - Assign tabBarController as rootView
-private extension LoginViewController {
-    func assignRootView() {
-        guard let window = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .map({$0 as? UIWindowScene})
-            .compactMap({$0})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first else { return }
-        
-        let enterMainViewHandler = EnterMainViewHandler(window: window)
-        enterMainViewHandler.start()
     }
 }
 
@@ -480,64 +447,3 @@ extension LoginViewController: PHPickerViewControllerDelegate {
 
 
 
-
-//MARK: Setting
-extension LoginViewController {
-    
-    
-    
-    private func setNavigationControllers() {
-
-        firstTabNavigationController.viewControllers = [makeMapViewVC()]
-        secondTabNavigationController.viewControllers = [makeLostViewVC()]
-        thirdTabNavigationController.viewControllers = [makeChatViewController()]
-        fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
-    }
-    
-    private func makeTabbarController() -> CustomTabBarController {
-        let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
-        
-        return TabbarController
-    }
-    
-    private func makeMapViewVC() -> MapViewController {
-        
-        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
-        
-        vc.filterTapped = {
-            
-            let modelViewController = CustomModalViewController()
-//            modelViewController.delegate = vc
-            vc.present(modelViewController, animated: true)
-            
-        }
-        return vc
-    }
-    
-    private func makeLostViewVC() -> LostListViewController {
-        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
-        
-        vc.filterTapped = {
-            let filterModalViewController = CustomFilterModalViewController()
-            filterModalViewController.delegate = vc
-            vc.present(filterModalViewController, animated: true)
-        }
-        
-        return vc
-    }
-    
-    private func makeDummyViewController() -> UIViewController {
-        let vc = UIViewController()
-        return vc
-    }
-    
-    private func makeChatViewController() -> ChatViewController {
-        let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
-        return vc
-    }
-    
-    private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController()
-        return vc
-    }
-}
