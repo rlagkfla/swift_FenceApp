@@ -12,13 +12,12 @@ import RxKeyboard
 import RxSwift
 import SnapKit
 import FirebaseAuth
-import FirebaseFirestore
 
 
 //MARK: - Properties & Deinit
 final class LoginViewController: UIViewController {
     
-    
+
     //------------------------------------------------------------------------
     
     
@@ -173,23 +172,34 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     @objc func loginButtonTapped() {
-        
         handleAlertWithError()
+        
         guard let email = emailTextField.text,
-              let password = passwordTextField.text else {return}
+              let password = passwordTextField.text else { return }
 
         Task {
             do {
                 try await firebaseAuthService.signInUser(email: email, password: password)
                 print("Successfully \(#function)")
                 handleKeychain()
-                assignRootView()
+                
+       
+                guard let window = UIApplication.shared.connectedScenes
+                    .filter({$0.activationState == .foregroundActive})
+                    .map({$0 as? UIWindowScene})
+                    .compactMap({$0})
+                    .first?.windows
+                    .filter({$0.isKeyWindow}).first else { return }
+                
+                let appCoordinator = EnterMainViewHandler(window: window)
+                appCoordinator.start()
             } catch {
                 print("Error logging in: \(error)")
             }
         }
     }
 
+    
     @objc func signUpButtonTapped() {
         handleAuthenticationView()
     }
@@ -345,8 +355,6 @@ extension LoginViewController {
 //MARK: - Assign tabBarController as rootView
 private extension LoginViewController {
     func assignRootView() {
-        setNavigationControllers()
-        
         guard let window = UIApplication.shared.connectedScenes
             .filter({$0.activationState == .foregroundActive})
             .map({$0 as? UIWindowScene})
@@ -354,11 +362,8 @@ private extension LoginViewController {
             .first?.windows
             .filter({$0.isKeyWindow}).first else { return }
         
-        let customTabBarController = CustomTabBarController(controllers: [self.firstTabNavigationController, self.secondTabNavigationController, UIViewController(), self.thirdTabNavigationController, self.fourthTabNavigationController], locationManager: self.locationManager, firebaseFoundSerivce: self.firebaseFoundService)
-        
-        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
-            window.rootViewController = customTabBarController
-        }, completion: nil)
+        let enterMainViewHandler = EnterMainViewHandler(window: window)
+        enterMainViewHandler.start()
     }
 }
 
