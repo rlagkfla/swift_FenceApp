@@ -103,6 +103,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeLostViewVC() -> LostListViewController {
         let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
+        
+        vc.filterTapped = {
+            let filterModalViewController = CustomFilterModalViewController()
+            filterModalViewController.delegate = vc
+            vc.present(filterModalViewController, animated: true)
+        }
+        
         return vc
     }
     
