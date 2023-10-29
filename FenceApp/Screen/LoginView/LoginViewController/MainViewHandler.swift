@@ -5,8 +5,6 @@ import FirebaseFirestore
 
 class MainViewHandler {
     
-    var window: UIWindow?
-
     let firstTabNavigationController = UINavigationController()
     let secondTabNavigationController = UINavigationController()
     let thirdTabNavigationController = UINavigationController()

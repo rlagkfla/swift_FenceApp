@@ -142,7 +142,7 @@ extension AuthenticationView {
             if let error = error { print("Error during phone number verification: \(error.localizedDescription)"); return }
             
             UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
-            
+        
         }
     }
     
@@ -198,22 +198,21 @@ extension AuthenticationView {
         )
         
         Auth.auth().signIn(with: credential) { [weak self](authResult, error) in
-            if let error = error {
-                print("Error during signing in with phone number: \(error.localizedDescription)")
-                return
-            }
-            
+            if let error = error {print("\(error.localizedDescription)");return}
+            self?.deletePhoneNumber()
             print("Successfully signed in with phone number!")
-            
-            Auth.auth().currentUser?.delete { error in
+        }
+    }
+    
+    
+    func deletePhoneNumber() {
+        Auth.auth().currentUser?.delete { error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+            } else {
+                print("User successfully deleted")
                 
-                if let error = error {
-                    print("Error deleting user: \(error.localizedDescription)")
-                } else {
-                    print("User successfully deleted")
-                    
-                    self?.authenticationSuccessful.onNext(())
-                }
+                self.authenticationSuccessful.onNext(())
             }
         }
     }

@@ -161,7 +161,7 @@ private extension LoginViewController {
 private extension LoginViewController {
 
     @objc func loginButtonTapped() {
-        handleAlertWithError()
+        handleTextFormatError()
         handleKeychain()
         
         guard let email = emailTextField.text, let password = passwordTextField.text else {return}
@@ -173,10 +173,10 @@ private extension LoginViewController {
                 enterMainView()
             } catch {
                 print("Login error: \(error)")
+                //alert창 넣기
             }
         }
     }
-
     
     func enterMainView() {
         let window = UIApplication.shared.windows.first { $0.isKeyWindow }
@@ -241,11 +241,6 @@ private extension LoginViewController {
 //MARK: - Handle Alert with Error case
 
 extension LoginViewController {
-    
-    func handleAlertWithError() {
-        handleTextFormatError()
-    }
-    
     
     func showAlert(for error: AppError) {
         let alertPresenter = alertHandler.generateAlert(for: error)
