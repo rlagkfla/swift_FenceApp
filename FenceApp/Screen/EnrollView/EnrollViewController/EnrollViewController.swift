@@ -17,8 +17,6 @@ protocol EnrollViewControllerDelegate: AnyObject {
 class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
-//    private let enrollViewCell = PhotoCollectionViewCell()
-//    private let lostListView = LostListView()
     
     let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
