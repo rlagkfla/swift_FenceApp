@@ -12,14 +12,18 @@ import Kingfisher
 class LostListViewController: UIViewController {
     
     // MARK: - Properties
-    private let lostListView = LostListView()
+    lazy var lostListView: LostListView = {
+        let view = LostListView()
+        view.delegate = self
+        return view
+    }()
     
     let fireBaseLostService: FirebaseLostService
     let firebaseLostCommentService: FirebaseLostCommentService
     var lostList: [LostResponseDTO] = []
-    
     let firebaseAuthService: FirebaseAuthService
     let firebaseUserService: FirebaseUserService
+    var filterTapped: (() -> Void)?
     
     init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService) {
         self.fireBaseLostService = fireBaseLostService
@@ -139,4 +143,31 @@ extension LostListViewController: EnrollViewControllerDelegate {
     func popEnrollViewController() {
         getLostList()
     }
+}
+
+extension LostListViewController: lostListViewDelegate {
+    func tapFilterButton() {
+        filterTapped?()
+    }
+}
+
+extension LostListViewController: CustomFilterModalViewControllerDelegate {
+    func applyTapped(within: Double, fromDate: Date, toDate: Date) {
+        print("tap2")
+        Task{
+            print("within - \(within) / fromDate - \(fromDate) / toDate - \(toDate)")
+            
+            let filteredLostList = try await fireBaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
+            
+            print("filter count - \(filteredLostList.count)")
+            
+            // 필터링된 데이터로 테이블 데이터 업데이트
+            lostList = filteredLostList
+            
+            // 테이블뷰 새로 고침
+            lostListView.lostTableView.reloadData()
+        }
+    }
+    
+    
 }
