@@ -17,6 +17,8 @@ import FirebaseAuth
 //MARK: - Properties & Deinit
 final class LoginViewController: UIViewController {
     
+    //--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     let firebaseLostCommentService = FirebaseLostCommentService()
     let firebaseLostService = FirebaseLostService(firebaseLostCommentService: FirebaseLostCommentService())
     
@@ -31,11 +33,14 @@ final class LoginViewController: UIViewController {
         firebaseLostCommentService: self.firebaseLostCommentService,
         firebaseFoundService: FirebaseFoundService()
     )
-    
+    //--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
+
     private let alertHandler = AlertHandler()
-    let authView = AuthenticationView()
-    let signUpView = SignUpView()
-    let resetPasswordView = ResetPasswordView()
+    private let authView = AuthenticationView()
+    private var signUpView: SignUpView?
+
+    private let resetPasswordView = ResetPasswordView()
     
     private var disposeBag = DisposeBag()
     private var emailTextSubject = BehaviorSubject<String?>(value: nil)
@@ -96,7 +101,9 @@ final class LoginViewController: UIViewController {
 extension LoginViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        signUpView = SignUpView(authService: firebaseAuthService, userService:  firebaseUserService)
         setupTFValidate()
+
         view.handleKeyboardAdjustment(adjustmentFactor: 0.25)
         setupUI()
         setUpKeychain()
@@ -269,11 +276,11 @@ extension LoginViewController {
     
     func presentSignUpView() {
         setUpSignUpView()
-        view.addSubview(signUpView)
+        view.addSubview(signUpView!)
     }
     
     func setUpSignUpView() {
-        signUpView
+        signUpView!
             .positionCenterX()
             .positionCenterY()
             .withSize(widthRatioOfSuperview: 0.8)
@@ -305,7 +312,7 @@ extension LoginViewController {
         
         
         resetPasswordView.resetEmailSent
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self, weak resetPasswordView] in
                 self?.showResetEmailSentAlert()
                 self?.resetPasswordView.removeFromSuperview()
             })
@@ -322,8 +329,7 @@ extension LoginViewController {
     func deinitResetPasswordView() {
         resetPasswordView.deinitResetPasswordView
             .subscribe(onNext: { [weak self, weak resetPasswordView] in
-                resetPasswordView?.removeFromSuperview()
-                
+                self?.resetPasswordView.removeFromSuperview()
             })
             .disposed(by: disposeBag)
     }
@@ -401,7 +407,7 @@ extension LoginViewController {
 extension LoginViewController: PHPickerViewControllerDelegate {
     
     func bindImagePicker() {
-        signUpView.didRequestImagePicker
+        signUpView?.didRequestImagePicker
             .subscribe(onNext: { [weak self] in
                 self?.presentPHImagePicker()
             })
@@ -431,13 +437,35 @@ extension LoginViewController: PHPickerViewControllerDelegate {
                     print("Error loading image: \(error)")
                 }
                 if let image = image as? UIImage {
-                    self?.signUpView.profileRiveAnimationView.removeFromSuperview()
-                    self?.signUpView.profileImageButton.setImage(image, for: .normal)
+                    self?.signUpView?.profileRiveAnimationView.removeFromSuperview()
+                    self?.signUpView?.profileImageButton.setImage(image, for: .normal)
+                    
+                    if let imageURL = self?.saveImageToTempDirectory(image) {
+                        self?.signUpView?.profileImageURL.onNext(imageURL)
+                    }
                 }
                 picker.dismiss(animated: true)
             }
         }
     }
+    
+    
+    func saveImageToTempDirectory(_ image: UIImage) -> URL? {
+        let tempDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let imageName = UUID().uuidString
+        let fileURL = tempDirectoryURL.appendingPathComponent(imageName).appendingPathExtension("png")
+        
+        do {
+            if let pngData = image.pngData() {
+                try pngData.write(to: fileURL, options: .atomicWrite)
+                return fileURL
+            }
+        } catch {
+            print("Failed to save image to temp directory:", error)
+        }
+        return nil
+    }
+
 }
 
 

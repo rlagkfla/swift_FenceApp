@@ -5,6 +5,11 @@ import RxKeyboard
 
 final class SignUpView: UIView {
     
+    private var userService: FirebaseUserService
+    private var authService: FirebaseAuthService
+    
+    private var pickedImageURL: URL?
+    var profileImageURL = PublishSubject<URL>()
     private(set) var didRequestImagePicker = PublishSubject<Void>()
     private var didFinishPickingImage = PublishSubject<UIImage>()
     private var didCancelImagePicker = PublishSubject<Void>()
@@ -57,15 +62,23 @@ final class SignUpView: UIView {
     
     
     // MARK: - Initialization
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(authService: FirebaseAuthService, userService: FirebaseUserService) {
+        self.authService = authService
+        self.userService = userService
+        super.init(frame: .zero)
         configureUI()
         setupTFValidate()
+        
+        
+        profileImageURL
+            .subscribe(onNext: { [weak self] url in
+                self?.pickedImageURL = url
+            })
+            .disposed(by: disposeBag)
 
     }
-    
+
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -190,6 +203,7 @@ private extension SignUpView {
     
     
     @objc func signupButtonTapped() {
+        signupWithFirebase()
         
         
     }
@@ -199,3 +213,25 @@ private extension SignUpView {
     }
 }
 
+
+
+//MARK: - SignUp
+extension SignUpView {
+    
+    func signupWithFirebase() {
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text,
+              let nickname = nicknameTextField.text,
+              let imageUrlString = pickedImageURL?.absoluteString else { return }
+        Task {
+            do {
+                let authResult = try await authService.signUpUser(email: email, password: password)
+                let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
+                try await userService.createUser(userResponseDTO: userResponseDTO)
+            } catch {
+                // Handle errors
+                print("Error occurred: \(error)")
+            }
+        }
+    }
+}

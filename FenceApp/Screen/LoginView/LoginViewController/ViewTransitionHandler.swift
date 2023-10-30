@@ -10,8 +10,8 @@ class ViewTransitionHandler {
     
     func transitionToMainView() {
         let mainViewHandler = MainViewHandler()
+        mainViewHandler.setNavigationControllers()
         window?.rootViewController = mainViewHandler.makeTabbarController()
         window?.makeKeyAndVisible()
-        mainViewHandler.setNavigationControllers()
     }
 }
