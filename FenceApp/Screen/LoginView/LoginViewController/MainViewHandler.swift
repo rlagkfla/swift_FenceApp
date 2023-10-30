@@ -38,9 +38,11 @@ class MainViewHandler {
         
         vc.filterTapped = {
             
-            let modelViewController = CustomModalViewController()
-//            modelViewController.delegate = vc
-            vc.present(modelViewController, animated: true)
+//            let modelViewController = CustomModalViewController()
+            
+            let filterViewController = CustomFilterModalViewController()
+            filterViewController.delegate = vc
+            vc.present(filterViewController, animated: true)
             
         }
         return vc

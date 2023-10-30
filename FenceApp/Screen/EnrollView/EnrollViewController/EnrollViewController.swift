@@ -71,7 +71,21 @@ class EnrollViewController: UIViewController {
         configureMap()
         
         configureKeyboard()
-
+        
+        rqwrq()
+    }
+    
+    func rqwrq() {
+        Task {
+            do {
+                let user = try firebaseAuthService.getCurrentUser().uid
+                
+                let user2 = try await firebaseUserService.fetchUser(userIdentifier: user)
+                print(user2.email)
+            } catch {
+                print(error)
+            }
+        }
     }
     
     

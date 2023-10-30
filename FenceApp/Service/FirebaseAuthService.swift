@@ -25,7 +25,6 @@ struct FirebaseAuthService {
     func signInUser(email: String, password: String) async throws {
         let result = try await Auth.auth().signIn(withEmail: email, password: password)
         print(result.user)
-        
     }
     
     func sendPasswordReset(withEmail: String) async throws {
