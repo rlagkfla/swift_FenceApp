@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import FirebaseFirestore
 
 class LostListViewController: UIViewController {
     
@@ -24,6 +25,9 @@ class LostListViewController: UIViewController {
     let firebaseAuthService: FirebaseAuthService
     let firebaseUserService: FirebaseUserService
     var filterTapped: (() -> Void)?
+    
+    var lastDocument: DocumentSnapshot? = nil
+    let itemsPerPage = 5 // 페이지당 10개의 아이템을 표시
     
     init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService) {
         self.fireBaseLostService = fireBaseLostService
@@ -46,6 +50,7 @@ class LostListViewController: UIViewController {
         super.viewDidLoad()
             
         getLostList()
+//        loadNextPage()
         
         configureTableView()
         
@@ -79,12 +84,48 @@ class LostListViewController: UIViewController {
         Task {
             do{
                 lostList = try await fireBaseLostService.fetchLosts()
+                
+                // 날짜에 따라 lostList 배열을 정렬 (최신 날짜가 맨 위로)
+                lostList.sort { $0.postDate > $1.postDate }
+                
                 lostListView.lostTableView.reloadData()
             }catch{
                 print(error)
             }
         }
     }
+    
+//    func loadNextPage() {
+//        // fetchLostsWithPagination 함수를 호출하여 다음 페이지의 데이터 가져오기
+//        Task {
+//            do {
+//                let result = try await fireBaseLostService.fetchLostsWithPagination(int: itemsPerPage, lastDocument: lastDocument)
+//                let newItems = result.lostResponseDTOs
+//                lastDocument = result.lastDocument
+//
+//                // 가져온 데이터를 데이터 원본에 추가
+//                lostList.append(contentsOf: newItems)
+//
+//                // 테이블 뷰 업데이트
+//                lostListView.lostTableView.reloadData()
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        // 스크롤이 특정 위치까지 도달하면 다음 페이지 로드
+//        let threshold: CGFloat = 100.0 // 스크롤을 어느 정도 내려야 다음 페이지 로드
+//        let contentOffsetY = scrollView.contentOffset.y
+//        let contentHeight = scrollView.contentSize.height
+//        let distanceToBottom = contentHeight - contentOffsetY - scrollView.bounds.size.height
+//
+//        if distanceToBottom < threshold {
+//            loadNextPage()
+//        }
+//    }
+    
 }
 
 extension LostListViewController {
@@ -122,7 +163,7 @@ extension LostListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LostListViewCell", for: indexPath) as! LostListViewCell
         let lostPost = lostList[indexPath.row]
-        cell.configure(lostPostImageUrl: lostPost.imageURL, lostPostTitle: lostPost.title, lostPostDate: "\(lostPost.lostDate)", lostPostUserNickName: lostPost.userNickName)
+        cell.configure(lostPostImageUrl: lostPost.imageURL, lostPostTitle: lostPost.title, lostPostDate: "\(lostPost.postDate)", lostPostUserNickName: lostPost.userNickName)
         return cell
     }
 
@@ -153,7 +194,7 @@ extension LostListViewController: lostListViewDelegate {
 
 extension LostListViewController: CustomFilterModalViewControllerDelegate {
     func applyTapped(within: Double, fromDate: Date, toDate: Date) {
-        print("tap2")
+       
         Task{
             print("within - \(within) / fromDate - \(fromDate) / toDate - \(toDate)")
             
