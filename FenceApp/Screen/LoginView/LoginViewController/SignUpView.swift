@@ -228,6 +228,7 @@ extension SignUpView {
                 let authResult = try await authService.signUpUser(email: email, password: password)
                 let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
                 try await userService.createUser(userResponseDTO: userResponseDTO)
+                print("회원가입 성공!!!!!")
             } catch {
                 // Handle errors
                 print("Error occurred: \(error)")
