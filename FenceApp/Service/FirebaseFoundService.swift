@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 
 struct FirebaseFoundService {
@@ -59,6 +60,29 @@ struct FirebaseFoundService {
         }
       
         return b
+    }
+    
+    func fetchFoundsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> FoundWithDocument {
+        
+        var ref = COLLECTION_FOUND.limit(to: int)
+        
+        if let lastDocument {
+            ref = ref.start(afterDocument: lastDocument)
+        }
+        let snapshot = try await ref.getDocuments()
+        
+        let documents = snapshot.documents
+        
+        guard let lastDocument = documents.last else { throw PetError.noSnapshotDocument }
+        
+        let foundResponseDTOs = documents.map { document in
+            return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        return FoundWithDocument(foundResponseDTOs: foundResponseDTOs, lastDocument: lastDocument)
+        
+        
+        
     }
     
     

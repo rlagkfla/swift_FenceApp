@@ -1,22 +1,37 @@
-//
-//  AppDelegate.swift
-//  FenceApp
-//
-//  Created by JeonSangHyeok on 10/16/23.
-//
-
 import UIKit
 import Firebase
+import UserNotifications
+
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate { 
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
+
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
         return true
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register for remote notifications with error: \(error)")
     }
 
     // MARK: UISceneSession Lifecycle
@@ -35,4 +50,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
