@@ -33,14 +33,16 @@ class EnrollViewController: UIViewController {
     // map
     // 확인필요
     let currentLocation = LocationManager().fetchLocation() // 현재 위치
+    let currentUserResponseDTO: UserResponseDTO
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
-    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService) {
+    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService, currentUserResponseDTO: UserResponseDTO) {
         self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
         self.firebaseUserService = firebaseUserService
         self.firebaseLostCommentService = firebaseLostCommentService
+        self.currentUserResponseDTO = currentUserResponseDTO
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -69,23 +71,7 @@ class EnrollViewController: UIViewController {
         configureMap()
         
         configureKeyboard()
-        
-        rqwrq()
     }
-    
-    func rqwrq() {
-        Task {
-            do {
-                let user = try firebaseAuthService.getCurrentUser().uid
-                
-                let user2 = try await firebaseUserService.fetchUser(userIdentifier: user)
-                print(user2.email)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
     
     func configureAction(){
         // 사진 추가 버튼 클릭 시
@@ -234,12 +220,12 @@ class EnrollViewController: UIViewController {
         
         Task{
             do {
-                let userIdentifier = try firebaseAuthService.getCurrentUser().uid
-                let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+//                let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+//                let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
                 // 수정 예정
                 let picture = images[0]
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 
