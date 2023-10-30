@@ -277,6 +277,8 @@ extension LoginViewController {
     func presentSignUpView() {
         setUpSignUpView()
         view.addSubview(signUpView!)
+        bindSignUpAuthSuccess()
+
     }
     
     func setUpSignUpView() {
@@ -288,6 +290,15 @@ extension LoginViewController {
             .withCornerRadius(20)
             .withBlurEffect()
     }
+    
+    func bindSignUpAuthSuccess() {
+        signUpView?.signUpAuthSuccessful
+            .subscribe(onNext: { [weak self] in
+                self?.signUpView?.removeFromSuperview()
+            })
+            .disposed(by: disposeBag)
+    }
+
 
 
 }

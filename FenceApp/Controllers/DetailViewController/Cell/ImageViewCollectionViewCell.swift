@@ -15,7 +15,7 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "ImageViewCell"
     
     // MARK: - UI Properties
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "코주부 원숭이"))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
