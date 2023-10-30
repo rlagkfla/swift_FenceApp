@@ -73,7 +73,7 @@ extension ChatViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = chatView.foundCollectionView.dequeueReusableCell(withReuseIdentifier: ChatCollectionViewCell.identifier, for: indexPath) as! ChatCollectionViewCell
-        cell.foundImageView.kf.setImage(with: URL(string: foundList[indexPath.row].imageURL))
+        cell.setFoundImageView(foundImageUrl: foundList[indexPath.row].imageURL)
         return cell
     }
     
