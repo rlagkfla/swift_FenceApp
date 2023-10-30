@@ -106,22 +106,28 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @objc func cancelButtonTapped() {
-        if presentingViewController != nil {
-            dismiss(animated: true, completion: nil)
-        } else {
-            navigationController?.popViewController(animated: true)
-        }
+//        if presentingViewController != nil {
+//            dismiss(animated: true, completion: nil)
+//        } else {
+//            navigationController?.popViewController(animated: true)
+//        }
+        navigationController?.popViewController(animated: true)
+
     }
     
     @objc func doneButtonTapped() {
         if let nickname = nicknameTextField.text, let memo = memoTextField.text, let image = profileImageView.image  {
             delegate?.didSaveProfileInfo(nickname: nickname, memo: memo, image: image)
-           }
-           if presentingViewController != nil {
-               dismiss(animated: true, completion: nil)
-           } else {
-               navigationController?.popViewController(animated: true)
-           }
+        }
+        
+//           if presentingViewController != nil {
+//               dismiss(animated: true, completion: nil)
+//           } else {
+//               navigationController?.popViewController(animated: true)
+//           }
+        
+        navigationController?.popViewController(animated: true)
+
        }
     
     func addTapGesture() {
