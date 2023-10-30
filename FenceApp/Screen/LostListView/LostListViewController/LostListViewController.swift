@@ -26,6 +26,8 @@ class LostListViewController: UIViewController {
     let firebaseUserService: FirebaseUserService
     var filterTapped: (() -> Void)?
     
+    var currentUserResponseDTO: UserResponseDTO!
+    
     var lastDocument: DocumentSnapshot? = nil
     let itemsPerPage = 5 // 페이지당 10개의 아이템을 표시
     
@@ -50,6 +52,8 @@ class LostListViewController: UIViewController {
         super.viewDidLoad()
             
         getLostList()
+        
+        getCurrentUser()
 //        loadNextPage()
         
         configureTableView()
@@ -66,7 +70,7 @@ class LostListViewController: UIViewController {
 
     
     @objc func tapRightBarBtn(){
-        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService)
+        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService, currentUserResponseDTO: currentUserResponseDTO)
         
         enrollVC.delegate = self
         // 탭바 숨기기
@@ -90,6 +94,18 @@ class LostListViewController: UIViewController {
                 
                 lostListView.lostTableView.reloadData()
             }catch{
+                print(error)
+            }
+        }
+    }
+    
+    func getCurrentUser() {
+        Task {
+            do {
+                let userIdentifier = try self.firebaseAuthService.getCurrentUser().uid
+                let userResponseDTO = try await self.firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+                currentUserResponseDTO = userResponseDTO
+            } catch {
                 print(error)
             }
         }
@@ -125,7 +141,6 @@ class LostListViewController: UIViewController {
 //            loadNextPage()
 //        }
 //    }
-    
 }
 
 extension LostListViewController {
@@ -175,7 +190,7 @@ extension LostListViewController: UITableViewDataSource {
 
 extension LostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService)
+        let DetailVC = DetailViewController(lostDTO: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService, firebaseUserService: firebaseUserService, firebaseAuthService: firebaseAuthService, currentUserResponseDTO: currentUserResponseDTO)
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }
