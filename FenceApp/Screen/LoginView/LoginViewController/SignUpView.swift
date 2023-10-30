@@ -14,6 +14,8 @@ final class SignUpView: UIView {
     private var didFinishPickingImage = PublishSubject<UIImage>()
     private var didCancelImagePicker = PublishSubject<Void>()
     private lazy var authenticationView = AuthenticationView()
+    let signUpAuthSuccessful = PublishSubject<Void>()
+
     private let disposeBag = DisposeBag()
 
     private var profileAnimationViewModel = RiveViewModel(fileName: "profile")
@@ -68,14 +70,7 @@ final class SignUpView: UIView {
         super.init(frame: .zero)
         configureUI()
         setupTFValidate()
-        
-        
-        profileImageURL
-            .subscribe(onNext: { [weak self] url in
-                self?.pickedImageURL = url
-            })
-            .disposed(by: disposeBag)
-
+        fetchImageURL()
     }
 
     required init?(coder: NSCoder) {
@@ -214,7 +209,6 @@ private extension SignUpView {
 }
 
 
-
 //MARK: - SignUp
 extension SignUpView {
     
@@ -228,10 +222,25 @@ extension SignUpView {
                 let authResult = try await authService.signUpUser(email: email, password: password)
                 let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
                 try await userService.createUser(userResponseDTO: userResponseDTO)
+                print("Successfully \(#function)")
+                self.signUpAuthSuccessful.onNext(())
             } catch {
-                // Handle errors
                 print("Error occurred: \(error)")
             }
         }
     }
 }
+
+
+//MARK: - Fetch Image URL From LoginVC
+extension SignUpView {
+    func fetchImageURL() {
+        profileImageURL
+            .subscribe(onNext: { [weak self] url in
+                self?.pickedImageURL = url
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+
