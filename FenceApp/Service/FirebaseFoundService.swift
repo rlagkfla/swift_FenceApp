@@ -80,9 +80,6 @@ struct FirebaseFoundService {
         }
         
         return FoundWithDocument(foundResponseDTOs: foundResponseDTOs, lastDocument: lastDocument)
-        
-        
-        
     }
     
     

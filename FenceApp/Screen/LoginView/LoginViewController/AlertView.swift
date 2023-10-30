@@ -8,8 +8,6 @@ enum AppError: Error {
     case unknownError
 }
 
-
-
 // MARK: - Alert Handler
 struct AlertHandler {
 
