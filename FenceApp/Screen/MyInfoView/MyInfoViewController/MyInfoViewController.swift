@@ -105,29 +105,20 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.present(alertController, animated: true, completion: nil)
     }
 
-    private func configureLostCollectionView(){
-        view.addSubview(lostCollectionView)
-        lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        lostCollectionView.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 30).isActive = true
-        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: self.tabBarController!.tabBar.frame.height).isActive = true
-    }
-    
-    private func configureEditProfileButton() {
-        view.addSubview(editProfileButton)
-        editProfileButton.translatesAutoresizingMaskIntoConstraints = false
-        editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45).isActive = true
-        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    private func configureProfileImage() {
+        view.addSubview(profileImageView)
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
     }
     
     private func configureNickName(){
         view.addSubview(nickname)
         nickname.translatesAutoresizingMaskIntoConstraints = false
         nickname.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 40).isActive = true
-        nickname.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 30).isActive = true
+        nickname.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45).isActive = true
         nickname.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         
     }
@@ -141,15 +132,24 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         
     }
     
-    private func configureProfileImage() {
-        view.addSubview(profileImageView)
-        profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+    private func configureEditProfileButton() {
+        view.addSubview(editProfileButton)
+        editProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45).isActive = true
+        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
-
+    
+    private func configureLostCollectionView(){
+        view.addSubview(lostCollectionView)
+        lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        lostCollectionView.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 30).isActive = true
+        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: self.tabBarController!.tabBar.frame.height).isActive = true
+    }
+    
     
     @objc func editProfile() {
         let view = EditViewController()
