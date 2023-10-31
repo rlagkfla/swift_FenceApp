@@ -20,6 +20,27 @@ import UIKit
 
 class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, EditViewControllerDelegate {
 
+    // EditViewController에 추가된 변수들을 처리하기 위한 프로퍼티들
+    var previousNickname: String = ""
+    var previousMemo: String = ""
+    var previousImage: UIImage?
+    
+    let firebaseLostService: FirebaseLostService
+    let firebaseFoundService: FirebaseFoundService
+    var lostList: [LostResponseDTO] = []
+    var foundList: [FoundResponseDTO] = []
+    let imageLoader = ImageLoader()
+    
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService) {
+        self.firebaseLostService = firebaseLostService
+        self.firebaseFoundService = firebaseFoundService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -32,7 +53,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private let nickname: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .blue
+//        label.backgroundColor = .blue
         label.text = "닉네임"
         label.textColor = UIColor.black
         label.font = UIFont.systemFont(ofSize: 20)
@@ -41,7 +62,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     private let memo: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .red
+//        label.backgroundColor = .red
         label.text = "간단한 메모"
         return label
     }()
@@ -64,7 +85,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .lightGray
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(MyInfoCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.isScrollEnabled = true
         return collectionView
     }()
@@ -72,8 +93,10 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        getData()
         configureUI()
         configureNavigationBar()
+        print("count \(lostList.count)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +104,17 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)]
     }
     
+    func getData() {
+        Task{
+            do{
+                lostList = try await firebaseLostService.fetchLosts()
+//                lostCollectionView.reloadData()
+            } catch{
+                print(error)
+                
+            }
+        }
+    }
     private func configureUI(){
         configureProfileImage()
         configureNickName()
@@ -152,9 +186,17 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     @objc func editProfile() {
-        let view = EditViewController()
-        view.delegate = self
-        navigationController?.pushViewController(view, animated: true)
+        // let view = EditViewController()
+        // view.delegate = self
+        // navigationController?.pushViewController(view, animated: true)
+        let editViewController = EditViewController()
+        editViewController.delegate = self
+        editViewController.previousNickname = self.nickname.text ?? ""
+        editViewController.previousMemo = self.memo.text ?? ""
+        editViewController.previousImage = self.profileImageView.image
+        
+        editViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(editViewController, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -170,46 +212,61 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 2
-        }
-        return 9
+//        if section == 0 {
+//            return lostList.count 
+//        }
+        return lostList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MyInfoCollectionViewCell
         
-        if indexPath.section == 0 {
-            cell.backgroundColor = .systemPink
-//            if indexPath.item == 0 {
-//                let lostLabel = UILabel()
-//                lostLabel.text = "Lost"
-//                lostLabel.textColor = .black
-//                lostLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-//                lostLabel.translatesAutoresizingMaskIntoConstraints = false
-//                cell.addSubview(lostLabel)
-//                lostLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-//                lostLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
-//            }
+        Task{
+            do {
+//                if indexPath.section == 0{
+                    let url = lostList[indexPath.row].imageURL
+                    let image = try await ImageLoader.fetchPhoto(urlString: url)
+                    cell.imageView.image = image
+//                }
+            } catch{
+                print(error)
+            }
         }
+//        if indexPath.section == 0 {
+////            cell.backgroundColor = .systemPink
+//            let aa = imageLoader.
+//            let lostPost = lostList[indexPath.row].imageURL
+//            cell.imageView.image = lostPost
+////            cell.contentView
+////            if indexPath.item == 0 {
+////                let lostLabel = UILabel()
+////                lostLabel.text = "Lost"
+////                lostLabel.textColor = .black
+////                lostLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+////                lostLabel.translatesAutoresizingMaskIntoConstraints = false
+////                cell.addSubview(lostLabel)
+////                lostLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+////                lostLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
+////            }
+//        }
         
-        if indexPath.section == 1 {
-            cell.backgroundColor = .color1
-//            if indexPath.item == 0 {
-//                let foundLabel = UILabel()
-//                foundLabel.text = "Found"
-//                foundLabel.textColor = .black
-//                foundLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-//                foundLabel.translatesAutoresizingMaskIntoConstraints = false
-//                cell.addSubview(foundLabel)
-//                foundLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-//                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
-//            }
-        }
+//        if indexPath.section == 1 {
+////            cell.backgroundColor = .color1
+////            if indexPath.item == 0 {
+////                let foundLabel = UILabel()
+////                foundLabel.text = "Found"
+////                foundLabel.textColor = .black
+////                foundLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+////                foundLabel.translatesAutoresizingMaskIntoConstraints = false
+////                cell.addSubview(foundLabel)
+////                foundLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+////                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
+////            }
+//        }
         
         return cell
     }
