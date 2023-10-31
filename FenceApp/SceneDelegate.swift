@@ -20,6 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()
     }
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
 
 

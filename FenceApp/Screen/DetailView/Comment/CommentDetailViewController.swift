@@ -98,12 +98,26 @@ class CommentDetailViewController: UIViewController {
             }
         }
     }
+    
+    func commentAlert() {
+        guard let lastComment = commentList.last else {
+            return
+        }
+        guard currentUserResponseDTO.identifier == lostResponseDTO.userIdentifier else {
+            return
+        }
+        guard currentUserResponseDTO.identifier != lastComment.userIdentifier else {
+            return
+        }
+        UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
+    }
 }
 
 // MARK: - Actions
 extension CommentDetailViewController {
     @objc func rightButtonTapped() {
         dismiss(animated: true)
+        commentAlert()
     }
     
     @objc func keyboardUp(notification: NSNotification) {
