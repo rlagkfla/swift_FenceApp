@@ -69,7 +69,7 @@ class MainViewHandler {
     }
     
     private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController()
+        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
         return vc
     }
 }
