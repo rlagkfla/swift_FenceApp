@@ -13,7 +13,10 @@ protocol EditViewControllerDelegate: AnyObject {
 
 class EditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-   
+    // EditViewController에 추가된 변수들을 처리하기 위한 프로퍼티들
+    var previousNickname: String = ""
+    var previousMemo: String = ""
+    var previousImage: UIImage?
 
     let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -45,7 +48,11 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemPink
+        self.view.backgroundColor = .white
+        // viewDidLoad 메소드에 기존 정보를 세팅해주는 코드를 추가합니다.
+        nicknameTextField.text = previousNickname
+        memoTextField.text = previousMemo
+        profileImageView.image = previousImage
         
         setupProfileImageView()
         setupNicknameTextField()
@@ -82,9 +89,6 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func setupNavigationBar() {
         self.navigationItem.title = "프로필 편집"
-        if let font = UIFont(name: "Arial-BoldMT", size: 24) {
-            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: font]
-        }
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
         let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(doneButtonTapped))
         self.navigationItem.leftBarButtonItem = cancelButton
