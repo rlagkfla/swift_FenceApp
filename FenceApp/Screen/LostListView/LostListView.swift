@@ -8,7 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol lostListViewDelegate: AnyObject {
+    func tapFilterButton()
+}
+
 class LostListView: UIView {
+    
+    weak var delegate: lostListViewDelegate?
     
     private let filterLabel: UILabel = {
         let lb = UILabel()
@@ -27,13 +33,15 @@ class LostListView: UIView {
         return tableView
     }()
     
-    let filterBtn: UIButton = {
+    lazy var filterBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
+        btn.addTarget(self, action: #selector(tapFilterBtutton), for: .touchUpInside)
         return btn
     }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +54,9 @@ class LostListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
+    @objc func tapFilterBtutton(){
+        delegate?.tapFilterButton()
+    }
     
 }
 
@@ -72,10 +82,10 @@ extension LostListView {
         }
         
         filterBtn.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-18)
-            $0.width.equalTo(38)
-            $0.height.equalTo(35)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-15)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.width.equalTo(43)
+            $0.height.equalTo(42)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
     }

@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hyeok.FenceApp</string>
+	<string>com.team.FenceApp01</string>
 	<key>PROJECT_ID</key>
 	<string>fence-app-d14db</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:444539823777:ios:6d185bad1cd8d01f2e32e0</string>
+	<string>1:444539823777:ios:fd3de5b5f712f1ab2e32e0</string>
 </dict>
 </plist>

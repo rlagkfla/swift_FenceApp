@@ -4,14 +4,15 @@
 <dict>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-444539823777-ios-fd3de5b5f712f1ab2e32e0</string>
+			</array>
+		</dict>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>카메라 필요하다</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치 필요하다</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>위치 필요하다</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -18,14 +18,18 @@ class CommentDetailViewController: UIViewController {
     private let commentDetailView = CommentDetailView()
     
     let lostResponseDTO: LostResponseDTO
+    
+    let currentUserResponseDTO: UserResponseDTO
+    
     let firebaseCommentService: FirebaseLostCommentService
     var commentList: [CommentResponseDTO] = []
     
     weak var delegate: CommentDetailViewControllerDelegate?
     
-    init(firebaseCommentService: FirebaseLostCommentService, lostResponseDTO: LostResponseDTO) {
+    init(firebaseCommentService: FirebaseLostCommentService, lostResponseDTO: LostResponseDTO, currentUserResponseDTO: UserResponseDTO) {
         self.firebaseCommentService = firebaseCommentService
         self.lostResponseDTO = lostResponseDTO
+        self.currentUserResponseDTO = currentUserResponseDTO
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -69,7 +73,7 @@ class CommentDetailViewController: UIViewController {
         configureTalbeView()
         configureActions()
         
-        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: lostResponseDTO.userProfileImageURL))
+        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: currentUserResponseDTO.profileImageURL))
     }
     
     private func configureActions() {
@@ -129,7 +133,7 @@ extension CommentDetailViewController {
         } else {
             Task {
                 do {
-                    try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: lostResponseDTO.userIdentifier, userProfileImageURL: lostResponseDTO.userProfileImageURL, userNickname: lostResponseDTO.userNickName, commentDescription: commentDetailView.writeCommentTextView.text, commentDate: Date()))
+                    try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: commentDetailView.writeCommentTextView.text, commentDate: Date()))
                     
                     getCommentList()
                     

@@ -61,10 +61,18 @@ class EnrollView: UIView {
     }()
     
     lazy var segmentedControl: UISegmentedControl = {
-        let items = ["dog", "cat", "etc"]
+        let items = ["강아지", "고양이", "기타 동물"]
         let control = UISegmentedControl(items: items)
         control.selectedSegmentIndex = 0 // 초기 선택 항목 설정
         control.tintColor = .blue // 세그먼트 컨트롤 색상 설정
+        let backgroundImage = UIImage()
+        control.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
+        control.setBackgroundImage(backgroundImage, for: .selected, barMetrics: .default)
+        control.setBackgroundImage(backgroundImage, for: .highlighted, barMetrics: .default)
+        let deviderImage = UIImage()
+        control.setDividerImage(deviderImage, forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
+        control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
+        control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "AccentColor")], for: .selected)
         return control
     }()
     
@@ -97,11 +105,14 @@ class EnrollView: UIView {
         return tf
     }()
     
-    let textView: UITextView = {
+    lazy var textView: UITextView = {
         let textView = UITextView()
+        textView.delegate = self
+        textView.text = "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)"
+        textView.textColor = nameTextField.attributedPlaceholder?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
         textView.autocorrectionType = .no
         textView.backgroundColor = .clear
-        textView.font = UIFont.systemFont(ofSize: 20)
+        textView.font = UIFont.systemFont(ofSize: 15)
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.lightGray.cgColor
         return textView
@@ -114,11 +125,43 @@ class EnrollView: UIView {
         return lb
     }()
     
+    private let mapLable: UILabel = {
+        let lb = UILabel()
+        lb.text = "📍 반려동물 잃어버린 위치"
+        lb.font = UIFont.systemFont(ofSize: 15)
+        lb.textColor = .darkGray
+        return lb
+    }()
+    
     let mapView: MKMapView = {
         let map = MKMapView()
+        map.layer.cornerRadius = 15
         return map
     }()
     
+    private lazy var zoomInButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("+", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.layer.borderWidth = 0.7
+        button.layer.cornerRadius = 3
+        button.addTarget(self, action: #selector(zoomInButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var zoomOutButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("-", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.layer.borderWidth = 0.7
+        button.layer.cornerRadius = 3
+        button.addTarget(self, action: #selector(zoomOutButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -131,15 +174,50 @@ class EnrollView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    @objc func zoomInButtonTapped() {
+        let region = mapView.region
+        var span = mapView.region.span
+        span.latitudeDelta *= 0.5
+        span.longitudeDelta *= 0.5
+        let newRegion = MKCoordinateRegion(center: region.center, span: span)
+        mapView.setRegion(newRegion, animated: true)
+    }
+
+    @objc func zoomOutButtonTapped() {
+        let region = mapView.region
+        var span = mapView.region.span
+        span.latitudeDelta *= 2.0
+        span.longitudeDelta *= 2.0
+        let newRegion = MKCoordinateRegion(center: region.center, span: span)
+        mapView.setRegion(newRegion, animated: true)
+    }
     
 }
 
+extension EnrollView: UITextViewDelegate {
+    
+    // UITextViewDelegate를 준수하는 클래스 내에서 다음 메서드를 구현
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)" {
+            textView.text = ""
+            textView.textColor = .darkGray
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)"
+            textView.textColor = nameTextField.attributedPlaceholder?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
+        }
+    }
+}
 
 extension EnrollView {
     
     func configureUI(){
         self.addSubview(scrollView)
-        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, nameTextField, textView, lineLabel5, mapView)
+        scrollView.addSubviews(customBtnView, collectionView, lineLabel, titleTextField, lineLabel2, segmentedControl, lineLabel3, datePicker, lineLabel4, nameTextField, textView, lineLabel5, mapLable, mapView, zoomInButton, zoomOutButton)
         
         
         scrollView.snp.makeConstraints {
@@ -155,10 +233,10 @@ extension EnrollView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(customBtnView.snp.top)
+            $0.top.equalTo(scrollView.snp.top)
             $0.leading.equalTo(customBtnView.snp.trailing).offset(10) // 컬렉션뷰와 버튼 사이 여백 설정
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
-            $0.height.equalTo(70) // 셀의 높이에 따라 조정
+            $0.bottom.equalTo(lineLabel.snp.top)
         }
         
         lineLabel.snp.makeConstraints {
@@ -188,7 +266,7 @@ extension EnrollView {
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(lineLabel2.snp.bottom).offset(10)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
-            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+//            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
             $0.height.equalTo(40)
         }
         
@@ -203,8 +281,6 @@ extension EnrollView {
         datePicker.snp.makeConstraints {
             $0.top.equalTo(lineLabel3.snp.bottom).offset(10)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
-            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
-            $0.width.equalTo(scrollView.snp.width).offset(-26)
             $0.height.equalTo(40)
         }
         
@@ -228,29 +304,44 @@ extension EnrollView {
             $0.top.equalTo(nameTextField.snp.bottom).offset(10)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
-//            $0.bottom.equalTo(scrollView.snp.bottom).offset(-10)
             $0.width.equalTo(scrollView.snp.width).offset(-26)
-            $0.height.equalTo(250)
+            $0.height.equalTo(200)
         }
         
-        
-        
         lineLabel5.snp.makeConstraints {
-            $0.top.equalTo(textView.snp.bottom).offset(10)
+            $0.top.equalTo(textView.snp.bottom).offset(15)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
             $0.width.equalTo(scrollView.snp.width).offset(-26)
             $0.height.equalTo(0.7)
         }
         
-        mapView.snp.makeConstraints {
-            $0.top.equalTo(lineLabel5.snp.bottom).offset(10)
+        mapLable.snp.makeConstraints {
+            $0.top.equalTo(lineLabel5.snp.bottom).offset(15)
             $0.leading.equalTo(scrollView.snp.leading).offset(13)
             $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
-            $0.bottom.equalTo(scrollView.snp.bottom).offset(-10)
+        }
+        
+        mapView.snp.makeConstraints {
+            $0.top.equalTo(mapLable.snp.bottom).offset(15)
+            $0.leading.equalTo(scrollView.snp.leading).offset(13)
+            $0.trailing.equalTo(scrollView.snp.trailing).offset(-13)
+            $0.bottom.equalTo(scrollView.snp.bottom).offset(-20)
             $0.height.equalTo(250)
         }
 
+        zoomInButton.snp.makeConstraints {
+//            $0.top.equalTo(mapView.snp.top).offset(85)
+            $0.centerY.equalTo(mapView.snp.centerY).offset(-13)
+            $0.trailing.equalTo(mapView.snp.trailing).offset(-5)
+            $0.width.height.equalTo(30)
+        }
+
+        zoomOutButton.snp.makeConstraints {
+            $0.top.equalTo(zoomInButton.snp.bottom).offset(5)
+            $0.trailing.equalTo(mapView.snp.trailing).offset(-5)
+            $0.width.height.equalTo(30)
+        }
     }
     
 }
