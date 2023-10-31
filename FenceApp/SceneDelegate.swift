@@ -33,17 +33,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 //        try! firebaseAuthService.signOutUser()
-        checkUserLoggedIn()
-        window?.makeKeyAndVisible()
+       
         Task {
 //
             do {
-                let userUID = try firebaseAuthService.getCurrentUser().uid
-                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
-                print(user, "!!!@@@")
+                try firebaseAuthService.signOutUser()
+//                let userUID = try firebaseAuthService.getCurrentUser().uid
+//                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
+//                print(user, "!!!@@@")
 //                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
 //                try firebaseAuthService.signOutUser()
-               
+                checkUserLoggedIn()
+                window?.makeKeyAndVisible()
             } catch {
                 print(error)
             }
@@ -57,7 +58,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func checkUserLoggedIn() {
         if firebaseAuthService.checkIfUserLoggedIn() == false {
-            window?.rootViewController = LoginViewController()
+            window?.rootViewController = makeLoginVC()
+            
         } else {
             setNavigationControllers()
             window?.rootViewController = makeTabbarController()
@@ -91,6 +93,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+    private func makeLoginVC() -> LoginViewController {
+        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService) {
+            self.setNavigationControllers()
+            self.window?.rootViewController = self.makeTabbarController()
+        }
+        
+        return vc
+    }
+    
     private func makeLostViewVC() -> LostListViewController {
         let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
@@ -114,7 +125,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController()
+        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
         return vc
     }
 }
