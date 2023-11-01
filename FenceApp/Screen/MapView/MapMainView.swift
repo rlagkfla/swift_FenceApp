@@ -47,7 +47,7 @@ class MapMainView: UIView {
     
     private lazy var filterImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(systemName: "line.3.horizontal.decrease.circle.fill")
+        iv.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterImageViewTapped)))
         iv.tintColor = .gray
@@ -56,7 +56,7 @@ class MapMainView: UIView {
     
     private lazy var locationImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(systemName: "location.circle.fill")
+        iv.image = UIImage(systemName: "location.circle")
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(locationImageViewTapped)))
         iv.isUserInteractionEnabled = true
         iv.tintColor = .gray
@@ -67,8 +67,9 @@ class MapMainView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        backgroundColor = .white
         configureUI()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -95,7 +96,55 @@ class MapMainView: UIView {
     
     //MARK: - Helpers
     
-   
+    //MARK: - UI
+    
+    private func configureUI() {
+        configureMapView()
+        configureSegmentedControl()
+        configureLocationImageView()
+        configureOptionImageView()
+    }
+    
+    
+    private func configureMapView() {
+        addSubview(mapView)
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(3)
+        }
+    }
+    
+    
+    private func configureSegmentedControl() {
+        addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(5)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(150)
+            make.height.equalTo(25)
+        }
+    }
+    
+    
+    private func configureLocationImageView() {
+        addSubview(locationImageView)
+        locationImageView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(20)
+            make.width.height.equalTo(45)
+        }
+    }
+    
+    
+    private func configureOptionImageView() {
+        addSubview(filterImageView)
+        filterImageView.snp.makeConstraints { make in
+            make.bottom.equalTo(locationImageView.snp.top).offset(-20)
+            make.trailing.equalToSuperview().inset(10)
+            make.width.height.equalTo(45)
+        }
+    }
 }
 
 extension MapMainView: MKMapViewDelegate {
@@ -128,11 +177,29 @@ extension MapMainView: MKMapViewDelegate {
             
             annotationView.setImage(urlString: (annotation as! MapPin).pinable.imageURL)
             
-
+//            annotationView.isEnabled = true
+//            annotationView.canShowCallout = true
+//            
+//            let btn = UIButton(type: .detailDisclosure)
+//            annotationView.rightCalloutAccessoryView = btn
+//            
+            
             return annotationView
         }
     }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        let capital = view.annotation as! MapPin
+//        let placeName = capital.title
+//        let placeInfo = capital.info
+
+        print("Hello")
         
+//        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+//        ac.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(ac, animated: true)
+    }
+    
 }
 
 extension MapMainView: CustomAnnotationViewDelegate {
@@ -140,60 +207,6 @@ extension MapMainView: CustomAnnotationViewDelegate {
     func annotationViewTapped(annotation: MKAnnotation) {
         delegate?.petImageTappedOnMap(annotation: annotation)
     }
-}
-
-
-//MARK: - UI
-
-
-extension MapMainView {
     
-    private func configureUI() {
-        configureSelf()
-        configureMapView()
-        configureSegmentedControl()
-        configureLocationImageView()
-        configureOptionImageView()
-    }
     
-    private func configureSelf() {
-        backgroundColor = .white
-    }
-    
-    private func configureMapView() {
-        addSubview(mapView)
-        mapView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
-            make.leading.trailing.equalToSuperview().inset(3)
-        }
-    }
-    
-    private func configureSegmentedControl() {
-        addSubview(segmentedControl)
-        segmentedControl.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(5)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(150)
-            make.height.equalTo(25)
-        }
-    }
-    
-    private func configureLocationImageView() {
-        addSubview(locationImageView)
-        locationImageView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(20)
-            make.width.height.equalTo(45)
-        }
-    }
-    
-    private func configureOptionImageView() {
-        addSubview(filterImageView)
-        filterImageView.snp.makeConstraints { make in
-            make.bottom.equalTo(locationImageView.snp.top).offset(-20)
-            make.trailing.equalToSuperview().inset(10)
-            make.width.height.equalTo(45)
-        }
-    }
 }
