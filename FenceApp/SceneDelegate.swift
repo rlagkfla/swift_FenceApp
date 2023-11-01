@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Task {
 //
             do {
-                try firebaseAuthService.signOutUser()
+//                try firebaseAuthService.signOutUser()
 //                let userUID = try firebaseAuthService.getCurrentUser().uid
 //                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
 //                print(user, "!!!@@@")
@@ -93,6 +93,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+    // [weak self]?????
     private func makeLoginVC() -> LoginViewController {
         let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService) {
             self.setNavigationControllers()
@@ -101,6 +102,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         return vc
     }
+    
     
     private func makeLostViewVC() -> LostListViewController {
         let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
@@ -114,15 +116,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+    
     private func makeDummyViewController() -> UIViewController {
         let vc = UIViewController()
         return vc
     }
     
+    
     private func makeChatViewController() -> ChatViewController {
         let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
         return vc
     }
+    
     
     private func makeMyInfoViewController() -> MyInfoViewController {
         let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
