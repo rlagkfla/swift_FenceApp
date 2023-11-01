@@ -13,14 +13,18 @@ class MapViewController: UIViewController {
     
     //MARK: - Properties
     
+    var filterModel = FilterModel(distance: 20, startDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, endDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!)
+    
     var lostResponseDTOs: [LostResponseDTO] = []
     var foundResponseDTOs: [FoundResponseDTO] = []
     var pinTogether: [Pinable] = []
+    
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
+    let locationManager: LocationManager
     var pins: [MapPin] = []
     
-    var filterTapped: (() -> Void)?
+    var filterTapped: ( (FilterModel) -> Void )?
     
     lazy var mainView: MapMainView = {
         let view = MapMainView()
@@ -28,7 +32,7 @@ class MapViewController: UIViewController {
         return view
     }()
     
-    let locationManager: LocationManager
+    
     
     //MARK: - Lifecycle
     
@@ -44,7 +48,7 @@ class MapViewController: UIViewController {
         
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 20, fromDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, toDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!)
+                lostResponseDTOs = try await firebaseLostService.fetchLosts(filterModel: filterModel)
 //                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
                 //                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
 //                                pinTogether = lostResponseDTOs + foundResponseDTOs
@@ -98,7 +102,7 @@ class MapViewController: UIViewController {
     }
 }
 
-extension MapViewController: mapMainViewDelegate {
+extension MapViewController: MapMainViewDelegate {
     func segmentTapped(onIndex: Int) {
         print(onIndex)
     }
@@ -114,7 +118,7 @@ extension MapViewController: mapMainViewDelegate {
     }
     
     func filterImageViewTapped() {
-        filterTapped?()
+        filterTapped?(filterModel)
     }
     
     func locationImageViewTapped() {
@@ -123,15 +127,12 @@ extension MapViewController: mapMainViewDelegate {
 }
 
 extension MapViewController: CustomFilterModalViewControllerDelegate {
-    func applyTapped(within: Double, fromDate: Date, toDate: Date) {
+    func applyTapped(filterModel: FilterModel) {
+        
+        self.filterModel = filterModel
         
         Task {
-            
-            print(within, fromDate, toDate, "@@@@@@@@@")
-            let a = try await firebaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
-            print(a.count, "!!!!!!")
-            //
-            //            var pins = pinTogether.map { MapPin(pinable: $0)}
+            let a = try await firebaseLostService.fetchLosts(filterModel: filterModel)
             mainView.mapView.removeAnnotations(pins)
             pins = a.map { MapPin(pinable: $0)}
             mainView.mapView.addAnnotations(pins)

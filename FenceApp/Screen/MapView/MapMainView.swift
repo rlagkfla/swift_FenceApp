@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import MapKit
 
-protocol mapMainViewDelegate: AnyObject {
+protocol MapMainViewDelegate: AnyObject {
     
     func locationImageViewTapped()
     
@@ -25,7 +25,7 @@ class MapMainView: UIView {
     
     //MARK: - Properties
     
-    weak var delegate: mapMainViewDelegate?
+    weak var delegate: MapMainViewDelegate?
     
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
