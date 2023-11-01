@@ -32,30 +32,48 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-//        try! firebaseAuthService.signOutUser()
-       
+        window?.makeKeyAndVisible()
+        checkLoginandTrasitAccordingly()
+        
+    }
+    
+    
+    //MARK: - Helper
+    
+    private func checkLoginandTrasitAccordingly() {
         Task {
 //
             do {
-//                try firebaseAuthService.signOutUser()
-//                let userUID = try firebaseAuthService.getCurrentUser().uid
-//                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
-//                print(user, "!!!@@@")
-//                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
-//                try firebaseAuthService.signOutUser()
-                checkUserLoggedIn()
-                window?.makeKeyAndVisible()
+                print("111111")
+                let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
+                
+                if isUserLoggedIn {
+                    print("22222")
+                    let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+                    
+                    let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+                    
+                    CurrentUserInfo.shared.currentUser = user
+                    
+                    window?.rootViewController = makeTabbarController()
+                    
+                    
+                } else {
+                    print("333333")
+                    window?.rootViewController = makeLoginVC()
+                }
+                
             } catch {
+                print("44444")
+                try firebaseAuthService.signOutUser()
                 print(error)
             }
             
             
            
         }
-        
-       
     }
-    
+
     private func checkUserLoggedIn() {
         if firebaseAuthService.checkIfUserLoggedIn() == false {
             window?.rootViewController = makeLoginVC()
