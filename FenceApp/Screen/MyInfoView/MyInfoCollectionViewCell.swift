@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MyInfoCollectionViewCell: UICollectionViewCell {
-    static let identifier = "Cell"
+    
+    static let identifier = "MyInfoCollectionViewCell"
     
     let imageView: UIImageView = {
         let img = UIImageView()
@@ -27,12 +29,15 @@ class MyInfoCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+  
+    func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        imageView.kf.setImage(with: url)
+    }
 }
 
 extension MyInfoCollectionViewCell{
-    func configureUI(){
+    private func configureUI(){
         self.addSubview(imageView)
-        
-        
     }
 }

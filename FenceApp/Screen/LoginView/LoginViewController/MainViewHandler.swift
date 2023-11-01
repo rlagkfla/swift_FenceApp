@@ -1,7 +1,7 @@
 
 import UIKit
 import RxSwift
-import FirebaseFirestore
+//import FirebaseFirestore
 
 class MainViewHandler {
     
