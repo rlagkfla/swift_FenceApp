@@ -32,38 +32,88 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-//        try! firebaseAuthService.signOutUser()
-       
+        //        try! firebaseAuthService.signOutUser()
+        
         Task {
-//
+            //
             do {
-//                try firebaseAuthService.signOutUser()
-//                let userUID = try firebaseAuthService.getCurrentUser().uid
-//                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
-//                print(user, "!!!@@@")
-//                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
-//                try firebaseAuthService.signOutUser()
-                checkUserLoggedIn()
-                window?.makeKeyAndVisible()
+                
+                let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
+                
+                if isUserLoggedIn {
+                    
+                    let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+                    
+                    let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+                    
+                    CurrentUserInfo.shared.currentUser = user
+                    
+                    window?.rootViewController = makeTabbarController()
+                    
+                    
+                } else {
+                    
+                    window?.rootViewController = makeLoginVC()
+                }
+                
             } catch {
+                
+                try firebaseAuthService.signOutUser()
                 print(error)
+                window?.rootViewController = makeLoginVC()
             }
-            
-            
-           
         }
+    }
+                        
+                        
+                        
+                        
+                    
+                        
+                        
+//                    }
+//                    
+//                    
+//                }
+////                try firebaseAuthService.signOutUser()
+////                let userUID = try firebaseAuthService.getCurrentUser().uid
+////                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
+////                print(user, "!!!@@@")
+////                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
+////                try firebaseAuthService.signOutUser()
+//                checkUserLoggedIn()
+//                window?.makeKeyAndVisible()
+//            } catch {
+//                print(error)
+//            }
+//            
+//            
+//           
+//        }
         
        
-    }
+    
+
     
     private func checkUserLoggedIn() {
         if firebaseAuthService.checkIfUserLoggedIn() == false {
             window?.rootViewController = makeLoginVC()
             
         } else {
-            setNavigationControllers()
+            
+//            let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+//            
+//            try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+            
+            
             window?.rootViewController = makeTabbarController()
         }
+    }
+    
+    private func getCurrentUser() async throws -> UserResponseDTO {
+        
+        let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+        return try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
     }
     
     private func setNavigationControllers() {
@@ -74,6 +124,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       }
     
     private func makeTabbarController() -> CustomTabBarController {
+        setNavigationControllers()
         let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
         return TabbarController
