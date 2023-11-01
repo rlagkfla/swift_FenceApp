@@ -94,7 +94,7 @@ class MapViewController: UIViewController {
     }
     
     private func setNavigationTitle() {
-        self.navigationItem.title = "게시판"
+        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내 / 동물 - 전체"
     }
 }
 

@@ -88,6 +88,7 @@ extension CustomTabBarController {
         controllers[4].tabBarItem = myInfoTabBarItem
     
         self.viewControllers = controllers
+        
     }
     
     private func setBackgroundColor() {
@@ -97,10 +98,10 @@ extension CustomTabBarController {
         self.tabBar.unselectedItemTintColor = .black
         
         let appearance = UITabBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.backgroundColor = .white
+        appearance.configureWithTransparentBackground()
         self.tabBar.standardAppearance = appearance
         self.tabBar.scrollEdgeAppearance = appearance
+        
     }
     
     private func configureCameraButton() {
