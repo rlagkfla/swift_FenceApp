@@ -39,7 +39,5 @@ class MyInfoCollectionViewCell: UICollectionViewCell {
 extension MyInfoCollectionViewCell{
     private func configureUI(){
         self.addSubview(imageView)
-        
-        
     }
 }
