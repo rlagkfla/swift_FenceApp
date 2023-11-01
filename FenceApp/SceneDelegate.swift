@@ -71,6 +71,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 window?.rootViewController = makeLoginVC()
             }
         }
+    }
+                        
+                        
+                        
+                        
+                    
+                        
+                        
+//                    }
+//                    
+//                    
+//                }
+////                try firebaseAuthService.signOutUser()
+////                let userUID = try firebaseAuthService.getCurrentUser().uid
+////                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
+////                print(user, "!!!@@@")
+////                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
+////                try firebaseAuthService.signOutUser()
+//                checkUserLoggedIn()
+//                window?.makeKeyAndVisible()
+//            } catch {
+//                print(error)
+//            }
+//            
+//            
+//           
+//        }
         
     }
     
