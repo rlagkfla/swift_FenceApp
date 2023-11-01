@@ -52,6 +52,8 @@ class CommentDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        getCommentList()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,7 +67,34 @@ class CommentDetailViewController: UIViewController {
         delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
     }
     
-    private func configure() {
+    func getCommentList() {
+        Task {
+            do {
+                commentList = try await firebaseCommentService.fetchComments(lostIdentifier: lostResponseDTO.lostIdentifier)
+                commentDetailView.commentTableView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+//    func commentAlert() {
+//        guard let lastComment = commentList.last else {
+//            return
+//        }
+//        guard currentUserResponseDTO.identifier == lostResponseDTO.userIdentifier else {
+//            return
+//        }
+//        guard currentUserResponseDTO.identifier != lastComment.userIdentifier else {
+//            return
+//        }
+//        UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
+//    }
+}
+
+// MARK: - Private Method
+private extension CommentDetailViewController {
+    func configure() {
         getCommentList()
         
         view.backgroundColor = .white
@@ -76,27 +105,22 @@ class CommentDetailViewController: UIViewController {
         commentDetailView.myProfileImageView.kf.setImage(with: URL(string: currentUserResponseDTO.profileImageURL))
     }
     
-    private func configureActions() {
+    func configureActions() {
         commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
         commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
         
         commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
     
-    private func configureTalbeView() {
+    func configureTalbeView() {
         commentDetailView.commentTableView.dataSource = self
         commentDetailView.commentTableView.delegate = self
     }
     
-    func getCommentList() {
-        Task {
-            do {
-                commentList = try await firebaseCommentService.fetchComments(lostIdentifier: lostResponseDTO.lostIdentifier)
-                commentDetailView.commentTableView.reloadData()
-            } catch {
-                print(error)
-            }
-        }
+    func setText(text: String) async throws {
+        commentDetailView.writeCommentTextView.text = ""
+        
+        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: text, commentDate: Date()))
     }
 }
 
@@ -128,25 +152,21 @@ extension CommentDetailViewController {
     }
     
     @objc func commentSendButtonTapped() {
-        if commentDetailView.writeCommentTextView.text == "" {
-            return
-        } else {
-            Task {
-                do {
-                    try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: commentDetailView.writeCommentTextView.text, commentDate: Date()))
-                    
-                    getCommentList()
-                    
-                    commentDetailView.writeCommentTextView.text = ""
-                } catch {
-                    print(error)
-                }
+        guard commentDetailView.writeCommentTextView.text != "" else { return }
+        
+        Task {
+            do {
+                try await setText(text: commentDetailView.writeCommentTextView.text)
+                
+                getCommentList()
+            } catch {
+                print(error)
             }
         }
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentList.count
@@ -157,6 +177,10 @@ extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegat
         let comment = commentList[indexPath.row]
         cell.configureCell(commentUserNickName: comment.userNickname, commentUserProfileImageUrl: comment.userProfileImageURL, commentDescription: comment.commentDescription, commentTime: "\(comment.commentDate)")
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
 
