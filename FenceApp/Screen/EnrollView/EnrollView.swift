@@ -39,7 +39,7 @@ class EnrollView: UIView {
     private let lineLabel: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.lightGray.cgColor
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         return lb
     }()
     
@@ -48,15 +48,13 @@ class EnrollView: UIView {
         tf.placeholder = "제목을 입력하세요."
         tf.isUserInteractionEnabled = true
         tf.backgroundColor = .clear
-//        tf.delegate = self
-//        tf.inputAccessoryView = UIView()  // 키보드 위에 Done 버튼 추가 (선택 사항)
         return tf
     }()
     
     private let lineLabel2: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.lightGray.cgColor
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         return lb
     }()
     
@@ -64,22 +62,33 @@ class EnrollView: UIView {
         let items = ["강아지", "고양이", "기타 동물"]
         let control = UISegmentedControl(items: items)
         control.selectedSegmentIndex = 0 // 초기 선택 항목 설정
-        control.tintColor = .blue // 세그먼트 컨트롤 색상 설정
+//        control.tintColor = .blue // 세그먼트 컨트롤 색상 설정
         let backgroundImage = UIImage()
         control.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
         control.setBackgroundImage(backgroundImage, for: .selected, barMetrics: .default)
         control.setBackgroundImage(backgroundImage, for: .highlighted, barMetrics: .default)
         let deviderImage = UIImage()
         control.setDividerImage(deviderImage, forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
-        control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
-        control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "AccentColor")], for: .selected)
+        let normalTextAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 15), // 원하는 텍스트 크기로 변경
+            .foregroundColor: UIColor.gray // 원하는 텍스트 색상
+        ]
+        let selectedTextAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 15), // 원하는 텍스트 크기로 변경
+            .foregroundColor: UIColor(named: "AccentColor")! // 원하는 텍스트 색상
+        ]
+        control.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+        control.setContentPositionAdjustment(UIOffset(horizontal: -15, vertical: 0), forSegmentType: .left, barMetrics: .default)
+        control.setContentPositionAdjustment(UIOffset(horizontal: -15, vertical: 0), forSegmentType: .center, barMetrics: .default)
+        control.setContentPositionAdjustment(UIOffset(horizontal: -9, vertical: 0), forSegmentType: .right, barMetrics: .default)
         return control
     }()
     
     private let lineLabel3: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.lightGray.cgColor
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         return lb
     }()
     
@@ -93,7 +102,7 @@ class EnrollView: UIView {
     private let lineLabel4: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.lightGray.cgColor
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         return lb
     }()
     
@@ -108,20 +117,21 @@ class EnrollView: UIView {
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
+        textView.textContainerInset = UIEdgeInsets(top: 13, left: 13, bottom: 13, right: 13)
         textView.text = "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)"
         textView.textColor = nameTextField.attributedPlaceholder?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
         textView.autocorrectionType = .no
         textView.backgroundColor = .clear
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.lightGray.cgColor
+        textView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         return textView
     }()
     
     private let lineLabel5: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
-        lb.layer.borderColor = UIColor.lightGray.cgColor
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         return lb
     }()
     
@@ -201,7 +211,7 @@ extension EnrollView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)" {
             textView.text = ""
-            textView.textColor = .darkGray
+            textView.textColor = .black
         }
     }
     
