@@ -101,7 +101,6 @@
 		D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */; };
 		D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */; };
 		D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF352AEBDB0A00974B1F /* FoundWithDocument.swift */; };
-		D6F1CF382AF1EEA800974B1F /* CurrentUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF372AF1EEA800974B1F /* CurrentUserInfo.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -185,7 +184,6 @@
 		D6EE09502ADE9B74007E8328 /* PostInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostWithDocument.swift; sourceTree = "<group>"; };
 		D6F1CF352AEBDB0A00974B1F /* FoundWithDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundWithDocument.swift; sourceTree = "<group>"; };
-		D6F1CF372AF1EEA800974B1F /* CurrentUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserInfo.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -476,7 +474,6 @@
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
 				08F96BF02AEF735400EE276D /* GoogleService-Info.plist */,
 				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
-				D6F1CF372AF1EEA800974B1F /* CurrentUserInfo.swift */,
 			);
 			path = FenceApp;
 			sourceTree = "<group>";
@@ -670,7 +667,6 @@
 				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */,
 				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
-				D6F1CF382AF1EEA800974B1F /* CurrentUserInfo.swift in Sources */,
 				D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */,
 				D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */,
 				C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */,

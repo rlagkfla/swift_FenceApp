@@ -22,6 +22,7 @@ class EnrollViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseUserService: FirebaseUserService
     let firebaseLostCommentService: FirebaseLostCommentService
+    let currentUserResponseDTO: UserResponseDTO
     var lostList: [LostResponseDTO] = []
     
     weak var delegate: EnrollViewControllerDelegate?
@@ -33,7 +34,6 @@ class EnrollViewController: UIViewController {
     // map
     // 확인필요
     let currentLocation = LocationManager().fetchLocation() // 현재 위치
-    let currentUserResponseDTO: UserResponseDTO
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
@@ -200,10 +200,33 @@ class EnrollViewController: UIViewController {
     
     
     @objc func tapRightBarBtn(){
-        guard let selectedCoordinate else {return}
-        guard let enrollTitle = enrollView.titleTextField.text else {return}
-        guard let enrollName = enrollView.nameTextField.text else {return}
+        // 터치 이벤트를 막음
+//        self.view.isUserInteractionEnabled = false
+        
+        // 사진 수정 예정
+        guard let picture = images.first else {
+            showAlert(message: "이미지를 선택하세요.")
+            return
+        }
+        guard let enrollTitle = enrollView.titleTextField.text, !enrollTitle.isEmpty else {
+            showAlert(message: "제목을 입력하세요.")
+            return
+        }
+        guard let enrollName = enrollView.nameTextField.text, !enrollName.isEmpty else {
+            showAlert(message: "반려동물의 이름을 입력하세요.")
+            return
+        }
+        guard let selectedCoordinate else {
+            showAlert(message: "위치를 선택하세요.")
+            return
+        }
         guard let enrollSeg = enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex) else {return}
+             
+        // 로딩 인디케이터 추가
+        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+        activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
         
         var kind: String
         
@@ -220,16 +243,17 @@ class EnrollViewController: UIViewController {
         
         Task{
             do {
-//                let userIdentifier = try firebaseAuthService.getCurrentUser().uid
-//                let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
-                // 수정 예정
-                let picture = images[0]
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
                 let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 
                 print("lostResponseDTO - \(lostResponseDTO)")
+                
+                // 작업이 완료되면 로딩 인디케이터를 제거하고 페이지를 닫음
+                activityIndicator.stopAnimating()
+                activityIndicator.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true
                 
                 self.navigationController?.popViewController(animated: true)
                 
@@ -241,6 +265,14 @@ class EnrollViewController: UIViewController {
         }
         
     }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "필수 입력", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     
 }
 
