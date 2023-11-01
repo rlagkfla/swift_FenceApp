@@ -50,10 +50,10 @@ class MyInfoViewController: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.color2, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
-        button.layer.borderColor = UIColor.blue.cgColor
+        button.layer.borderColor = UIColor.color2.cgColor
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         return button
     }()
