@@ -5,22 +5,13 @@
 //  Created by JeonSangHyeok on 10/16/23.
 //
 
-//import UIKit
-//
-//class MyInfoViewController: UIViewController {
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        // Do any additional setup after loading the view.
-//    }
-//
-//
+
 import UIKit
 
-class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, EditViewControllerDelegate {
-
-    // EditViewController에 추가된 변수들을 처리하기 위한 프로퍼티들
+class MyInfoViewController: UIViewController {
+    
+    //MARK: - Properties
+    
     var previousNickname: String = ""
     var previousMemo: String = ""
     var previousImage: UIImage?
@@ -29,18 +20,8 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     let firebaseFoundService: FirebaseFoundService
     var lostList: [LostResponseDTO] = []
     var foundList: [FoundResponseDTO] = []
-  
-    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService) {
-        self.firebaseLostService = firebaseLostService
-        self.firebaseFoundService = firebaseFoundService
-        super.init(nibName: nil, bundle: nil)
-    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private let profileImageView: UIImageView = {
+   private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -89,12 +70,28 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         return collectionView
     }()
     
+    //MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        getData()
-        configureUI()
-        configureNavigationBar()
+       
+        
+       Task {
+            
+            do {
+                try await getLosts()
+                
+                try await getFounds()
+                
+                configureUI()
+                
+                configureNavigationBar()
+                
+            } catch {
+                print(error)
+                
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,30 +99,18 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)]
     }
     
-    func getData() {
-        Task{
-            do{
-                lostList = try await firebaseLostService.fetchLosts()
-                print("count \(lostList.count)")
-                //                lostCollectionView.reloadData()
-            } catch{
-                print(error)
-                
-            }
-        }
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService) {
+        self.firebaseLostService = firebaseLostService
+        self.firebaseFoundService = firebaseFoundService
+        super.init(nibName: nil, bundle: nil)
     }
-    private func configureUI(){
-        configureProfileImage()
-        configureNickName()
-        configureMemo()
-        configureEditProfileButton()
-        configureLostCollectionView()
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    private func configureNavigationBar() {
-        navigationItem.title = "마이페이지"
-        let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
-        navigationItem.rightBarButtonItem = logoutButton
-    }
+    
+    
+    //MARK: - Actions
     
     @objc func logoutTapped() {
         let alertController = UIAlertController(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert)
@@ -136,6 +121,149 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    @objc func editProfile() {
+        // let view = EditViewController()
+        // view.delegate = self
+        // navigationController?.pushViewController(view, animated: true)
+        let editViewController = EditViewController()
+        editViewController.delegate = self
+        editViewController.previousNickname = self.nickname.text ?? ""
+        editViewController.previousMemo = self.memo.text ?? ""
+        editViewController.previousImage = self.profileImageView.image
+        
+        editViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(editViewController, animated: true)
+    }
+    
+    
+    //MARK: - Helpers
+    
+    private func getLosts() async throws {
+        
+        lostList = try await firebaseLostService.fetchLosts()
+    }
+    
+    private func getFounds() async throws {
+        
+        foundList = try await firebaseFoundService.fetchFounds()
+    }
+    
+    
+     private func configureNavigationBar() {
+         navigationItem.title = "마이페이지"
+         let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
+         navigationItem.rightBarButtonItem = logoutButton
+     }
+   
+    
+
+}
+
+//MARK: - EditViewController Delegate
+
+extension MyInfoViewController: EditViewControllerDelegate {
+        
+    func didSaveProfileInfo(nickname: String, memo: String, image: UIImage) {
+            DispatchQueue.main.async {
+                self.nickname.text = nickname
+                self.memo.text = memo
+                self.profileImageView.image = image
+            }
+        }
+}
+
+//MARK: - TextField Delegate
+
+extension MyInfoViewController: UITextFieldDelegate {
+    
+}
+
+//MARK: - Collectionview DataSource
+
+
+
+extension MyInfoViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        section == 0 ? lostList.count : foundList.count
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyInfoCollectionViewCell.identifier, for: indexPath) as! MyInfoCollectionViewCell
+        
+        if indexPath.section == 0 {
+            
+            let urlString = lostList[indexPath.row].imageURL
+            
+            cell.setImage(urlString: urlString)
+            
+        } else {
+            
+            let urlString = foundList[indexPath.row].imageURL
+            
+            cell.setImage(urlString: urlString)
+        }
+       
+        return cell
+    }
+}
+
+
+//MARK: - CollectionView FlowLayout
+
+
+extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.bounds.width - 4)/3, height: (collectionView.bounds.width - 4)/3)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+   
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 {
+            return UIEdgeInsets(top: 50, left: 0, bottom: 10, right: 0)
+        } else {
+            return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
+        }
+    }
+}
+
+//MARK: - UI
+
+extension MyInfoViewController {
+    
+
+    private func configureUI() {
+        
+        configureSelf()
+        configureProfileImage()
+        configureNickName()
+        configureMemo()
+        configureEditProfileButton()
+        configureLostCollectionView()
+    }
+    
+    private func configureSelf() {
+        view.backgroundColor = .white
     }
     
     private func configureProfileImage() {
@@ -180,103 +308,8 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         lostCollectionView.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 30).isActive = true
         lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        lostCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: self.tabBarController!.tabBar.frame.height).isActive = true
+        lostCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
-    
-    @objc func editProfile() {
-        // let view = EditViewController()
-        // view.delegate = self
-        // navigationController?.pushViewController(view, animated: true)
-        let editViewController = EditViewController()
-        editViewController.delegate = self
-        editViewController.previousNickname = self.nickname.text ?? ""
-        editViewController.previousMemo = self.memo.text ?? ""
-        editViewController.previousImage = self.profileImageView.image
-        
-        editViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(editViewController, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - 4)/3, height: (collectionView.bounds.width - 4)/3)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        if section == 0 {
-        //            return lostList.count
-        //        }
-        return lostList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MyInfoCollectionViewCell
-        
-                let urlString = lostList[indexPath.row].imageURL
-                
-                cell.setImage(urlString: urlString)
-                //                }
-           
-        
-        //        if indexPath.section == 0 {
-        ////            cell.backgroundColor = .systemPink
-        //            let aa = imageLoader.
-        //            let lostPost = lostList[indexPath.row].imageURL
-        //            cell.imageView.image = lostPost
-        ////            cell.contentView
-        ////            if indexPath.item == 0 {
-        ////                let lostLabel = UILabel()
-        ////                lostLabel.text = "Lost"
-        ////                lostLabel.textColor = .black
-        ////                lostLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        ////                lostLabel.translatesAutoresizingMaskIntoConstraints = false
-        ////                cell.addSubview(lostLabel)
-        ////                lostLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-        ////                lostLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
-        ////            }
-        //        }
-        
-        //        if indexPath.section == 1 {
-        ////            cell.backgroundColor = .color1
-        ////            if indexPath.item == 0 {
-        ////                let foundLabel = UILabel()
-        ////                foundLabel.text = "Found"
-        ////                foundLabel.textColor = .black
-        ////                foundLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        ////                foundLabel.translatesAutoresizingMaskIntoConstraints = false
-        ////                cell.addSubview(foundLabel)
-        ////                foundLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-        ////                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
-        ////            }
-        //        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
-            return UIEdgeInsets(top: 50, left: 0, bottom: 10, right: 0)
-        } else {
-            return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
-        }
-    }
-    
-    func didSaveProfileInfo(nickname: String, memo: String, image: UIImage) {
-        DispatchQueue.main.async {
-            self.nickname.text = nickname
-            self.memo.text = memo
-            self.profileImageView.image = image
-        }
-    }
+ 
 }

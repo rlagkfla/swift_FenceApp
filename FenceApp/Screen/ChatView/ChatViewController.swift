@@ -52,7 +52,7 @@ class ChatViewController: UIViewController {
 
 // MARK: - Private Method
 private extension ChatViewController {
-    private func getFoundList() {
+    func getFoundList() {
         Task {
             do {
                 foundList = try await firebaseFoundService.fetchFounds()
@@ -63,7 +63,7 @@ private extension ChatViewController {
         }
     }
     
-    private func configurefoundCollectionView() {
+    func configurefoundCollectionView() {
         chatView.foundCollectionView.dataSource = self
         chatView.foundCollectionView.delegate = self
     }
