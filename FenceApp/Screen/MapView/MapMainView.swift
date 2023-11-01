@@ -50,16 +50,22 @@ class MapMainView: UIView {
         iv.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterImageViewTapped)))
-        iv.tintColor = .gray
+        iv.tintColor = .accent
+//        iv.backgroundColor = .white
+        iv.layer.masksToBounds = false
+//        iv.withShadow()
+        iv.withShadow(color: .darkGray, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
         return iv
     }()
     
     private lazy var locationImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(systemName: "location.circle")
+//        iv.clipsToBounds = true
+        iv.image = UIImage(systemName: "location.circle.fill")
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(locationImageViewTapped)))
         iv.isUserInteractionEnabled = true
-        iv.tintColor = .gray
+        iv.tintColor = .accent
+        iv.withShadow(color: .darkGray, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
         return iv
     }()
     
