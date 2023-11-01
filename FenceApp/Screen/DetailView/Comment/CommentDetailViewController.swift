@@ -78,18 +78,18 @@ class CommentDetailViewController: UIViewController {
         }
     }
     
-    func commentAlert() {
-        guard let lastComment = commentList.last else {
-            return
-        }
-        guard currentUserResponseDTO.identifier == lostResponseDTO.userIdentifier else {
-            return
-        }
-        guard currentUserResponseDTO.identifier != lastComment.userIdentifier else {
-            return
-        }
-        UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
-    }
+//    func commentAlert() {
+//        guard let lastComment = commentList.last else {
+//            return
+//        }
+//        guard currentUserResponseDTO.identifier == lostResponseDTO.userIdentifier else {
+//            return
+//        }
+//        guard currentUserResponseDTO.identifier != lastComment.userIdentifier else {
+//            return
+//        }
+//        UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
+//    }
 }
 
 // MARK: - Private Method
@@ -117,7 +117,7 @@ private extension CommentDetailViewController {
         commentDetailView.commentTableView.delegate = self
     }
     
-    private func setText(text: String) async throws {
+    func setText(text: String) async throws {
         commentDetailView.writeCommentTextView.text = ""
         
         try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: text, commentDate: Date()))
@@ -128,7 +128,6 @@ private extension CommentDetailViewController {
 extension CommentDetailViewController {
     @objc func rightButtonTapped() {
         dismiss(animated: true)
-        commentAlert()
     }
     
     @objc func keyboardUp(notification: NSNotification) {

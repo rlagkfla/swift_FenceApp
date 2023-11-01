@@ -55,6 +55,7 @@ class CommentDetailView: UIView {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.layer.cornerRadius = 5
+        textView.contentInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         return textView
     }()
     
@@ -125,26 +126,15 @@ private extension CommentDetailView {
             $0.height.equalTo(100)
         }
         
-//        configureMyProfileImageView()
         configureCommentSendButton()
         configureMyCommentTextField()
     }
-    
-//    func configureMyProfileImageView() {
-//        myCommentTextView.addSubview(myProfileImageView)
-//        
-//        myProfileImageView.snp.makeConstraints {
-//            $0.top.equalToSuperview().offset(20)
-//            $0.leading.equalToSuperview().offset(10)
-//            $0.width.height.equalTo(35)
-//        }
-//    }
     
     func configureCommentSendButton() {
         myCommentTextView.addSubview(commentSendButton)
         
         commentSendButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(15)
+            $0.top.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().inset(10)
             $0.width.equalTo(60)
             $0.height.equalTo(40)
@@ -158,7 +148,7 @@ private extension CommentDetailView {
             $0.centerY.equalTo(commentSendButton.snp.centerY)
             $0.leading.equalToSuperview().offset(10)
             $0.trailing.equalTo(commentSendButton.snp.leading).offset(-10)
-            $0.height.equalTo(50)
+            $0.height.equalTo(60)
         }
     }
 }
