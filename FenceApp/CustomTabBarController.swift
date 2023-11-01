@@ -14,11 +14,12 @@ class CustomTabBarController: UITabBarController{
     let firebaseFoundSerivce: FirebaseFoundService
     
     lazy var cameraButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         button.setImage(UIImage(systemName: "camera"), for: .normal)
         button.tintColor = .white
         button.backgroundColor = UIColor(hexCode: "5DDFDE")
-        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 30
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         return button
@@ -106,7 +107,7 @@ extension CustomTabBarController {
     
     private func configureCameraButton() {
         self.tabBar.addSubview(cameraButton)
-        cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 25, y: -20, width: 50, height: 50)
+        cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 30, y: -20, width: 60, height: 60)
     }
 }
 
