@@ -29,7 +29,7 @@ class MyInfoCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+  
     func setImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         imageView.kf.setImage(with: url)
@@ -39,7 +39,5 @@ class MyInfoCollectionViewCell: UICollectionViewCell {
 extension MyInfoCollectionViewCell{
     private func configureUI(){
         self.addSubview(imageView)
-        
-        
     }
 }

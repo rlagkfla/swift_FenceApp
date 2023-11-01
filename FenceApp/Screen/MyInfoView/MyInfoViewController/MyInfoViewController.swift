@@ -19,7 +19,7 @@
 import UIKit
 
 class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, EditViewControllerDelegate {
-    
+
     // EditViewController에 추가된 변수들을 처리하기 위한 프로퍼티들
     var previousNickname: String = ""
     var previousMemo: String = ""
@@ -29,8 +29,7 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     let firebaseFoundService: FirebaseFoundService
     var lostList: [LostResponseDTO] = []
     var foundList: [FoundResponseDTO] = []
-    
-    
+  
     init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService) {
         self.firebaseLostService = firebaseLostService
         self.firebaseFoundService = firebaseFoundService
@@ -96,7 +95,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         getData()
         configureUI()
         configureNavigationBar()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -226,8 +224,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MyInfoCollectionViewCell
         
-      
-        
                 let urlString = lostList[indexPath.row].imageURL
                 
                 cell.setImage(urlString: urlString)
@@ -265,7 +261,6 @@ class MyInfoViewController: UIViewController, UICollectionViewDelegate, UICollec
         ////                foundLabel.bottomAnchor.constraint(equalTo: cell.topAnchor, constant: -10).isActive = true
         ////            }
         //        }
-        
         return cell
     }
     
