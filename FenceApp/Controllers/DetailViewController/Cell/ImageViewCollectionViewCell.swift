@@ -27,6 +27,7 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         configure()
+        self.backgroundColor = .yellow
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +45,8 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(5)
         }
     }
 }

@@ -22,8 +22,8 @@ class MapViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
     let locationManager: LocationManager
-    var pins: [MapPin] = []
-    
+    var lostPins: [MapPin] = []
+    var foundPins: [MapPin] = []
     var filterTapped: ( (FilterModel) -> Void )?
     
     lazy var mainView: MapMainView = {
@@ -79,11 +79,11 @@ class MapViewController: UIViewController {
     //MARK: - UI
     
     private func setPinUsingMKAnnotation(pinables: [Pinable]) {
-        pins = pinables.map({ pinable in
+        lostPins = pinables.map({ pinable in
             MapPin(pinable: pinable)
         })
         
-        mainView.mapView.addAnnotations(pins)
+        mainView.mapView.addAnnotations(lostPins)
        
     }
     
@@ -104,7 +104,30 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MapMainViewDelegate {
     func segmentTapped(onIndex: Int) {
-        print(onIndex)
+        
+        print("Working")
+        
+        Task {
+            do {
+                if onIndex == 0 {
+                    
+                    lostResponseDTOs = try await firebaseLostService.fetchLosts(filterModel: filterModel)
+                    mainView.mapView.removeAnnotations(lostPins)
+                    setPinUsingMKAnnotation(pinables: lostResponseDTOs)
+                    
+                } else {
+                    
+                    foundResponseDTOs = try await firebaseFoundService.fetchFounds(filterModel: filterModel)
+                    mainView.mapView.removeAnnotations(lostPins)
+                    setPinUsingMKAnnotation(pinables: foundResponseDTOs)
+                }
+                
+            } catch {
+                print(error)
+            }
+           
+            
+        }
     }
     
     func petImageTappedOnMap(annotation: MKAnnotation) {
@@ -133,9 +156,11 @@ extension MapViewController: CustomFilterModalViewControllerDelegate {
         
         Task {
             let a = try await firebaseLostService.fetchLosts(filterModel: filterModel)
-            mainView.mapView.removeAnnotations(pins)
-            pins = a.map { MapPin(pinable: $0)}
-            mainView.mapView.addAnnotations(pins)
+            mainView.mapView.removeAnnotations(lostPins)
+            lostPins = a.map { MapPin(pinable: $0)}
+            mainView.mapView.addAnnotations(lostPins)
         }
+        
+        
     }
 }
