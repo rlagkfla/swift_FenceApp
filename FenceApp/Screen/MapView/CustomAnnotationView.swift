@@ -8,9 +8,15 @@
 import MapKit
 import Kingfisher
 
+protocol CustomAnnotationViewDelegate: AnyObject {
+    func annotationViewTapped(annotation: MKAnnotation)
+}
+
 class CustomAnnotationView: MKAnnotationView {
     
     static let identifier = "CustomAnnotationView"
+    
+    weak var delegate: CustomAnnotationViewDelegate?
     
     override var annotation: MKAnnotation? {
         didSet {
@@ -24,8 +30,17 @@ class CustomAnnotationView: MKAnnotationView {
         view.contentMode = .scaleToFill
         view.backgroundColor = .lightGray
         view.clipsToBounds = true
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
         return view
     }()
+    
+    @objc func imageTapped() {
+
+        guard let annotation else { return }
+        
+        delegate?.annotationViewTapped(annotation: annotation)
+    }
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)

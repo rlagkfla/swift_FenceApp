@@ -14,27 +14,15 @@ import SnapKit
 import FirebaseAuth
 
 
+
+
 //MARK: - Properties & Deinit
 final class LoginViewController: UIViewController {
     
-    //--------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------
-    let firebaseLostCommentService = FirebaseLostCommentService()
-    let firebaseLostService = FirebaseLostService(firebaseLostCommentService: FirebaseLostCommentService())
+    let firebaseAuthService: FirebaseAuthService
+    let firebaseUserService: FirebaseUserService
     
-    lazy var firebaseUserService = FirebaseUserService(
-        firebaseLostService: self.firebaseLostService,
-        firebaseLostCommentService: self.firebaseLostCommentService
-    )
-    
-    lazy var firebaseAuthService = FirebaseAuthService(
-        firebaseUserService: self.firebaseUserService,
-        firebaseLostService: self.firebaseLostService,
-        firebaseLostCommentService: self.firebaseLostCommentService,
-        firebaseFoundService: FirebaseFoundService()
-    )
-    //--------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------
+    let authPassed: () -> Void
 
     private let alertHandler = AlertHandler()
     private let authView = AuthenticationView()
@@ -91,6 +79,17 @@ final class LoginViewController: UIViewController {
         .withDistribution(.fillEqually)
         .withSpacing(10)
         .withMargins(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+    
+    init(firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, authPassed: @escaping () -> Void) {
+        self.firebaseAuthService = firebaseAuthService
+        self.firebaseUserService = firebaseUserService
+        self.authPassed = authPassed
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         print("Successfully LoginVC has been deinitialized!")
@@ -186,9 +185,11 @@ private extension LoginViewController {
     }
     
     func enterMainView() {
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-        let viewTransitionHandler = ViewTransitionHandler(window: window)
-        viewTransitionHandler.transitionToMainView()
+        
+//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+//        let viewTransitionHandler = ViewTransitionHandler(window: window)
+//        viewTransitionHandler.transitionToMainView()
+        authPassed()
     }
     
     @objc func signUpButtonTapped() {

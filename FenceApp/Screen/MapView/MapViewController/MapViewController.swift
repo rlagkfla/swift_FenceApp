@@ -5,7 +5,7 @@
 //  Created by JeonSangHyeok on 10/16/23.
 //
 
-import UIKit
+
 import MapKit
 import SnapKit
 
@@ -99,6 +99,16 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: mapMainViewDelegate {
+    func petImageTappedOnMap(annotation: MKAnnotation) {
+        
+        if let pinable = (annotation as? MapPin)?.pinable {
+            print(pinable.imageURL, pinable.latitude, pinable.longitude)
+            
+        }
+        
+        print(annotation.coordinate.longitude)
+    }
+    
     func filterImageViewTapped() {
         filterTapped?()
     }
