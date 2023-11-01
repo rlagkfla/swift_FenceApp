@@ -42,6 +42,7 @@
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
 		D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */; };
+		D64EE7152AF0DAA100A33AEF /* UNUserNotification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64EE7142AF0DAA100A33AEF /* UNUserNotification+Ext.swift */; };
 		D651509E2ADD0F2E002FDD04 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D651509D2ADD0F2E002FDD04 /* SnapKit */; };
 		D65150A32ADD0FFB002FDD04 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D65150A22ADD0FFB002FDD04 /* FirebaseAnalytics */; };
 		D65150A52ADD0FFB002FDD04 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = D65150A42ADD0FFB002FDD04 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -134,6 +135,7 @@
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D64EE7142AF0DAA100A33AEF /* UNUserNotification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotification+Ext.swift"; sourceTree = "<group>"; };
 		D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -241,7 +243,6 @@
 				D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */,
 				D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */,
 				D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */,
-				D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -296,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				D64D76A02ADE097F00E9815B /* DetailView.swift */,
+				D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */,
 				D65150922ADD0CE3002FDD04 /* DetailViewController */,
 				D61368682AE2130D00DE18DF /* Comment */,
 			);
@@ -433,6 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				D6D806352AEA52D90002AE3A /* String+Ext.swift */,
+				D64EE7142AF0DAA100A33AEF /* UNUserNotification+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
 				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
+				D64EE7152AF0DAA100A33AEF /* UNUserNotification+Ext.swift in Sources */,
 				D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
 				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
@@ -866,7 +870,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -903,7 +907,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";

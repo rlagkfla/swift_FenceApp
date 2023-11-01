@@ -16,6 +16,8 @@ class ChatViewController: UIViewController {
     let firebaseFoundService: FirebaseFoundService
     var foundList: [FoundResponseDTO] = []
     
+    var filterTapped: (() -> Void)?
+    
     init(firebaseFoundService: FirebaseFoundService) {
         self.firebaseFoundService = firebaseFoundService
         super.init(nibName: nil, bundle: nil)
@@ -36,6 +38,10 @@ class ChatViewController: UIViewController {
         configure()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getFoundList()
+    }
+    
     func configure() {
         view.backgroundColor = .white
         
@@ -48,7 +54,7 @@ class ChatViewController: UIViewController {
 
 // MARK: - Private Method
 private extension ChatViewController {
-    private func getFoundList() {
+    func getFoundList() {
         Task {
             do {
                 foundList = try await firebaseFoundService.fetchFounds()
@@ -59,7 +65,7 @@ private extension ChatViewController {
         }
     }
     
-    private func configurefoundCollectionView() {
+    func configurefoundCollectionView() {
         chatView.foundCollectionView.dataSource = self
         chatView.foundCollectionView.delegate = self
     }
