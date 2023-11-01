@@ -16,6 +16,8 @@ class ChatViewController: UIViewController {
     let firebaseFoundService: FirebaseFoundService
     var foundList: [FoundResponseDTO] = []
     
+    var filterTapped: (() -> Void)?
+    
     init(firebaseFoundService: FirebaseFoundService) {
         self.firebaseFoundService = firebaseFoundService
         super.init(nibName: nil, bundle: nil)

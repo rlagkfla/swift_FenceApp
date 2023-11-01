@@ -41,6 +41,18 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    let dividerView2: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.showsUserLocation = true
@@ -99,9 +111,12 @@ private extension PostInfoCollectionViewCell {
 private extension PostInfoCollectionViewCell {
     func configureUI() {
         configurePostTitleLabel()
+        configureDividerView()
         configureLostTimeLabel()
-        configureMapView()
+        configureDividerView2()
         configurePostDescriptionLabel()
+        configureMapView()
+        
     }
     
     func configurePostTitleLabel() {
@@ -109,9 +124,18 @@ private extension PostInfoCollectionViewCell {
         
         postTitleLabel.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top).offset(5)
-            $0.leading.equalTo(contentView.snp.leading).offset(10)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
-            $0.height.equalTo(30)
+            $0.leading.trailing.equalToSuperview().inset(10)
+//            $0.height.equalTo(30)
+        }
+    }
+    
+    func configureDividerView() {
+        contentView.addSubview(dividerView)
+        
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(postTitleLabel.snp.bottom).offset(5)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(0.6)
         }
     }
     
@@ -119,10 +143,20 @@ private extension PostInfoCollectionViewCell {
         contentView.addSubview(lostTimeLabel)
         
         lostTimeLabel.snp.makeConstraints {
-            $0.top.equalTo(postTitleLabel.snp.bottom).offset(5)
+            $0.top.equalTo(dividerView.snp.bottom).offset(5)
             $0.leading.equalTo(contentView.snp.leading).offset(10)
             $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
             $0.height.equalTo(30)
+        }
+    }
+    
+    func configureDividerView2() {
+        contentView.addSubview(dividerView2)
+        
+        dividerView2.snp.makeConstraints {
+            $0.top.equalTo(lostTimeLabel.snp.bottom).offset(5)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(0.6)
         }
     }
     
@@ -130,10 +164,10 @@ private extension PostInfoCollectionViewCell {
         contentView.addSubview(postDescriptionLabel)
         
         postDescriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(lostTimeLabel.snp.bottom).offset(5)
+            $0.top.equalTo(dividerView2.snp.bottom).offset(5)
             $0.leading.equalTo(contentView.snp.leading).offset(10)
             $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
-            $0.bottom.equalTo(mapView.snp.top).offset(-5)
+            $0.height.equalTo(24)
         }
     }
     
@@ -142,6 +176,7 @@ private extension PostInfoCollectionViewCell {
         
         mapView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
+            $0.top.equalTo(postDescriptionLabel.snp.bottom).offset(10)
             $0.leading.equalTo(contentView.snp.leading).offset(10)
             $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
             $0.height.equalTo(250)

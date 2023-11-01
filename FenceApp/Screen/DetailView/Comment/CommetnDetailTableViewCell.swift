@@ -34,6 +34,7 @@ class CommentDetailTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .right
         return label
     }()
     
@@ -93,7 +94,7 @@ private extension CommentDetailTableViewCell {
         commenterNickName.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
-            $0.width.equalTo(80)
+            $0.width.equalTo(200)
             $0.height.equalTo(16)
         }
     }
