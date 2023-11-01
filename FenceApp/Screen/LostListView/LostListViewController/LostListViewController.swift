@@ -226,7 +226,5 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
             // 테이블뷰 새로 고침
             lostListView.lostTableView.reloadData()
         }
-    }
-    
-    
+    }   
 }
