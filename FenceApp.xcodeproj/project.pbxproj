@@ -241,7 +241,6 @@
 				D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */,
 				D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */,
 				D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */,
-				D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -296,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				D64D76A02ADE097F00E9815B /* DetailView.swift */,
+				D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */,
 				D65150922ADD0CE3002FDD04 /* DetailViewController */,
 				D61368682AE2130D00DE18DF /* Comment */,
 			);

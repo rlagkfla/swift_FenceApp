@@ -48,6 +48,10 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
         mapView.register(MKUserLocationView.self, forAnnotationViewWithReuseIdentifier: "user")
         mapView.delegate = self
+        mapView.clipsToBounds = true
+        mapView.layer.cornerRadius = 10
+        mapView.layer.borderWidth = 1
+        mapView.layer.borderColor = UIColor.systemGray.cgColor
         return mapView
     }()
     
