@@ -36,13 +36,14 @@ class MainViewHandler {
         
         let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
-        vc.filterTapped = {
+        vc.filterTapped = { filterModel in
             
-//            let modelViewController = CustomModalViewController()
+            let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
             
-            let filterViewController = CustomFilterModalViewController()
             filterViewController.delegate = vc
+            
             vc.present(filterViewController, animated: true)
+            
             
         }
         return vc
@@ -51,11 +52,11 @@ class MainViewHandler {
     private func makeLostViewVC() -> LostListViewController {
         let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
-        vc.filterTapped = {
-            let filterModalViewController = CustomFilterModalViewController()
-            filterModalViewController.delegate = vc
-            vc.present(filterModalViewController, animated: true)
-        }
+//        vc.filterTapped = {
+//            let filterModalViewController = CustomFilterModalViewController()
+//            filterModalViewController.delegate = vc
+//            vc.present(filterModalViewController, animated: true)
+//        }
         
         return vc
     }

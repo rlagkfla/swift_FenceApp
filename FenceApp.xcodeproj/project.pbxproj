@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08206A452ADD437A00C110C0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08206A442ADD437A00C110C0 /* Model.swift */; };
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
 		08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */; };
@@ -102,11 +101,11 @@
 		D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */; };
 		D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF352AEBDB0A00974B1F /* FoundWithDocument.swift */; };
 		D6F1CF3A2AF2511800974B1F /* CurrentUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */; };
+		D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		08206A442ADD437A00C110C0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -186,6 +185,7 @@
 		D6F1CF332AEBCB7000974B1F /* LostWithDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostWithDocument.swift; sourceTree = "<group>"; };
 		D6F1CF352AEBDB0A00974B1F /* FoundWithDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundWithDocument.swift; sourceTree = "<group>"; };
 		D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserInfo.swift; sourceTree = "<group>"; };
+		D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,14 +244,6 @@
 				D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */,
 			);
 			path = Comment;
-			sourceTree = "<group>";
-		};
-		D65150882ADD0C72002FDD04 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				08206A442ADD437A00C110C0 /* Model.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		D651508B2ADD0C8B002FDD04 /* Service */ = {
@@ -457,6 +449,7 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6F1CF3B2AF25C9D00974B1F /* PresentingModels */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
 				D6E10E942AE24A630098F05D /* Constants */,
 				D6E10E8B2AE102220098F05D /* Error */,
@@ -464,7 +457,6 @@
 				D6FAD9E02ADD2AA6001EDABC /* Screen */,
 				D65150992ADD0E20002FDD04 /* Asset */,
 				D651508B2ADD0C8B002FDD04 /* Service */,
-				D65150882ADD0C72002FDD04 /* Models */,
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
@@ -520,6 +512,14 @@
 				D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */,
 			);
 			path = Mapper;
+			sourceTree = "<group>";
+		};
+		D6F1CF3B2AF25C9D00974B1F /* PresentingModels */ = {
+			isa = PBXGroup;
+			children = (
+				D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */,
+			);
+			path = PresentingModels;
 			sourceTree = "<group>";
 		};
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
@@ -691,6 +691,7 @@
 				D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */,
 				D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
+				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
@@ -709,7 +710,6 @@
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
-				08206A452ADD437A00C110C0 /* Model.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
 				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
