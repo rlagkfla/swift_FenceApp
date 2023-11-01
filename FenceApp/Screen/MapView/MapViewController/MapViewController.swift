@@ -19,6 +19,7 @@ class MapViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
     var pins: [MapPin] = []
+    
     var filterTapped: (() -> Void)?
     
     lazy var mainView: MapMainView = {
@@ -43,12 +44,12 @@ class MapViewController: UIViewController {
         
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts()
-                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
+                lostResponseDTOs = try await firebaseLostService.fetchLosts(within: 20, fromDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, toDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!)
+//                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
                 //                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
-                                pinTogether = lostResponseDTOs + foundResponseDTOs
+//                                pinTogether = lostResponseDTOs + foundResponseDTOs
 //                pinTogether = lostResponseDTOs
-                setPinUsingMKAnnotation(pinables: pinTogether)
+                setPinUsingMKAnnotation(pinables: lostResponseDTOs)
             } catch {
                 print(error)
             }
@@ -60,7 +61,6 @@ class MapViewController: UIViewController {
         self.firebaseLostService = firebaseLostService
         self.firebaseFoundService = firebaseFoundService
         self.locationManager = locationManager
-        print("I am inited")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -94,11 +94,15 @@ class MapViewController: UIViewController {
     }
     
     private func setNavigationTitle() {
-        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내 / 동물 - 전체"
+        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내"
     }
 }
 
 extension MapViewController: mapMainViewDelegate {
+    func segmentTapped(onIndex: Int) {
+        print(onIndex)
+    }
+    
     func petImageTappedOnMap(annotation: MKAnnotation) {
         
         if let pinable = (annotation as? MapPin)?.pinable {
