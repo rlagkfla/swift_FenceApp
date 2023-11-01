@@ -36,6 +36,10 @@ class ChatViewController: UIViewController {
         configure()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getFoundList()
+    }
+    
     func configure() {
         view.backgroundColor = .white
         

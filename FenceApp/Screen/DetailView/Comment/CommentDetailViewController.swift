@@ -65,29 +65,6 @@ class CommentDetailViewController: UIViewController {
         delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
     }
     
-    private func configure() {
-        getCommentList()
-        
-        view.backgroundColor = .white
-        
-        configureTalbeView()
-        configureActions()
-        
-        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: currentUserResponseDTO.profileImageURL))
-    }
-    
-    private func configureActions() {
-        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
-        commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
-        
-        commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-    }
-    
-    private func configureTalbeView() {
-        commentDetailView.commentTableView.dataSource = self
-        commentDetailView.commentTableView.delegate = self
-    }
-    
     func getCommentList() {
         Task {
             do {
@@ -110,6 +87,32 @@ class CommentDetailViewController: UIViewController {
             return
         }
         UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
+    }
+}
+
+// MARK: - Private Method
+private extension CommentDetailViewController {
+    func configure() {
+        getCommentList()
+        
+        view.backgroundColor = .white
+        
+        configureTalbeView()
+        configureActions()
+        
+        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: currentUserResponseDTO.profileImageURL))
+    }
+    
+    func configureActions() {
+        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
+        
+        commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+    
+    func configureTalbeView() {
+        commentDetailView.commentTableView.dataSource = self
+        commentDetailView.commentTableView.delegate = self
     }
 }
 
@@ -160,7 +163,7 @@ extension CommentDetailViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentList.count
