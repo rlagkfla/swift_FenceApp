@@ -215,6 +215,9 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
             
             let filteredLostList = try await fireBaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
             
+            
+            lostListView.setFilterLabel(within: within, fromDate: fromDate, toDate: toDate)
+            
             print("filter count - \(filteredLostList.count)")
             
             // 필터링된 데이터로 테이블 데이터 업데이트
