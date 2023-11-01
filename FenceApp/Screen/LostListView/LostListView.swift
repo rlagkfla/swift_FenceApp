@@ -77,7 +77,7 @@ extension LostListView {
             $0.top.equalTo(filterLabel.snp.bottom).offset(7)
             $0.leading.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().offset(-18)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-30)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
             
         }
         
