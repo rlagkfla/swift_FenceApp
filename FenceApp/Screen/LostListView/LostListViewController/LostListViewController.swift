@@ -64,8 +64,7 @@ class LostListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        lostListView.lostTableView.reloadData()
+        getLostList()
     }
 
     
@@ -154,17 +153,6 @@ extension LostListViewController {
         
         // 우측 버튼
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(tapRightBarBtn))
-        
-       // appearance.backgroundColor = .black // bartintcolor가 15버전부터 appearance로 설정하게끔 바뀜
-//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.orange]
-//        appearance.titleTextAttributes = [.foregroundColor: UIColor.orange]
-//        appearance.shadowColor = .clear
-//        self.navigationController?.navigationBar.prefersLargeTitles = true
-//        self.navigationController?.navigationBar.tintColor = .orange
-//        self.navigationController?.navigationBar.standardAppearance = appearance
-//        self.navigationController?.navigationBar.compactAppearance = appearance
-//        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-//        self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
 }

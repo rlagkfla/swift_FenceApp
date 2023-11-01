@@ -35,7 +35,7 @@ class LostListView: UIView {
     
     lazy var filterBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
+        btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .normal)
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
         btn.addTarget(self, action: #selector(tapFilterBtutton), for: .touchUpInside)
@@ -77,7 +77,7 @@ extension LostListView {
             $0.top.equalTo(filterLabel.snp.bottom).offset(7)
             $0.leading.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().offset(-18)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-30)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
             
         }
         
