@@ -1,7 +1,7 @@
 
 import UIKit
 import RxSwift
-import FirebaseFirestore
+//import FirebaseFirestore
 
 class MainViewHandler {
     
@@ -71,7 +71,7 @@ class MainViewHandler {
     }
     
     private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController()
+        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
         return vc
     }
 }

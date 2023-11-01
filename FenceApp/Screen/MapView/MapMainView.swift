@@ -14,6 +14,8 @@ protocol mapMainViewDelegate: AnyObject {
     func locationImageViewTapped()
     
     func filterImageViewTapped()
+    
+    func petImageTappedOnMap(annotation: MKAnnotation)
 }
 
 class MapMainView: UIView {
@@ -171,10 +173,40 @@ extension MapMainView: MKMapViewDelegate {
             
             let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
             
+            annotationView.delegate = self
+            
             annotationView.setImage(urlString: (annotation as! MapPin).pinable.imageURL)
+            
+//            annotationView.isEnabled = true
+//            annotationView.canShowCallout = true
+//            
+//            let btn = UIButton(type: .detailDisclosure)
+//            annotationView.rightCalloutAccessoryView = btn
+//            
             
             return annotationView
         }
     }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        let capital = view.annotation as! MapPin
+//        let placeName = capital.title
+//        let placeInfo = capital.info
+
+        print("Hello")
+        
+//        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+//        ac.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(ac, animated: true)
+    }
+    
+}
+
+extension MapMainView: CustomAnnotationViewDelegate {
+    
+    func annotationViewTapped(annotation: MKAnnotation) {
+        delegate?.petImageTappedOnMap(annotation: annotation)
+    }
+    
     
 }
