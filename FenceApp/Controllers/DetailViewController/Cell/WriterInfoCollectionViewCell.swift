@@ -33,9 +33,9 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     
     private let postWriteTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textColor = .systemGray
-        label.textAlignment = .center
+        label.textAlignment = .right
         return label
     }()
     
@@ -75,7 +75,7 @@ private extension WriterInfoCollectionViewCell {
         contentView.addSubview(writerProfileImageView)
         
         writerProfileImageView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).offset(10)
+            $0.centerY.equalToSuperview()
             $0.leading.equalTo(contentView.snp.leading).offset(10)
             $0.width.height.equalTo(50)
         }
@@ -96,10 +96,10 @@ private extension WriterInfoCollectionViewCell {
         contentView.addSubview(postWriteTimeLabel)
         
         postWriteTimeLabel.snp.makeConstraints {
-            $0.centerY.equalTo(writerProfileImageView.snp.centerY)
+            $0.top.equalToSuperview()
             $0.leading.equalTo(writerNickNameLabel.snp.trailing)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
-            $0.height.equalTo(50)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(20)
         }
     }
 }

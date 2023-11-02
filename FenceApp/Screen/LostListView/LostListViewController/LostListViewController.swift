@@ -212,7 +212,7 @@ extension LostListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // 여기에서 각 행에 대한 높이를 동적으로 반환합니다.
-        return 130
+        return 150
     }
 }
 
@@ -243,6 +243,5 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
         
         getLostListWithFilter()
     }
-    
 }
 
