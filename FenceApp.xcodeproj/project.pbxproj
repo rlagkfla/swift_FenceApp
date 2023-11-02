@@ -464,7 +464,6 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
-				D6F1CF4B2AF396FE00974B1F /* Scene */,
 				D6F1CF3E2AF3298B00974B1F /* Extensions */,
 				D6F1CF3B2AF25C9D00974B1F /* Models */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
@@ -485,6 +484,8 @@
 				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
 				D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */,
 				D6F1CF412AF32D5D00974B1F /* PinController.swift */,
+				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
+				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 			);
 			path = FenceApp;
 			sourceTree = "<group>";
@@ -548,15 +549,6 @@
 				D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		D6F1CF4B2AF396FE00974B1F /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
-				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
-			);
-			path = Scene;
 			sourceTree = "<group>";
 		};
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
