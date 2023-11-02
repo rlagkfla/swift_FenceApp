@@ -11,15 +11,21 @@ import SnapKit
 
 class MapViewController: UIViewController {
     
-    //MARK: - Properties
+    //MARK: - Services
     
-    var lostResponseDTOs: [LostResponseDTO] = []
-    var foundResponseDTOs: [FoundResponseDTO] = []
-    var pinTogether: [Pinable] = []
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
+    let locationManager: LocationManager
+    
+    //MARK: - Properties
+    
+    var filterModel = FilterModel(distance: 20, startDate: Calendar.yesterday, endDate: Calendar.today)
+    
+    var losts: [Lost] = []
+    var founds: [Found] = []
     var pins: [MapPin] = []
-    var filterTapped: (() -> Void)?
+    
+    var filterTapped: ( (FilterModel) -> Void )?
     
     lazy var mainView: MapMainView = {
         let view = MapMainView()
@@ -27,7 +33,6 @@ class MapViewController: UIViewController {
         return view
     }()
     
-    let locationManager: LocationManager
     
     //MARK: - Lifecycle
     
@@ -38,49 +43,30 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        setNavigationTitle()
-        centerViewOnUserLocation()
-        
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts()
-                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
-                //                foundResponseDTOs = try await firebaseFoundService.fetchFounds(within: 10)
-                                pinTogether = lostResponseDTOs + foundResponseDTOs
-//                pinTogether = lostResponseDTOs
-                setPinUsingMKAnnotation(pinables: pinTogether)
+                
+                setNavigationTitle()
+                centerViewOnUserLocation()
+                
+                try await performAPIAndSetPins(segmentIndex: mainView.segmentedControl.selectedSegmentIndex)
+                
             } catch {
                 print(error)
             }
         }
-    }
-    
-    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
         
-        self.firebaseLostService = firebaseLostService
-        self.firebaseFoundService = firebaseFoundService
-        self.locationManager = locationManager
-        print("I am inited")
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Actions
     
     //MARK: - Helpers
     
-    //MARK: - UI
-    
     private func setPinUsingMKAnnotation(pinables: [Pinable]) {
-        pins = pinables.map({ pinable in
-            MapPin(pinable: pinable)
-        })
+        
+        pins = pinables.map { MapPin(pinable: $0) }
         
         mainView.mapView.addAnnotations(pins)
-       
     }
     
     private func centerViewOnUserLocation() {
@@ -94,11 +80,83 @@ class MapViewController: UIViewController {
     }
     
     private func setNavigationTitle() {
-        self.navigationItem.title = "게시판"
+        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내"
+    }
+    
+    
+    
+    private func getLosts() async throws {
+        
+        let lostResponseDTOs = try await firebaseLostService.fetchLosts(filterModel: filterModel)
+        
+        losts = LostResponseDTOMapper.makeLosts(from: lostResponseDTOs)
+        
+    }
+    
+    private func getFounds() async throws {
+        
+        let foundResponseDTOs = try await firebaseFoundService.fetchFounds(filterModel: filterModel)
+        
+        founds = FoundResponseDTOMapper.makeFounds(from: foundResponseDTOs)
+        
+        
+    }
+    
+    private func clearPins() {
+        mainView.mapView.removeAnnotations(pins)
+        
+    }
+    
+    private func performAPIAndSetPins(segmentIndex: Int) async throws {
+        
+        if segmentIndex == 0 {
+            
+            try await getLosts()
+            clearPins()
+            setPinUsingMKAnnotation(pinables: losts)
+            
+        } else {
+            
+            try await getFounds()
+            clearPins()
+            setPinUsingMKAnnotation(pinables: founds)
+        }
+    }
+    
+    
+    //MARK: - Init
+    
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
+        
+        self.firebaseLostService = firebaseLostService
+        self.firebaseFoundService = firebaseFoundService
+        self.locationManager = locationManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
-extension MapViewController: mapMainViewDelegate {
+//MARK: - MapMainView Delegate
+
+extension MapViewController: MapMainViewDelegate {
+    
+    func segmentTapped(onIndex: Int) {
+        
+        Task {
+            do {
+                
+                try await performAPIAndSetPins(segmentIndex: onIndex)
+                
+                
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     func petImageTappedOnMap(annotation: MKAnnotation) {
         
         if let pinable = (annotation as? MapPin)?.pinable {
@@ -110,7 +168,7 @@ extension MapViewController: mapMainViewDelegate {
     }
     
     func filterImageViewTapped() {
-        filterTapped?()
+        filterTapped?(filterModel)
     }
     
     func locationImageViewTapped() {
@@ -118,19 +176,24 @@ extension MapViewController: mapMainViewDelegate {
     }
 }
 
+//MARK: - FilterModalViewController Delegate
+
 extension MapViewController: CustomFilterModalViewControllerDelegate {
-    func applyTapped(within: Double, fromDate: Date, toDate: Date) {
+    func applyTapped(filterModel: FilterModel) {
+        
+        self.filterModel = filterModel
         
         Task {
             
-            print(within, fromDate, toDate, "@@@@@@@@@")
-            let a = try await firebaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
-            print(a.count, "!!!!!!")
-            //
-            //            var pins = pinTogether.map { MapPin(pinable: $0)}
-            mainView.mapView.removeAnnotations(pins)
-            pins = a.map { MapPin(pinable: $0)}
-            mainView.mapView.addAnnotations(pins)
+            do {
+                let segmentIndex = mainView.segmentedControl.selectedSegmentIndex
+                
+                try await performAPIAndSetPins(segmentIndex: segmentIndex)
+                
+            } catch {
+                print(error)
+            }
         }
+        
     }
 }

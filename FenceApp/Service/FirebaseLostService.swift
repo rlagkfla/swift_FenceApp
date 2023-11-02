@@ -134,6 +134,35 @@ struct FirebaseLostService {
         
     }
     
+    func fetchLosts(filterModel: FilterModel) async throws -> [LostResponseDTO] {
+        
+        
+        
+        let locationManager = LocationManager()
+        
+        guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
+        
+        let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: filterModel.distance)
+        
+        let ref = COLLECTION_LOST.whereField(FB.Lost.latitude, isLessThan: a.maxLat)
+                                .whereField(FB.Lost.latitude, isGreaterThan: a.minLat)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let lostResponseDTOs = documents.map { document in
+            return LostResponseDTOMapper.makeLostResponseDTO(from: document.data())
+        }
+        
+        let filteredLostResponseDTOs = lostResponseDTOs.filter {
+            let range = a.minLon...a.maxLon
+            return range.contains($0.longitude) && $0.postDate <= filterModel.endDate && $0.postDate >= filterModel.startDate
+        }
+        
+        
+        
+        return filteredLostResponseDTOs
+    }
+    
     func fetchLosts(within distance: Double, fromDate: Date, toDate: Date) async throws -> [LostResponseDTO] {
         
         

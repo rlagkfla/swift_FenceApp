@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LostResponseDTO: Pinable {
+struct LostResponseDTO {
     
     let lostIdentifier: String
     var latitude: Double

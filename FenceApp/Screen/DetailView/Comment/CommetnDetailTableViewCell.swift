@@ -34,6 +34,7 @@ class CommentDetailTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .right
         return label
     }()
     
@@ -63,29 +64,8 @@ class CommentDetailTableViewCell: UITableViewCell {
         commenterNickName.text = commentUserNickName
         commentUserProfileImageView.kf.setImage(with: URL(string: commentUserProfileImageUrl))
         commentTextLabel.text = commentDescription
-        setCommentWriteTime(commentTime)
-    }
-    
-    private func setCommentWriteTime(_ commentTime: String) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        formatter.locale = Locale(identifier: "ko_KR")
-        
-        guard let publishedDate = formatter.date(from: commentTime) else { return print("에러") }
-        let result = Date().timeIntervalSince1970 - publishedDate.timeIntervalSince1970
-        
-        switch result {
-        case ..<60:
-            commentDate.text = "방금"
-        case 60..<3600:
-            commentDate.text = "\(Int(result / 60))분 전"
-        case 3600..<86400:
-            commentDate.text = "\(Int(result / 3600))시간 전"
-        case 86400...:
-            commentDate.text = "\(Int(result / 86400))일 전"
-        default:
-            commentDate.text = "날자 Parshing 오류"
-        }
+        let commentDateFormatter = commentTime.getHowLongAgo()
+        commentDate.text = commentDateFormatter
     }
 }
 
@@ -114,7 +94,7 @@ private extension CommentDetailTableViewCell {
         commenterNickName.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
-            $0.width.equalTo(80)
+            $0.width.equalTo(200)
             $0.height.equalTo(16)
         }
     }
