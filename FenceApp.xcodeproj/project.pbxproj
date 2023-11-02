@@ -37,6 +37,7 @@
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
 		D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */; };
+		D63E41332AF3901B0086C002 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63E41322AF3901B0086C002 /* Date+Ext.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
@@ -134,6 +135,7 @@
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		D63E41322AF3901B0086C002 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				D6D806352AEA52D90002AE3A /* String+Ext.swift */,
+				D63E41322AF3901B0086C002 /* Date+Ext.swift */,
 				D64EE7142AF0DAA100A33AEF /* UNUserNotification+Ext.swift */,
 			);
 			path = Extension;
@@ -688,6 +691,7 @@
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
+				D63E41332AF3901B0086C002 /* Date+Ext.swift in Sources */,
 				D6F1CF462AF3463600974B1F /* Found.swift in Sources */,
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
