@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
+		0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */; };
+		0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
 		08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */; };
 		08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */; };
@@ -19,8 +21,6 @@
 		08DB05E42AEE622300A0C589 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 08DB05E32AEE622300A0C589 /* RxKeyboard */; };
 		08DB05E62AEE62B600A0C589 /* cat.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08DB05E52AEE62B600A0C589 /* cat.riv */; };
 		08DB05E82AEE62BE00A0C589 /* profile.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08DB05E72AEE62BE00A0C589 /* profile.riv */; };
-		08DB05EA2AEE65D800A0C589 /* MainViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05E92AEE65D800A0C589 /* MainViewHandler.swift */; };
-		08DB05EC2AEE847A00A0C589 /* ViewTransitionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05EB2AEE847A00A0C589 /* ViewTransitionHandler.swift */; };
 		08DB05EE2AEE875900A0C589 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 08DB05ED2AEE875900A0C589 /* FirebaseAuth */; };
 		08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */; };
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
@@ -115,6 +115,8 @@
 
 /* Begin PBXFileReference section */
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
+		0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
+		0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Regular.otf"; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -122,8 +124,6 @@
 		08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		08DB05E52AEE62B600A0C589 /* cat.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat.riv; sourceTree = "<group>"; };
 		08DB05E72AEE62BE00A0C589 /* profile.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = profile.riv; sourceTree = "<group>"; };
-		08DB05E92AEE65D800A0C589 /* MainViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewHandler.swift; sourceTree = "<group>"; };
-		08DB05EB2AEE847A00A0C589 /* ViewTransitionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransitionHandler.swift; sourceTree = "<group>"; };
 		08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoService.swift; sourceTree = "<group>"; };
 		08E537BC2AE276EF001F08B2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		08F96BF02AEF735400EE276D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -331,8 +331,6 @@
 				08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */,
 				08DB05D32AEE61E100A0C589 /* ValidationHandler.swift */,
 				08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */,
-				08DB05E92AEE65D800A0C589 /* MainViewHandler.swift */,
-				08DB05EB2AEE847A00A0C589 /* ViewTransitionHandler.swift */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -370,6 +368,8 @@
 			children = (
 				08DB05E52AEE62B600A0C589 /* cat.riv */,
 				08DB05E72AEE62BE00A0C589 /* profile.riv */,
+				0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */,
+				0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */,
 				08206A462ADD43A000C110C0 /* background.riv */,
 			);
 			path = Asset;
@@ -663,8 +663,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				08F96BF12AEF735500EE276D /* GoogleService-Info.plist in Resources */,
+				0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */,
 				08206A472ADD43A000C110C0 /* background.riv in Resources */,
 				08DB05E82AEE62BE00A0C589 /* profile.riv in Resources */,
+				0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */,
 				08DB05E62AEE62B600A0C589 /* cat.riv in Resources */,
 				D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */,
 				D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */,
@@ -689,7 +691,6 @@
 				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
-				08DB05EC2AEE847A00A0C589 /* ViewTransitionHandler.swift in Sources */,
 				D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
@@ -717,7 +718,6 @@
 				D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */,
 				D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */,
 				D6F1CF402AF329AB00974B1F /* Calendar+Ext.swift in Sources */,
-				08DB05EA2AEE65D800A0C589 /* MainViewHandler.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
@@ -906,7 +906,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -943,7 +943,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
