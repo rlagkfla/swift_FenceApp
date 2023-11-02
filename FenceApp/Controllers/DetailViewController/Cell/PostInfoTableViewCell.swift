@@ -81,7 +81,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         postTitleLabel.text = postTitle
         postDescriptionLabel.text = postDescription
         setLabel(lostTime: lostTime)
-        setPin(pinable: lostDTO)
+//        setPin(pinable: lostDTO)
     }
 }
 
