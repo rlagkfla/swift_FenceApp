@@ -169,7 +169,7 @@ extension MapMainView {
         addSubview(mapView)
         mapView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(5)
             make.leading.trailing.equalToSuperview().inset(3)
         }
     }
@@ -178,7 +178,7 @@ extension MapMainView {
     private func configureSegmentedControl() {
         addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(5)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.centerX.equalToSuperview()
             make.width.equalTo(150)
             make.height.equalTo(25)
@@ -196,7 +196,7 @@ extension MapMainView {
     }
     
     
-    private func configureOptionImageView() {
+    private func configureOptionImageView() {1
         addSubview(locationImageView)
         locationImageView.snp.makeConstraints { make in
             make.bottom.equalTo(filterImageView.snp.top).offset(-20)

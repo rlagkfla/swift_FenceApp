@@ -77,11 +77,11 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(postTitle: String, postDescription: String, lostTime: Date, lostDTO: LostResponseDTO) {
+    func configureCell(postTitle: String, postDescription: String, lostTime: Date, lost: Lost) {
         postTitleLabel.text = postTitle
         postDescriptionLabel.text = postDescription
         setLabel(lostTime: lostTime)
-//        setPin(pinable: lostDTO)
+        setPin(pinable: lost)
     }
 }
 

@@ -17,7 +17,7 @@ class CommentDetailViewController: UIViewController {
     // MARK: - Properties
     private let commentDetailView = CommentDetailView()
     
-    let lostResponseDTO: LostResponseDTO
+    let lost: Lost
     
     let currentUserResponseDTO: UserResponseDTO
     
@@ -26,9 +26,9 @@ class CommentDetailViewController: UIViewController {
     
     weak var delegate: CommentDetailViewControllerDelegate?
     
-    init(firebaseCommentService: FirebaseLostCommentService, lostResponseDTO: LostResponseDTO, currentUserResponseDTO: UserResponseDTO) {
+    init(firebaseCommentService: FirebaseLostCommentService, lost: Lost, currentUserResponseDTO: UserResponseDTO) {
         self.firebaseCommentService = firebaseCommentService
-        self.lostResponseDTO = lostResponseDTO
+        self.lost = lost
         self.currentUserResponseDTO = currentUserResponseDTO
         super.init(nibName: nil, bundle: nil)
     }
@@ -70,7 +70,7 @@ class CommentDetailViewController: UIViewController {
     func getCommentList() {
         Task {
             do {
-                commentList = try await firebaseCommentService.fetchComments(lostIdentifier: lostResponseDTO.lostIdentifier)
+                commentList = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier)
                 commentDetailView.commentTableView.reloadData()
             } catch {
                 print(error)
@@ -120,7 +120,7 @@ private extension CommentDetailViewController {
     func setText(text: String) async throws {
         commentDetailView.writeCommentTextView.text = ""
         
-        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lostResponseDTO.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: text, commentDate: Date()))
+        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: text, commentDate: Date()))
     }
 }
 

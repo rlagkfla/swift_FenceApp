@@ -18,11 +18,11 @@ class DetailViewController: UIViewController {
     
     var currentUserResponseDTO: UserResponseDTO
     
-    let lostDTO: LostResponseDTO
+    let lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     
-    init(lostDTO: LostResponseDTO, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, currentUserResponseDTO: UserResponseDTO) {
-        self.lostDTO = lostDTO
+    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, currentUserResponseDTO: UserResponseDTO) {
+        self.lost = lost
         self.firebaseCommentService = firebaseCommentService
         self.firebaseUserService = firebaseUserService
         self.firebaseAuthService = firebaseAuthService
@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Action
     @objc func tapped() {
-        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lostResponseDTO: lostDTO, currentUserResponseDTO: currentUserResponseDTO)
+        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost, currentUserResponseDTO: currentUserResponseDTO)
         commentVC.modalTransitionStyle = .coverVertical
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.delegate = self
@@ -81,7 +81,7 @@ private extension DetailViewController {
     private func getFirstComment() {
         Task {
             do {
-                lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lostDTO.lostIdentifier).last
+                lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier).last
             } catch {
                 print(error)
             }
@@ -110,22 +110,22 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let imageCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
-            imageCell.getImageUrl(urlString: lostDTO.imageURL)
+            imageCell.getImageUrl(urlString: lost.imageURL)
             return imageCell
         } else if indexPath.section == 1 {
             let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
-            writerCell.configureCell(userNickName: lostDTO.userNickName, userProfileImageURL: lostDTO.userProfileImageURL, postTime: "\(lostDTO.postDate)")
+            writerCell.configureCell(userNickName: lost.userNickName, userProfileImageURL: lost.userProfileImageURL, postTime: "\(lost.postDate)")
             return writerCell
         } else if indexPath.section == 2 {
             let postCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
-            postCell.configureCell(postTitle: lostDTO.title, postDescription: lostDTO.description, lostTime: lostDTO.lostDate, lostDTO: lostDTO)
+            postCell.configureCell(postTitle: lost.title, postDescription: lost.description, lostTime: lost.lostDate, lost: lost)
             return postCell
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
             commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
             if let lastCommentDescription = lastCommentDTO?.commentDescription {
                 let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lostDTO.userProfileImageURL)
+                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lost.userProfileImageURL)
                 commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
                 return commentCell
             }
