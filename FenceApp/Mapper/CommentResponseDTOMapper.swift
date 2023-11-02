@@ -38,6 +38,22 @@ struct CommentResponseDTOMapper {
         
         return data
     }
+    
+    static func makeComment(from commentResponseDTO: CommentResponseDTO) -> Comment {
+        
+        Comment(lostIdentifier: commentResponseDTO.lostIdentifier,
+                commentIdentifier: commentResponseDTO.commentIdentifier,
+                userIdentifier: commentResponseDTO.userIdentifier,
+                userProfileImageURL: commentResponseDTO.userProfileImageURL,
+                userNickname: commentResponseDTO.userNickname,
+                commentDescription: commentResponseDTO.commentDescription,
+                commentDate: commentResponseDTO.commentDate)
+    }
+    
+    static func makeComments(from commentResponseDTOs: [CommentResponseDTO]) -> [Comment] {
+        
+        commentResponseDTOs.map { makeComment(from: $0)}
+    }
 }
 
 

@@ -25,6 +25,8 @@ class MapViewController: UIViewController {
     var founds: [Found] = []
     var pins: [MapPin] = []
     
+    var annotationViewTapped: ( (Pinable) -> Void )?
+    
     var filterTapped: ( (FilterModel) -> Void )?
     
     lazy var mainView: MapMainView = {
@@ -160,11 +162,13 @@ extension MapViewController: MapMainViewDelegate {
     func petImageTappedOnMap(annotation: MKAnnotation) {
         
         if let pinable = (annotation as? MapPin)?.pinable {
+            
+            annotationViewTapped?(pinable)
             print(pinable.imageURL, pinable.latitude, pinable.longitude)
             
         }
         
-        print(annotation.coordinate.longitude)
+        
     }
     
     func filterImageViewTapped() {

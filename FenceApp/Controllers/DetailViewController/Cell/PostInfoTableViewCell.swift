@@ -87,7 +87,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         postTitleLabel.text = postTitle
         postDescriptionLabel.text = postDescription
         
-        let lostTimeDate = lostTime.getConverDate(lostTime: lostTime)
+        let lostTimeDate = lostTime.convertToDate(lostTime: lostTime)
         lostTimeLabel.text = "실종 시간: \(lostTimeDate)"
         
         setPin(pinable: lost)
