@@ -4,10 +4,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-struct ValidationHandler {
+
+
+
+class ValidationHandler {
     
     let disposeBag = DisposeBag()
-    let textSubject = PublishSubject<String?>()
+    let textSubject = BehaviorSubject<String?>(value: "")
     let isValidRelay: BehaviorRelay<Bool>
     let validationType: ValidationType
     
@@ -36,6 +39,7 @@ struct ValidationHandler {
         case .phoneNumber:
             textSubject
                 .map { self.isValidPhoneNumber($0) }
+                .debug()
                 .bind(to: isValidRelay)
                 .disposed(by: disposeBag)
                 
@@ -73,8 +77,8 @@ extension ValidationHandler {
     
     func isValidPhoneNumber(_ phone: String?) -> Bool {
         guard let phone = phone else { return false }
-        let phoneNumberFormat = "^\\+\\d{1,15}$"
-        let phonePredicate = NSPredicate(format:"SELF MATCHES %@", phoneNumberFormat)
+        let phoneNumberFormat = "^\\+82(0[1-9]{1}[0-9]{1,2}[0-9]{7,8}|10[0-9]{8})$"
+        let phonePredicate = NSPredicate(format: "SELF MATCHES %@", phoneNumberFormat)
         return phonePredicate.evaluate(with: phone)
     }
     
@@ -110,21 +114,35 @@ extension UITextField {
         }
     }
     
-    func setupForValidation(type: ValidationHandler.ValidationType) {
+    func setupForValidation(type: ValidationHandler.ValidationType) -> Self {
+        
+        
+        let initialColor = UIColor(hexCode: "6C5F5B")
+        self.withBottomBorder(color: initialColor, width: 3.0)
+        
+
         if validationHandler == nil {
             validationHandler = ValidationHandler(type: type)
         }
         
-        
-        self.rx.text
+        self.rx.text.orEmpty
+            .debug()
             .bind(to: validationHandler!.textSubject)
             .disposed(by: validationHandler!.disposeBag)
         
+        
         validationHandler!.isValidRelay
-            .map { $0 ? UIColor(hexCode: "68B984") : UIColor(hexCode: "6C5F5B") }
-            .subscribe(onNext: { [weak self] color in
-                self?.layer.borderColor = color.cgColor
+            .debug()
+            .subscribe(onNext: { [weak self] isValid in
+                DispatchQueue.main.async {
+                    let borderColor = isValid ? UIColor(hexCode: "68B984") : UIColor(hexCode: "6C5F5B")
+                    self?.withBottomBorder(color: borderColor, width: 3.0)
+                    self?.layoutIfNeeded()
+                }
             })
             .disposed(by: validationHandler!.disposeBag)
+                
+        validationHandler!.textSubject.onNext(self.text)
+        return self
     }
 }

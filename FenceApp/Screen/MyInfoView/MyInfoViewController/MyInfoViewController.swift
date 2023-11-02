@@ -7,10 +7,13 @@
 
 
 import UIKit
+import SnapKit
 
 class MyInfoViewController: UIViewController {
     
     //MARK: - Properties
+    
+    private let sectionTitles = ["LOST", "FOUND"]
     
     var previousNickname: String = ""
     var previousMemo: String = ""
@@ -35,18 +38,18 @@ class MyInfoViewController: UIViewController {
         let label = UILabel()
         //        label.backgroundColor = .blue
         label.text = "닉네임"
-        label.textColor = UIColor.color1
+        label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
     
-    private let memo: UILabel = {
-        let label = UILabel()
-        //        label.backgroundColor = .red
-        label.text = "간단한 메모"
-        label.textColor = UIColor.color1
-        return label
-    }()
+//    private let memo: UILabel = {
+//        let label = UILabel()
+//        //        label.backgroundColor = .red
+//        label.text = "간단한 메모"
+//        label.textColor = UIColor.color1
+//        return label
+//    }()
     
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
@@ -59,14 +62,22 @@ class MyInfoViewController: UIViewController {
         return button
     }()
     
+    private let borderLine: UILabel = {
+        let lb = UILabel()
+        lb.layer.borderWidth = 1
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        return lb
+    }()
+    
     private lazy var lostCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .white
         collectionView.register(MyInfoCollectionViewCell.self, forCellWithReuseIdentifier: MyInfoCollectionViewCell.identifier)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         collectionView.isScrollEnabled = true
         return collectionView
     }()
@@ -134,7 +145,7 @@ class MyInfoViewController: UIViewController {
         let editViewController = EditViewController()
         editViewController.delegate = self
         editViewController.previousNickname = self.nickname.text ?? ""
-        editViewController.previousMemo = self.memo.text ?? ""
+//        editViewController.previousMemo = self.memo.text ?? ""
         editViewController.previousImage = self.profileImageView.image
         
         editViewController.hidesBottomBarWhenPushed = true
@@ -177,11 +188,11 @@ class MyInfoViewController: UIViewController {
 //MARK: - EditViewController Delegate
 
 extension MyInfoViewController: EditViewControllerDelegate {
-        
-    func didSaveProfileInfo(nickname: String, memo: String, image: UIImage) {
+
+    func didSaveProfileInfo(nickname: String, image: UIImage) {
             DispatchQueue.main.async {
                 self.nickname.text = nickname
-                self.memo.text = memo
+//                self.memo.text = memo
                 self.profileImageView.image = image
             }
         }
@@ -200,13 +211,26 @@ extension MyInfoViewController: UITextFieldDelegate {
 extension MyInfoViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return sectionTitles.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+
+            // 섹션 제목을 설정
+            headerView.titleLabel.text = sectionTitles[indexPath.section]
+            return headerView
+        } else {
+            // 다른 경우 (footer, 등)에 대한 처리
+            return UICollectionReusableView()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        section == 0 ? lostList.count : foundList.count
-        
+        return section == 0 ? lostList.count : foundList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -237,7 +261,8 @@ extension MyInfoViewController: UICollectionViewDataSource {
 extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - 4)/3, height: (collectionView.bounds.width - 4)/3)
+        let cellWidth = (collectionView.bounds.width - 10 - 10 - 2 * 4) / 3 // (컬렉션 뷰 너비 - 좌/우 inset - (셀 간 간격 * 4)) / 3
+        return CGSize(width: cellWidth, height: cellWidth) // 정사각형 셀
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -248,15 +273,15 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return 2
     }
     
-   
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 50) // 원하는 높이로 설정
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
-            return UIEdgeInsets(top: 50, left: 0, bottom: 10, right: 0)
-        } else {
-            return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
-        }
+        return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
     }
+    
 }
 
 //MARK: - UI
@@ -269,8 +294,9 @@ extension MyInfoViewController {
         configureSelf()
         configureProfileImage()
         configureNickName()
-        configureMemo()
+//        configureMemo()
         configureEditProfileButton()
+        configureLine()
         configureLostCollectionView()
     }
     
@@ -281,7 +307,7 @@ extension MyInfoViewController {
     private func configureProfileImage() {
         view.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        profileImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
@@ -291,33 +317,44 @@ extension MyInfoViewController {
         view.addSubview(nickname)
         nickname.translatesAutoresizingMaskIntoConstraints = false
         nickname.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 40).isActive = true
-        nickname.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45).isActive = true
+        nickname.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
         nickname.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         
     }
     
-    private func configureMemo(){
-        view.addSubview(memo)
-        memo.translatesAutoresizingMaskIntoConstraints = false
-        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
-        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
-        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        
-    }
+//    private func configureMemo(){
+//        view.addSubview(memo)
+//        memo.translatesAutoresizingMaskIntoConstraints = false
+//        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
+//        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
+//        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+//        
+//    }
     
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
-        editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45).isActive = true
-        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        editProfileButton.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 80).isActive = true
+        editProfileButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+//        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        editProfileButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }
+    
+    private func configureLine(){
+        view.addSubview(borderLine)
+        
+        borderLine.snp.makeConstraints {
+            $0.top.equalTo(editProfileButton.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.7)
+        }
     }
     
     private func configureLostCollectionView(){
         view.addSubview(lostCollectionView)
         lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        lostCollectionView.topAnchor.constraint(equalTo: editProfileButton.bottomAnchor, constant: 30).isActive = true
+        lostCollectionView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 5).isActive = true
         lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         lostCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
