@@ -40,10 +40,11 @@ private extension DetailView {
         self.addSubview(detailCollectionView)
         
         detailCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
-            $0.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
+//            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+//            $0.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
+//            $0.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
+//            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
+            $0.edges.equalTo(self.safeAreaLayoutGuide.snp.edges).inset(5)
         }
     }
 }
