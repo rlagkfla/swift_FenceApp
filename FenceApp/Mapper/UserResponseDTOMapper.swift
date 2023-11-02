@@ -31,5 +31,18 @@ struct UserResponseDTOMapper {
         return data
         
     }
+    
+    static func makeFBUser(from userResponseDTO: UserResponseDTO) -> FBUser {
+        
+        return FBUser(email: userResponseDTO.email,
+                      profileImageURL: userResponseDTO.profileImageURL,
+                      identifier: userResponseDTO.identifier,
+                      nickname: userResponseDTO.nickname)
+    }
+    
+    static func makeFBUsers(from userResponseDTOs: [UserResponseDTO]) -> [FBUser] {
+        
+        userResponseDTOs.map { makeFBUser(from: $0) }
+    }
 }
 

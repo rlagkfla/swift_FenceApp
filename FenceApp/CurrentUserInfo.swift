@@ -11,7 +11,7 @@ class CurrentUserInfo {
     
     static let shared = CurrentUserInfo()
     
-    var currentUser: UserResponseDTO?
+    var currentUser: FBUser?
     
     private init() {}
 }

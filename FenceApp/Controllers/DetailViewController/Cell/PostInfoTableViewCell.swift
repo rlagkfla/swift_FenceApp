@@ -86,7 +86,10 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     func configureCell(postTitle: String, postDescription: String, lostTime: Date, lost: Lost) {
         postTitleLabel.text = postTitle
         postDescriptionLabel.text = postDescription
-        setLabel(lostTime: lostTime)
+        
+        let lostTimeDate = lostTime.convertToDate(lostTime: lostTime)
+        lostTimeLabel.text = "실종 시간: \(lostTimeDate)"
+        
         setPin(pinable: lost)
     }
 }

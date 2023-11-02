@@ -207,7 +207,7 @@ extension LostListViewController: UITableViewDataSource {
 
 extension LostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let DetailVC = DetailViewController(lost: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService, firebaseUserService: firebaseUserService, firebaseAuthService: firebaseAuthService, currentUserResponseDTO: currentUserResponseDTO)
+        let DetailVC = DetailViewController(lost: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService, firebaseUserService: firebaseUserService, firebaseAuthService: firebaseAuthService)
         self.navigationController?.pushViewController(DetailVC, animated: true)
     }
 }

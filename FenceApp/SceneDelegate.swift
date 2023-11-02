@@ -54,7 +54,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let userIdentifier = try firebaseAuthService.getCurrentUser().uid
             
-            let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+            let userResponseDTO = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+            
+            let user = UserResponseDTOMapper.makeFBUser(from: userResponseDTO)
             
             CurrentUserInfo.shared.currentUser = user
             
@@ -85,22 +87,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeMapViewVC() -> MapViewController {
         
-        let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
+        let mapViewController = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
-        vc.filterTapped = { filterModel in
+        mapViewController.filterTapped = { filterModel in
             
             let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
             
-            filterViewController.delegate = vc
+            filterViewController.delegate = mapViewController
             
-            vc.present(filterViewController, animated: true)
+            mapViewController.present(filterViewController, animated: true)
             
         }
-        return vc
+        
+        mapViewController.annotationViewTapped = { pinable in
+            let modalViewController = CustomModalViewController(pinable: pinable)
+            
+            modalViewController.transitToDetailVC = { lost in
+                let detailViewController = DetailViewController(lost: lost,
+                                     firebaseCommentService: self.firebaseLostCommentService,
+                                     firebaseUserService: self.firebaseUserService,
+                                     firebaseAuthService: self.firebaseAuthService)
+                modalViewController.dismiss(animated: true)
+                self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
+                
+            }
+            
+            mapViewController.present(modalViewController, animated: true)
+        }
+        
+        return mapViewController
     }
     
     // [weak self]?????
     private func makeLoginVC() -> LoginViewController {
+        
         let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService) {
             self.setNavigationControllers()
             self.window?.rootViewController = self.makeTabbarController()
@@ -135,6 +155,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeChatViewController() -> ChatViewController {
         let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
+        vc.filterTapped = { filterModel in
+            let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
+            filterViewController.delegate = vc
+            vc.present(filterViewController, animated: true)
+        }
         return vc
     }
     

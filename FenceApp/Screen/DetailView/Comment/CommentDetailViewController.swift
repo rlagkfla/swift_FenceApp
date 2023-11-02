@@ -19,17 +19,14 @@ class CommentDetailViewController: UIViewController {
     
     let lost: Lost
     
-    let currentUserResponseDTO: UserResponseDTO
-    
     let firebaseCommentService: FirebaseLostCommentService
     var commentList: [CommentResponseDTO] = []
     
     weak var delegate: CommentDetailViewControllerDelegate?
     
-    init(firebaseCommentService: FirebaseLostCommentService, lost: Lost, currentUserResponseDTO: UserResponseDTO) {
+    init(firebaseCommentService: FirebaseLostCommentService, lost: Lost) {
         self.firebaseCommentService = firebaseCommentService
         self.lost = lost
-        self.currentUserResponseDTO = currentUserResponseDTO
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -102,7 +99,7 @@ private extension CommentDetailViewController {
         configureTalbeView()
         configureActions()
         
-        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: currentUserResponseDTO.profileImageURL))
+        commentDetailView.myProfileImageView.kf.setImage(with: URL(string: CurrentUserInfo.shared.currentUser!.profileImageURL))
     }
     
     func configureActions() {
@@ -120,7 +117,9 @@ private extension CommentDetailViewController {
     func setText(text: String) async throws {
         commentDetailView.writeCommentTextView.text = ""
         
-        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickname: currentUserResponseDTO.nickname, commentDescription: text, commentDate: Date()))
+        guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser }
+        
+        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: text, commentDate: Date()))
     }
 }
 

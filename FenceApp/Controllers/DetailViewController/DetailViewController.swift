@@ -16,17 +16,16 @@ class DetailViewController: UIViewController {
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseUserService: FirebaseUserService
     
-    var currentUserResponseDTO: UserResponseDTO
+    
     
     let lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     
-    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, currentUserResponseDTO: UserResponseDTO) {
+    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService) {
         self.lost = lost
         self.firebaseCommentService = firebaseCommentService
         self.firebaseUserService = firebaseUserService
         self.firebaseAuthService = firebaseAuthService
-        self.currentUserResponseDTO = currentUserResponseDTO
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,7 +46,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Action
     @objc func tapped() {
-        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost, currentUserResponseDTO: currentUserResponseDTO)
+        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost)
         commentVC.modalTransitionStyle = .coverVertical
         commentVC.modalPresentationStyle = .pageSheet
         commentVC.delegate = self
