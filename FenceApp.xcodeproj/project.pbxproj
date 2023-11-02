@@ -107,6 +107,8 @@
 		D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF412AF32D5D00974B1F /* PinController.swift */; };
 		D6F1CF442AF3409C00974B1F /* Lost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF432AF3409C00974B1F /* Lost.swift */; };
 		D6F1CF462AF3463600974B1F /* Found.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF452AF3463600974B1F /* Found.swift */; };
+		D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF472AF386F300974B1F /* FBUser.swift */; };
+		D6F1CF4A2AF3882D00974B1F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF492AF3882D00974B1F /* Comment.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +198,8 @@
 		D6F1CF412AF32D5D00974B1F /* PinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinController.swift; sourceTree = "<group>"; };
 		D6F1CF432AF3409C00974B1F /* Lost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lost.swift; sourceTree = "<group>"; };
 		D6F1CF452AF3463600974B1F /* Found.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Found.swift; sourceTree = "<group>"; };
+		D6F1CF472AF386F300974B1F /* FBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBUser.swift; sourceTree = "<group>"; };
+		D6F1CF492AF3882D00974B1F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -460,6 +464,7 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6F1CF4B2AF396FE00974B1F /* Scene */,
 				D6F1CF3E2AF3298B00974B1F /* Extensions */,
 				D6F1CF3B2AF25C9D00974B1F /* Models */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
@@ -469,8 +474,6 @@
 				D6FAD9E02ADD2AA6001EDABC /* Screen */,
 				D65150992ADD0E20002FDD04 /* Asset */,
 				D651508B2ADD0C8B002FDD04 /* Service */,
-				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
-				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
 				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
 				D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */,
@@ -533,6 +536,8 @@
 				D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */,
 				D6F1CF432AF3409C00974B1F /* Lost.swift */,
 				D6F1CF452AF3463600974B1F /* Found.swift */,
+				D6F1CF472AF386F300974B1F /* FBUser.swift */,
+				D6F1CF492AF3882D00974B1F /* Comment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -543,6 +548,15 @@
 				D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D6F1CF4B2AF396FE00974B1F /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
+				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
+			);
+			path = Scene;
 			sourceTree = "<group>";
 		};
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
@@ -694,6 +708,7 @@
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
 				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */,
+				D6F1CF4A2AF3882D00974B1F /* Comment.swift in Sources */,
 				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
 				D6F1CF3A2AF2511800974B1F /* CurrentUserInfo.swift in Sources */,
 				D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */,
@@ -737,6 +752,7 @@
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
+				D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
 				D6F1CF442AF3409C00974B1F /* Lost.swift in Sources */,

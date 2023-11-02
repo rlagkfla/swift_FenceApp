@@ -9,8 +9,10 @@ import UIKit
 
 class CustomModalViewController: UIViewController {
     
-//    var isLost: Bool
-
+    let pinable: Pinable
+    
+    var transitToDetailVC: ( (Lost) -> Void )?
+    
     let petImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
@@ -65,20 +67,35 @@ class CustomModalViewController: UIViewController {
         return button
     }()
     
-//    init(isLost: Bool) {
-//        self.isLost = isLost
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init(pinable: Pinable) {
+        self.pinable = pinable
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setSelf()
         configureUI()
+        configureModal()
+    }
+    
+    private func configureModal() {
+        let url = URL(string: pinable.imageURL)
+        
+        petImageView.kf.setImage(with: url)
+        
+       if let lost = pinable as? Lost {
+            petNameLabel.text = "이름: \(lost.petName)"
+            
+            
+            let postDateFormatter = ("\(lost.lostDate)").getHowLongAgo()
+            postDateLabel.text = postDateFormatter
+        }
     }
     
     func configureModal(petImageUrl: String, petName: String, postDate: String, isLost: Bool) {
@@ -106,6 +123,11 @@ extension CustomModalViewController {
     
     @objc func presentButtonTapped() {
         print(#function)
+        if let lost = pinable as? Lost {
+            
+            transitToDetailVC?(lost)
+        }
+        
     }
 }
 
