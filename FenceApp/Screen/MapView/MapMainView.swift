@@ -37,7 +37,7 @@ class MapMainView: UIView {
         return mapView
     }()
     
-    private lazy var segmentedControl: UISegmentedControl = {
+    lazy var segmentedControl: UISegmentedControl = {
         let view = UISegmentedControl()
         view.isUserInteractionEnabled = true
         view.backgroundColor = .white

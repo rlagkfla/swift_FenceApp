@@ -208,23 +208,27 @@ extension LostListViewController: lostListViewDelegate {
 }
 
 extension LostListViewController: CustomFilterModalViewControllerDelegate {
+    func applyTapped(filterModel: FilterModel) {
+        
+    }
+    
     func applyTapped(within: Double, fromDate: Date, toDate: Date) {
        
-        Task{
-            print("within - \(within) / fromDate - \(fromDate) / toDate - \(toDate)")
-            
-            let filteredLostList = try await fireBaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
-            
-            
-            lostListView.setFilterLabel(within: within, fromDate: fromDate, toDate: toDate)
-            
-            print("filter count - \(filteredLostList.count)")
-            
-            // 필터링된 데이터로 테이블 데이터 업데이트
-            lostList = filteredLostList
-            
-            // 테이블뷰 새로 고침
-            lostListView.lostTableView.reloadData()
-        }
+//        Task{
+//            print("within - \(within) / fromDate - \(fromDate) / toDate - \(toDate)")
+//            
+//            let filteredLostList = try await fireBaseLostService.fetchLosts(within: within, fromDate: fromDate, toDate: toDate)
+//            
+//            
+//            lostListView.setFilterLabel(within: within, fromDate: fromDate, toDate: toDate)
+//            
+//            print("filter count - \(filteredLostList.count)")
+//            
+//            // 필터링된 데이터로 테이블 데이터 업데이트
+//            lostList = filteredLostList
+//            
+//            // 테이블뷰 새로 고침
+//            lostListView.lostTableView.reloadData()
+//        }
     }   
 }
