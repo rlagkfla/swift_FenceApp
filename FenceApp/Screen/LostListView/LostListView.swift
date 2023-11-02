@@ -35,9 +35,10 @@ class LostListView: UIView {
     
     lazy var filterBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .normal)
+        btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
+        btn.withShadow(color: .accent, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
         btn.addTarget(self, action: #selector(tapFilterBtutton), for: .touchUpInside)
         return btn
     }()
