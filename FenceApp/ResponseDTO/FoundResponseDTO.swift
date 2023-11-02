@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FoundResponseDTO: Pinable {
+struct FoundResponseDTO {
     
     var latitude: Double
     var longitude: Double

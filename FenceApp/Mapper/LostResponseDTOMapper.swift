@@ -52,7 +52,29 @@ struct LostResponseDTOMapper {
         
         return data
     }
+    
+    static func makeLost(from lostResponseDTO: LostResponseDTO) -> Lost {
+        
+        Lost(lostIdentifier: lostResponseDTO.lostIdentifier,
+             latitude: lostResponseDTO.latitude,
+             longitude: lostResponseDTO.longitude,
+             userIdentifier:  lostResponseDTO.userIdentifier,
+             userProfileImageURL: lostResponseDTO.userProfileImageURL,
+             userNickName: lostResponseDTO.userNickName,
+             title: lostResponseDTO.title,
+             postDate: lostResponseDTO.postDate,
+             lostDate: lostResponseDTO.lostDate,
+             imageURL: lostResponseDTO.imageURL,
+             petName: lostResponseDTO.petName,
+             description: lostResponseDTO.description,
+             kind: lostResponseDTO.kind)
+    }
+    
+    static func makeLosts(from lostResponseDTOs: [LostResponseDTO]) -> [Lost] {
+        
+        return lostResponseDTOs.map { makeLost(from: $0) }
+        
+    }
+    
 }
-
-
 
