@@ -31,6 +31,7 @@
 		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
 		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
 		C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */; };
+		C3FAAE0E2AF38D5B00089684 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */; };
 		C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C726A7872AE30067000B8D6D /* EditViewController.swift */; };
 		C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
@@ -133,6 +134,7 @@
 		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
 		C3F5C3252AE227AE00D6DA16 /* LostListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewCell.swift; sourceTree = "<group>"; };
+		C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		C726A7872AE30067000B8D6D /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			children = (
 				D6FAD9E82ADD2BB3001EDABC /* MyInfoViewController */,
 				C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */,
+				C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */,
 			);
 			path = MyInfoView;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				D6F1CF4A2AF3882D00974B1F /* Comment.swift in Sources */,
 				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
 				D6F1CF3A2AF2511800974B1F /* CurrentUserInfo.swift in Sources */,
+				C3FAAE0E2AF38D5B00089684 /* SectionHeaderView.swift in Sources */,
 				D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */,
 				D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */,
 				C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */,

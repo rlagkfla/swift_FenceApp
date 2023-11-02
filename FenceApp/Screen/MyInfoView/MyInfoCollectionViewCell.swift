@@ -15,7 +15,7 @@ class MyInfoCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .black
+        img.backgroundColor = .clear
         img.layer.cornerRadius = 7
         img.layer.masksToBounds = true
         img.contentMode = .scaleAspectFill
