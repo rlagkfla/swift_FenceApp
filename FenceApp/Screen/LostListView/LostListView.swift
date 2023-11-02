@@ -28,7 +28,7 @@ class LostListView: UIView {
         let tableView = UITableView()
         tableView.register(LostListViewCell.self, forCellReuseIdentifier: "LostListViewCell")
         tableView.separatorStyle = .singleLine
-        tableView.separatorInset = UIEdgeInsets(top: 0.5, left: 10, bottom: 0.5, right: 10)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
         tableView.separatorColor = .gray
         return tableView
     }()

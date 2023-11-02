@@ -27,7 +27,6 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         configure()
-        self.backgroundColor = .yellow
     }
     
     required init?(coder: NSCoder) {

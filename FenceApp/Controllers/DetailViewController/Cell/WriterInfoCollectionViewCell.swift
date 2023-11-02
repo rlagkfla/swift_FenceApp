@@ -44,7 +44,6 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         configureUI()
-        self.backgroundColor = .red
     }
     
     override func layoutSubviews() {
