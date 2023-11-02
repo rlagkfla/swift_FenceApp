@@ -8,25 +8,33 @@
 import UIKit
 
 protocol CustomFilterModalViewControllerDelegate: AnyObject {
-    func applyTapped(within: Double, fromDate: Date, toDate: Date)
+    func applyTapped(filterModel: FilterModel)
 }
 
 class CustomFilterModalViewController: UIViewController {
     
+    //MARK: - Actions
+    
+    //MARK: - Helpers
+    
+
+    //MARK: - Properties
+    
+    let filterModel: FilterModel
+    
     let navigationBar = UINavigationBar()
     
     var delegate: CustomFilterModalViewControllerDelegate?
-//    lazy var startDate = self.startDatePicker.date
-//    lazy var endDate = self.endDatePicker.date
 
-    lazy var currentRangeLabel: UILabel = {
+
+    private lazy var currentRangeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.text = String(Int(rangeSlider.value)) + "km"
         return label
     }()
     
-    lazy var applyButton: UIButton = {
+    private lazy var applyButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(applyButtonTapped), for: .touchUpInside)
         button.setTitle("적용", for: .normal)
@@ -41,12 +49,12 @@ class CustomFilterModalViewController: UIViewController {
         return label
     }()
     
-    lazy var rangeSlider: UISlider = {
+    private lazy var rangeSlider: UISlider = {
         let slider = UISlider()
         slider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
         slider.minimumValue = 1
         slider.maximumValue = 500
-        slider.value = 250
+        slider.value = Float(filterModel.distance)
         slider.thumbTintColor = UIColor(hexCode: "5DDFDE")
         slider.minimumTrackTintColor = UIColor(hexCode: "5DDFDE")
         slider.maximumTrackTintColor = .darkGray
@@ -64,9 +72,9 @@ class CustomFilterModalViewController: UIViewController {
         var datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
-        let currnetDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        datePicker.date = currnetDayAgo
-        datePicker.maximumDate = currnetDayAgo
+        let startDate = filterModel.startDate
+        datePicker.date = startDate
+        datePicker.maximumDate = startDate
         datePicker.addTarget(self, action: #selector(startDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
@@ -78,14 +86,17 @@ class CustomFilterModalViewController: UIViewController {
         return label
     }()
     
-    lazy var endDatePicker: UIDatePicker = {
+    private lazy var endDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
+        datePicker.date = filterModel.endDate
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
-        datePicker.minimumDate = Date()
+        datePicker.maximumDate = Date()
         datePicker.addTarget(self, action: #selector(endDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
     }()
+    
+    //MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +104,15 @@ class CustomFilterModalViewController: UIViewController {
         setSelf()
         configureUI()
         configureNavigationBarItem()
+    }
+    
+    init(filterModel: FilterModel) {
+        self.filterModel = filterModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setSelf() {
@@ -113,10 +133,17 @@ class CustomFilterModalViewController: UIViewController {
 
 // MARK: - Actions
 extension CustomFilterModalViewController {
+
     @objc func applyButtonTapped() {
-        delegate?.applyTapped(within: Double(rangeSlider.value), fromDate: startDatePicker.date, toDate: endDatePicker.date)
+        
+        delegate?.applyTapped(filterModel: FilterModel(distance: Double(rangeSlider.value),
+                                                       startDate: startDatePicker.date,
+                                                       endDate: endDatePicker.date))
+        
         dismiss(animated: true)
     }
+    
+    
     
     @objc func sliderValueChanged(_ sender: UISlider) {
         let value = sender.value
@@ -134,7 +161,11 @@ extension CustomFilterModalViewController {
     }
 }
 
+//MARK: - UI
+
 private extension CustomFilterModalViewController {
+    
+    
     func configureUI() {
         configureNavigationBar()
         configureRangeLabel()
@@ -153,8 +184,6 @@ private extension CustomFilterModalViewController {
             $0.top.leading.trailing.equalToSuperview()
         }
     }
-    
-    
     
     func configureRangeLabel() {
         view.addSubview(rangeLabel)

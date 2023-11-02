@@ -37,4 +37,19 @@ struct FoundResponseDTOMapper {
         
         return data
     }
+    
+    static func makeFound(from foundResponseDTO: FoundResponseDTO) -> Found {
+        
+        Found(latitude: foundResponseDTO.latitude,
+              longitude: foundResponseDTO.longitude,
+              imageURL: foundResponseDTO.imageURL,
+              date: foundResponseDTO.date,
+              userIdentifier: foundResponseDTO.userIdentifier,
+              foundIdentifier: foundResponseDTO.foundIdentifier)
+    }
+    
+    static func makeFounds(from foundResponseDTOs: [FoundResponseDTO]) -> [Found] {
+        
+        return foundResponseDTOs.map { makeFound(from: $0)}
+    }
 }

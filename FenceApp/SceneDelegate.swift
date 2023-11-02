@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let secondTabNavigationController = UINavigationController()
     let thirdTabNavigationController = UINavigationController()
     let fourthTabNavigationController = UINavigationController()
-
+    
     let locationManager = LocationManager()
     let firebaseFoundService = FirebaseFoundService()
     let firebaseLostCommentService = FirebaseLostCommentService()
@@ -28,52 +28,56 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
         window = UIWindow(windowScene: windowScene)
-//        try! firebaseAuthService.signOutUser()
-       
-        Task {
-//
-            do {
-//                try firebaseAuthService.signOutUser()
-//                let userUID = try firebaseAuthService.getCurrentUser().uid
-//                let user = try await firebaseUserService.fetchUser(userIdentifier: userUID)
-//                print(user, "!!!@@@")
-//                try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
-//                try firebaseAuthService.signOutUser()
-                checkUserLoggedIn()
-                window?.makeKeyAndVisible()
-            } catch {
-                print(error)
-            }
-            
-            
-           
-        }
+        window?.makeKeyAndVisible()
         
-       
+        Task {
+            
+            do {
+                try await checkUserLoggedIn()
+                
+            } catch {
+                
+                try firebaseAuthService.signOutUser()
+                print(error)
+                window?.rootViewController = makeLoginVC()
+            }
+        }
     }
     
-    private func checkUserLoggedIn() {
-        if firebaseAuthService.checkIfUserLoggedIn() == false {
-            window?.rootViewController = makeLoginVC()
+    private func checkUserLoggedIn() async throws {
+        
+        let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
+        
+        if isUserLoggedIn {
+            
+            let userIdentifier = try firebaseAuthService.getCurrentUser().uid
+            
+            let user = try await firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+            
+            CurrentUserInfo.shared.currentUser = user
+            
+            window?.rootViewController = makeTabbarController()
+            
             
         } else {
-            setNavigationControllers()
-            window?.rootViewController = makeTabbarController()
+            
+            window?.rootViewController = makeLoginVC()
         }
     }
     
     private func setNavigationControllers() {
-          firstTabNavigationController.viewControllers = [makeMapViewVC()]
-          secondTabNavigationController.viewControllers = [makeLostViewVC()]
-          thirdTabNavigationController.viewControllers = [makeChatViewController()]
-          fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
-      }
+        firstTabNavigationController.viewControllers = [makeMapViewVC()]
+        secondTabNavigationController.viewControllers = [makeLostViewVC()]
+        thirdTabNavigationController.viewControllers = [makeChatViewController()]
+        fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
+    }
     
     private func makeTabbarController() -> CustomTabBarController {
+        
+        setNavigationControllers()
+        
         let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
         return TabbarController
@@ -83,10 +87,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let vc = MapViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, locationManager: locationManager)
         
-        vc.filterTapped = {
-                    
-            let filterViewController = CustomFilterModalViewController()
+        vc.filterTapped = { filterModel in
+            
+            let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
+            
             filterViewController.delegate = vc
+            
             vc.present(filterViewController, animated: true)
             
         }
@@ -107,10 +113,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeLostViewVC() -> LostListViewController {
         let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
-        vc.filterTapped = {
-            let filterModalViewController = CustomFilterModalViewController()
-            filterModalViewController.delegate = vc
-            vc.present(filterModalViewController, animated: true)
+        vc.filterTapped = { filterModel in
+            
+            let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
+            
+            filterViewController.delegate = vc
+            
+            vc.present(filterViewController, animated: true)
+            
         }
         
         return vc
@@ -133,6 +143,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
         return vc
     }
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
 
 
@@ -141,20 +155,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //    do {
 //                        var lostWithDocument: LostWithDocument?
 //                        var lostResponseArray: [LostResponseDTO] = []
-//        
+//
 //                        lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3)
-//        
+//
 //                        lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
-//        
-//        
-//        
+//
+//
+//
 //                        lostResponseArray.forEach { lostResponseDTO in
 //                            print(lostResponseDTO.lostIdentifier, "(((((")
 //                        }
 //                        lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3, lastDocument: lostWithDocument!.lastDocument)
-//        
+//
 //                        lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
-//        
+//
 //                        lostResponseArray.forEach { lostResponseDTO in
 //                            print(lostResponseDTO.lostIdentifier, "(((((")
 //                        }
@@ -164,14 +178,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                                print(error)
 //                            case .success(let userResponseDTO):
 //                                print(userResponseDTO.email, "!!!!!!!")
-//        
-//        
+//
+//
 //                            }
 //                        }
 //                        try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
 //                        let a = firebaseAuthService.checkIfUserLoggedIn()
 //                        print(a)
-//        
+//
 //                var foundWithDocument: FoundWithDocument?
 //                var foundResponseArray: [FoundResponseDTO] = []
 //
@@ -190,9 +204,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                foundResponseArray.forEach { foundResponseDTO in
 //                    print(foundResponseDTO.foundIdentifier, "(((((")
 //                }
-//        
-//        
-//        
+//
+//
+//
 //    } catch {
 //        print(error, "@@@@@@@@")
 //    }

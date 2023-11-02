@@ -79,13 +79,16 @@ class MyInfoViewController: UIViewController {
        Task {
             
             do {
-                try await getLosts()
-                
-                try await getFounds()
                 
                 configureUI()
                 
                 configureNavigationBar()
+                
+                try await getLosts()
+                
+                try await getFounds()
+                
+                lostCollectionView.reloadData()
                 
             } catch {
                 print(error)

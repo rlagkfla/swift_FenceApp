@@ -33,18 +33,19 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        imageView.kf.setImage(with: url)
+    }
+    
     // MARK: - AutoLayout
     private func configure() {
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(5)
         }
-    }
-    
-    func setImage(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        
-        imageView.kf.setImage(with: url)
     }
 }
