@@ -65,12 +65,8 @@ class EnrollViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-//        view.safeAreaLayoutGuide
         // mapView의 delegate 설정
         enrollView.mapView.delegate = self
-        
-        view.handleKeyboardAdjustment(adjustmentFactor: 0.25)
         
         configureNavBar()
 
@@ -80,7 +76,7 @@ class EnrollViewController: UIViewController {
         
         configureMap()
         
-//        configureKeyboard()
+        configureKeyboard()
     }
     
     func configureAction(){
@@ -91,18 +87,17 @@ class EnrollViewController: UIViewController {
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-
     }
     
-//    func configureKeyboard(){
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//        
-//        // 키보드 외 영역 클릭 시 키보드 사라지게 하기
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//        tapGestureRecognizer.cancelsTouchesInView = false
-//        enrollView.addGestureRecognizer(tapGestureRecognizer)
-//    }
+    func configureKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        // 키보드 외 영역 클릭 시 키보드 사라지게 하기
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGestureRecognizer.cancelsTouchesInView = false
+        enrollView.addGestureRecognizer(tapGestureRecognizer)
+    }
 
     
     @objc func customButtonTapped() {
@@ -138,48 +133,48 @@ class EnrollViewController: UIViewController {
         print("Selected Date: \(selectedDate)")
     }
     
-//    @objc func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-//            enrollView.scrollView.contentInset = contentInset
-//            enrollView.scrollView.scrollIndicatorInsets = contentInset
-//
-//            // UITextView가 키보드 아래에 가려지지 않도록 조정
-//            if let selectedRange = enrollView.textView.selectedTextRange {
-//                let caretRect = enrollView.textView.caretRect(for: selectedRange.start)
-//                let caretY = caretRect.origin.y
-//                let visibleY = enrollView.textView.frame.height - keyboardSize.height
-//                if caretY > visibleY {
-//                    let offsetY = caretY - visibleY
-//                    enrollView.scrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
-//                }
-//            }
-//        }
-//    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            enrollView.scrollView.contentInset = contentInset
+            enrollView.scrollView.scrollIndicatorInsets = contentInset
+
+            // UITextView가 키보드 아래에 가려지지 않도록 조정
+            if let selectedRange = enrollView.textView.selectedTextRange {
+                let caretRect = enrollView.textView.caretRect(for: selectedRange.start)
+                let caretY = caretRect.origin.y
+                let visibleY = enrollView.textView.frame.height - keyboardSize.height
+                if caretY > visibleY {
+                    let offsetY = caretY - visibleY
+                    enrollView.scrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+                }
+            }
+        }
+    }
     
-//    @objc func keyboardWillHide(notification: NSNotification) {
-//        let contentInset = UIEdgeInsets.zero
-//        enrollView.scrollView.contentInset = contentInset
-//        enrollView.scrollView.scrollIndicatorInsets = contentInset
-//        
-//        // 키보드 숨겨질 때 커서의 위치 확인
-//        if let selectedRange = enrollView.textView.selectedTextRange {
-//            let caretRect = enrollView.textView.caretRect(for: selectedRange.start)
-//            let caretY = caretRect.origin.y
-//            let contentOffset = enrollView.scrollView.contentOffset.y
-//
-//            if caretY < contentOffset {
-//                // 커서가 화면에서 가려져 있는 경우 스크롤하여 보이도록 함
-//                let offsetY = max(0, contentOffset - (contentOffset - caretY))
-//                enrollView.scrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
-//            }
-//        }
-//        
-//    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        let contentInset = UIEdgeInsets.zero
+        enrollView.scrollView.contentInset = contentInset
+        enrollView.scrollView.scrollIndicatorInsets = contentInset
+        
+        // 키보드 숨겨질 때 커서의 위치 확인
+        if let selectedRange = enrollView.textView.selectedTextRange {
+            let caretRect = enrollView.textView.caretRect(for: selectedRange.start)
+            let caretY = caretRect.origin.y
+            let contentOffset = enrollView.scrollView.contentOffset.y
+
+            if caretY < contentOffset {
+                // 커서가 화면에서 가려져 있는 경우 스크롤하여 보이도록 함
+                let offsetY = max(0, contentOffset - (contentOffset - caretY))
+                enrollView.scrollView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: true)
+            }
+        }
+        
+    }
     
-//    @objc func dismissKeyboard() {
-//        enrollView.endEditing(true)
-//    }
+    @objc func dismissKeyboard() {
+        enrollView.endEditing(true)
+    }
     
     
     @objc func tapLeftBarBtn(){
