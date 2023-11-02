@@ -35,7 +35,7 @@ class MyInfoViewController: UIViewController {
         let label = UILabel()
         //        label.backgroundColor = .blue
         label.text = "닉네임"
-        label.textColor = UIColor.black
+        label.textColor = UIColor.color1
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
@@ -44,16 +44,17 @@ class MyInfoViewController: UIViewController {
         let label = UILabel()
         //        label.backgroundColor = .red
         label.text = "간단한 메모"
+        label.textColor = UIColor.color1
         return label
     }()
     
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.color2, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
-        button.layer.borderColor = UIColor.blue.cgColor
+        button.layer.borderColor = UIColor.color2.cgColor
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         return button
     }()
@@ -74,7 +75,6 @@ class MyInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         
        Task {
             
@@ -92,7 +92,6 @@ class MyInfoViewController: UIViewController {
                 
             } catch {
                 print(error)
-                
             }
         }
     }
@@ -100,6 +99,7 @@ class MyInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)]
+        configureNavigationBar()
     }
     
     init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService) {
@@ -155,14 +155,23 @@ class MyInfoViewController: UIViewController {
     }
     
     
-     private func configureNavigationBar() {
-         navigationItem.title = "마이페이지"
-         let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
-         navigationItem.rightBarButtonItem = logoutButton
-     }
-   
-    
-
+    private func configureNavigationBar() {
+        navigationItem.title = "마이페이지"
+        
+        if let titleTextAttributes = navigationController?.navigationBar.titleTextAttributes {
+            var attributes = titleTextAttributes
+            attributes[NSAttributedString.Key.foregroundColor] = UIColor.color2
+            navigationController?.navigationBar.titleTextAttributes = attributes
+        } else {
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.color2]
+            navigationController?.navigationBar.titleTextAttributes = attributes
+        }
+        
+        let logoutImage = UIImage(systemName: "escape")
+        let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
+        logoutButton.tintColor = UIColor.color2
+        navigationItem.rightBarButtonItem = logoutButton
+    }
 }
 
 //MARK: - EditViewController Delegate
