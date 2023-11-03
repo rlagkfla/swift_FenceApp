@@ -56,11 +56,12 @@ class ChatViewController: UIViewController {
         
         configurefoundCollectionView()
         getFoundList()
-        setFilterLabel()
     }
     
     func setFilterLabel() {
-        chatView.filterLabel.text = "거리 - 반경 \(filterModel.distance)km 내 / 시간 - 3일 이내 / 동물 - 전체"
+        let convertDate = DateService().converToDateInFilterLabel(fromDate: filterModel.startDate, toDate: filterModel.endDate)
+        
+        chatView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내 / 동물 - 전체"
     }
 }
 
@@ -107,6 +108,7 @@ extension ChatViewController: ChatViewDelegate, CustomFilterModalViewControllerD
         self.filterModel = filterModel
         
         getFoundListWithFilter()
+        setFilterLabel()
     }
     
     func filterButtonTapped() {
