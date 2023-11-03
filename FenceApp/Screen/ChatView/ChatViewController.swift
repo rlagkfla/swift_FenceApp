@@ -11,12 +11,19 @@ import Kingfisher
 class ChatViewController: UIViewController {
     
     // MARK: - Properties
-    private let chatView = ChatView()
+    var filterModel = FilterModel(distance: 20, startDate: Calendar.yesterday, endDate: Calendar.today)
     
     let firebaseFoundService: FirebaseFoundService
-    var foundList: [FoundResponseDTO] = []
+    var foundList: [Found] = []
     
-    var filterTapped: (() -> Void)?
+    var filterTapped: ((FilterModel) -> Void)?
+    
+    // MARK: - Properties
+    private lazy var chatView: ChatView = {
+        let view = ChatView()
+        view.delegate = self
+        return view
+    }()
     
     init(firebaseFoundService: FirebaseFoundService) {
         self.firebaseFoundService = firebaseFoundService
@@ -63,10 +70,29 @@ private extension ChatViewController {
     func getFoundList() {
         Task {
             do {
-                foundList = try await firebaseFoundService.fetchFounds()
+                let foundResponseDTDs = try await firebaseFoundService.fetchFounds()
+                
+                foundList = FoundResponseDTOMapper.makeFounds(from: foundResponseDTDs)
+//                foundList = try await firebaseFoundService.fetchFounds()
                 chatView.foundCollectionView.reloadData()
             } catch {
                 print("error")
+            }
+        }
+    }
+    
+    func getFoundListWithFilter() {
+        Task {
+            do {
+                let foundResponseDTOs = try await firebaseFoundService.fetchFounds(filterModel: filterModel)
+                
+                foundList = FoundResponseDTOMapper.makeFounds(from: foundResponseDTOs)
+                
+                foundList.sort { $0.date > $1.date }
+                
+                chatView.foundCollectionView.reloadData()
+            } catch {
+                print(error)
             }
         }
     }
