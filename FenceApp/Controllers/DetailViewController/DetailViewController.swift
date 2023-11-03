@@ -17,7 +17,6 @@ class DetailViewController: UIViewController {
     let firebaseUserService: FirebaseUserService
     
     
-    
     let lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     
@@ -122,9 +121,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
             commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
-            if let lastCommentDescription = lastCommentDTO?.commentDescription, let lastCommentUserImageUrl = lastCommentDTO?.userProfileImageURL {
+            if let lastCommentDescription = lastCommentDTO?.commentDescription {
                 let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lastCommentUserImageUrl)
+                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lost.userProfileImageURL)
                 commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
                 return commentCell
             }

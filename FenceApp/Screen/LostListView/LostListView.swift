@@ -38,7 +38,6 @@ class LostListView: UIView {
         btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
-        btn.withShadow(color: .accent, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
         btn.addTarget(self, action: #selector(tapFilterBtutton), for: .touchUpInside)
         return btn
     }()
@@ -99,8 +98,8 @@ extension LostListView {
         
         filterBtn.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
-            $0.width.equalTo(43)
-            $0.height.equalTo(42)
+            $0.width.equalTo(45)
+            $0.height.equalTo(44)
             $0.bottom.equalToSuperview().inset(20)
         }
     }

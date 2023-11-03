@@ -14,11 +14,6 @@ protocol EnrollViewControllerDelegate: AnyObject {
     func popEnrollViewController()
 }
 
-struct SelectedImage {
-    let image: UIImage
-    let index: Int
-}
-
 class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
@@ -27,14 +22,13 @@ class EnrollViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseUserService: FirebaseUserService
     let firebaseLostCommentService: FirebaseLostCommentService
-    let currentUserResponseDTO: UserResponseDTO
+//    let currentUserResponseDTO: UserResponseDTO
     var lostList: [LostResponseDTO] = []
     
     weak var delegate: EnrollViewControllerDelegate?
     
     // camera
-    var images: [UIImage] = [] // 삭제 예정
-//    var selectedImages: [SelectedImage] = []
+    var images: [UIImage] = []
     var pickerViewController: PHPickerViewController?
     
     // map
@@ -43,12 +37,12 @@ class EnrollViewController: UIViewController {
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
-    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService, currentUserResponseDTO: UserResponseDTO) {
+    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService) {
         self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
         self.firebaseUserService = firebaseUserService
         self.firebaseLostCommentService = firebaseLostCommentService
-        self.currentUserResponseDTO = currentUserResponseDTO
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -87,6 +81,7 @@ class EnrollViewController: UIViewController {
         enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+
     }
     
     func configureKeyboard(){
@@ -205,16 +200,14 @@ class EnrollViewController: UIViewController {
     
     
     @objc func tapRightBarBtn(){
+        // 터치 이벤트를 막음
+//        self.view.isUserInteractionEnabled = false
         
         // 사진 수정 예정
         guard let picture = images.first else {
             showAlert(message: "이미지를 선택하세요.")
             return
         }
-//        guard let picture = selectedImages.first else {
-//            showAlert(message: "이미지를 선택하세요.")
-//            return
-//        }
         guard let enrollTitle = enrollView.titleTextField.text, !enrollTitle.isEmpty else {
             showAlert(message: "제목을 입력하세요.")
             return
@@ -252,7 +245,11 @@ class EnrollViewController: UIViewController {
             do {
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
 //                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
+//                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
+                
+                guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
+                
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 
@@ -289,8 +286,7 @@ extension EnrollViewController {
         self.title = "게시글 등록"
         let appearance = UINavigationBarAppearance()
         // 불투명한 색상의 백그라운드 생성 (불투명한 그림자를 한겹을 쌓는다)
-//        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
+        appearance.configureWithOpaqueBackground()
         // 우측 버튼
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(tapRightBarBtn))
         // NavigationItem back 버튼 숨기기
@@ -306,26 +302,21 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
         enrollView.collectionView.delegate = self
         enrollView.collectionView.dataSource = self
         
-        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier) // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스
+        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell") // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스
         enrollView.collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 셀 간 여백 설정
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count // 삭제 예정
-//        return selectedImages.count
+        return images.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCollectionViewCell
         
         cell.backgroundColor = .white
         
-        // selectedImages 배열에서 해당 인덱스의 이미지를 가져와서 셀에 표시
-//        let selectedImage = selectedImages[indexPath.row]
-//        cell.imageView.image = selectedImage.image
-        
-        // images 배열에서 해당 인덱스의 이미지를 가져와서 셀에 표시 -> 삭제 예정
+        // images 배열에서 해당 인덱스의 이미지를 가져와서 셀에 표시
         let image = images[indexPath.row]
         cell.imageView.image = image
         
@@ -350,24 +341,6 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
         picker.dismiss(animated: true, completion: nil)
 
         // 선택한 이미지 처리
-//        for (index, result) in results.enumerated() {
-//            // 이미지 아이템 제공자에서 이미지를 가져옵니다.
-//            result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                if let image = image as? UIImage {
-//                    // 이미지를 배열에 추가
-////                    self.images.append(image)
-//
-//                    // 이미지와 순서 정보를 함께 저장
-//                    self.selectedImages.append(SelectedImage(image: image, index: index))
-//                    
-//                    // 컬렉션 뷰 새로 고침
-//                    DispatchQueue.main.async {
-//                        self.enrollView.collectionView.reloadData()
-//                    }
-//                }
-//            }
-//        }
-        
         for result in results {
             // 이미지 아이템 제공자에서 이미지를 가져옵니다.
             result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in

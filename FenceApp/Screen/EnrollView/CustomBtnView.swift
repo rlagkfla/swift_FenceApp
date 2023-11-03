@@ -15,7 +15,7 @@ class CustomBtnView: UIView {
         view.backgroundColor = .clear
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = 12
         return view
     }()
 

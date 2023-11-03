@@ -14,12 +14,13 @@ class CustomTabBarController: UITabBarController{
     let firebaseFoundSerivce: FirebaseFoundService
     
     lazy var cameraButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         button.setImage(UIImage(systemName: "camera"), for: .normal)
         button.tintColor = .white
-        button.backgroundColor = UIColor(hexCode: "5DDFDE")
+//        button.backgroundColor = UIColor(hexCode: "5DDFDE")
+        button.backgroundColor = UIColor(hexCode: "55BCEF")
         button.clipsToBounds = true
-        button.layer.cornerRadius = 30
+        button.layer.cornerRadius = 20
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         return button
@@ -69,23 +70,24 @@ class CustomTabBarController: UITabBarController{
 // MARK: - Private Method
 extension CustomTabBarController {
     private func configureTabBarControllers() {
-        let mapTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "map"), tag: 0)
-        mapTabBarItem.selectedImage = UIImage(systemName: "map.fill")
+        let mapTabBarItem = UITabBarItem(title: "Map", image: UIImage(systemName: "map"), tag: 0)
+//        mapTabBarItem.selectedImage = UIImage(systemName: "map.fill")
+        mapTabBarItem.selectedImage = UIImage(systemName: "map")
         controllers[0].tabBarItem = mapTabBarItem
         
-        let lostListTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "menucard"), tag: 1)
-        lostListTabBarItem.selectedImage = UIImage(systemName: "menucard.fill")
+        let lostListTabBarItem = UITabBarItem(title: "Lost", image: UIImage(systemName: "menucard"), tag: 1)
+        lostListTabBarItem.selectedImage = UIImage(systemName: "menucard")
         controllers[1].tabBarItem = lostListTabBarItem
         
         let dummyTabBarItem = UITabBarItem(title: nil, image: nil, tag: 2)
         controllers[2].tabBarItem = dummyTabBarItem
         
-        let chatTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "message"), tag: 3)
-        chatTabBarItem.selectedImage = UIImage(systemName: "message.fill")
+        let chatTabBarItem = UITabBarItem(title: "Found", image: UIImage(systemName: "message"), tag: 3)
+        chatTabBarItem.selectedImage = UIImage(systemName: "message")
         controllers[3].tabBarItem = chatTabBarItem
         
-        let myInfoTabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "person"), tag: 4)
-        myInfoTabBarItem.selectedImage = UIImage(systemName: "person.fill")
+        let myInfoTabBarItem = UITabBarItem(title: "My", image: UIImage(systemName: "person"), tag: 4)
+        myInfoTabBarItem.selectedImage = UIImage(systemName: "person")
         controllers[4].tabBarItem = myInfoTabBarItem
     
         self.viewControllers = controllers
@@ -93,13 +95,18 @@ extension CustomTabBarController {
     }
     
     private func setBackgroundColor() {
-        self.tabBar.backgroundColor = .white
+
+        self.tabBar.barTintColor = .black
+        
         self.tabBar.isTranslucent = false
-        self.tabBar.barTintColor = UIColor(hexCode: "5DDFDE")
+
+        self.tabBar.tintColor = CustomColor.pointColor
+
         self.tabBar.unselectedItemTintColor = .black
         
         let appearance = UITabBarAppearance()
-        appearance.configureWithTransparentBackground()
+        appearance.configureWithOpaqueBackground()
+//        appearance.configureWithTransparentBackground()
         self.tabBar.standardAppearance = appearance
         self.tabBar.scrollEdgeAppearance = appearance
         
@@ -107,7 +114,7 @@ extension CustomTabBarController {
     
     private func configureCameraButton() {
         self.tabBar.addSubview(cameraButton)
-        cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 30, y: -20, width: 60, height: 60)
+        cameraButton.frame = CGRect(x: Int(self.tabBar.bounds.width / 2) - 25, y: -10, width: 50, height: 50)
     }
 }
 
