@@ -54,10 +54,10 @@ class MyInfoViewController: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.color2, for: .normal)
+        button.setTitleColor(.color1, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
-        button.layer.borderColor = UIColor.color2.cgColor
+        button.layer.borderColor = UIColor.color1.cgColor
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         return button
     }()
@@ -171,7 +171,7 @@ class MyInfoViewController: UIViewController {
         
         if let titleTextAttributes = navigationController?.navigationBar.titleTextAttributes {
             var attributes = titleTextAttributes
-            attributes[NSAttributedString.Key.foregroundColor] = UIColor.color2
+            attributes[NSAttributedString.Key.foregroundColor] = UIColor.black
             navigationController?.navigationBar.titleTextAttributes = attributes
         } else {
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.color2]
@@ -180,7 +180,7 @@ class MyInfoViewController: UIViewController {
         
         let logoutImage = UIImage(systemName: "escape")
         let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
-        logoutButton.tintColor = UIColor.color2
+        logoutButton.tintColor = UIColor.color1
         navigationItem.rightBarButtonItem = logoutButton
     }
 }

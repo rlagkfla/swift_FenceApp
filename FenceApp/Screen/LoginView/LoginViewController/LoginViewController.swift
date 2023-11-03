@@ -39,7 +39,7 @@ final class LoginViewController: UIViewController {
     private lazy var titleLabel = UILabel()
         .withText("찾아줄개")
         .withFont(40, fontName: "Binggrae-Bold")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+        .withTextColor(UIColor(hexCode: "5DDFDE"))
     
     private lazy var emailTextField = UITextField()
         .withPlaceholder("Email@gmail.com")
@@ -54,22 +54,22 @@ final class LoginViewController: UIViewController {
 
     private lazy var loginButton = UIButton()
         .withTitle("로그인")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+        .withTextColor(UIColor(hexCode: "5DDFDE"))
         .withFont(size: 20, fontName: "Binggrae-Regular")
         .withTarget(self, action: #selector(loginButtonTapped))
         .withCornerRadius(15)
         .withBlurEffect()
-        .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
+        .withBorder(color: UIColor(hexCode: "5DDFDE"), width: 3.0)
     
     private lazy var signUpButton = UIButton()
         .withTitle("회원 가입")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+        .withTextColor(UIColor(hexCode: "5DDFDE"))
         .withFont(size: 20, fontName: "Binggrae-Regular")
         .withTarget(self, action: #selector(signUpButtonTapped))
     
     private lazy var findPasswordButton = UIButton()
         .withTitle("비밀번호 찾기")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+        .withTextColor(UIColor(hexCode: "5DDFDE"))
         .withFont(size: 20, fontName: "Binggrae-Regular")
         .withTarget(self, action: #selector(findPasswordButtonTapped))
     
@@ -415,9 +415,9 @@ extension LoginViewController {
 
             DispatchQueue.main.async {
                 if isEnabled {
-                    self?.loginButton.layer.borderColor = UIColor(hexCode: "68B984").cgColor
+                    self?.loginButton.layer.borderColor = UIColor(hexCode: "5DDFDE").cgColor
                 } else {
-                    self?.loginButton.layer.borderColor = UIColor(hexCode: "6C5F5B").cgColor
+                    self?.loginButton.layer.borderColor = UIColor(hexCode: "5DDFDE").cgColor
                 }
             }
         })

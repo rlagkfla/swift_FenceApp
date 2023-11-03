@@ -95,10 +95,10 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.navigationItem.title = "프로필 편집"
         
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
-        cancelButton.tintColor = .color2
+        cancelButton.tintColor = .color1
 
         let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(doneButtonTapped))
-        doneButton.tintColor = .color2
+        doneButton.tintColor = .color1
 
         self.navigationItem.leftBarButtonItem = cancelButton
         self.navigationItem.rightBarButtonItem = doneButton
