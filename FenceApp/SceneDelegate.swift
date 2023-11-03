@@ -175,6 +175,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeChatViewController() -> ChatViewController {
         let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
+        vc.filterTapped = { filterModel in
+            let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
+            filterViewController.delegate = vc
+            vc.present(filterViewController, animated: true)
+        }
         return vc
     }
     

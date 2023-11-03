@@ -11,12 +11,19 @@ import Kingfisher
 class ChatViewController: UIViewController {
     
     // MARK: - Properties
-    private let chatView = ChatView()
+    var filterModel = FilterModel(distance: 20, startDate: Calendar.yesterday, endDate: Calendar.today)
     
     let firebaseFoundService: FirebaseFoundService
-    var foundList: [FoundResponseDTO] = []
+    var foundList: [Found] = []
     
-    var filterTapped: (() -> Void)?
+    var filterTapped: ((FilterModel) -> Void)?
+    
+    // MARK: - Properties
+    private lazy var chatView: ChatView = {
+        let view = ChatView()
+        view.delegate = self
+        return view
+    }()
     
     init(firebaseFoundService: FirebaseFoundService) {
         self.firebaseFoundService = firebaseFoundService
@@ -49,6 +56,11 @@ class ChatViewController: UIViewController {
         
         configurefoundCollectionView()
         getFoundList()
+        setFilterLabel()
+    }
+    
+    func setFilterLabel() {
+        chatView.filterLabel.text = "거리 - 반경 \(filterModel.distance)km 내 / 시간 - 3일 이내 / 동물 - 전체"
     }
 }
 
@@ -57,7 +69,10 @@ private extension ChatViewController {
     func getFoundList() {
         Task {
             do {
-                foundList = try await firebaseFoundService.fetchFounds()
+                let foundResponseDTDs = try await firebaseFoundService.fetchFounds()
+                
+                foundList = FoundResponseDTOMapper.makeFounds(from: foundResponseDTDs)
+//                foundList = try await firebaseFoundService.fetchFounds()
                 chatView.foundCollectionView.reloadData()
             } catch {
                 print("error")
@@ -65,9 +80,37 @@ private extension ChatViewController {
         }
     }
     
+    func getFoundListWithFilter() {
+        Task {
+            do {
+                let foundResponseDTOs = try await firebaseFoundService.fetchFounds(filterModel: filterModel)
+                
+                foundList = FoundResponseDTOMapper.makeFounds(from: foundResponseDTOs)
+                
+                foundList.sort { $0.date > $1.date }
+                
+                chatView.foundCollectionView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     func configurefoundCollectionView() {
         chatView.foundCollectionView.dataSource = self
         chatView.foundCollectionView.delegate = self
+    }
+}
+
+extension ChatViewController: ChatViewDelegate, CustomFilterModalViewControllerDelegate {
+    func applyTapped(filterModel: FilterModel) {
+        self.filterModel = filterModel
+        
+        getFoundListWithFilter()
+    }
+    
+    func filterButtonTapped() {
+        filterTapped?(filterModel)
     }
 }
 
