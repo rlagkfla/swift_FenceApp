@@ -167,6 +167,31 @@ extension CommentDetailViewController {
     }
 }
 
+extension CommentDetailViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: commentDetailView.writeCommentTextView.frame.width, height: .greatestFiniteMagnitude)
+        let estimatedSize = commentDetailView.writeCommentTextView.sizeThatFits(size)
+        commentDetailView.writeCommentTextView.snp.updateConstraints {
+            $0.height.greaterThanOrEqualTo(30)
+            $0.height.lessThanOrEqualTo(estimatedSize.height)
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if commentDetailView.writeCommentTextView.textColor == UIColor.lightGray {
+            commentDetailView.writeCommentTextView.text = nil
+            commentDetailView.writeCommentTextView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if commentDetailView.writeCommentTextView.text.isEmpty {
+            commentDetailView.writeCommentTextView.text = "댓글 작성해주세요."
+            commentDetailView.writeCommentTextView.textColor = UIColor.lightGray
+        }
+    }
+}
+
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension CommentDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
