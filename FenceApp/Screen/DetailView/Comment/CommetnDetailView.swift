@@ -38,7 +38,9 @@ class CommentDetailView: UIView {
     
     let myCommentTextView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hexCode: "5DDFDE")
+//        view.backgroundColor = UIColor(hexCode: "5DDFDE")
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.black.cgColor
         return view
     }()
     
@@ -54,8 +56,8 @@ class CommentDetailView: UIView {
     
     let writeCommentTextView: UITextView = {
         let textView = UITextView()
-//        textView.text = "댓글을 입력해주세요."
-//        textView.textColor = .lightGray
+        textView.text = "댓글을 입력해주세요."
+        textView.textColor = .lightGray
         textView.font = UIFont.systemFont(ofSize: 18)
         textView.layer.cornerRadius = 20
         textView.textContainerInset.left = 5
@@ -125,13 +127,11 @@ private extension CommentDetailView {
         self.addSubview(myCommentTextView)
         
         myCommentTextView.snp.makeConstraints {
-            //            $0.top.greaterThanOrEqualTo(50)
             $0.height.greaterThanOrEqualTo(60)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.lessThanOrEqualToSuperview()
         }
         
-        //        configureCommentSendButton()
         configureMyCommentTextField()
         configureCommentSendButton()
     }
@@ -140,9 +140,7 @@ private extension CommentDetailView {
         myCommentTextView.addSubview(writeCommentTextView)
         
         writeCommentTextView.snp.makeConstraints {
-            //            $0.top.lessThanOrEqualToSuperview().offset(10)
             $0.top.greaterThanOrEqualToSuperview().inset(10)
-            //            $0.centerY.equalTo(commentSendButton.snp.centerY)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.bottom.equalToSuperview().inset(50)
         }
@@ -154,7 +152,6 @@ private extension CommentDetailView {
         commentSendButton.snp.makeConstraints {
             $0.trailing.equalTo(writeCommentTextView.snp.trailing).inset(10)
             $0.bottom.equalTo(writeCommentTextView.snp.bottom).inset(3)
-            //            $0.width.height.equalTo(30)
         }
     }
 }

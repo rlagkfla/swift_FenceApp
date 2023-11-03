@@ -64,6 +64,10 @@ class CommentDetailViewController: UIViewController {
         delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        commentDetailView.writeCommentTextView.resignFirstResponder()
+    }
+    
     func getCommentList() {
         Task {
             do {
@@ -114,6 +118,7 @@ private extension CommentDetailViewController {
     func configureTalbeView() {
         commentDetailView.commentTableView.dataSource = self
         commentDetailView.commentTableView.delegate = self
+        commentDetailView.writeCommentTextView.delegate = self
     }
     
     func setText(text: String) async throws {
@@ -168,26 +173,17 @@ extension CommentDetailViewController {
 }
 
 extension CommentDetailViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: commentDetailView.writeCommentTextView.frame.width, height: .greatestFiniteMagnitude)
-        let estimatedSize = commentDetailView.writeCommentTextView.sizeThatFits(size)
-        commentDetailView.writeCommentTextView.snp.updateConstraints {
-            $0.height.greaterThanOrEqualTo(30)
-            $0.height.lessThanOrEqualTo(estimatedSize.height)
-        }
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if commentDetailView.writeCommentTextView.textColor == UIColor.lightGray {
-            commentDetailView.writeCommentTextView.text = nil
+        if commentDetailView.writeCommentTextView.text == "댓글을 입력해주세요." {
+            commentDetailView.writeCommentTextView.text = ""
             commentDetailView.writeCommentTextView.textColor = .black
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if commentDetailView.writeCommentTextView.text.isEmpty {
-            commentDetailView.writeCommentTextView.text = "댓글 작성해주세요."
-            commentDetailView.writeCommentTextView.textColor = UIColor.lightGray
+            commentDetailView.writeCommentTextView.text = "댓글을 입력해주세요."
+            commentDetailView.writeCommentTextView.textColor = .lightGray
         }
     }
 }
