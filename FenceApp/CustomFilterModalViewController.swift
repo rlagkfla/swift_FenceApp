@@ -20,7 +20,7 @@ class CustomFilterModalViewController: UIViewController {
 
     //MARK: - Properties
     
-    let padding: CGFloat = 15
+    let padding: CGFloat = 20
     
     let filterModel: FilterModel
     
@@ -49,7 +49,7 @@ class CustomFilterModalViewController: UIViewController {
     
     private let rangeLabel: UILabel = {
         let label = UILabel()
-        label.text = "거리"
+        label.text = "반경"
         label.font = UIFont.systemFont(ofSize: 22)
         return label
     }()
@@ -68,9 +68,9 @@ class CustomFilterModalViewController: UIViewController {
     
     private let startDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "from:"
-        label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 22)
+        label.text = "From:"
+        label.textColor = .darkGray
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         return label
     }()
     
@@ -88,9 +88,9 @@ class CustomFilterModalViewController: UIViewController {
     
     private let endDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "to:"
-        label.font = UIFont.systemFont(ofSize: 22)
-        label.textColor = .gray
+        label.text = "To:"
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.textColor = .darkGray
         return label
     }()
     
@@ -140,12 +140,13 @@ class CustomFilterModalViewController: UIViewController {
         self.modalTransitionStyle = .coverVertical
         self.modalPresentationStyle = .pageSheet
         if let sheet = self.sheetPresentationController {
-            sheet.detents = [.medium()]
-//            let smallId = UISheetPresentationController.Detent.Identifier("small")
-//            let smallDetent = UISheetPresentationController.Detent.custom(identifier: smallId) { context in
-//                return 80
-//            }
+            
+            let smallId = UISheetPresentationController.Detent.Identifier("small")
+            let smallDetent = UISheetPresentationController.Detent.custom(identifier: smallId) { context in
+                return 240
+            }
           
+            sheet.detents = [smallDetent]
             
         }
     }
@@ -221,8 +222,9 @@ private extension CustomFilterModalViewController {
         view.addSubview(rangeLabel)
         
         rangeLabel.snp.makeConstraints {
-            $0.top.equalTo(applyButton.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
+            $0.centerY.equalTo(applyButton)
+//            $0.top.equalTo(applyButton.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(padding)
         }
     }
     
@@ -239,9 +241,9 @@ private extension CustomFilterModalViewController {
         view.addSubview(rangeSlider)
         
         rangeSlider.snp.makeConstraints {
-            $0.top.equalTo(rangeLabel.snp.bottom)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(rangeLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(padding)
+            
         }
     }
     
@@ -250,8 +252,8 @@ private extension CustomFilterModalViewController {
         
         upperSpacer.snp.makeConstraints {
             $0.top.equalTo(rangeSlider.snp.bottom).offset(15)
-            $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(0.2)
+            $0.leading.trailing.equalToSuperview().inset(padding)
+            $0.height.equalTo(0.5)
         }
     }
     func configureStartDateLabel() {
@@ -279,9 +281,9 @@ private extension CustomFilterModalViewController {
         view.addSubview(lowerSpacer)
         
         lowerSpacer.snp.makeConstraints {
-            $0.top.equalTo(startDatePicker.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(0.2)
+            $0.top.equalTo(startDatePicker.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview().inset(padding)
+            $0.height.equalTo(0.5)
         }
     }
     
@@ -289,7 +291,7 @@ private extension CustomFilterModalViewController {
         view.addSubview(endDateLabel)
         
         endDateLabel.snp.makeConstraints {
-            $0.top.equalTo(startDateLabel.snp.bottom).offset(25)
+            $0.top.equalTo(lowerSpacer).offset(15)
             $0.leading.equalToSuperview().offset(padding)
         }
     }

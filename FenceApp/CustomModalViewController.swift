@@ -15,7 +15,8 @@ class CustomModalViewController: UIViewController {
     
     let petImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+        
+        
         imageView.layer.cornerRadius = 10
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -25,7 +26,7 @@ class CustomModalViewController: UIViewController {
         let label = UILabel()
         label.text = "이름: 전콩"
         label.font = UIFont.systemFont(ofSize: 22)
-        label.backgroundColor = .yellow
+        
         return label
     }()
     
@@ -33,7 +34,7 @@ class CustomModalViewController: UIViewController {
         let label = UILabel()
         label.text = "날짜: \(Date())"
         label.font = UIFont.systemFont(ofSize: 22)
-        label.backgroundColor = .yellow
+        
         return label
     }()
     
@@ -50,7 +51,7 @@ class CustomModalViewController: UIViewController {
     lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("취소", for: .normal)
-        button.setTitleColor(.red, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .systemGray5
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
@@ -60,7 +61,7 @@ class CustomModalViewController: UIViewController {
     lazy var presentButton: UIButton = {
         let button = UIButton()
         button.setTitle("이동", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .systemGray5
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(presentButtonTapped), for: .touchUpInside)
