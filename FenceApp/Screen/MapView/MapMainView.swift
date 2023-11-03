@@ -40,13 +40,9 @@ class MapMainView: UIView {
     lazy var segmentedControl: UISegmentedControl = {
         let view = UISegmentedControl()
         view.isUserInteractionEnabled = true
-        view.tintColor = .white
-        view.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        view.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
         view.backgroundColor = .white
-        view.selectedSegmentTintColor = CustomColor.pointColor
-        view.insertSegment(withTitle: "Lost", at: 0, animated: true)
-        view.insertSegment(withTitle: "Found", at: 1, animated: true)
+        view.insertSegment(withTitle: "lost", at: 0, animated: true)
+        view.insertSegment(withTitle: "found", at: 1, animated: true)
         view.selectedSegmentIndex = 0
         view.addTarget(self, action: #selector(segmentTapped(_:)), for: .valueChanged)
         return view
@@ -183,10 +179,10 @@ extension MapMainView {
     private func configureSegmentedControl() {
         addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.centerX.equalToSuperview()
-            make.width.equalTo(170)
-            make.height.equalTo(40)
+            make.width.equalTo(150)
+            make.height.equalTo(25)
         }
     }
     

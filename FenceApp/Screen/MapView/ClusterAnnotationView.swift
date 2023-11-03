@@ -22,7 +22,7 @@ class ClusterAnnotationView: MKAnnotationView {
             didSet {
                 displayPriority = .defaultHigh
 
-                backgroundColor = CustomColor.pointColor
+                
                 collisionMode = .circle
                 
                 frame = CGRect(x: 0, y: 0, width: 40, height: 40)
