@@ -127,6 +127,17 @@ class LostListViewController: UIViewController {
         }
     }
     
+//    private func getCurrentUser() {
+//        Task {
+//            do {
+//                let userIdentifier = try self.firebaseAuthService.getCurrentUser().uid
+//                let userResponseDTO = try await self.firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+//                currentUserResponseDTO = userResponseDTO
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
    
     
     //    func loadNextPage() {

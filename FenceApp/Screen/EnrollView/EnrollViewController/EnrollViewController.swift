@@ -244,6 +244,8 @@ class EnrollViewController: UIViewController {
         Task{
             do {
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
+//                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
+//                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
                 
