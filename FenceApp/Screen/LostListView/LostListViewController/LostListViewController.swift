@@ -31,18 +31,18 @@ class LostListViewController: UIViewController {
     
     var filterTapped: ( (FilterModel) -> Void)?
     
-    var currentUserResponseDTO: UserResponseDTO!
-    
+    let lostCellTapped: ( (Lost) -> Void )
     
     
 
     let itemsPerPage = 5 // 페이지당 10개의 아이템을 표시
     
-    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService) {
+    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, lostCellTapped: @escaping (Lost) -> Void) {
         self.fireBaseLostService = fireBaseLostService
         self.firebaseLostCommentService = firebaseLostCommentService
         self.firebaseAuthService = firebaseAuthService
         self.firebaseUserService = firebaseUserService
+        self.lostCellTapped = lostCellTapped
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -60,7 +60,7 @@ class LostListViewController: UIViewController {
         
         getLostList()
         
-        getCurrentUser()
+        
         //        loadNextPage()
         
         configureTableView()
@@ -77,7 +77,7 @@ class LostListViewController: UIViewController {
     
     
     @objc func tapRightBarBtn(){
-        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService, currentUserResponseDTO: currentUserResponseDTO)
+        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService)
         
         enrollVC.delegate = self
         // 탭바 숨기기
@@ -137,6 +137,7 @@ class LostListViewController: UIViewController {
             }
         }
     }
+   
     
     //    func loadNextPage() {
     //        // fetchLostsWithPagination 함수를 호출하여 다음 페이지의 데이터 가져오기
@@ -207,8 +208,8 @@ extension LostListViewController: UITableViewDataSource {
 
 extension LostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let DetailVC = DetailViewController(lost: lostList[indexPath.row], firebaseCommentService: firebaseLostCommentService, firebaseUserService: firebaseUserService, firebaseAuthService: firebaseAuthService)
-        self.navigationController?.pushViewController(DetailVC, animated: true)
+        lostCellTapped(lostList[indexPath.row])
+
     }
 }
 
