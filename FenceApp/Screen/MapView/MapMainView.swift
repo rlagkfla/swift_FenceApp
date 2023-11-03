@@ -50,25 +50,25 @@ class MapMainView: UIView {
     
     private lazy var filterImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
+        
+        let image = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration:UIImage.SymbolConfiguration(weight: .medium))?
+            .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors:[.white, .systemGray2]))
+        iv.image = image
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterImageViewTapped)))
-        iv.tintColor = .accent
-        //        iv.backgroundColor = .white
-        iv.layer.masksToBounds = false
-        //        iv.withShadow()
-        iv.withShadow(color: .darkGray, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
+        
         return iv
     }()
     
     private lazy var locationImageView: UIImageView = {
         let iv = UIImageView()
-        //        iv.clipsToBounds = true
-        iv.image = UIImage(systemName: "location.circle.fill")
+        let image = UIImage(systemName: "location.circle.fill", withConfiguration:UIImage.SymbolConfiguration(weight: .medium))?
+            .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors:[.white, .label, .systemGray2]))
+        iv.image = image
+        //UIColor(hexCode: "55BCEF")
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(locationImageViewTapped)))
         iv.isUserInteractionEnabled = true
-        iv.tintColor = .accent
-        iv.withShadow(color: .darkGray, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
+
         return iv
     }()
     
@@ -87,7 +87,7 @@ class MapMainView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        mapView.layer.cornerRadius = mapView.frame.height / 40
+//        mapView.layer.cornerRadius = mapView.frame.height / 40
     }
     
     //MARK: - Actions
@@ -168,9 +168,10 @@ extension MapMainView {
     private func configureMapView() {
         addSubview(mapView)
         mapView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(5)
-            make.leading.trailing.equalToSuperview().inset(3)
+            make.top.equalToSuperview()
+//            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.trailing.equalToSuperview()
         }
     }
     
@@ -190,8 +191,8 @@ extension MapMainView {
         addSubview(filterImageView)
         filterImageView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(20)
-            make.width.height.equalTo(45)
+            make.bottom.equalToSuperview().inset(30)
+            make.width.height.equalTo(60)
         }
     }
     
@@ -201,7 +202,7 @@ extension MapMainView {
         locationImageView.snp.makeConstraints { make in
             make.bottom.equalTo(filterImageView.snp.top).offset(-20)
             make.trailing.equalToSuperview().inset(10)
-            make.width.height.equalTo(45)
+            make.width.height.equalTo(60)
         }
     }
 }

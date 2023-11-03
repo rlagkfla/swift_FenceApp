@@ -17,7 +17,6 @@ class DetailViewController: UIViewController {
     let firebaseUserService: FirebaseUserService
     
     
-    
     let lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     

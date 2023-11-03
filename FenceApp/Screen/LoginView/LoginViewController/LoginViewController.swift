@@ -169,7 +169,7 @@ private extension LoginViewController {
         
         Task {
             do {
-                try await firebaseAuthService.signInUser(email: email, password: password)
+                try await firebaseAuthService.loginUser(email: email, password: password)
                 print("Successfully \(#function)")
                 enterMainView()
             } catch {

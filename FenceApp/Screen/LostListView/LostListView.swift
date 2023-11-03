@@ -16,11 +16,11 @@ class LostListView: UIView {
     
     weak var delegate: lostListViewDelegate?
     
-    private let filterLabel: UILabel = {
+    let filterLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .darkGray
         lb.font = UIFont.systemFont(ofSize: 13)
-        lb.text = "거리 - 반경 5km 내 / 시간 - 1일 이내 / 동물 - 전체"
+        lb.text = "거리 - 반경 1km 내 / 시간 - 1일 이내 / 동물 - 전체"
         return lb
     }()
     
@@ -35,10 +35,11 @@ class LostListView: UIView {
     
     lazy var filterBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .normal)
+        btn.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration:UIImage.SymbolConfiguration(weight: .medium))?
+            .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors:[.white, .systemGray2])), for: .normal)
         btn.contentVerticalAlignment = .fill
         btn.contentHorizontalAlignment = .fill
-        btn.withShadow(color: .accent, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
+//        btn.withShadow(color: .accent, opacity: 1, offset: CGSize(width: 0, height: 2), radius: 4)
         btn.addTarget(self, action: #selector(tapFilterBtutton), for: .touchUpInside)
         return btn
     }()
@@ -58,22 +59,21 @@ class LostListView: UIView {
     @objc func tapFilterBtutton(){
         delegate?.tapFilterButton()
     }
-    
-    
-    func setFilterLabel(within: Double, fromDate: Date, toDate: Date) {
-        let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
-        
-        var resultDate = ""
-        
-        switch result {
-        case 86400...:
-            resultDate = "\(Int(result / 86400))일 이내"
-        default:
-            resultDate = "알 수 없는 오류"
-        }
-        
-        filterLabel.text = "거리 - 반경 \(Int(within))km 내 / 시간 - \(resultDate)"
-    }
+
+//    func setFilterLabel(within: Double, fromDate: Date, toDate: Date) {
+//        let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
+//        
+//        var resultDate = ""
+//        
+//        switch result {
+//        case 86400...:
+//            resultDate = "\(Int(result / 86400))일 이내"
+//        default:
+//            resultDate = "알 수 없는 오류"
+//        }
+//        
+//        filterLabel.text = "거리 - 반경 \(Int(within))km 내 / 시간 - \(resultDate)"
+//    }
 }
 
 extension LostListView {
@@ -99,9 +99,9 @@ extension LostListView {
         
         filterBtn.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
-            $0.width.equalTo(43)
-            $0.height.equalTo(42)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.width.equalTo(60)
+            $0.height.equalTo(59)
+            $0.bottom.equalToSuperview().inset(30)
         }
     }
 }

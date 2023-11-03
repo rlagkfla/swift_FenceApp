@@ -15,13 +15,14 @@ class CustomBtnView: UIView {
         view.backgroundColor = .clear
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.cornerRadius = 5
+        view.layer.cornerRadius = 12
         return view
     }()
 
     private let cameraImgView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "camera.fill")
+        imageView.tintColor = UIColor(hexCode: "55BCEF")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
