@@ -22,7 +22,7 @@ class EnrollViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let firebaseUserService: FirebaseUserService
     let firebaseLostCommentService: FirebaseLostCommentService
-    let currentUserResponseDTO: UserResponseDTO
+//    let currentUserResponseDTO: UserResponseDTO
     var lostList: [LostResponseDTO] = []
     
     weak var delegate: EnrollViewControllerDelegate?
@@ -37,12 +37,12 @@ class EnrollViewController: UIViewController {
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
-    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService, currentUserResponseDTO: UserResponseDTO) {
+    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService) {
         self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
         self.firebaseUserService = firebaseUserService
         self.firebaseLostCommentService = firebaseLostCommentService
-        self.currentUserResponseDTO = currentUserResponseDTO
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -244,7 +244,10 @@ class EnrollViewController: UIViewController {
         Task{
             do {
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
+                
+                guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
+                
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                 

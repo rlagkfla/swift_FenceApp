@@ -44,7 +44,9 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+       
+        
         Task {
             do {
                 
@@ -57,7 +59,17 @@ class MapViewController: UIViewController {
                 print(error)
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     //MARK: - Actions
@@ -82,7 +94,7 @@ class MapViewController: UIViewController {
     }
     
     private func setNavigationTitle() {
-        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내"
+//        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내"
     }
     
     
@@ -167,8 +179,6 @@ extension MapViewController: MapMainViewDelegate {
             print(pinable.imageURL, pinable.latitude, pinable.longitude)
             
         }
-        
-        
     }
     
     func filterImageViewTapped() {
