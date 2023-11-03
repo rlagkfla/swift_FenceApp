@@ -32,8 +32,8 @@ class CommentDetailTableViewCell: UITableViewCell {
     
     private let commentDate: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .systemGray2
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .right
         return label
     }()
@@ -82,7 +82,7 @@ private extension CommentDetailTableViewCell {
         contentView.addSubview(commentUserProfileImageView)
         
         commentUserProfileImageView.snp.makeConstraints {
-            
+            $0.top.equalToSuperview().offset(8)
             $0.leading.equalToSuperview().offset(10)
             $0.width.height.equalTo(30)
         }
@@ -95,7 +95,7 @@ private extension CommentDetailTableViewCell {
             $0.top.equalToSuperview()
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
             $0.width.equalTo(200)
-            $0.height.equalTo(16)
+            $0.height.equalTo(20)
         }
     }
     
@@ -114,7 +114,7 @@ private extension CommentDetailTableViewCell {
         contentView.addSubview(commentTextLabel)
         
         commentTextLabel.snp.makeConstraints {
-            $0.top.equalTo(commenterNickName.snp.bottom).offset(3)
+            $0.top.equalTo(commenterNickName.snp.bottom)
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(5)

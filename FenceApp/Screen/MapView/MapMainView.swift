@@ -196,7 +196,7 @@ extension MapMainView {
     }
     
     
-    private func configureOptionImageView() {1
+    private func configureOptionImageView() {
         addSubview(locationImageView)
         locationImageView.snp.makeConstraints { make in
             make.bottom.equalTo(filterImageView.snp.top).offset(-20)
