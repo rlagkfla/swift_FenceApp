@@ -98,8 +98,8 @@ extension LostListView {
         
         filterBtn.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(10)
-            $0.width.equalTo(43)
-            $0.height.equalTo(42)
+            $0.width.equalTo(45)
+            $0.height.equalTo(44)
             $0.bottom.equalToSuperview().inset(20)
         }
         

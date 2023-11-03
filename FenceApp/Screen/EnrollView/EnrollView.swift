@@ -22,9 +22,9 @@ class EnrollView: UIView {
     
     lazy var customBtnView: CustomBtnView = {
         let view = CustomBtnView()
-        view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         view.isUserInteractionEnabled = true
+        view.layer.cornerRadius = 12
         return view
     }()
     
@@ -117,7 +117,7 @@ class EnrollView: UIView {
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
-        textView.textContainerInset = UIEdgeInsets(top: 13, left: 13, bottom: 13, right: 13)
+        textView.textContainerInset = UIEdgeInsets(top: 13, left: 9, bottom: 13, right: 9)
         textView.text = "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)"
         textView.textColor = nameTextField.attributedPlaceholder?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor
         textView.autocorrectionType = .no
@@ -125,6 +125,7 @@ class EnrollView: UIView {
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        textView.layer.cornerRadius = 12
         return textView
     }()
     
@@ -145,7 +146,7 @@ class EnrollView: UIView {
     
     let mapView: MKMapView = {
         let map = MKMapView()
-        map.layer.cornerRadius = 15
+        map.layer.cornerRadius = 12
         return map
     }()
     

@@ -34,8 +34,6 @@ class LostListViewController: UIViewController {
     
     let lostCellTapped: ( (Lost) -> Void )
     
-    
-
     let itemsPerPage = 5 // 페이지당 10개의 아이템을 표시
     
     init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, lostCellTapped: @escaping (Lost) -> Void) {
@@ -127,6 +125,17 @@ class LostListViewController: UIViewController {
         }
     }
     
+//    private func getCurrentUser() {
+//        Task {
+//            do {
+//                let userIdentifier = try self.firebaseAuthService.getCurrentUser().uid
+//                let userResponseDTO = try await self.firebaseUserService.fetchUser(userIdentifier: userIdentifier)
+//                currentUserResponseDTO = userResponseDTO
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
    
     
     //    func loadNextPage() {
