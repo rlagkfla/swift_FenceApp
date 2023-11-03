@@ -19,13 +19,15 @@ class MyInfoViewController: UIViewController {
     let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
-    var lostList: [LostResponseDTO] = []
-    var foundList: [FoundResponseDTO] = []
+    var lostList: [Lost] = []
+    var foundList: [Found] = []
     
     var logOut: ( () -> Void )?
     
+    let user = CurrentUserInfo.shared.currentUser!
     
-   private let profileImageView: UIImageView = {
+    
+    private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -78,27 +80,12 @@ class MyInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         
-       Task {
-            
-            do {
-                
-                configureUI()
-                
-                configureNavigationBar()
-                
-                try await getLosts()
-                
-                try await getFounds()
-                
-                lostCollectionView.reloadData()
-                
-            } catch {
-                print(error)
-                
-            }
-        }
+        configureUI()
+        configureNavigationBar()
+        
+        getListenToLosts()
+        getListenToFounds()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -151,38 +138,63 @@ class MyInfoViewController: UIViewController {
     
     //MARK: - Helpers
     
-    private func getLosts() async throws {
+    private func getListenToLosts() {
         
-        lostList = try await firebaseLostService.fetchLosts()
+        firebaseLostService.listenToUpdateOn(userIdentifier: user.identifier) { [weak self] result in
+            
+            switch result {
+                
+            case .failure(let error):
+                print(error)
+            case .success(let lostResponseDTOs):
+                
+                self?.lostList = LostResponseDTOMapper.makeLosts(from: lostResponseDTOs)
+                
+                self?.lostCollectionView.reloadData()
+            }
+        }
     }
     
-    private func getFounds() async throws {
+    private func getListenToFounds() {
         
-        foundList = try await firebaseFoundService.fetchFounds()
+        firebaseFoundService.listenToUpdateOn(userIdentifier: user.identifier) { [weak self] result in
+            
+            switch result {
+                
+            case .failure(let error):
+                print(error)
+                
+            case .success(let foundResponseDTOs):
+                
+                self?.foundList = FoundResponseDTOMapper.makeFounds(from: foundResponseDTOs)
+                
+                self?.lostCollectionView.reloadData()
+            }
+        }
     }
     
     
-     private func configureNavigationBar() {
-         navigationItem.title = "마이페이지"
-         let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
-         navigationItem.rightBarButtonItem = logoutButton
-     }
-   
+    private func configureNavigationBar() {
+        navigationItem.title = "마이페이지"
+        let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
+        navigationItem.rightBarButtonItem = logoutButton
+    }
     
-
+    
+    
 }
 
 //MARK: - EditViewController Delegate
 
 extension MyInfoViewController: EditViewControllerDelegate {
-        
+    
     func didSaveProfileInfo(nickname: String, memo: String, image: UIImage) {
-            DispatchQueue.main.async {
-                self.nickname.text = nickname
-                self.memo.text = memo
-                self.profileImageView.image = image
-            }
+        DispatchQueue.main.async {
+            self.nickname.text = nickname
+            self.memo.text = memo
+            self.profileImageView.image = image
         }
+    }
 }
 
 //MARK: - TextField Delegate
@@ -223,7 +235,7 @@ extension MyInfoViewController: UICollectionViewDataSource {
             
             cell.setImage(urlString: urlString)
         }
-       
+        
         return cell
     }
 }
@@ -246,7 +258,7 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return 2
     }
     
-   
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 0 {
@@ -261,7 +273,7 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
 
 extension MyInfoViewController {
     
-
+    
     private func configureUI() {
         
         configureSelf()
@@ -321,5 +333,5 @@ extension MyInfoViewController {
         lostCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
- 
+    
 }

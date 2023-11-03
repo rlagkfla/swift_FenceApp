@@ -75,7 +75,7 @@ class EnrollView: UIView {
         ]
         let selectedTextAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 15), // 원하는 텍스트 크기로 변경
-            .foregroundColor: UIColor(named: "AccentColor")! // 원하는 텍스트 색상
+            .foregroundColor: CustomColor.pointColor // 원하는 텍스트 색상
         ]
         control.setTitleTextAttributes(normalTextAttributes, for: .normal)
         control.setTitleTextAttributes(selectedTextAttributes, for: .selected)
