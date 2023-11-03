@@ -405,7 +405,7 @@ extension LoginViewController {
         .subscribe(onNext: { [weak self] isEnabled in
             DispatchQueue.main.async {
                 if isEnabled {
-                    self?.loginButton.layer.borderColor = UIColor(hexCode: "68B984").cgColor
+                    self?.loginButton.layer.borderColor = UIColor(hexCode: "5DDFDE").cgColor
                 } else {
                     self?.loginButton.layer.borderColor = UIColor(hexCode: "04364A").cgColor
                 }
