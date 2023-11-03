@@ -40,7 +40,10 @@ class CustomFilterModalViewController: UIViewController {
         let button = UIButton()
         button.addTarget(self, action: #selector(applyButtonTapped), for: .touchUpInside)
         button.setTitle("적용", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = CustomColor.pointColor
+        button.layer.cornerRadius = 10
         return button
     }()
     
@@ -59,7 +62,7 @@ class CustomFilterModalViewController: UIViewController {
         slider.value = Float(filterModel.distance)
         slider.thumbTintColor = CustomColor.pointColor
         slider.minimumTrackTintColor = CustomColor.pointColor
-        slider.maximumTrackTintColor = .darkGray
+        slider.maximumTrackTintColor = .lightGray
         return slider
     }()
     
@@ -120,7 +123,7 @@ class CustomFilterModalViewController: UIViewController {
         
         setSelf()
         configureUI()
-        configureNavigationBarItem()
+        
     }
     
     init(filterModel: FilterModel) {
@@ -147,10 +150,10 @@ class CustomFilterModalViewController: UIViewController {
         }
     }
     
-    func configureNavigationBarItem() {
-        navigationBar.items = [UINavigationItem()]
-        navigationBar.items?[0].setRightBarButton(UIBarButtonItem(customView: applyButton), animated: true)
-    }
+//    func configureNavigationBarItem() {
+//        navigationBar.items = [UINavigationItem()]
+//        navigationBar.items?[0].setRightBarButton(UIBarButtonItem(customView: applyButton), animated: true)
+//    }
 }
 
 // MARK: - Actions
@@ -189,7 +192,8 @@ private extension CustomFilterModalViewController {
     
     
     func configureUI() {
-        configureNavigationBar()
+        
+        configureApplyButton()
         configureRangeLabel()
         configureCurrentRangeLabel()
         configureRangeSlider()
@@ -201,11 +205,15 @@ private extension CustomFilterModalViewController {
         configureEndDatePicker()
     }
     
-    func configureNavigationBar() {
-        view.addSubview(navigationBar)
+    func configureApplyButton() {
+        view.addSubviews(applyButton)
         
-        navigationBar.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+        applyButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(padding)
+            $0.height.equalTo(40)
+            $0.width.equalTo(80)
+            
         }
     }
     
@@ -213,7 +221,7 @@ private extension CustomFilterModalViewController {
         view.addSubview(rangeLabel)
         
         rangeLabel.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(10)
+            $0.top.equalTo(applyButton.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(10)
         }
     }
@@ -231,7 +239,7 @@ private extension CustomFilterModalViewController {
         view.addSubview(rangeSlider)
         
         rangeSlider.snp.makeConstraints {
-            $0.top.equalTo(rangeLabel.snp.bottom).offset(5)
+            $0.top.equalTo(rangeLabel.snp.bottom)
             $0.leading.equalToSuperview().offset(10)
             $0.trailing.equalToSuperview().inset(10)
         }
@@ -258,9 +266,11 @@ private extension CustomFilterModalViewController {
     func configureStartDatePicker() {
         view.addSubview(startDatePicker)
         
+        
+        
         startDatePicker.snp.makeConstraints {
             $0.centerY.equalTo(startDateLabel)
-            $0.leading.equalTo(startDateLabel)
+            
             $0.trailing.equalToSuperview().inset(padding)
         }
     }

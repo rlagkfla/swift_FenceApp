@@ -102,7 +102,6 @@ extension LostListView {
             $0.height.equalTo(44)
             $0.bottom.equalToSuperview().inset(20)
         }
-        
     }
 }
 
