@@ -64,7 +64,7 @@ private extension DetailViewController {
     private func configure() {
         view.backgroundColor = .white
         
-        self.navigationItem.title = "Detail"
+        self.navigationItem.title = "상세 페이지"
         self.navigationController?.navigationBar.backgroundColor = .white
         
         configureCollectionView()
