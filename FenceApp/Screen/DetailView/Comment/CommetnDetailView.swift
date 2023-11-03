@@ -54,18 +54,20 @@ class CommentDetailView: UIView {
     
     let writeCommentTextView: UITextView = {
         let textView = UITextView()
+//        textView.text = "댓글을 입력해주세요."
+//        textView.textColor = .lightGray
         textView.font = UIFont.systemFont(ofSize: 18)
-        textView.layer.cornerRadius = 5
-        textView.contentInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        textView.layer.cornerRadius = 20
+        textView.textContainerInset.left = 5
+        textView.textContainerInset.right = 45
+        textView.isScrollEnabled = false
         return textView
     }()
     
     let commentSendButton: UIButton = {
         let button = UIButton()
-        button.setTitle("등록", for: .normal)
-        button.backgroundColor = .white
+        button.setTitle("작성", for: .normal)
         button.setTitleColor(UIColor(hexCode: "5DDFDE"), for: .normal)
-        button.layer.cornerRadius = 5
         return button
     }()
     
@@ -123,33 +125,36 @@ private extension CommentDetailView {
         self.addSubview(myCommentTextView)
         
         myCommentTextView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(100)
+            //            $0.top.greaterThanOrEqualTo(50)
+            $0.height.greaterThanOrEqualTo(60)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
         
-        configureCommentSendButton()
+        //        configureCommentSendButton()
         configureMyCommentTextField()
-    }
-    
-    func configureCommentSendButton() {
-        myCommentTextView.addSubview(commentSendButton)
-        
-        commentSendButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.width.equalTo(60)
-            $0.height.equalTo(40)
-        }
+        configureCommentSendButton()
     }
     
     func configureMyCommentTextField() {
         myCommentTextView.addSubview(writeCommentTextView)
         
         writeCommentTextView.snp.makeConstraints {
-            $0.centerY.equalTo(commentSendButton.snp.centerY)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalTo(commentSendButton.snp.leading).offset(-10)
-            $0.height.equalTo(60)
+            //            $0.top.lessThanOrEqualToSuperview().offset(10)
+            $0.top.greaterThanOrEqualToSuperview().inset(10)
+            //            $0.centerY.equalTo(commentSendButton.snp.centerY)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.bottom.equalToSuperview().inset(50)
+        }
+    }
+    
+    func configureCommentSendButton() {
+        myCommentTextView.addSubview(commentSendButton)
+        
+        commentSendButton.snp.makeConstraints {
+            $0.trailing.equalTo(writeCommentTextView.snp.trailing).inset(10)
+            $0.bottom.equalTo(writeCommentTextView.snp.bottom).inset(3)
+            //            $0.width.height.equalTo(30)
         }
     }
 }
