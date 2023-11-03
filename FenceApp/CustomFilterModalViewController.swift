@@ -20,6 +20,8 @@ class CustomFilterModalViewController: UIViewController {
 
     //MARK: - Properties
     
+    let padding: CGFloat = 15
+    
     let filterModel: FilterModel
     
     let navigationBar = UINavigationBar()
@@ -55,8 +57,8 @@ class CustomFilterModalViewController: UIViewController {
         slider.minimumValue = 1
         slider.maximumValue = 500
         slider.value = Float(filterModel.distance)
-        slider.thumbTintColor = UIColor(hexCode: "5DDFDE")
-        slider.minimumTrackTintColor = UIColor(hexCode: "5DDFDE")
+        slider.thumbTintColor = CustomColor.pointColor
+        slider.minimumTrackTintColor = CustomColor.pointColor
         slider.maximumTrackTintColor = .darkGray
         return slider
     }()
@@ -64,12 +66,14 @@ class CustomFilterModalViewController: UIViewController {
     private let startDateLabel: UILabel = {
         let label = UILabel()
         label.text = "from:"
+        label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 22)
         return label
     }()
     
     lazy var startDatePicker: UIDatePicker = {
         var datePicker = UIDatePicker()
+        
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
         let startDate = filterModel.startDate
@@ -83,6 +87,7 @@ class CustomFilterModalViewController: UIViewController {
         let label = UILabel()
         label.text = "to:"
         label.font = UIFont.systemFont(ofSize: 22)
+        label.textColor = .gray
         return label
     }()
     
@@ -94,6 +99,18 @@ class CustomFilterModalViewController: UIViewController {
         datePicker.maximumDate = Date()
         datePicker.addTarget(self, action: #selector(endDatePickerValueChanged), for: UIControl.Event.valueChanged)
         return datePicker
+    }()
+    
+    private let upperSpacer: UIView = {
+       let view = UIView()
+        view.backgroundColor = .systemGray3
+        return view
+    }()
+    
+    private let lowerSpacer: UIView = {
+       let view = UIView()
+        view.backgroundColor = .systemGray3
+        return view
     }()
     
     //MARK: - Lifecycle
@@ -121,7 +138,12 @@ class CustomFilterModalViewController: UIViewController {
         self.modalPresentationStyle = .pageSheet
         if let sheet = self.sheetPresentationController {
             sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
+//            let smallId = UISheetPresentationController.Detent.Identifier("small")
+//            let smallDetent = UISheetPresentationController.Detent.custom(identifier: smallId) { context in
+//                return 80
+//            }
+          
+            
         }
     }
     
@@ -171,8 +193,10 @@ private extension CustomFilterModalViewController {
         configureRangeLabel()
         configureCurrentRangeLabel()
         configureRangeSlider()
+        configureUpperSpacer()
         configureStartDateLabel()
         configureStartDatePicker()
+        configureLowerSpacer()
         configureEndDateLabel()
         configureEndDatePicker()
     }
@@ -213,12 +237,21 @@ private extension CustomFilterModalViewController {
         }
     }
     
+    private func configureUpperSpacer() {
+        view.addSubview(upperSpacer)
+        
+        upperSpacer.snp.makeConstraints {
+            $0.top.equalTo(rangeSlider.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(0.2)
+        }
+    }
     func configureStartDateLabel() {
         view.addSubview(startDateLabel)
         
         startDateLabel.snp.makeConstraints {
             $0.top.equalTo(rangeSlider.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().inset(padding)
         }
     }
     
@@ -228,7 +261,17 @@ private extension CustomFilterModalViewController {
         startDatePicker.snp.makeConstraints {
             $0.centerY.equalTo(startDateLabel)
             $0.leading.equalTo(startDateLabel)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(padding)
+        }
+    }
+    
+    private func configureLowerSpacer() {
+        view.addSubview(lowerSpacer)
+        
+        lowerSpacer.snp.makeConstraints {
+            $0.top.equalTo(startDatePicker.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(0.2)
         }
     }
     
@@ -236,8 +279,8 @@ private extension CustomFilterModalViewController {
         view.addSubview(endDateLabel)
         
         endDateLabel.snp.makeConstraints {
-            $0.top.equalTo(startDateLabel.snp.bottom).offset(15)
-            $0.leading.equalToSuperview().offset(10)
+            $0.top.equalTo(startDateLabel.snp.bottom).offset(25)
+            $0.leading.equalToSuperview().offset(padding)
         }
     }
     
@@ -247,7 +290,7 @@ private extension CustomFilterModalViewController {
         endDatePicker.snp.makeConstraints {
             $0.centerY.equalTo(endDateLabel)
             $0.leading.equalTo(endDateLabel)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(padding)
         }
     }
 }

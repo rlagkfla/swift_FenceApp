@@ -109,6 +109,7 @@
 		D6F1CF462AF3463600974B1F /* Found.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF452AF3463600974B1F /* Found.swift */; };
 		D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF472AF386F300974B1F /* FBUser.swift */; };
 		D6F1CF4A2AF3882D00974B1F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF492AF3882D00974B1F /* Comment.swift */; };
+		D6F1CF4D2AF4A4B900974B1F /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF4C2AF4A4B900974B1F /* CustomColor.swift */; };
 		D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +201,7 @@
 		D6F1CF452AF3463600974B1F /* Found.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Found.swift; sourceTree = "<group>"; };
 		D6F1CF472AF386F300974B1F /* FBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBUser.swift; sourceTree = "<group>"; };
 		D6F1CF492AF3882D00974B1F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		D6F1CF4C2AF4A4B900974B1F /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -516,6 +518,7 @@
 			children = (
 				D6E10E712ADFD3740098F05D /* Constant.swift */,
 				D6E10E952AE24ABD0098F05D /* FB.swift */,
+				D6F1CF4C2AF4A4B900974B1F /* CustomColor.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -741,6 +744,7 @@
 				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,
 				D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */,
 				C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */,
+				D6F1CF4D2AF4A4B900974B1F /* CustomColor.swift in Sources */,
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,

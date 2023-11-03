@@ -100,14 +100,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         mapViewController.annotationViewTapped = { pinable in
+            
             let modalViewController = CustomModalViewController(pinable: pinable)
             
             modalViewController.transitToDetailVC = { lost in
+                
                 let detailViewController = DetailViewController(lost: lost,
                                      firebaseCommentService: self.firebaseLostCommentService,
                                      firebaseUserService: self.firebaseUserService,
                                      firebaseAuthService: self.firebaseAuthService)
                 modalViewController.dismiss(animated: true)
+                
                 self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
                 
             }
@@ -129,9 +132,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+    private func makeDetailVC(lost: Lost) -> DetailViewController {
+        let detailViewController = DetailViewController(lost: lost,
+                                                        firebaseCommentService: firebaseLostCommentService,
+                                                        firebaseUserService: firebaseUserService,
+                                                        firebaseAuthService: firebaseAuthService)
+        return detailViewController
+    }
+    
+//    private func makeEnrollVC() -> EnrollViewController {
+//
+//    }
+    
     
     private func makeLostViewVC() -> LostListViewController {
-        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
+        let lostCellTapped = { lost in
+            let detailViewController = self.makeDetailVC(lost: lost)
+            self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
+        }
+        
+        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, lostCellTapped: lostCellTapped)
         
         vc.filterTapped = { filterModel in
             
@@ -160,7 +180,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService)
+        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService)
+        vc.logOut = {
+            self.window?.rootViewController = self.makeLoginVC()
+        }
         return vc
     }
     
