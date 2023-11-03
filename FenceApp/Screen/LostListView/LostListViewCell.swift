@@ -22,7 +22,7 @@ class LostListViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let lb = UILabel()
         lb.text = "test"
-        lb.font = UIFont.systemFont(ofSize: 22)
+        lb.font = UIFont.systemFont(ofSize: 19)
         lb.textColor = .black
         return lb
     }()
@@ -60,9 +60,9 @@ class LostListViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        lostimgView.layer.cornerRadius = 15
+        lostimgView.layer.cornerRadius = 8
         
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 13, left: 0, bottom: 13, right: 0))
     }
     
     required init?(coder: NSCoder) {
@@ -78,24 +78,24 @@ private extension LostListViewCell {
         
         lostimgView.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview()
-            $0.width.equalTo(110)
+            $0.width.equalTo(125)
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(5)
-            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(13)
             $0.trailing.equalToSuperview()
 
         }
         
         dateLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(5)
-            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(13)
             $0.trailing.equalToSuperview()
         }
         
         nickNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(13)
             $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-5)
         }
