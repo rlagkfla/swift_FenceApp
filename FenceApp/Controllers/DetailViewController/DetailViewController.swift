@@ -121,9 +121,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
             commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
-            if let lastCommentDescription = lastCommentDTO?.commentDescription {
+            if let lastCommentDescription = lastCommentDTO?.commentDescription, let lastCommentUserImageUrl = lastCommentDTO?.userProfileImageURL {
                 let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lost.userProfileImageURL)
+                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lastCommentUserImageUrl)
                 commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
                 return commentCell
             }

@@ -1,21 +1,22 @@
 import UIKit
 import RiveRuntime
 import RxSwift
-import RxKeyboard
 
 final class SignUpView: UIView {
     
     private var userService: FirebaseUserService
     private var authService: FirebaseAuthService
     
-    private var pickedImageURL: URL?
     var profileImageURL = PublishSubject<URL>()
+    private var pickedImageURL: URL?
+    
     private(set) var didRequestImagePicker = PublishSubject<Void>()
     private var didFinishPickingImage = PublishSubject<UIImage>()
     private var didCancelImagePicker = PublishSubject<Void>()
     private lazy var authenticationView = AuthenticationView()
     let signUpAuthSuccessful = PublishSubject<Void>()
-
+    let cancelSignupViewSubject = PublishSubject<Void>()
+    
     private let disposeBag = DisposeBag()
 
     private var profileAnimationViewModel = RiveViewModel(fileName: "profile")
@@ -23,29 +24,27 @@ final class SignUpView: UIView {
     private(set) lazy var profileImageButton: UIButton = UIButton()
         .withTarget(self, action: #selector(profileImageButtonTapped))
         .withCornerRadius(50)
+        .withBottomBorder(width: 3)
         .withBorder(color: UIColor(hexCode: "04364A"), width: 3.0)
+
 
     private lazy var emailTextField = UITextField()
         .withPlaceholder("Email")
-        .withInsets(left: 20, right: 20)
-        .withCornerRadius(20)
-        .withBlurEffect()
-        .withBorder(color: UIColor(hexCode: "04364A"), width: 3.0)
-    
+        .withInsets(left: 5, right: 20)
+        .withBottomBorder(width: 3)
+
+
     private lazy var nicknameTextField = UITextField()
         .withPlaceholder("Nick Name")
-        .withInsets(left: 20, right: 20)
-        .withCornerRadius(20)
-        .withBlurEffect()
-        .withBorder(color: UIColor(hexCode: "04364A"), width: 3.0)
-    
+        .withInsets(left: 5, right: 20)
+        .withBottomBorder(width: 3)
+
     private lazy var passwordTextField = UITextField()
         .withPlaceholder("Password")
-        .withInsets(left: 20, right: 20)
-        .withCornerRadius(20)
-        .withBlurEffect()
-        .withBorder(color: UIColor(hexCode: "04364A"), width: 3.0)
-    
+        .withInsets(left: 5, right: 20)
+        .withBottomBorder(width: 3)
+
+
     private lazy var signupButton = UIButton()
         .withTitle("가입 완료!")
         .withBorder(color: UIColor(hexCode: "04364A"), width: 3.0)
@@ -64,12 +63,28 @@ final class SignUpView: UIView {
     
     
     // MARK: - Initialization
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        emailTextField
+            .updateBottomBorder(color: UIColor(hexCode: "04364A"), width: 3)
+            .setupForValidation(type: .email)
+
+        nicknameTextField
+            .updateBottomBorder(color: UIColor(hexCode: "04364A"), width: 3)
+            .setupForValidation(type: .nickName)
+
+        
+        passwordTextField
+            .updateBottomBorder(color: UIColor(hexCode: "04364A"), width: 3)
+            .setupForValidation(type: .password)
+    }
+    
     init(authService: FirebaseAuthService, userService: FirebaseUserService) {
         self.authService = authService
         self.userService = userService
         super.init(frame: .zero)
         configureUI()
-        setupTFValidate()
         fetchImageURL()
     }
 
@@ -82,52 +97,18 @@ final class SignUpView: UIView {
 }
 
 
-//MARK: - isValid TextField Format
-extension SignUpView {
-    func setupTFValidate() {
-        emailTextField
-            .setupForValidation(type: .email)
-        
-        nicknameTextField
-            .setupForValidation(type: .nickName)
-        
-        passwordTextField
-            .setupForValidation(type: .password)
-        
-        setupSignupButtonValidate()
-    }
-    
-    func setupSignupButtonValidate() {
-        Observable.combineLatest(
-             emailTextField.validationHandler!.isValidRelay,
-             nicknameTextField.validationHandler!.isValidRelay,
-             passwordTextField.validationHandler!.isValidRelay
-
-         ) { emailIsValid, nickNameIsValid ,passwordIsValid in
-             return emailIsValid && passwordIsValid && passwordIsValid
-         }
-         .do(onNext: { [weak self] isEnabled in
-             DispatchQueue.main.async {
-                 if isEnabled {
-                     self?.signupButton.layer.borderColor = UIColor(hexCode: "68B984").cgColor
-                 } else {
-                     self?.signupButton.layer.borderColor = UIColor(hexCode: "04364A").cgColor
-                 }
-             }
-         })
-         .bind(to: signupButton.rx.isEnabled)
-         .disposed(by: disposeBag)
-     }
-}
 
 
 // MARK: - Congfigure UI
 private extension SignUpView {
     
     func configureUI() {
+        self.backgroundColor = UIColor(hexCode: "CBEDC4")
+
         addSubviews(emailTextField,profileImageButton,nicknameTextField,passwordTextField,signupButton,cancelButton)
         profileImageButton.addSubview(profileRiveAnimationView)
         configureConstraints()
+        
     }
     
     
@@ -204,7 +185,7 @@ private extension SignUpView {
     }
     
     @objc func cancelButtonTapped() {
-        self.removeFromSuperview()
+        cancelSignupViewSubject.onNext(())
     }
 }
 
