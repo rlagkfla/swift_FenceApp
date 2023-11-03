@@ -11,53 +11,45 @@ class ResetPasswordView: UIView {
     let resetEmailSent = PublishSubject<Void>()
     let deinitResetPasswordView = PublishSubject<Void>()
 
-    let alertView = AlertHandler()
-    
-    private lazy var titleLabel = UILabel()
-        .withText("비밀번호 변경")
-        .withFont(30, fontName: "Binggrae-Bold")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+    private var viewModel = RiveViewModel(fileName: "cat")
+    private lazy var riveView = RiveView()
+        .withViewModel(viewModel)
+
     
     private lazy var emailTextField = UITextField()
         .withPlaceholder("Email")
-        .withInsets(left: 5, right: 20)
+        .withCornerRadius(20)
+        .withInsets(left: 20, right: 20)
+        .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
     
     private lazy var resetPasswordButton = UIButton()
         .withTitle("비밀번호 재설정하기")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+        .withTextColor(.black)
         .withTarget(self, action: #selector(resetPasswordButtonTapped))
-        .withCornerRadius(15)
+        .withCornerRadius(20)
         .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
-        .withBlurEffect()
     
     private lazy var cancelButton = UIButton()
         .withTitle("뒤로가기")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
+        .withTextColor(.black)
         .withTarget(self, action: #selector(cancelButtonTapped))
-        .withCornerRadius(15)
+        .withCornerRadius(20)
         .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
-        .withBlurEffect()
     
     deinit {
         print("ResetPasswor Deinit")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        emailTextField
-            .updateBottomBorder(color: UIColor(hexCode: "04364A"), width: 3)
-            .setupForValidation(type: .email)
-    }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        setupValidate()
         handleKeyboardAdjustment(adjustmentFactor: 0.1)
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -65,26 +57,22 @@ class ResetPasswordView: UIView {
 
 extension ResetPasswordView {
     func setupUI() {
-        
-        self.backgroundColor = UIColor(hexCode: "CBEDC4")
-        addSubviews(emailTextField, resetPasswordButton,cancelButton,titleLabel)
+        addSubviews(emailTextField, resetPasswordButton,cancelButton,riveView)
         configureConstraints()
     }
     
-    
     func configureConstraints() {
         
-        
-        titleLabel
-            .positionCenterX()
-            .putAbove(emailTextField, 40)
-
-
         emailTextField
             .positionCenterX()
             .positionCenterY()
             .withSize(widthRatioOfSuperview: 0.8)
             .withHeight(40)
+
+        riveView
+            .putAbove(emailTextField, 8)
+            .positionCenterX()
+            .withSize(200, 150)
 
         resetPasswordButton
             .putBelow(emailTextField, 20)
@@ -145,6 +133,7 @@ extension ResetPasswordView {
 //MARK: - isValid TextField Format
 extension ResetPasswordView {
     func setupValidate() {
+        emailTextField.setupForValidation(type: .email)
     }
 }
 
@@ -164,5 +153,3 @@ extension ResetPasswordView {
             .disposed(by: disposeBag)
     }
 }
-
-

@@ -50,7 +50,7 @@ extension UIView {
         }
         return self
     }
-    
+
     
     @discardableResult
     func putBelow(_ view: UIView, _ offset: CGFloat) -> Self {
@@ -126,8 +126,8 @@ extension UIView {
     @discardableResult
     func withShadow(color: UIColor = .black,
                     opacity: Float = 1.0,
-                    offset: CGSize = CGSize(width: 0, height: 3),
-                    radius: CGFloat = 10) -> Self {
+                    offset: CGSize = CGSize(width: 0, height: 2),
+                    radius: CGFloat = 4) -> Self {
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = opacity
         layer.shadowOffset = offset
@@ -135,31 +135,10 @@ extension UIView {
         layer.masksToBounds = false
         return self
     }
-    
+
     @discardableResult
     func withBackgroundColor(_ color: UIColor) -> Self {
         self.backgroundColor = color
-        return self
-    }
-    
-    
-    @discardableResult
-    func withBottomBorder(color: UIColor? = .black, width: CGFloat) -> Self {
-        
-        let bottomBorder = CALayer()
-        bottomBorder.name = "bottomBorder"
-        bottomBorder.backgroundColor = color?.cgColor
-        bottomBorder.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
-        layer.addSublayer(bottomBorder)
-        self.layoutIfNeeded()
-        return self
-    }
-    
-    func updateBottomBorder(color: UIColor? = .black, width: CGFloat) -> Self {
-        if let bottomBorder = layer.sublayers?.first(where: { $0.name == "bottomBorder" }) {
-            bottomBorder.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
-            bottomBorder.backgroundColor = color?.cgColor
-        }
         return self
     }
 
@@ -168,7 +147,7 @@ extension UIView {
     func withShadowContainer(color: UIColor = .black, opacity: Float = 0.5, offset: CGSize = CGSize(width: 0, height: 2), radius: CGFloat = 4) -> UIView {
         
         guard let superview = self.superview else { return self }
-        
+
         let shadowContainerView = UIView()
         shadowContainerView.backgroundColor = .clear
         shadowContainerView.layer.shadowColor = color.cgColor
@@ -202,7 +181,7 @@ extension UIView {
     
     @discardableResult
     func withBlurEffect() -> Self {
-        let blurEffect = UIBlurEffect(style: .extraLight)
+        let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -221,7 +200,7 @@ extension UIView {
         isUserInteractionEnabled = false
         return self
     }
-    
+
     //MARK: Others
     func addSubviews(_ subviews: UIView...) {
         subviews.forEach { addSubview($0) }
@@ -245,7 +224,7 @@ extension UIView {
     @discardableResult
     func yConstraints() -> Constraint {
         var constraint: Constraint?
-        
+
         if let superview = self.superview {
             snp.makeConstraints {
                 constraint = $0.centerY.equalTo(superview).constraint
@@ -258,8 +237,8 @@ extension UIView {
         
         return constraint!
     }
-    
-    
+
+
 }
 
 // MARK: - UIButton Extensions
@@ -292,19 +271,6 @@ extension UIButton {
         return self
     }
     
-    
-    @discardableResult
-    func withFont(size: CGFloat, fontName: String? = nil) -> Self {
-        if let fontName = fontName, let customFont = UIFont(name: fontName, size: size) {
-            titleLabel?.font = customFont
-        } else {
-            titleLabel?.font = UIFont.systemFont(ofSize: size)
-        }
-        setNeedsLayout()
-        return self
-    }
-    
-    
     @discardableResult
     func withTitle(_ title: String) -> Self {
         setTitle(title, for: .normal)
@@ -324,21 +290,11 @@ extension UIButton {
     }
     
     @discardableResult
-    func withSFImage(systemName: String, pointSize: CGFloat? = nil, weight: UIImage.SymbolWeight = .regular, tintColor: UIColor? = nil, for state: UIControl.State = .normal) -> Self {
-        
+    func withSFImage(systemName: String, pointSize: CGFloat? = nil, weight: UIImage.SymbolWeight = .regular, for state: UIControl.State = .normal) -> Self {
         var image: UIImage?
-        
-        if let pointSize = pointSize {
-            let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: weight)
-            image = UIImage(systemName: systemName, withConfiguration: configuration)
-        } else {
-            image = UIImage(systemName: systemName)
-        }
-        
-        if let tintColor = tintColor {
-            self.tintColor = tintColor
-        }
-        
+        guard let pointSize = pointSize else { image = UIImage(systemName: systemName);return self}
+        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: weight)
+        image = UIImage(systemName: systemName, withConfiguration: configuration)
         setImage(image, for: state)
         return self
     }
@@ -353,44 +309,24 @@ extension UITextField {
         return self
     }
     
-    
-    @discardableResult
-        func withText(_ text: String) -> UITextField {
-            self.text = text
-            return self
-        }
-    
-
     @discardableResult
     func withSecured() -> Self {
         isSecureTextEntry = true
         return self
     }
     
-    
     @discardableResult
-    func withTFBottomBorder(color: UIColor, width: CGFloat) -> Self {
-        self.borderStyle = .none
-        let border = CALayer()
-        border.backgroundColor = color.cgColor
-        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
-        self.layer.addSublayer(border)
-        return self
-    }
-
+      func withInsets(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0) -> Self {
+          let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: left, height: self.frame.height))
+          self.leftView = paddingView
+          self.leftViewMode = .always
+          
+          let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: right, height: self.frame.height))
+          self.rightView = rightPaddingView
+          self.rightViewMode = .always
     
-    @discardableResult
-    func withInsets(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0) -> Self {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: left, height: self.frame.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
-        
-        let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: right, height: self.frame.height))
-        self.rightView = rightPaddingView
-        self.rightViewMode = .always
-        
-        return self
-    }
+          return self
+      }
 }
 
 // MARK: - UILabel Extensions
@@ -431,8 +367,8 @@ extension UIStackView {
     
     @discardableResult
     func withArrangedSubviews(_ views: UIView...) -> Self {        for view in views {
-        addArrangedSubview(view)
-    }
+            addArrangedSubview(view)
+        }
         return self
     }
     

@@ -32,7 +32,6 @@ class CommentDetailView: UIView {
     let commentTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CommentDetailTableViewCell.self, forCellReuseIdentifier: CommentDetailTableViewCell.identifier)
-        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -113,7 +112,7 @@ private extension CommentDetailView {
         self.addSubview(commentTableView)
         
         commentTableView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.top.equalTo(navigationBar.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(100)
         }
