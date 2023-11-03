@@ -17,4 +17,15 @@ extension Date {
         
         return convertToDate
     }
+    
+    func converToDateInFilterLabel(fromDate: Date, toDate: Date) -> String {
+        let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
+        
+        switch result {
+        case 86400...:
+            return "\(Int(result / 86400))일 이내"
+        default:
+            return "알 수 없는 오류"
+        }
+    }
 }
