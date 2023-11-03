@@ -20,7 +20,7 @@ class LostListView: UIView {
         let lb = UILabel()
         lb.textColor = .darkGray
         lb.font = UIFont.systemFont(ofSize: 13)
-        lb.text = "거리 - 반경 5km 내 / 시간 - 1일 이내 / 동물 - 전체"
+        lb.text = "전체"
         return lb
     }()
     
@@ -58,22 +58,21 @@ class LostListView: UIView {
     @objc func tapFilterBtutton(){
         delegate?.tapFilterButton()
     }
-    
-    
-    func setFilterLabel(within: Double, fromDate: Date, toDate: Date) {
-        let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
-        
-        var resultDate = ""
-        
-        switch result {
-        case 86400...:
-            resultDate = "\(Int(result / 86400))일 이내"
-        default:
-            resultDate = "알 수 없는 오류"
-        }
-        
-        filterLabel.text = "거리 - 반경 \(Int(within))km 내 / 시간 - \(resultDate)"
-    }
+
+//    func setFilterLabel(within: Double, fromDate: Date, toDate: Date) {
+//        let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
+//        
+//        var resultDate = ""
+//        
+//        switch result {
+//        case 86400...:
+//            resultDate = "\(Int(result / 86400))일 이내"
+//        default:
+//            resultDate = "알 수 없는 오류"
+//        }
+//        
+//        filterLabel.text = "거리 - 반경 \(Int(within))km 내 / 시간 - \(resultDate)"
+//    }
 }
 
 extension LostListView {

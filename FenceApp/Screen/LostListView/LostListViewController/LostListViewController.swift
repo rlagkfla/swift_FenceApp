@@ -60,7 +60,6 @@ class LostListViewController: UIViewController {
         
         getLostList()
         
-        
         //        loadNextPage()
         
         configureTableView()
@@ -72,7 +71,8 @@ class LostListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        lostListView.lostTableView.reloadData()
+        getLostList()
+        
     }
     
     
