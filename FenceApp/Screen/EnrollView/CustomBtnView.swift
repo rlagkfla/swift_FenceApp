@@ -22,6 +22,7 @@ class CustomBtnView: UIView {
     private let cameraImgView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "camera.fill")
+        imageView.tintColor = UIColor(hexCode: "55BCEF")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

@@ -59,7 +59,6 @@ class LostListViewController: UIViewController {
         
         getLostList()
         
-        
         //        loadNextPage()
         
         configureTableView()
@@ -71,7 +70,8 @@ class LostListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        lostListView.lostTableView.reloadData()
+        getLostList()
+        
     }
     
     
@@ -123,6 +123,12 @@ class LostListViewController: UIViewController {
                 print(error)
             }
         }
+    }
+    
+    func setFilterLabel() {
+        let convertDate = DateService().converToDateInFilterLabel(fromDate: filterModel.startDate, toDate: filterModel.endDate)
+        
+        lostListView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내 / 동물 - 전체"
     }
     
 //    private func getCurrentUser() {
@@ -181,17 +187,7 @@ extension LostListViewController {
         
         // 우측 버튼
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(tapRightBarBtn))
-        
-        // appearance.backgroundColor = .black // bartintcolor가 15버전부터 appearance로 설정하게끔 바뀜
-        //        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.orange]
-        //        appearance.titleTextAttributes = [.foregroundColor: UIColor.orange]
-        //        appearance.shadowColor = .clear
-        //        self.navigationController?.navigationBar.prefersLargeTitles = true
-        //        self.navigationController?.navigationBar.tintColor = .orange
-        //        self.navigationController?.navigationBar.standardAppearance = appearance
-        //        self.navigationController?.navigationBar.compactAppearance = appearance
-        //        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        //        self.navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
     
 }
@@ -241,6 +237,7 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
         self.filterModel = filterModel
         
         getLostListWithFilter()
+        setFilterLabel()
     }
 }
 

@@ -245,7 +245,6 @@ class EnrollViewController: UIViewController {
             do {
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
 //                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
-//                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: currentUserResponseDTO.identifier, userProfileImageURL: currentUserResponseDTO.profileImageURL, userNickName: currentUserResponseDTO.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind)
                 
                 guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
                 
@@ -289,10 +288,12 @@ extension EnrollViewController {
         appearance.configureWithOpaqueBackground()
         // 우측 버튼
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(tapRightBarBtn))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
         // NavigationItem back 버튼 숨기기
         navigationItem.hidesBackButton = true
         // 좌측 버튼
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(tapLeftBarBtn))
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
 }
 
