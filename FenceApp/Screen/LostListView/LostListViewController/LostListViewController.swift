@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+
 class LostListViewController: UIViewController {
     
     //MARK: - Services
@@ -33,8 +34,6 @@ class LostListViewController: UIViewController {
     
     let lostCellTapped: ( (Lost) -> Void )
     
-    
-
     let itemsPerPage = 5 // 페이지당 10개의 아이템을 표시
     
     init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, lostCellTapped: @escaping (Lost) -> Void) {
@@ -91,7 +90,7 @@ class LostListViewController: UIViewController {
         lostListView.lostTableView.delegate = self
     }
     
-    private func getLostList(){
+    func getLostList(){
         Task {
             do{
                 let lostResponseDTOs = try await fireBaseLostService.fetchLosts()

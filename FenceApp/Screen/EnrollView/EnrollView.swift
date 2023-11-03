@@ -13,7 +13,7 @@ class EnrollView: UIView {
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
-        scroll.backgroundColor = .white
+        scroll.backgroundColor = .clear
         scroll.isDirectionalLockEnabled = true
         scroll.alwaysBounceHorizontal = false
         scroll.alwaysBounceVertical = true
