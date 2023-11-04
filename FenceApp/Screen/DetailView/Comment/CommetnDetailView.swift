@@ -45,7 +45,7 @@ class CommentDetailView: UIView {
     let myProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
+		083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */; };
 		0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */; };
 		0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
@@ -22,7 +23,6 @@
 		08DB05E62AEE62B600A0C589 /* cat.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08DB05E52AEE62B600A0C589 /* cat.riv */; };
 		08DB05E82AEE62BE00A0C589 /* profile.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08DB05E72AEE62BE00A0C589 /* profile.riv */; };
 		08DB05EE2AEE875900A0C589 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 08DB05ED2AEE875900A0C589 /* FirebaseAuth */; };
-		08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */; };
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
 		08F96BF12AEF735500EE276D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08F96BF02AEF735400EE276D /* GoogleService-Info.plist */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
@@ -117,6 +117,7 @@
 
 /* Begin PBXFileReference section */
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
+		0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHandler.swift; sourceTree = "<group>"; };
 		0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
 		0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Regular.otf"; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -126,7 +127,6 @@
 		08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		08DB05E52AEE62B600A0C589 /* cat.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat.riv; sourceTree = "<group>"; };
 		08DB05E72AEE62BE00A0C589 /* profile.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = profile.riv; sourceTree = "<group>"; };
-		08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoService.swift; sourceTree = "<group>"; };
 		08E537BC2AE276EF001F08B2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		08F96BF02AEF735400EE276D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtentsion.swift; sourceTree = "<group>"; };
@@ -331,12 +331,12 @@
 				D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */,
 				08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */,
 				08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */,
-				08E47AFE2AE11D3F005EDC8C /* UserInfoService.swift */,
 				08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */,
 				08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */,
 				08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */,
 				08DB05D32AEE61E100A0C589 /* ValidationHandler.swift */,
 				08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */,
+				0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -712,7 +712,6 @@
 				C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */,
 				08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */,
 				D6F1CF4A2AF3882D00974B1F /* Comment.swift in Sources */,
-				08E47AFF2AE11D3F005EDC8C /* UserInfoService.swift in Sources */,
 				D6F1CF3A2AF2511800974B1F /* CurrentUserInfo.swift in Sources */,
 				C3FAAE0E2AF38D5B00089684 /* SectionHeaderView.swift in Sources */,
 				D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */,
@@ -755,6 +754,7 @@
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
+				083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */,
 				D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
@@ -914,7 +914,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -925,7 +925,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -951,7 +951,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -962,7 +962,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
