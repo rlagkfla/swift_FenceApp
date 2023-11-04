@@ -61,13 +61,26 @@ class MyInfoViewController: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.color2, for: .normal)
+        button.setTitleColor(.white, for: .normal) 
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
         button.layer.borderColor = UIColor.color2.cgColor
+        button.backgroundColor = UIColor.color1
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+        
+        if let titleLabel = button.titleLabel {
+            let attributes: [NSAttributedString.Key: Any] = [
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: titleLabel.font.pointSize)
+            ]
+            let attributedString = NSAttributedString(string: "프로필 편집", attributes: attributes)
+            button.setAttributedTitle(attributedString, for: .normal)
+        }
         return button
     }()
+    
+    
+    
     
     private let borderLine: UILabel = {
         let lb = UILabel()
@@ -202,7 +215,7 @@ class MyInfoViewController: UIViewController {
         nickname.text = user.nickname
     }
     func setImage() {
-       
+        
         guard let url = URL(string: user.profileImageURL ) else {
             return
         }
@@ -213,20 +226,20 @@ class MyInfoViewController: UIViewController {
         
         if let titleTextAttributes = navigationController?.navigationBar.titleTextAttributes {
             var attributes = titleTextAttributes
-            attributes[NSAttributedString.Key.foregroundColor] = UIColor.color2
+            attributes[NSAttributedString.Key.foregroundColor] = UIColor.black
             navigationController?.navigationBar.titleTextAttributes = attributes
         } else {
-            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.color2]
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             navigationController?.navigationBar.titleTextAttributes = attributes
         }
         
-        let logoutImage = UIImage(systemName: "escape")
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        let logoutImage = UIImage(systemName: "escape")?.withConfiguration(largeConfig)
         let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
-        logoutButton.tintColor = UIColor.color2
+        logoutButton.tintColor = UIColor.color1
         navigationItem.rightBarButtonItem = logoutButton
     }
 }
-
 //MARK: - EditViewController Delegate
 
 extension MyInfoViewController: EditViewControllerDelegate {
@@ -260,12 +273,10 @@ extension MyInfoViewController: UICollectionViewDataSource {
         
         if kind == UICollectionView.elementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
-            
-            // 섹션 제목을 설정
+           
             headerView.titleLabel.text = sectionTitles[indexPath.section]
             return headerView
         } else {
-            // 다른 경우 (footer, 등)에 대한 처리
             return UICollectionReusableView()
         }
     }
