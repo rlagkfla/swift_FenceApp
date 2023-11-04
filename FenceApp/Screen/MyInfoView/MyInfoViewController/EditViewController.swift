@@ -90,7 +90,17 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func setupNavigationBar() {
         self.navigationItem.title = "프로필 편집"
         let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        cancelButton.tintColor = .color2
+        if let cancelButtonAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: UIColor.color2] as? [NSAttributedString.Key: Any] {
+            cancelButton.setTitleTextAttributes(cancelButtonAttributes, for: .normal)
+        }
+
         let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(doneButtonTapped))
+        doneButton.tintColor = .color2
+        if let doneButtonAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: UIColor.color2] as? [NSAttributedString.Key: Any] {
+            doneButton.setTitleTextAttributes(doneButtonAttributes, for: .normal)
+        }
+
         self.navigationItem.leftBarButtonItem = cancelButton
         self.navigationItem.rightBarButtonItem = doneButton
     }

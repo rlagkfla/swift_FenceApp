@@ -56,14 +56,31 @@ class MyInfoViewController: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.white, for: .normal) 
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
-        button.layer.borderColor = UIColor.blue.cgColor
+        button.layer.borderColor = UIColor.color2.cgColor
+        button.backgroundColor = UIColor.color1
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+        
+        if let titleLabel = button.titleLabel {
+            let attributes: [NSAttributedString.Key: Any] = [
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: titleLabel.font.pointSize)
+            ]
+            let attributedString = NSAttributedString(string: "프로필 편집", attributes: attributes)
+            button.setAttributedTitle(attributedString, for: .normal)
+        }
         return button
     }()
     
+    private let borderLine: UILabel = {
+        let lb = UILabel()
+        lb.layer.borderWidth = 1
+        lb.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        return lb
+    }()
+
     private lazy var lostCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -172,18 +189,39 @@ class MyInfoViewController: UIViewController {
             }
         }
     }
-    
-    
+
+    func setNickName() {
+        nickname.text = user.nickname
+    }
+    func setImage() {
+        
+        guard let url = URL(string: user.profileImageURL ) else {
+            return
+        }
+        profileImageView.kf.setImage(with: url)
+    }
     private func configureNavigationBar() {
         navigationItem.title = "마이페이지"
-        let logoutButton = UIBarButtonItem(title: "로그아웃", style: .plain, target: self, action: #selector(logoutTapped))
+        
+        if let titleTextAttributes = navigationController?.navigationBar.titleTextAttributes {
+            var attributes = titleTextAttributes
+            attributes[NSAttributedString.Key.foregroundColor] = UIColor.black
+            navigationController?.navigationBar.titleTextAttributes = attributes
+        } else {
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            navigationController?.navigationBar.titleTextAttributes = attributes
+        }
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        let logoutImage = UIImage(systemName: "escape")?.withConfiguration(largeConfig)
+        let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
+        logoutButton.tintColor = UIColor.color1
         navigationItem.rightBarButtonItem = logoutButton
     }
     
     
     
 }
-
 //MARK: - EditViewController Delegate
 
 extension MyInfoViewController: EditViewControllerDelegate {
@@ -208,7 +246,19 @@ extension MyInfoViewController: UITextFieldDelegate {
 extension MyInfoViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return sectionTitles.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+           
+            headerView.titleLabel.text = sectionTitles[indexPath.section]
+            return headerView
+        } else {
+            return UICollectionReusableView()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -316,11 +366,12 @@ extension MyInfoViewController {
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
-        editProfileButton.topAnchor.constraint(equalTo: memo.bottomAnchor, constant: 45).isActive = true
         editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        editProfileButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        editProfileButton.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 80).isActive = true
+        editProfileButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
+
     
     private func configureLostCollectionView(){
         view.addSubview(lostCollectionView)
