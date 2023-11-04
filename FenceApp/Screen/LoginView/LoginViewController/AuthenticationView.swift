@@ -16,10 +16,10 @@ class AuthenticationView: UIView {
     private lazy var titleLabel = UILabel()
         .withText("번호인증")
         .withFont(30, fontName: "Binggrae-Bold")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
-
+        .withTextColor(ColorHandler.shared.titleColor)
+    
     private lazy var sendAuthButton = UIButton(type: .custom)
-        .withSFImage(systemName: "paperplane.circle", pointSize: 30, tintColor: (UIColor(hexCode: "6C5F5B")))
+        .withSFImage(systemName: "paperplane.circle", pointSize: 30)
         .withTarget(self, action: #selector(sendAuthButtonTapped))
     
     private lazy var phoneNumberTextField = UITextField()
@@ -32,49 +32,37 @@ class AuthenticationView: UIView {
         .withInsets(left: 5, right: 20)
         .withSecured()
         .withBottomBorder(width: 3)
-
+    
     
     private lazy var signupButton = UIButton()
         .withTitle("인증완료")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
-        .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
-        .withBlurEffect()
+        .withTextColor(ColorHandler.shared.buttonTextColor)
         .withCornerRadius(15)
         .withTarget(self, action: #selector(signupButtonTapped))
     
     private lazy var cancelButton = UIButton()
         .withTitle("뒤로가기")
-        .withTextColor(UIColor(hexCode: "6C5F5B"))
-        .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
-        .withBlurEffect()
+        .withTextColor(ColorHandler.shared.textColor)
         .withCornerRadius(15)
         .withTarget(self, action: #selector(cancelButtonTapped))
     
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        phoneNumberTextField
-            .updateBottomBorder(color: UIColor(hexCode: "6C5F5B"), width: 3)
-            .setupForValidation(type: .phoneNumber)
-
-        authNumberTextField
-            .updateBottomBorder(color: UIColor(hexCode: "6C5F5B"), width: 3)
-            .setupForValidation(type: .authNumber)
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        phoneNumberTextField.setupForValidation(type: .phoneNumber)
+        authNumberTextField.setupForValidation(type: .authNumber)
+        validateSignupButton()
     }
-
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
         setupUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
         setupUI()
-        
-        
     }
     
     deinit {
@@ -82,18 +70,43 @@ class AuthenticationView: UIView {
     }
 }
 
+
+//MARK:  - Validate Signup Button
+extension AuthenticationView {
+    
+    func validateSignupButton() {
+        Observable
+            .combineLatest(
+                phoneNumberTextField.validationHandler!.isValidRelay,
+                authNumberTextField.validationHandler!.isValidRelay
+            ) { isPhoneNumberValid, isAuthNUmberValid in
+                return isPhoneNumberValid && isAuthNUmberValid
+            }
+            .subscribe(onNext: { [weak self] allValid in
+                DispatchQueue.main.async {
+                    let backgroundColor = allValid ? ColorHandler.shared.buttonActivatedColor : ColorHandler.shared.buttonDeactivateColor
+                    self?.signupButton.backgroundColor = backgroundColor
+                    self?.sendAuthButton.tintColor = backgroundColor
+                    self?.signupButton.isEnabled = allValid
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+}
+
 //MARK: - configure UI
 
 extension AuthenticationView {
     
     func setupUI() {
-        self.backgroundColor = UIColor(hexCode: "CBEDC4")
+        self.backgroundColor = .white
         
         addSubviews(phoneNumberTextField,titleLabel,authNumberTextField,signupButton,sendAuthButton,cancelButton)
         phoneNumberTextField.rightView = sendAuthButton
         phoneNumberTextField.rightViewMode = .always
         configureConstraints()
-
+        
     }
     
     func configureConstraints() {
@@ -101,7 +114,6 @@ extension AuthenticationView {
         titleLabel
             .putAbove(phoneNumberTextField, 40)
             .positionCenterX()
-
         
         phoneNumberTextField
             .withSize(widthRatioOfSuperview: 0.7)
@@ -133,9 +145,15 @@ extension AuthenticationView {
 extension AuthenticationView {
     
     @objc func sendAuthButtonTapped() {
+        var phoneNumber = self.phoneNumberTextField.text ?? ""
+        if !phoneNumber.starts(with: "+82") && phoneNumber.count == 10 || phoneNumber.count == 11 {
+            if phoneNumber.starts(with: "0") {
+                phoneNumber.remove(at: phoneNumber.startIndex)
+            }
+            phoneNumber = "+82" + phoneNumber
+        }
+
         
-        
-        let phoneNumber = self.phoneNumberTextField.text ?? ""
         
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
             guard let self = self else { return }
