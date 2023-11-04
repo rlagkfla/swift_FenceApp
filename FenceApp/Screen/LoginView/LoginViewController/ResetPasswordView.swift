@@ -10,8 +10,6 @@ class ResetPasswordView: UIView {
     
     let resetEmailSent = PublishSubject<Void>()
     let deinitResetPasswordView = PublishSubject<Void>()
-
-    let alertView = AlertHandler()
     
     private lazy var titleLabel = UILabel()
         .withText("비밀번호 변경")
@@ -27,7 +25,6 @@ class ResetPasswordView: UIView {
         .withTextColor(UIColor(hexCode: "6C5F5B"))
         .withTarget(self, action: #selector(resetPasswordButtonTapped))
         .withCornerRadius(15)
-        .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
         .withBlurEffect()
     
     private lazy var cancelButton = UIButton()
@@ -35,7 +32,6 @@ class ResetPasswordView: UIView {
         .withTextColor(UIColor(hexCode: "6C5F5B"))
         .withTarget(self, action: #selector(cancelButtonTapped))
         .withCornerRadius(15)
-        .withBorder(color: UIColor(hexCode: "6C5F5B"), width: 3.0)
         .withBlurEffect()
     
     deinit {
@@ -66,7 +62,7 @@ class ResetPasswordView: UIView {
 extension ResetPasswordView {
     func setupUI() {
         
-        self.backgroundColor = UIColor(hexCode: "CBEDC4")
+        self.backgroundColor = .white
         addSubviews(emailTextField, resetPasswordButton,cancelButton,titleLabel)
         configureConstraints()
     }
@@ -74,11 +70,9 @@ extension ResetPasswordView {
     
     func configureConstraints() {
         
-        
         titleLabel
             .positionCenterX()
             .putAbove(emailTextField, 40)
-
 
         emailTextField
             .positionCenterX()
