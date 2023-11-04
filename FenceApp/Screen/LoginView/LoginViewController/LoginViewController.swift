@@ -345,6 +345,7 @@ extension LoginViewController {
             .subscribe(onNext: { [weak self] in
                 self?.shadowContainer.removeFromSuperview()
                 self?.signUpView?.removeFromSuperview()
+                self?.enterMainView()
             })
             .disposed(by: disposeBag)
     }
