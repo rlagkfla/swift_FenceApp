@@ -37,4 +37,5 @@ class SectionHeaderView: UICollectionReusableView {
             $0.leading.equalToSuperview().offset(10)
         }
     }
+    
 }
