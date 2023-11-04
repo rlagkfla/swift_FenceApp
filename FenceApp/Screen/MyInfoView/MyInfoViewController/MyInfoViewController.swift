@@ -124,16 +124,23 @@ class MyInfoViewController: UIViewController {
     //MARK: - Actions
     
     @objc func logoutTapped() {
+        
         let alertController = UIAlertController(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { (action) in
-            
-            self.logOut?()
-            print("로그아웃 확인됨")
-        }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] action in
+            
+            do {
+                try self?.firebaseAuthService.signOutUser()
+                self?.logOut?()
+                
+            } catch {
+                self?.logOut?()
+            }
+        }
+        
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     

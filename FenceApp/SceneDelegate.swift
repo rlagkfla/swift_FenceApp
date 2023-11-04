@@ -51,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
         
-        if isUserLoggedIn {
+        if isUserLoggedIn && locationManager.fetchStatus() == true {
             
             let userIdentifier = try firebaseAuthService.getCurrentUser().uid
             

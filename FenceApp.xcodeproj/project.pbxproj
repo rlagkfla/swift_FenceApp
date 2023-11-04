@@ -54,6 +54,7 @@
 		D65150AB2ADD0FFB002FDD04 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AA2ADD0FFB002FDD04 /* FirebaseAppCheck */; };
 		D65150AE2ADD103C002FDD04 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AD2ADD103C002FDD04 /* RiveRuntime */; };
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
+		D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */; };
 		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
 		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
@@ -154,6 +155,7 @@
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D65150BC2ADD123B002FDD04 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHandler.swift; sourceTree = "<group>"; };
 		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 				D62D62972AF4D8100050FE12 /* DateService.swift */,
+				D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
+				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
