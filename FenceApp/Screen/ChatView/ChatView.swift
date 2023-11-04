@@ -43,7 +43,7 @@ class ChatView: UIView {
     let filterLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
-        label.text = "거리 - 반경 20km 내 / 시간 - 1일 이내 / 동물 - 전체"
+        label.text = "전체 리스트"
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
