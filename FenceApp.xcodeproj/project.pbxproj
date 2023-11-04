@@ -39,6 +39,7 @@
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
 		D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */; };
+		D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B23222AF6213000EFB13A /* CustomColor.swift */; };
 		D63E41332AF3901B0086C002 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63E41322AF3901B0086C002 /* Date+Ext.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
@@ -141,6 +142,7 @@
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		D63B23222AF6213000EFB13A /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		D63E41322AF3901B0086C002 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 			children = (
 				D6E10E712ADFD3740098F05D /* Constant.swift */,
 				D6E10E952AE24ABD0098F05D /* FB.swift */,
+				D63B23222AF6213000EFB13A /* CustomColor.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
+				D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */,
 				08DB05D62AEE620000A0C589 /* KeyboardHandler.swift in Sources */,
 				D6E10EAF2AE388AD0098F05D /* LostResponseDTOMapper.swift in Sources */,
 				D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */,
