@@ -38,9 +38,7 @@ class CommentDetailView: UIView {
     
     let myCommentTextView: UIView = {
         let view = UIView()
-//        view.backgroundColor = UIColor(hexCode: "5DDFDE")
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.black.cgColor
+        view.backgroundColor = .white
         return view
     }()
     
@@ -62,6 +60,8 @@ class CommentDetailView: UIView {
         textView.layer.cornerRadius = 20
         textView.textContainerInset.left = 5
         textView.textContainerInset.right = 45
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.black.cgColor
         textView.isScrollEnabled = false
         return textView
     }()
@@ -83,6 +83,7 @@ class CommentDetailView: UIView {
     
     override func layoutSubviews() {
         myProfileImageView.layer.cornerRadius = 17.5
+        myCommentTextView.layer.addBorder(edge: .top, color: .black, thickness: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -127,7 +128,7 @@ private extension CommentDetailView {
         self.addSubview(myCommentTextView)
         
         myCommentTextView.snp.makeConstraints {
-            $0.height.greaterThanOrEqualTo(60)
+            $0.height.greaterThanOrEqualTo(50)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.lessThanOrEqualToSuperview()
         }
@@ -142,7 +143,7 @@ private extension CommentDetailView {
         writeCommentTextView.snp.makeConstraints {
             $0.top.greaterThanOrEqualToSuperview().inset(10)
             $0.leading.trailing.equalToSuperview().inset(15)
-            $0.bottom.equalToSuperview().inset(50)
+            $0.bottom.equalToSuperview().inset(30)
         }
     }
     
@@ -154,4 +155,32 @@ private extension CommentDetailView {
             $0.bottom.equalTo(writeCommentTextView.snp.bottom).inset(3)
         }
     }
+}
+
+extension CALayer {
+
+  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+
+    let border = CALayer()
+
+    switch edge {
+    case UIRectEdge.top:
+        border.frame = CGRect(x: 0, y: 0, width: frame.width, height: thickness)
+
+    case UIRectEdge.bottom:
+        border.frame = CGRect(x:0, y: frame.height - thickness, width: frame.width, height:thickness)
+
+    case UIRectEdge.left:
+        border.frame = CGRect(x:0, y:0, width: thickness, height: frame.height)
+
+    case UIRectEdge.right:
+        border.frame = CGRect(x: frame.width - thickness, y: 0, width: thickness, height: frame.height)
+
+    default: do {}
+    }
+
+    border.backgroundColor = color.cgColor
+
+    addSublayer(border)
+ }
 }
