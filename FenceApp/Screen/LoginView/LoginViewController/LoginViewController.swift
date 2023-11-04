@@ -222,22 +222,6 @@ private extension LoginViewController {
         
         handleResetPasswordView()
     }
-    
-//    func darkenBackgroud() {
-//        UIView.animate(withDuration: 0.3) { [weak self] in
-//            guard let self = self else { return }
-//            self.view.backgroundColor = UIColor.white.withAlphaComponent(0.6)
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-//    
-//    func resetBackground() {
-//        UIView.animate(withDuration: 0.3) { [weak self] in
-//            guard let self = self else { return }
-//            self.view.backgroundColor = .white
-//            self.view.layoutIfNeeded()
-//        }
-//    }
 }
 
 //MARK: - Present/Deinit AuthView
@@ -316,6 +300,7 @@ extension LoginViewController {
     func handlesSignupView() {
         successAuth()
         cancelSignupViewSubject()
+        bindSignUpAuthSuccess()
     }
     
     func successAuth() {
@@ -360,6 +345,7 @@ extension LoginViewController {
             .subscribe(onNext: { [weak self] in
                 self?.shadowContainer.removeFromSuperview()
                 self?.signUpView?.removeFromSuperview()
+                self?.enterMainView()
             })
             .disposed(by: disposeBag)
     }
