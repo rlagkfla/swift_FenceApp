@@ -65,6 +65,7 @@ private extension DetailViewController {
         view.backgroundColor = .white
         
         self.navigationItem.title = "상세 페이지"
+        self.navigationItem.backBarButtonItem?.tintColor = .accent
         self.navigationController?.navigationBar.backgroundColor = .white
         
         configureCollectionView()

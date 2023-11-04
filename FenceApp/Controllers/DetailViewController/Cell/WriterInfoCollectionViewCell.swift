@@ -15,8 +15,8 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Properties
     private let writerProfileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "코주부 원숭이")
-        imageView.contentMode = .scaleToFill
+        imageView.image = UIImage(systemName: "photo")
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
@@ -25,7 +25,6 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     
     private let writerNickNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "코주부 원숭이"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .left
         return label
@@ -34,7 +33,7 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     private let postWriteTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .systemGray
+        label.textColor = .systemGray2
         label.textAlignment = .right
         return label
     }()
