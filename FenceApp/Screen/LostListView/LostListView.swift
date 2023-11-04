@@ -20,7 +20,7 @@ class LostListView: UIView {
         let lb = UILabel()
         lb.textColor = .darkGray
         lb.font = UIFont.systemFont(ofSize: 13)
-        lb.text = "거리 - 반경 1km 내 / 시간 - 1일 이내 / 동물 - 전체"
+        lb.text = "전체 리스트"
         return lb
     }()
     
