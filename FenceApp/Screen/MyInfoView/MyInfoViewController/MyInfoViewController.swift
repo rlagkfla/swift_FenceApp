@@ -387,12 +387,12 @@ extension MyInfoViewController {
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         editProfileButton.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 80).isActive = true
-        editProfileButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        //        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         editProfileButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
+
     
     private func configureLine(){
         view.addSubview(borderLine)
