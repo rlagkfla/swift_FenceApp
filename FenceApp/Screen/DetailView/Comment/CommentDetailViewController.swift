@@ -158,6 +158,7 @@ extension CommentDetailViewController {
     }
     
     @objc func commentSendButtonTapped() {
+        guard commentDetailView.writeCommentTextView.textColor == .black else { return }
         guard commentDetailView.writeCommentTextView.text != "" else { return }
         
         Task {
