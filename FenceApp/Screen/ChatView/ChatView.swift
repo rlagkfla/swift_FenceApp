@@ -28,12 +28,16 @@ class ChatView: UIView {
         return collectionView
     }()
     
-    lazy var filterButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .normal)
-        button.tintColor = UIColor(hexCode: "5DDFED")
-        button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
-        return button
+    private lazy var filterImageView: UIImageView = {
+        let iv = UIImageView()
+        
+        let image = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration:UIImage.SymbolConfiguration(weight: .medium))?
+            .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors:[.white, .systemGray2]))
+        iv.image = image
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterImageViewTapped)))
+        
+        return iv
     }()
     
     let filterLabel: UILabel = {
@@ -55,7 +59,7 @@ class ChatView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func filterButtonTapped() {
+    @objc func filterImageViewTapped() {
         delegate?.filterButtonTapped()
     }
 }
@@ -88,13 +92,11 @@ private extension ChatView {
     }
     
     func configureFilterButton() {
-        self.addSubview(filterButton)
-        
-        filterButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(10)
-            $0.width.equalTo(43)
-            $0.height.equalTo(42)
-            $0.bottom.equalToSuperview().inset(20)
+        self.addSubview(filterImageView)
+        filterImageView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(30)
+            make.width.height.equalTo(60)
         }
     }
 }
