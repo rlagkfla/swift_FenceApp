@@ -31,11 +31,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-    
+        
         Task {
             
             do {
-            
+                
                 try await checkUserLoggedIn()
                 
             } catch {
@@ -65,7 +65,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             
         } else {
-            
+            try firebaseAuthService.signOutUser()
             window?.rootViewController = makeLoginVC()
         }
     }
@@ -100,38 +100,60 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         }
         
-        mapViewController.annotationViewTapped = { pinable in
+        mapViewController.annotationViewTapped = { [weak self] pinable in
             
-            let modalViewController = CustomModalViewController(pinable: pinable)
+            guard let self else { return }
             
-            modalViewController.transitToDetailVC = { lost in
-                
-                let detailViewController = DetailViewController(lost: lost,
-                                     firebaseCommentService: self.firebaseLostCommentService,
-                                     firebaseUserService: self.firebaseUserService,
-                                     firebaseAuthService: self.firebaseAuthService)
-                modalViewController.dismiss(animated: true)
-                
-                self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
-                
-            }
-            
+            let modalViewController = pinable is Lost ? self.makeLostModalVC(lost: pinable as! Lost) : self.makeFoundModalVC(found: pinable as! Found)
+
             mapViewController.present(modalViewController, animated: true)
         }
         
         return mapViewController
     }
     
-    // [weak self]?????
+    private func makeLostModalVC(lost: Lost) -> LostModalViewController {
+        
+        let lostModalViewController = LostModalViewController(lost: lost)
+        
+        lostModalViewController.transitToDetailVC = { [weak self] lost in
+            
+            guard let self else { return }
+            
+            let detailViewController = DetailViewController(lost: lost,
+                                                            firebaseCommentService: self.firebaseLostCommentService,
+                                                            firebaseUserService: self.firebaseUserService,
+                                                            firebaseAuthService: self.firebaseAuthService)
+            lostModalViewController.dismiss(animated: true)
+            
+            self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
+            
+        }
+        
+        return lostModalViewController
+    }
+    
+    private func makeFoundModalVC(found: Found) -> FoundModalViewController {
+        
+        let foundModalViewController = FoundModalViewController(found: found)
+        return foundModalViewController
+    }
+    
+    
     private func makeLoginVC() -> LoginViewController {
         
-        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService) {
+        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService) { [weak self] in
+            
+            guard let self else { return }
+            
             self.setNavigationControllers()
+            
             self.window?.rootViewController = self.makeTabbarController()
         }
         
         return vc
     }
+    
     
     private func makeDetailVC(lost: Lost) -> DetailViewController {
         let detailViewController = DetailViewController(lost: lost,
@@ -141,14 +163,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return detailViewController
     }
     
-//    private func makeEnrollVC() -> EnrollViewController {
-//
-//    }
-    
     
     private func makeLostViewVC() -> LostListViewController {
-        let lostCellTapped = { lost in
+        let lostCellTapped = { [weak self] lost in
+            
+            guard let self else { return }
+            
             let detailViewController = self.makeDetailVC(lost: lost)
+            
             self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
         }
         
@@ -184,11 +206,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+   
+    
     
     private func makeMyInfoViewController() -> MyInfoViewController {
         let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService)
-        vc.logOut = {
-            self.window?.rootViewController = self.makeLoginVC()
+        
+        vc.logOut = { [weak self] in
+            self?.window?.rootViewController = self?.makeLoginVC()
         }
         return vc
     }
@@ -199,64 +224,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 
-
-//Task {
-//    do {
-//                        var lostWithDocument: LostWithDocument?
-//                        var lostResponseArray: [LostResponseDTO] = []
-//
-//                        lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3)
-//
-//                        lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
-//
-//
-//
-//                        lostResponseArray.forEach { lostResponseDTO in
-//                            print(lostResponseDTO.lostIdentifier, "(((((")
-//                        }
-//                        lostWithDocument = try await firebaseLostService.fetchLostsWithPagination(int: 3, lastDocument: lostWithDocument!.lastDocument)
-//
-//                        lostResponseArray.append(contentsOf: lostWithDocument!.lostResponseDTOs)
-//
-//                        lostResponseArray.forEach { lostResponseDTO in
-//                            print(lostResponseDTO.lostIdentifier, "(((((")
-//                        }
-//                        firebaseUserService.listenToUpdateOn(userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2") { result in
-//                            switch result {
-//                            case .failure(let error):
-//                                print(error)
-//                            case .success(let userResponseDTO):
-//                                print(userResponseDTO.email, "!!!!!!!")
-//
-//
-//                            }
-//                        }
-//                        try await firebaseAuthService.signInUser(email: "aaa@gmail.com", password: "123456")
-//                        let a = firebaseAuthService.checkIfUserLoggedIn()
-//                        print(a)
-//
-//                var foundWithDocument: FoundWithDocument?
-//                var foundResponseArray: [FoundResponseDTO] = []
-//
-//                foundWithDocument = try await firebaseFoundService.fetchFoundsWithPagination(int: 3)
-//
-//                foundResponseArray.append(contentsOf: foundWithDocument!.foundResponseDTOs)
-//
-//                foundResponseArray.forEach { foundResponseDTO in
-//                    print(foundResponseDTO.foundIdentifier, "((((((")
-//                }
-//
-//                foundWithDocument = try await firebaseFoundService.fetchFoundsWithPagination(int: 3, lastDocument: foundWithDocument!.lastDocument)
-//
-//                foundResponseArray.append(contentsOf: foundWithDocument!.foundResponseDTOs)
-//
-//                foundResponseArray.forEach { foundResponseDTO in
-//                    print(foundResponseDTO.foundIdentifier, "(((((")
-//                }
-//
-//
-//
-//    } catch {
-//        print(error, "@@@@@@@@")
-//    }
-//}

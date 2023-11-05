@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class CustomModalViewController: UIViewController {
+class LostModalViewController: UIViewController {
     
-    let pinable: Pinable
+    let lost: Lost
     
     var transitToDetailVC: ( (Lost) -> Void )?
     
@@ -73,8 +73,8 @@ class CustomModalViewController: UIViewController {
         return button
     }()
     
-    init(pinable: Pinable) {
-        self.pinable = pinable
+    init(lost: Lost) {
+        self.lost = lost
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -91,17 +91,17 @@ class CustomModalViewController: UIViewController {
     }
     
     private func configureModal() {
-        let url = URL(string: pinable.imageURL)
+        let url = URL(string: lost.imageURL)
         
         petImageView.kf.setImage(with: url)
         
-       if let lost = pinable as? Lost {
-            petNameLabel.text = "반려동물 이름 : \(lost.petName)"
-            
-            
-            let postDateFormatter = "잃어버린 날짜 : " + ("\(lost.lostDate)").getHowLongAgo()
-            postDateLabel.text = postDateFormatter
-        }
+        
+        petNameLabel.text = "반려동물 이름 : \(lost.petName)"
+        
+        
+        let postDateFormatter = "잃어버린 날짜 : " + ("\(lost.lostDate)").getHowLongAgo()
+        postDateLabel.text = postDateFormatter
+        
     }
     
     func configureModal(petImageUrl: String, petName: String, postDate: String, isLost: Bool) {
@@ -117,27 +117,27 @@ class CustomModalViewController: UIViewController {
         self.modalPresentationStyle = .pageSheet
         if let sheet = self.sheetPresentationController {
             sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
+            
         }
     }
 }
 
-extension CustomModalViewController {
+extension LostModalViewController {
     @objc func cancelButtonTapped() {
         dismiss(animated: true)
     }
     
     @objc func presentButtonTapped() {
         print(#function)
-        if let lost = pinable as? Lost {
-            
-            transitToDetailVC?(lost)
-        }
+        
+        
+        transitToDetailVC?(lost)
+        
         
     }
 }
 
-private extension CustomModalViewController {
+private extension LostModalViewController {
     func configureUI() {
         view.backgroundColor = .white
         
