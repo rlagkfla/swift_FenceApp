@@ -38,7 +38,7 @@
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
-		D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */; };
+		D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */; };
 		D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B23222AF6213000EFB13A /* CustomColor.swift */; };
 		D63E41332AF3901B0086C002 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63E41322AF3901B0086C002 /* Date+Ext.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
@@ -55,6 +55,9 @@
 		D65150AE2ADD103C002FDD04 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AD2ADD103C002FDD04 /* RiveRuntime */; };
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
 		D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */; };
+		D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B762AF75FF300F8DCFD /* FoundModalViewController.swift */; };
+		D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B782AF7600A00F8DCFD /* FoundModalMainView.swift */; };
+		D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */; };
 		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
 		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
@@ -142,7 +145,7 @@
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
-		D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostModalViewController.swift; sourceTree = "<group>"; };
 		D63B23222AF6213000EFB13A /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		D63E41322AF3901B0086C002 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
@@ -156,6 +159,9 @@
 		D65150BC2ADD123B002FDD04 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHandler.swift; sourceTree = "<group>"; };
+		D6535B762AF75FF300F8DCFD /* FoundModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundModalViewController.swift; sourceTree = "<group>"; };
+		D6535B782AF7600A00F8DCFD /* FoundModalMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundModalMainView.swift; sourceTree = "<group>"; };
+		D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
 		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
@@ -409,6 +415,15 @@
 			path = CameraView;
 			sourceTree = "<group>";
 		};
+		D6535B752AF75FB900F8DCFD /* FoundModalView */ = {
+			isa = PBXGroup;
+			children = (
+				D6535B762AF75FF300F8DCFD /* FoundModalViewController.swift */,
+				D6535B782AF7600A00F8DCFD /* FoundModalMainView.swift */,
+			);
+			path = FoundModalView;
+			sourceTree = "<group>";
+		};
 		D66470512AE5F6FE0041643E /* ChatViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,7 +504,7 @@
 				D651508B2ADD0C8B002FDD04 /* Service */,
 				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
 				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
-				D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */,
+				D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */,
 				D6D806342AEA52B70002AE3A /* Extension */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
@@ -562,6 +577,7 @@
 			isa = PBXGroup;
 			children = (
 				D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */,
+				D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -569,6 +585,7 @@
 		D6FAD9E02ADD2AA6001EDABC /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				D6535B752AF75FB900F8DCFD /* FoundModalView */,
 				D651508F2ADD0CBE002FDD04 /* DetailView */,
 				D65150972ADD0DDD002FDD04 /* ChatView */,
 				C3F5C3212AE227AE00D6DA16 /* LostListView */,
@@ -698,7 +715,7 @@
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
 				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
 				D64EE7152AF0DAA100A33AEF /* UNUserNotification+Ext.swift in Sources */,
-				D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */,
+				D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
 				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
@@ -706,8 +723,10 @@
 				D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
+				D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */,
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
+				D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
 				D63E41332AF3901B0086C002 /* Date+Ext.swift in Sources */,
@@ -774,6 +793,7 @@
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
 				08DB05D42AEE61E100A0C589 /* ValidationHandler.swift in Sources */,
 				D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */,
+				D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */,
 				C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */,
 				08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */,
 			);
