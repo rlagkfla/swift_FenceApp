@@ -22,8 +22,9 @@ final class LoginViewController: UIViewController {
     let firebaseUserService: FirebaseUserService
     
     let authPassed: () -> Void
-    var isWaitingForLocationPermission = false
-
+    
+    let locationManager = LocationManager()
+    
     
     private let authView = AuthenticationView()
     private var signUpView: SignUpView?
@@ -171,12 +172,12 @@ private extension LoginViewController {
 //MARK: - Button Action
 private extension LoginViewController {
     
-    
-    
-    
+
     @objc func loginButtonTapped() {
-        checkUserAllocationAllow()
-        if isWaitingForLocationPermission { return }
+        if locationManager.fetchStatus() == false {
+            AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in SettingHandler.moveToSetting() }
+            return
+        }
         handleTextFormatError()
         handleKeychain()
         
@@ -223,7 +224,11 @@ private extension LoginViewController {
     }
     
     @objc func signUpButtonTapped() {
-    
+        if locationManager.fetchStatus() == false {
+            AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in SettingHandler.moveToSetting() }
+            return
+        }
+
         handleAuthenticationView()
         handlesSignupView()
     }
@@ -238,8 +243,8 @@ private extension LoginViewController {
 private extension LoginViewController {
     
     func handleAuthenticationView() {
-        checkUserAllocationAllow()
-        if isWaitingForLocationPermission { return }
+        /*checkUserAllocationAllow*/()
+//        if isWaitingForLocationPermission { return }
         setupAuthView()
         cancelAuthView()
         successPhoneAuth()
@@ -464,33 +469,6 @@ extension LoginViewController {
                            .disposed(by: disposeBag)
     }
 }
-
-
-
-//MARK: - Chceck location
-extension LoginViewController: CLLocationManagerDelegate {
-    
-    private func checkUserAllocationAllow()  {
-        let locationManager = CLLocationManager()
-        let status = locationManager.authorizationStatus
-        
-        switch status {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted, .denied:
-            isWaitingForLocationPermission = true
-            AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in
-                SettingHandler.moveToSetting()
-            }
-        case .authorizedAlways, .authorizedWhenInUse:
-            print("Location services are enabled")
-            isWaitingForLocationPermission = false
-        @unknown default:
-            fatalError("Unknown case of authorizationStatus")
-        }
-    }
-}
-
 
 
 //MARK: - PHPickerVC

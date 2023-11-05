@@ -57,16 +57,15 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             case .authorizedAlways, .authorizedWhenInUse:
                 locationManager.requestLocation()
                 
-                
             case .restricted, .notDetermined:
                 print("GPS 권한 설정되지 않음")
                 
             case .denied:
-
-                AlertHandler.shared.presentErrorAlertWithAction(for: .unknownError) { _ in
-                    exit(-1)
+                AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in
+                    SettingHandler.moveToSetting()
+                    return
                 }
-                
+
             default:
                 print("GPS: Default")
             }
