@@ -23,7 +23,7 @@ final class LoginViewController: UIViewController {
     
     let authPassed: () -> Void
     
-    let locationManager = LocationManager()
+    let locationManager: LocationManager?
     
     
     private let authView = AuthenticationView()
@@ -81,10 +81,11 @@ final class LoginViewController: UIViewController {
         .withSpacing(10)
         .withMargins(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
     
-    init(firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, authPassed: @escaping () -> Void) {
+    init(firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, locationManager:LocationManager, authPassed: @escaping () -> Void) {
         self.firebaseAuthService = firebaseAuthService
         self.firebaseUserService = firebaseUserService
         self.authPassed = authPassed
+        self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -174,7 +175,7 @@ private extension LoginViewController {
     
 
     @objc func loginButtonTapped() {
-        if locationManager.fetchStatus() == false {
+        if locationManager?.fetchStatus() == false {
             AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in SettingHandler.moveToSetting() }
             return
         }
@@ -224,7 +225,7 @@ private extension LoginViewController {
     }
     
     @objc func signUpButtonTapped() {
-        if locationManager.fetchStatus() == false {
+        if locationManager?.fetchStatus() == false {
             AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in SettingHandler.moveToSetting() }
             return
         }
