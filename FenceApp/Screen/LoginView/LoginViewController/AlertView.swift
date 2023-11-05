@@ -18,6 +18,7 @@ enum AppError: Error {
     case authenticationError(String)
     case formatError(String)
     case loadImageError(String)
+    case permissionError(String)
     case unknownError
 }
 
@@ -106,6 +107,8 @@ class AlertHandler {
             return ("🥹입력 에러🥹", customMessage)
         case .loadImageError(let customMessage):
             return ("🥹이미지 불러오기 에러🥹", customMessage)
+        case .permissionError(let customMessage):
+            return ("🥹권한 허용 에러🥹", customMessage)
         case .unknownError:
             return ("🥹에러🥹", "무언가 잘못되었습니다")
         }

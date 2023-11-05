@@ -487,4 +487,3 @@ extension RiveView {
         return self
     }
 }
-

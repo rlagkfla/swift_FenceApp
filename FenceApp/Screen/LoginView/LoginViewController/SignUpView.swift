@@ -3,7 +3,7 @@ import RiveRuntime
 import RxSwift
 
 final class SignUpView: UIView {
-    
+        
     private var userService: FirebaseUserService
     private var authService: FirebaseAuthService
     
@@ -235,3 +235,5 @@ extension SignUpView {
         }
     }
 }
+
+
