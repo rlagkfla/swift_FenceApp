@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class ChatViewController: UIViewController {
+final class ChatViewController: UIViewController {
     
     // MARK: - Properties
     var filterModel = FilterModel(distance: 20, startDate: Calendar.yesterday, endDate: Calendar.today)
