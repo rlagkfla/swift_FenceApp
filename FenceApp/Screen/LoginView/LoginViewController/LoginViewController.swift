@@ -4,6 +4,7 @@
 import UIKit
 import Security
 import PhotosUI
+import CoreLocation
 
 //Library
 import RiveRuntime
@@ -16,11 +17,13 @@ import FirebaseAuth
 
 //MARK: - Properties & Deinit
 final class LoginViewController: UIViewController {
-
+    
     let firebaseAuthService: FirebaseAuthService
     let firebaseUserService: FirebaseUserService
     
     let authPassed: () -> Void
+    var isWaitingForLocationPermission = false
+
     
     private let authView = AuthenticationView()
     private var signUpView: SignUpView?
@@ -110,7 +113,7 @@ extension LoginViewController {
             .setupForValidation(type: .password)
         
         setupLoginButtonValidate()
-
+        
     }
     
 }
@@ -168,7 +171,12 @@ private extension LoginViewController {
 //MARK: - Button Action
 private extension LoginViewController {
     
+    
+    
+    
     @objc func loginButtonTapped() {
+        checkUserAllocationAllow()
+        if isWaitingForLocationPermission { return }
         handleTextFormatError()
         handleKeychain()
         
@@ -215,6 +223,7 @@ private extension LoginViewController {
     }
     
     @objc func signUpButtonTapped() {
+    
         handleAuthenticationView()
         handlesSignupView()
     }
@@ -229,14 +238,15 @@ private extension LoginViewController {
 private extension LoginViewController {
     
     func handleAuthenticationView() {
+        checkUserAllocationAllow()
+        if isWaitingForLocationPermission { return }
         setupAuthView()
         cancelAuthView()
         successPhoneAuth()
     }
-    
-    
-    func setupAuthView() {
 
+    func setupAuthView() {
+        
         view.addSubview(shadowContainer)
         shadowContainer.addSubview(authView)
         disableUIComponent()
@@ -313,7 +323,7 @@ extension LoginViewController {
     }
     
     func presentSignUpView() {
-        
+    
         guard let signUpView = signUpView else { return }
         
         view.addSubview(shadowContainer)
@@ -432,6 +442,7 @@ extension LoginViewController {
     
 }
 
+
 //MARK: - isValid TextField Format
 extension LoginViewController {
     
@@ -451,6 +462,32 @@ extension LoginViewController {
                                }
                            })
                            .disposed(by: disposeBag)
+    }
+}
+
+
+
+//MARK: - Chceck location
+extension LoginViewController: CLLocationManagerDelegate {
+    
+    private func checkUserAllocationAllow()  {
+        let locationManager = CLLocationManager()
+        let status = locationManager.authorizationStatus
+        
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            isWaitingForLocationPermission = true
+            AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in
+                SettingHandler.moveToSetting()
+            }
+        case .authorizedAlways, .authorizedWhenInUse:
+            print("Location services are enabled")
+            isWaitingForLocationPermission = false
+        @unknown default:
+            fatalError("Unknown case of authorizationStatus")
+        }
     }
 }
 
