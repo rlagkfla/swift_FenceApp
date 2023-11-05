@@ -12,7 +12,7 @@ protocol CommentDetailViewControllerDelegate: AnyObject {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO)
 }
 
-class CommentDetailViewController: UIViewController {
+final class CommentDetailViewController: UIViewController {
     
     // MARK: - Properties
     private let commentDetailView = CommentDetailView()
