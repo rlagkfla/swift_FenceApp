@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CustomModalViewController: UIViewController {
     
@@ -15,7 +16,8 @@ class CustomModalViewController: UIViewController {
     
     let petImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .white
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -24,16 +26,18 @@ class CustomModalViewController: UIViewController {
     let petNameLabel: UILabel = {
         let label = UILabel()
         label.text = "이름: 전콩"
-        label.font = UIFont.systemFont(ofSize: 22)
-        label.backgroundColor = .yellow
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.backgroundColor = .white
         return label
     }()
     
     let postDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "날짜: \(Date())"
-        label.font = UIFont.systemFont(ofSize: 22)
-        label.backgroundColor = .yellow
+        label.text = "날짜"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.backgroundColor = .white
         return label
     }()
     
@@ -50,8 +54,10 @@ class CustomModalViewController: UIViewController {
     lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("취소", for: .normal)
-        button.setTitleColor(.red, for: .normal)
-        button.backgroundColor = .systemGray5
+        button.setTitleColor(UIColor(hexCode: "55BCEF"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor(hexCode: "55BCEF").cgColor
+        button.layer.borderWidth = 1
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return button
@@ -60,8 +66,8 @@ class CustomModalViewController: UIViewController {
     lazy var presentButton: UIButton = {
         let button = UIButton()
         button.setTitle("이동", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
-        button.backgroundColor = .systemGray5
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(hexCode: "55BCEF")
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(presentButtonTapped), for: .touchUpInside)
         return button
@@ -90,10 +96,10 @@ class CustomModalViewController: UIViewController {
         petImageView.kf.setImage(with: url)
         
        if let lost = pinable as? Lost {
-            petNameLabel.text = "이름: \(lost.petName)"
+            petNameLabel.text = "반려동물 이름 : \(lost.petName)"
             
             
-            let postDateFormatter = ("\(lost.lostDate)").getHowLongAgo()
+            let postDateFormatter = "잃어버린 날짜 : " + ("\(lost.lostDate)").getHowLongAgo()
             postDateLabel.text = postDateFormatter
         }
     }
@@ -147,7 +153,7 @@ private extension CustomModalViewController {
         petImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(30)
             $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(200)
+            $0.height.equalTo(250)
         }
     }
     
@@ -173,7 +179,7 @@ private extension CustomModalViewController {
         view.addSubview(buttonsStackView)
         
         buttonsStackView.snp.makeConstraints {
-            $0.top.equalTo(postDateLabel.snp.bottom).offset(10)
+            $0.top.equalTo(postDateLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(35)
         }

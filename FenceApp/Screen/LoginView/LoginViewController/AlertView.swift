@@ -23,9 +23,9 @@ enum AppError: Error {
 
 // MARK: - Alert Handler Singleton
 class AlertHandler {
-
+    
     static let shared = AlertHandler()
-
+    
     private init() {}
     
     private func generateSuccessAlert(for successMessage: SuccessMessage) -> (UIViewController) -> Void {
@@ -37,44 +37,45 @@ class AlertHandler {
             viewController.present(alertController, animated: true, completion: nil)
         }
     }
-
+    
     func presentSuccessAlert(for successMessage: SuccessMessage) {
         if let topViewController = currentViewController() {
             let alert = generateSuccessAlert(for: successMessage)
             alert(topViewController)
         }
     }
-
+    
     func presentErrorAlert(for error: AppError) {
         if let topViewController = currentViewController() {
             let alert = generateErrorAlert(for: error)
             alert(topViewController)
         }
     }
-  
     
-/*
- UIApplication
+    
+    /*
+     UIApplication
      |
      |-- UIWindow (keyWindow)
-         |
-         |-- RootViewController (UIViewController)
-             |
-             |-- PresentedViewController (UIViewController)
-                 |
-                 |-- PresentedViewController (UIViewController)
-                ...
- */
+     |
+     |-- RootViewController (UIViewController)
+     |
+     |-- PresentedViewController (UIViewController)
+     |
+     |-- PresentedViewController (UIViewController)
+     ...
+     */
     
     private func currentViewController(head: UIViewController? = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController) -> UIViewController? {
         var currentViewController = head
         while let nextViewController = currentViewController?.presentedViewController {
             currentViewController = nextViewController
+            
         }
         return currentViewController
     }
-
-
+    
+    
     private func detailedSuccessMessage(for success: SuccessMessage) -> (title: String, message: String) {
         switch success {
         case .registrationComplete(let customMessage):
@@ -85,7 +86,7 @@ class AlertHandler {
             return("🥳이메일 전송 성공🥳", customMessage)
         }
     }
-
+    
     private func generateErrorAlert(for error: AppError) -> (UIViewController) -> Void {
         let (title, message) = detailedMessage(for: error)
         return { viewController in
@@ -94,7 +95,7 @@ class AlertHandler {
             viewController.present(alertController, animated: true, completion: nil)
         }
     }
-
+    
     private func detailedMessage(for error: AppError) -> (title: String, message: String) {
         switch error {
         case .networkError(let customMessage):
@@ -109,4 +110,43 @@ class AlertHandler {
             return ("🥹에러🥹", "무언가 잘못되었습니다")
         }
     }
+    
+    //    private func generateErrorAlert1(for error: AppError, handler: (UIAlertAction) -> Void) -> (UIViewController) -> Void {
+    //        let (title, message) = detailedMessage(for: error)
+    //        return { viewController in
+    //            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    //            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+    //
+    //            }))
+    //
+    //            viewController.present(alertController, animated: true, completion: nil)
+    //        }
+    //    }
+    //
+    //    func presentErrorAlert1(for error: AppError, handler: (UIAlertAction) -> Void) {
+    //        if let topViewController = currentViewController() {
+    //            let alert = generateErrorAlert1(for: error, handler: <#T##() -> Void#>)
+    //            alert(topViewController)
+    //        }
+    //    }
+    
+    
+    
+    private func generateErrorAlertController(for error: AppError) -> UIAlertController {
+        let (title, message) = detailedMessage(for: error)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        return alertController
+    }
+    
+    
+    // 여기에 인자로 Error, action
+    
+    func presentErrorAlertWithAction(for error: AppError, action: @escaping (UIAlertAction) -> Void) {
+        if let topViewController = currentViewController() {
+            let alertController = generateErrorAlertController(for: error)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: action))
+            topViewController.present(alertController, animated: true, completion: nil)
+        }
+    }
 }
+

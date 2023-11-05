@@ -129,7 +129,7 @@ class LostListViewController: UIViewController {
     func setFilterLabel() {
         let convertDate = DateService().converToDateInFilterLabel(fromDate: filterModel.startDate, toDate: filterModel.endDate)
         
-        lostListView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내 / 동물 - 전체"
+        lostListView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내"
     }
     
 //    private func getCurrentUser() {

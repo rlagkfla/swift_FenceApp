@@ -31,10 +31,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-        
+    
         Task {
             
             do {
+            
                 try await checkUserLoggedIn()
                 
             } catch {
@@ -50,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
         
-        if isUserLoggedIn {
+        if isUserLoggedIn && locationManager.fetchStatus() == true {
             
             let userIdentifier = try firebaseAuthService.getCurrentUser().uid
             

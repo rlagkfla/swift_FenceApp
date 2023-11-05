@@ -8,12 +8,15 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class MyInfoViewController: UIViewController {
     
     //MARK: - Properties
     
     private let sectionTitles = ["LOST", "FOUND"]
+    
+    let user = CurrentUserInfo.shared.currentUser!
     
     var previousNickname: String = ""
     var previousMemo: String = ""
@@ -22,13 +25,13 @@ class MyInfoViewController: UIViewController {
     let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
-    var lostList: [LostResponseDTO] = []
-    var foundList: [FoundResponseDTO] = []
+    var lostList: [Lost] = []
+    var foundList: [Found] = []
     
     var logOut: ( () -> Void )?
     
     
-   private let profileImageView: UIImageView = {
+    private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -47,24 +50,36 @@ class MyInfoViewController: UIViewController {
         return label
     }()
     
-//    private let memo: UILabel = {
-//        let label = UILabel()
-//        //        label.backgroundColor = .red
-//        label.text = "간단한 메모"
-//        label.textColor = UIColor.color1
-//        return label
-//    }()
+    //    private let memo: UILabel = {
+    //        let label = UILabel()
+    //        //        label.backgroundColor = .red
+    //        label.text = "간단한 메모"
+    //        label.textColor = UIColor.color1
+    //        return label
+    //    }()
     
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.color2, for: .normal)
+        button.setTitleColor(.white, for: .normal) 
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
         button.layer.borderColor = UIColor.color2.cgColor
+        button.backgroundColor = UIColor.color1
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+    
+        if let titleLabel = button.titleLabel {
+            let attributes: [NSAttributedString.Key: Any] = [
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: titleLabel.font.pointSize)
+            ]
+            let attributedString = NSAttributedString(string: "프로필 편집", attributes: attributes)
+            button.setAttributedTitle(attributedString, for: .normal)
+        }
         return button
     }()
+
+
     
     private let borderLine: UILabel = {
         let lb = UILabel()
@@ -91,24 +106,13 @@ class MyInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       Task {
-            
-            do {
-                
-                configureUI()
-                
-                configureNavigationBar()
-                
-                try await getLosts()
-                
-                try await getFounds()
-                
-                lostCollectionView.reloadData()
-                
-            } catch {
-                print(error)
-            }
-        }
+        configureUI()
+        configureNavigationBar()
+        
+        getListenToLosts()
+        getListenToFounds()
+        setNickName()
+        setImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,16 +136,23 @@ class MyInfoViewController: UIViewController {
     //MARK: - Actions
     
     @objc func logoutTapped() {
+        
         let alertController = UIAlertController(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { (action) in
-            
-            self.logOut?()
-            print("로그아웃 확인됨")
-        }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] action in
+            
+            do {
+                try self?.firebaseAuthService.signOutUser()
+                self?.logOut?()
+                
+            } catch {
+                self?.logOut?()
+            }
+        }
+        
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     
@@ -152,7 +163,7 @@ class MyInfoViewController: UIViewController {
         let editViewController = EditViewController()
         editViewController.delegate = self
         editViewController.previousNickname = self.nickname.text ?? ""
-//        editViewController.previousMemo = self.memo.text ?? ""
+        //        editViewController.previousMemo = self.memo.text ?? ""
         editViewController.previousImage = self.profileImageView.image
         
         editViewController.hidesBottomBarWhenPushed = true
@@ -162,47 +173,92 @@ class MyInfoViewController: UIViewController {
     
     //MARK: - Helpers
     
-    private func getLosts() async throws {
+    //    private func getLosts() async throws {
+    //
+    //        lostList = try await firebaseLostService.fetchLosts()
+    //    }
+    //
+    //    private func getFounds() async throws {
+    //
+    //        foundList = try await firebaseFoundService.fetchFounds()
+    //    }
+    
+    private func getListenToFounds() {
         
-        lostList = try await firebaseLostService.fetchLosts()
+        firebaseFoundService.listenToUpdateOn(userIdentifier: user.identifier) { [weak self] result in
+            
+            switch result {
+                
+            case .failure(let error):
+                print(error)
+                
+            case .success(let foundResponseDTOs):
+                
+                self?.foundList = FoundResponseDTOMapper.makeFounds(from: foundResponseDTOs)
+                
+                self?.lostCollectionView.reloadData()
+            }
+        }
     }
     
-    private func getFounds() async throws {
+    private func getListenToLosts() {
         
-        foundList = try await firebaseFoundService.fetchFounds()
+        firebaseLostService.listenToUpdateOn(userIdentifier: user.identifier) { [weak self] result in
+            
+            switch result {
+                
+            case .failure(let error):
+                print(error)
+            case .success(let lostResponseDTOs):
+                
+                self?.lostList = LostResponseDTOMapper.makeLosts(from: lostResponseDTOs)
+                
+                self?.lostCollectionView.reloadData()
+            }
+        }
     }
-    
-    
+    func setNickName() {
+        nickname.text = user.nickname
+    }
+    func setImage() {
+       
+        guard let url = URL(string: user.profileImageURL ) else {
+            return
+        }
+        profileImageView.kf.setImage(with: url)
+    }
     private func configureNavigationBar() {
         navigationItem.title = "마이페이지"
         
         if let titleTextAttributes = navigationController?.navigationBar.titleTextAttributes {
             var attributes = titleTextAttributes
-            attributes[NSAttributedString.Key.foregroundColor] = UIColor.color2
+            attributes[NSAttributedString.Key.foregroundColor] = UIColor.black
             navigationController?.navigationBar.titleTextAttributes = attributes
         } else {
-            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.color2]
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             navigationController?.navigationBar.titleTextAttributes = attributes
         }
         
-        let logoutImage = UIImage(systemName: "escape")
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        let logoutImage = UIImage(systemName: "escape")?.withConfiguration(largeConfig)
         let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
-        logoutButton.tintColor = UIColor.color2
+        logoutButton.tintColor = UIColor.color1
         navigationItem.rightBarButtonItem = logoutButton
     }
+
 }
 
 //MARK: - EditViewController Delegate
 
 extension MyInfoViewController: EditViewControllerDelegate {
-
+    
     func didSaveProfileInfo(nickname: String, image: UIImage) {
-            DispatchQueue.main.async {
-                self.nickname.text = nickname
-//                self.memo.text = memo
-                self.profileImageView.image = image
-            }
+        DispatchQueue.main.async {
+            self.nickname.text = nickname
+            //                self.memo.text = memo
+            self.profileImageView.image = image
         }
+    }
 }
 
 //MARK: - TextField Delegate
@@ -225,7 +281,7 @@ extension MyInfoViewController: UICollectionViewDataSource {
         
         if kind == UICollectionView.elementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
-
+            
             // 섹션 제목을 설정
             headerView.titleLabel.text = sectionTitles[indexPath.section]
             return headerView
@@ -256,7 +312,7 @@ extension MyInfoViewController: UICollectionViewDataSource {
             
             cell.setImage(urlString: urlString)
         }
-       
+        
         return cell
     }
 }
@@ -280,7 +336,7 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return 2
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 50) // 원하는 높이로 설정
     }
@@ -295,13 +351,13 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
 
 extension MyInfoViewController {
     
-
+    
     private func configureUI() {
         
         configureSelf()
         configureProfileImage()
         configureNickName()
-//        configureMemo()
+        //        configureMemo()
         configureEditProfileButton()
         configureLine()
         configureLostCollectionView()
@@ -329,24 +385,24 @@ extension MyInfoViewController {
         
     }
     
-//    private func configureMemo(){
-//        view.addSubview(memo)
-//        memo.translatesAutoresizingMaskIntoConstraints = false
-//        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
-//        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
-//        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-//        
-//    }
+    //    private func configureMemo(){
+    //        view.addSubview(memo)
+    //        memo.translatesAutoresizingMaskIntoConstraints = false
+    //        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
+    //        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
+    //        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+    //
+    //    }
     
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         editProfileButton.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 80).isActive = true
-        editProfileButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-//        editProfileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         editProfileButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         editProfileButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
+
     
     private func configureLine(){
         view.addSubview(borderLine)
@@ -367,5 +423,5 @@ extension MyInfoViewController {
         lostCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
- 
+    
 }

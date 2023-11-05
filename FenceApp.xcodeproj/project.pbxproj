@@ -39,6 +39,7 @@
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
 		D63ADF952AEBC29C0077AD81 /* CustomModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */; };
+		D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B23222AF6213000EFB13A /* CustomColor.swift */; };
 		D63E41332AF3901B0086C002 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63E41322AF3901B0086C002 /* Date+Ext.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
@@ -53,6 +54,7 @@
 		D65150AB2ADD0FFB002FDD04 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AA2ADD0FFB002FDD04 /* FirebaseAppCheck */; };
 		D65150AE2ADD103C002FDD04 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D65150AD2ADD103C002FDD04 /* RiveRuntime */; };
 		D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D65150B42ADD10BA002FDD04 /* FirebaseFirestore */; };
+		D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */; };
 		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
 		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
 		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
@@ -141,6 +143,7 @@
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* CustomModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalViewController.swift; sourceTree = "<group>"; };
+		D63B23222AF6213000EFB13A /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		D63E41322AF3901B0086C002 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -152,6 +155,7 @@
 		D65150B82ADD120F002FDD04 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D65150BC2ADD123B002FDD04 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D65150BE2ADD1249002FDD04 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHandler.swift; sourceTree = "<group>"; };
 		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 				D62D62972AF4D8100050FE12 /* DateService.swift */,
+				D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 			children = (
 				D6E10E712ADFD3740098F05D /* Constant.swift */,
 				D6E10E952AE24ABD0098F05D /* FB.swift */,
+				D63B23222AF6213000EFB13A /* CustomColor.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -727,6 +733,7 @@
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
+				D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */,
 				08DB05D62AEE620000A0C589 /* KeyboardHandler.swift in Sources */,
 				D6E10EAF2AE388AD0098F05D /* LostResponseDTOMapper.swift in Sources */,
 				D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */,
@@ -736,6 +743,7 @@
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
+				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
@@ -838,7 +846,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -896,7 +904,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -914,7 +922,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = 7YZAJX9R5S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -951,7 +959,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = 7YZAJX9R5S;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
