@@ -18,13 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let fourthTabNavigationController = UINavigationController()
     
     let locationManager = LocationManager()
-    let firebaseFoundService = FirebaseFoundService()
+    lazy var firebaseFoundService = FirebaseFoundService(locationManager: locationManager)
     let firebaseLostCommentService = FirebaseLostCommentService()
     
     lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     
     lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
-    lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService)
+    lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService, locationManager: locationManager)
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -87,6 +87,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
+        TabbarController.finishUploadingFound = {
+            print("Working")
+        }
         return TabbarController
     }
     

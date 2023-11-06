@@ -13,7 +13,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "PostInfoCell"
-    let locationManager = LocationManager()
+    
     var mapPin: MapPin!
     
     //    let pin: MapPin?
