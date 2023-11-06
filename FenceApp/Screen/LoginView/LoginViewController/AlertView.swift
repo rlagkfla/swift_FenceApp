@@ -114,26 +114,20 @@ class AlertHandler {
         }
     }
     
-    //    private func generateErrorAlert1(for error: AppError, handler: (UIAlertAction) -> Void) -> (UIViewController) -> Void {
-    //        let (title, message) = detailedMessage(for: error)
-    //        return { viewController in
-    //            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    //            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-    //
-    //            }))
-    //
-    //            viewController.present(alertController, animated: true, completion: nil)
-    //        }
-    //    }
-    //
-    //    func presentErrorAlert1(for error: AppError, handler: (UIAlertAction) -> Void) {
-    //        if let topViewController = currentViewController() {
-    //            let alert = generateErrorAlert1(for: error, handler: <#T##() -> Void#>)
-    //            alert(topViewController)
-    //        }
-    //    }
+    private func generateSuccessAlertController(for successMessage: SuccessMessage) -> UIAlertController {
+        let (title, message) = detailedSuccessMessage(for: successMessage)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        return alertController
+    }
     
-    
+    func presentSuccessAlertWithAction(for successMessage: SuccessMessage, action: @escaping (UIAlertAction) -> Void) {
+        if let topViewController = currentViewController() {
+            let alertController = generateSuccessAlertController(for: successMessage)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: action))
+            topViewController.present(alertController, animated: true, completion: nil)
+        }
+    }
+
     
     private func generateErrorAlertController(for error: AppError) -> UIAlertController {
         let (title, message) = detailedMessage(for: error)
