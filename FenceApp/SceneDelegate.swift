@@ -172,6 +172,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     private func makeLostViewVC() -> LostListViewController {
+        
         let lostCellTapped = { [weak self] lost in
             
             guard let self else { return }
@@ -181,21 +182,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
         }
         
-        let vc = LostListViewController(fireBaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, lostCellTapped: lostCellTapped)
+        let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService, lostCellTapped: lostCellTapped)
         
-        vc.filterTapped = { filterModel in
+        lostListViewController.plusButtonTapped = {
+            let enrollViewController = self.makeEnrollViewVC()
+            
+            enrollViewController.hidesBottomBarWhenPushed = true
+            
+            enrollViewController.delegate = lostListViewController
+            
+            self.secondTabNavigationController.pushViewController(enrollViewController, animated: true)
+        }
+        
+        lostListViewController.filterTapped = { filterModel in
             
             let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
             
-            filterViewController.delegate = vc
+            filterViewController.delegate = lostListViewController
             
-            vc.present(filterViewController, animated: true)
+            lostListViewController.present(filterViewController, animated: true)
             
         }
         
-        return vc
+        return lostListViewController
     }
     
+    private func makeEnrollViewVC() -> EnrollViewController {
+        let vc = EnrollViewController(firebaseLostService: firebaseLostService, locationManager: locationManager)
+        
+        return vc
+    }
     
     private func makeDummyViewController() -> UIViewController {
         let vc = UIViewController()
