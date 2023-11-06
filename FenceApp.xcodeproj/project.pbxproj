@@ -11,6 +11,9 @@
 		083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */; };
 		0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */; };
 		0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */; };
+		08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */; };
+		08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08653F902AF8C01D00B5BCAD /* FirebaseMessaging */; };
+		08653FA02AF901AA00B5BCAD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
 		08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */; };
 		08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */; };
@@ -24,7 +27,6 @@
 		08DB05E82AEE62BE00A0C589 /* profile.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08DB05E72AEE62BE00A0C589 /* profile.riv */; };
 		08DB05EE2AEE875900A0C589 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 08DB05ED2AEE875900A0C589 /* FirebaseAuth */; };
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
-		08F96BF12AEF735500EE276D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08F96BF02AEF735400EE276D /* GoogleService-Info.plist */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
 		C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */; };
@@ -123,6 +125,9 @@
 		0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHandler.swift; sourceTree = "<group>"; };
 		0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
 		0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Regular.otf"; sourceTree = "<group>"; };
+		08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		08653F922AF8C03000B5BCAD /* FenceApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceApp.entitlements; sourceTree = "<group>"; };
+		08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -131,7 +136,6 @@
 		08DB05E52AEE62B600A0C589 /* cat.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat.riv; sourceTree = "<group>"; };
 		08DB05E72AEE62BE00A0C589 /* profile.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = profile.riv; sourceTree = "<group>"; };
 		08E537BC2AE276EF001F08B2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		08F96BF02AEF735400EE276D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtentsion.swift; sourceTree = "<group>"; };
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 				08DB05D92AEE621900A0C589 /* RxBlocking in Frameworks */,
 				08DB05E12AEE621900A0C589 /* RxRelay in Frameworks */,
 				D65150A32ADD0FFB002FDD04 /* FirebaseAnalytics in Frameworks */,
+				08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */,
 				D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */,
 				D65150A52ADD0FFB002FDD04 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				D65150AB2ADD0FFB002FDD04 /* FirebaseAppCheck in Frameworks */,
@@ -345,6 +350,7 @@
 				08DB05D32AEE61E100A0C589 /* ValidationHandler.swift */,
 				08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */,
 				0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */,
+				08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -480,7 +486,7 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
-				D63855912AF8D7A700BD5016 /* FenceApp.entitlements */,
+				08653F922AF8C03000B5BCAD /* FenceApp.entitlements */,
 				D6F1CF3E2AF3298B00974B1F /* Extensions */,
 				D6F1CF3B2AF25C9D00974B1F /* Models */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
@@ -496,7 +502,7 @@
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
-				08F96BF02AEF735400EE276D /* GoogleService-Info.plist */,
+				08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */,
 				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
 				D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */,
 				D6F1CF412AF32D5D00974B1F /* PinController.swift */,
@@ -628,6 +634,7 @@
 				08DB05E02AEE621900A0C589 /* RxRelay */,
 				08DB05E32AEE622300A0C589 /* RxKeyboard */,
 				08DB05ED2AEE875900A0C589 /* FirebaseAuth */,
+				08653F902AF8C01D00B5BCAD /* FirebaseMessaging */,
 			);
 			productName = FenceApp;
 			productReference = D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */;
@@ -679,13 +686,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08F96BF12AEF735500EE276D /* GoogleService-Info.plist in Resources */,
 				0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */,
 				08206A472ADD43A000C110C0 /* background.riv in Resources */,
 				08DB05E82AEE62BE00A0C589 /* profile.riv in Resources */,
 				0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */,
 				08DB05E62AEE62B600A0C589 /* cat.riv in Resources */,
 				D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */,
+				08653FA02AF901AA00B5BCAD /* GoogleService-Info.plist in Resources */,
 				D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -749,6 +756,7 @@
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
+				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
@@ -927,12 +935,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VGM28F2FH7;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -950,7 +955,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamFenceApp01;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Fenceapp01;
@@ -970,12 +975,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VGM28F2FH7;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -993,7 +995,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamFenceApp01;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Fenceapp01;
@@ -1081,6 +1083,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		08653F902AF8C01D00B5BCAD /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D65150A12ADD0FFB002FDD04 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		08DB05D82AEE621900A0C589 /* RxBlocking */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 08DB05D72AEE621800A0C589 /* XCRemoteSwiftPackageReference "RxSwift" */;

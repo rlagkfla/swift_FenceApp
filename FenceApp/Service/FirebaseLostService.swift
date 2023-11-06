@@ -9,7 +9,7 @@ import FirebaseFirestore
 
 struct FirebaseLostService {
     
-    
+    let locationManager: LocationManager
     let firebaseLostCommentService: FirebaseLostCommentService
     
     func createLost(lostResponseDTO: LostResponseDTO) async throws {
@@ -109,13 +109,12 @@ struct FirebaseLostService {
         }
         
         return lostResponseDTOs
-        
-        
     }
+    
     
     func fetchLostsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> LostWithDocument {
         
-        var ref = COLLECTION_LOST.limit(to: int)
+        var ref = COLLECTION_LOST.limit(to: int).order(by: FB.Lost.postDate, descending: true)
         
         if let lastDocument {
             ref = ref.start(afterDocument: lastDocument)
@@ -131,21 +130,15 @@ struct FirebaseLostService {
         }
         
         return LostWithDocument(lostResponseDTOs: lostResponseDTOs, lastDocument: lastDocument)
-        
     }
+    
     
     func fetchLosts(filterModel: FilterModel) async throws -> [LostResponseDTO] {
         
-        
-        
-        let locationManager = LocationManager()
-        
         guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
         
-        let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: filterModel.distance)
-        
-        let ref = COLLECTION_LOST.whereField(FB.Lost.latitude, isLessThan: a.maxLat)
-                                .whereField(FB.Lost.latitude, isGreaterThan: a.minLat)
+        let ref = COLLECTION_LOST.whereField(FB.Lost.lostDate, isLessThanOrEqualTo: filterModel.endDate)
+            .whereField(FB.Lost.lostDate, isGreaterThanOrEqualTo: filterModel.startDate)
         
         let documents = try await ref.getDocuments().documents
         
@@ -153,21 +146,18 @@ struct FirebaseLostService {
             return LostResponseDTOMapper.makeLostResponseDTO(from: document.data())
         }
         
-        let filteredLostResponseDTOs = lostResponseDTOs.filter {
-            let range = a.minLon...a.maxLon
-            return range.contains($0.longitude) && $0.postDate <= filterModel.endDate && $0.postDate >= filterModel.startDate
+        let filteredLostResponseDTOs = lostResponseDTOs.filter { lostResponseDTO in
+         
+            let distanceFromOrigin = LocationCalculator.getDistanceFromOrigin(lat1: location.latitude, lon1: location.longitude, lat2: lostResponseDTO.latitude, lon2: lostResponseDTO.longitude)
+            
+            return distanceFromOrigin <= filterModel.distance
         }
-        
-        
         
         return filteredLostResponseDTOs
     }
     
+    
     func fetchLosts(within distance: Double, fromDate: Date, toDate: Date) async throws -> [LostResponseDTO] {
-        
-        
-        
-        let locationManager = LocationManager()
         
         guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
         
@@ -187,15 +177,14 @@ struct FirebaseLostService {
             return range.contains($0.longitude) && $0.postDate <= toDate && $0.postDate >= fromDate
         }
         
-        
-        
         return filteredLostResponseDTOs
     }
     
     
-    init(firebaseLostCommentService: FirebaseLostCommentService) {
+    init(firebaseLostCommentService: FirebaseLostCommentService, locationManager: LocationManager) {
         
         self.firebaseLostCommentService = firebaseLostCommentService
+        self.locationManager = locationManager
     }
     
     //MARK: - Helper

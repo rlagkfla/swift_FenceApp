@@ -55,6 +55,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //        setupMemoTextField()
         setupNavigationBar()
         addTapGesture()
+        nicknameTextField.setupForValidation(type: .nickName)
     }
 
     override func viewDidAppear(_ animated: Bool) {
