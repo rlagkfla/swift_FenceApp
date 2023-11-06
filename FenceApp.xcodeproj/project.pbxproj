@@ -11,6 +11,8 @@
 		083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */; };
 		0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */; };
 		0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */; };
+		08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */; };
+		08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08653F902AF8C01D00B5BCAD /* FirebaseMessaging */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
 		08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */; };
 		08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */; };
@@ -123,6 +125,8 @@
 		0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHandler.swift; sourceTree = "<group>"; };
 		0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
 		0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Regular.otf"; sourceTree = "<group>"; };
+		08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		08653F922AF8C03000B5BCAD /* FenceApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceApp.entitlements; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				08DB05D92AEE621900A0C589 /* RxBlocking in Frameworks */,
 				08DB05E12AEE621900A0C589 /* RxRelay in Frameworks */,
 				D65150A32ADD0FFB002FDD04 /* FirebaseAnalytics in Frameworks */,
+				08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */,
 				D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */,
 				D65150A52ADD0FFB002FDD04 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				D65150AB2ADD0FFB002FDD04 /* FirebaseAppCheck in Frameworks */,
@@ -344,6 +349,7 @@
 				08DB05D32AEE61E100A0C589 /* ValidationHandler.swift */,
 				08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */,
 				0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */,
+				08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 		D6D9A72D2ADD05EC006A5B8B /* FenceApp */ = {
 			isa = PBXGroup;
 			children = (
+				08653F922AF8C03000B5BCAD /* FenceApp.entitlements */,
 				D6F1CF3E2AF3298B00974B1F /* Extensions */,
 				D6F1CF3B2AF25C9D00974B1F /* Models */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
@@ -626,6 +633,7 @@
 				08DB05E02AEE621900A0C589 /* RxRelay */,
 				08DB05E32AEE622300A0C589 /* RxKeyboard */,
 				08DB05ED2AEE875900A0C589 /* FirebaseAuth */,
+				08653F902AF8C01D00B5BCAD /* FirebaseMessaging */,
 			);
 			productName = FenceApp;
 			productReference = D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */;
@@ -747,6 +755,7 @@
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
+				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
@@ -924,9 +933,10 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -937,6 +947,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -961,9 +972,10 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7YZAJX9R5S;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -974,6 +986,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1067,6 +1080,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		08653F902AF8C01D00B5BCAD /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D65150A12ADD0FFB002FDD04 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		08DB05D82AEE621900A0C589 /* RxBlocking */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 08DB05D72AEE621800A0C589 /* XCRemoteSwiftPackageReference "RxSwift" */;
