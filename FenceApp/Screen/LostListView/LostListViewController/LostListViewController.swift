@@ -15,9 +15,6 @@ class LostListViewController: UIViewController {
     //MARK: - Services
     
     let fireBaseLostService: FirebaseLostService
-    let firebaseLostCommentService: FirebaseLostCommentService
-    let firebaseAuthService: FirebaseAuthService
-    let firebaseUserService: FirebaseUserService
     
     // MARK: - Properties
     lazy var lostListView: LostListView = {
@@ -34,13 +31,12 @@ class LostListViewController: UIViewController {
     
     let lostCellTapped: ( (Lost) -> Void )
     
+    var plusButtonTapped: ( () -> Void )?
+    
     private var lostWithDocument: LostWithDocument?
     
-    init(fireBaseLostService: FirebaseLostService, firebaseLostCommentService: FirebaseLostCommentService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService, lostCellTapped: @escaping (Lost) -> Void) {
+    init(fireBaseLostService: FirebaseLostService, lostCellTapped: @escaping (Lost) -> Void) {
         self.fireBaseLostService = fireBaseLostService
-        self.firebaseLostCommentService = firebaseLostCommentService
-        self.firebaseAuthService = firebaseAuthService
-        self.firebaseUserService = firebaseUserService
         self.lostCellTapped = lostCellTapped
         super.init(nibName: nil, bundle: nil)
     }
@@ -59,30 +55,14 @@ class LostListViewController: UIViewController {
         
         getLostList()
         
-        //        loadNextPage()
-        
         configureTableView()
         
         configureNavBar()
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        getLostList()
-        
-    }
-    
-    
     @objc func tapRightBarBtn(){
-        let enrollVC = EnrollViewController(firebaseAuthService: firebaseAuthService, firebaseLostService: fireBaseLostService, firebaseUserService: firebaseUserService, firebaseLostCommentService: firebaseLostCommentService)
-        
-        enrollVC.delegate = self
-        // 탭바 숨기기
-        enrollVC.hidesBottomBarWhenPushed = true
-        
-        self.navigationController?.pushViewController(enrollVC, animated: true)
+        plusButtonTapped?()
     }
     
     private func configureTableView(){
@@ -97,7 +77,7 @@ class LostListViewController: UIViewController {
         }
     }
     
-    private func getLostList() {
+    private func getLostList(ifEnrolled: Bool = false) {
         Task {
             do {
                 if let nextLostWithDocument = self.lostWithDocument {
@@ -107,11 +87,13 @@ class LostListViewController: UIViewController {
                     let nextLostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
                     
                     lostList += nextLostList
+                    
                 } else {
                     // 처음 페이지를 가져올 때는 lastDocument를 nil로 전달
                     lostWithDocument = try await self.fireBaseLostService.fetchLostsWithPagination(int: 10)
-                 
+              
                     lostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
+                
                 }
 
                 lostList.sort { $0.postDate > $1.postDate }
@@ -199,6 +181,7 @@ extension LostListViewController: UITableViewDelegate {
 
 extension LostListViewController: EnrollViewControllerDelegate {
     func popEnrollViewController() {
+        lostWithDocument = nil
         getLostList()
     }
 }

@@ -23,11 +23,7 @@ class EnrollViewController: UIViewController {
 
     private let enrollView = EnrollView()
     
-    let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
-    let firebaseUserService: FirebaseUserService
-    let firebaseLostCommentService: FirebaseLostCommentService
-//    let currentUserResponseDTO: UserResponseDTO
     var lostList: [LostResponseDTO] = []
     
     weak var delegate: EnrollViewControllerDelegate?
@@ -39,16 +35,13 @@ class EnrollViewController: UIViewController {
     
     // map
     // 확인필요
-    let currentLocation = LocationManager().fetchLocation() // 현재 위치
+    let locationManager: LocationManager
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
-    init(firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, firebaseUserService: FirebaseUserService, firebaseLostCommentService: FirebaseLostCommentService) {
-        self.firebaseAuthService = firebaseAuthService
+    init(firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
         self.firebaseLostService = firebaseLostService
-        self.firebaseUserService = firebaseUserService
-        self.firebaseLostCommentService = firebaseLostCommentService
-        
+        self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -399,7 +392,7 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
 extension EnrollViewController: MKMapViewDelegate {
     
     func configureMap(){
-        if let location = currentLocation {
+        if let location = locationManager.fetchLocation() {
             let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             let span = MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002) // 지도 확대/축소 정도
             let region = MKCoordinateRegion(center: center, span: span)
