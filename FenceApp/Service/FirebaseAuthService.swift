@@ -28,6 +28,7 @@ struct FirebaseAuthService {
     
     func signOutUser() throws {
         try Auth.auth().signOut()
+        CurrentUserInfo.shared.currentUser = nil
     }
     
     
