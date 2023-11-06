@@ -30,22 +30,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        
+        
+        let launchScreenVC = LaunchScreenViewController()
+        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         
-        Task {
-            
-            do {
-                
-                try await checkUserLoggedIn()
-                
-            } catch {
-                
-                try firebaseAuthService.signOutUser()
-                print(error)
-                window?.rootViewController = makeLoginVC()
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) { [weak self] in
+            Task {
+                do {
+                    try await self?.checkUserLoggedIn()
+                } catch {
+                    try self?.firebaseAuthService.signOutUser()
+                    print(error)
+                    self?.window?.rootViewController = self?.makeLoginVC()
+                }
             }
         }
     }
+                                      
+
     
     private func checkUserLoggedIn() async throws {
         
