@@ -116,11 +116,12 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
+        if let selectedImage = info[.editedImage] as? UIImage {
             profileImageView.image = selectedImage
         }
         picker.dismiss(animated: true, completion: nil)

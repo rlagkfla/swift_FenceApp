@@ -2,13 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Binggrae-Bold.otf</string>
-		<string>Binggrae-Regular.otf</string>
-	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -19,6 +12,11 @@
 				<string>app-1-444539823777-ios-fd3de5b5f712f1ab2e32e0</string>
 			</array>
 		</dict>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Binggrae-Bold.otf</string>
+		<string>Binggrae-Regular.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
