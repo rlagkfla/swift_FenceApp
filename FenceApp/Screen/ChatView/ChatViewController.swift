@@ -46,6 +46,7 @@ final class ChatViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getFoundList()
     }
     
