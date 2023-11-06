@@ -101,18 +101,17 @@ class LostListViewController: UIViewController {
         Task {
             do {
                 if let nextLostWithDocument = self.lostWithDocument {
-//                    guard var lostWithDocument1 = self.lostWithDocument else {return}
                     // 이전 페이지의 마지막 도큐먼트를 사용하여 다음 페이지를 가져오도록 변경
                     lostWithDocument = try await fireBaseLostService.fetchLostsWithPagination(int: 10, lastDocument: nextLostWithDocument.lastDocument)
                     
-                    let nextLostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument!.lostResponseDTOs)
+                    let nextLostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
                     
                     lostList += nextLostList
                 } else {
                     // 처음 페이지를 가져올 때는 lastDocument를 nil로 전달
                     lostWithDocument = try await self.fireBaseLostService.fetchLostsWithPagination(int: 10)
-                                        
-                    lostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument!.lostResponseDTOs)
+                 
+                    lostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
                 }
 
                 lostList.sort { $0.postDate > $1.postDate }
