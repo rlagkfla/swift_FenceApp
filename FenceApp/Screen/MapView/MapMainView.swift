@@ -31,6 +31,7 @@ class MapMainView: UIView {
         let mapView = MKMapView()
         mapView.showsUserLocation = true
         mapView.delegate = self
+        mapView.isRotateEnabled = false
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
         mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
         mapView.register(MKUserLocationView.self, forAnnotationViewWithReuseIdentifier: "user")
