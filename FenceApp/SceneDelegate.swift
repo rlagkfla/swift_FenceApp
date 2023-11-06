@@ -30,25 +30,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        
+        
+        let launchScreenVC = LaunchScreenViewController()
+        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         
-//        let c = LocationCalculator.coordinatesWithinDistance(lat: 37.5519, lon: 126.9918, distance: 10)
-//        print(c)
-        
-        Task {
-            
-            do {
-                
-                try await checkUserLoggedIn()
-                
-            } catch {
-                
-                try firebaseAuthService.signOutUser()
-                print(error)
-                window?.rootViewController = makeLoginVC()
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) { [weak self] in
+            Task {
+                do {
+                    try await self?.checkUserLoggedIn()
+                } catch {
+                    try self?.firebaseAuthService.signOutUser()
+                    print(error)
+                    self?.window?.rootViewController = self?.makeLoginVC()
+                }
             }
         }
     }
+                                      
+
     
     private func checkUserLoggedIn() async throws {
         
@@ -148,7 +149,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeLoginVC() -> LoginViewController {
         
-        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService) { [weak self] in
+        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, locationManager: locationManager) { [weak self] in
             
             guard let self else { return }
             
