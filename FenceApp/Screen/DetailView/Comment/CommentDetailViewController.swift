@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseMessaging
 
 protocol CommentDetailViewControllerDelegate: AnyObject {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO)
@@ -77,6 +78,40 @@ final class CommentDetailViewController: UIViewController {
                 print(error)
             }
         }
+    }
+    
+    func sendCommentMessaing(comment: String) {
+        let serverKey = "AAAAZ4CjZqE:APA91bEW-e0wS7MSHeg2SpcMkQSQzSy0JiK448yYW6ZxnXc1eKkQ4u_jw1t5BV_rDpF0OtMS9aNLz31UaWMthSDXCeem5vpndqN6l_lqN3bxr6pI-hWxIFypAE225of79de-GdSf4hZd"
+        let url = URL(string: "https://fcm.googleapis.com/fcm/send")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("key=\(serverKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let message: [String: Any] = [
+            "to": "dRzx-Jiwg007tJuBdTNkmJ:APA91bHHIz8yNEkBB6UUm8qMfrHB2EBV7Uka81kg8qf-ppZcFI_b_l5dbiWXZ1nqj9CPjezAbhguXsmPr5-IjCr2HkGo3sMQQNj6LYDH8-o51dmGrWq__8RDS9XZMo3mjLqxROLn1RhE",
+            "notification": [
+                "title": "\(lost.title)",
+                "body": "\(comment)"
+            ]
+        ]
+        
+        let jsonData = try! JSONSerialization.data(withJSONObject: message)
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("FCM 메시지 전송 오류: \(error.localizedDescription)")
+            } else if let data = data {
+                let responseJSON = try? JSONSerialization.jsonObject(with: data)
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print("FCM 메시지 전송 성공: \(responseJSON)")
+                }
+            }
+        }
+        
+        task.resume()
     }
     
 //    func commentAlert() {
@@ -158,6 +193,7 @@ extension CommentDetailViewController {
     }
     
     @objc func commentSendButtonTapped() {
+        guard let comment = commentDetailView.writeCommentTextView.text else { return }
         guard commentDetailView.writeCommentTextView.textColor == .black else { return }
         guard commentDetailView.writeCommentTextView.text != "" else { return }
         
@@ -170,6 +206,8 @@ extension CommentDetailViewController {
                 print(error)
             }
         }
+        
+        sendCommentMessaing(comment: comment)
     }
 }
 
