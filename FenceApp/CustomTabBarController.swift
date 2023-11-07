@@ -72,23 +72,23 @@ class CustomTabBarController: UITabBarController{
 // MARK: - Private Method
 extension CustomTabBarController {
     private func configureTabBarControllers() {
-        let mapTabBarItem = UITabBarItem(title: "Map", image: UIImage(systemName: "map"), tag: 0)
+        let mapTabBarItem = UITabBarItem(title: "MAP", image: UIImage(systemName: "map"), tag: 0)
 //        mapTabBarItem.selectedImage = UIImage(systemName: "map.fill")
         mapTabBarItem.selectedImage = UIImage(systemName: "map")
         controllers[0].tabBarItem = mapTabBarItem
         
-        let lostListTabBarItem = UITabBarItem(title: "Lost", image: UIImage(systemName: "menucard"), tag: 1)
+        let lostListTabBarItem = UITabBarItem(title: "LOST", image: UIImage(systemName: "menucard"), tag: 1)
         lostListTabBarItem.selectedImage = UIImage(systemName: "menucard")
         controllers[1].tabBarItem = lostListTabBarItem
         
         let dummyTabBarItem = UITabBarItem(title: nil, image: nil, tag: 2)
         controllers[2].tabBarItem = dummyTabBarItem
         
-        let chatTabBarItem = UITabBarItem(title: "Found", image: UIImage(systemName: "message"), tag: 3)
+        let chatTabBarItem = UITabBarItem(title: "FOUND", image: UIImage(systemName: "message"), tag: 3)
         chatTabBarItem.selectedImage = UIImage(systemName: "message")
         controllers[3].tabBarItem = chatTabBarItem
         
-        let myInfoTabBarItem = UITabBarItem(title: "My", image: UIImage(systemName: "person"), tag: 4)
+        let myInfoTabBarItem = UITabBarItem(title: "MYPAGE", image: UIImage(systemName: "person"), tag: 4)
         myInfoTabBarItem.selectedImage = UIImage(systemName: "person")
         controllers[4].tabBarItem = myInfoTabBarItem
     

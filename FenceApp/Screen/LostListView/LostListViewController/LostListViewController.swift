@@ -136,7 +136,7 @@ class LostListViewController: UIViewController {
 extension LostListViewController {
     
     func configureNavBar() {
-        self.navigationItem.title = "게시판"
+        self.navigationItem.title = "잃어버린 반려동물"
         self.navigationController?.navigationBar.backgroundColor = .white
         // (네비게이션바 설정관련) iOS버전 업데이트 되면서 바뀐 설정:별:️:별:️:별:️
         let appearance = UINavigationBarAppearance()
