@@ -141,7 +141,7 @@ extension CommentDetailViewController {
     }
     
     @objc func dismissKeyboard() {
-        view.endEditing(true)
+        view.endEditing(true)	
     }
     
     @objc func commentSendButtonTapped() {

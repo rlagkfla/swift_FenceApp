@@ -41,7 +41,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
     
     private let commentImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
