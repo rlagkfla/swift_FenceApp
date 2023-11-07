@@ -163,8 +163,8 @@ extension CustomFilterModalViewController {
     @objc func applyButtonTapped() {
         
         delegate?.applyTapped(filterModel: FilterModel(distance: Double(rangeSlider.value),
-                                                       startDate: startDatePicker.date,
-                                                       endDate: endDatePicker.date))
+                                                       startDate: startDatePicker.date.startOfTheDay(),
+                                                       endDate: endDatePicker.date.endOfTheDay()))
         
         dismiss(animated: true)
     }

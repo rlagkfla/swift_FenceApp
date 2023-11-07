@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     
     //MARK: - Properties
     
-    var filterModel = FilterModel(distance: 20, startDate: Calendar.yesterday, endDate: Calendar.today)
+    var filterModel = FilterModel(distance: 20, startDate: Date().startOfTheDay(), endDate: Date().endOfTheDay())
     
     var losts: [Lost] = []
     var founds: [Found] = []

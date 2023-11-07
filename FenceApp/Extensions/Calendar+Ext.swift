@@ -9,7 +9,17 @@ import Foundation
 
 extension Calendar {
     
-    static let today = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
-    static let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+    static let currentCalendar = Calendar.current
+    
+//    static let StartOfYesterday: Date = {
+//        return currentCalendar.startOfDay(for: currentCalendar.date(byAdding: .day, value: -1, to: Date())!)
+//    }()
+//    
+////    static let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+//    
+//    static let endOfDay: Date = {
+//        let NextDay = currentCalendar.startOfDay(for: currentCalendar.date(byAdding: .day, value: 1, to: Date())!)
+//        return NextDay
+//    }()
     
 }

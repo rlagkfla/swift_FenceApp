@@ -23,7 +23,7 @@ class LostListViewController: UIViewController {
         return view
     }()
     
-    var filterModel = FilterModel(distance: 1, startDate: Calendar.yesterday, endDate: Calendar.today)
+    var filterModel = FilterModel(distance: 1, startDate: Date().startOfTheDay(), endDate: Date().endOfTheDay())
     
     var lostList: [Lost] = []
     
