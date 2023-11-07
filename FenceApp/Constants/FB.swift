@@ -12,6 +12,7 @@ struct FB {
         static let userNickname = "userNickname"
         static let profileImageURL = "profileImageURL"
         static let useridentifier = "userIdentifier"
+        static let deviceToken = "deviceToken"
     }
     
     struct Lost {
