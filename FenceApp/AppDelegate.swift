@@ -66,6 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // MARK: - MessagingDelegate
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
+        CurrentUserInfo.shared.userToken = fcmToken
+//        print("Firebase registration token: \(String(describing: fcmToken))")
+        print("userToken", CurrentUserInfo.shared.userToken)
     }
 }

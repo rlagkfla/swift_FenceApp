@@ -37,6 +37,7 @@
 		C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C726A7872AE30067000B8D6D /* EditViewController.swift */; };
 		C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
+		D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */; };
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
@@ -145,6 +146,7 @@
 		C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		C726A7872AE30067000B8D6D /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostModalViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				D6E10E9B2AE2A8CD0098F05D /* FirebaseLostCommentService.swift */,
 				D6E10E982AE2A8CD0098F05D /* FirebaseLostService.swift */,
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
+				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
 				D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
@@ -753,6 +756,7 @@
 				D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
+				D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
