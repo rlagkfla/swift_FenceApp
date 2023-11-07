@@ -32,19 +32,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         
-        let launchScreenVC = LaunchScreenViewController()
-        window?.rootViewController = launchScreenVC
+//        let launchScreenVC = LaunchScreenViewController()
+//        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) { [weak self] in
-            Task {
-                do {
-                    try await self?.checkUserLoggedIn()
-                } catch {
-                    try self?.firebaseAuthService.signOutUser()
-                    print(error)
-                    self?.window?.rootViewController = self?.makeLoginVC()
-                }
+//        let c = LocationCalculator.coordinatesWithinDistance(lat: 37.5519, lon: 126.9918, distance: 10)
+//        print(c)
+        
+        Task {
+            
+            do {
+                
+                try await checkUserLoggedIn()
+                
+            } catch {
+                
+                try firebaseAuthService.signOutUser()
+                print(error)
+                window?.rootViewController = makeLoginVC()
             }
         }
     }
@@ -87,8 +92,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
-        TabbarController.finishUploadingFound = {
-            print("Working")
+        TabbarController.finishUploadingFound = { [weak self] missingType in
+            
+            let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
+            
+            displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
+            
         }
         return TabbarController
     }
@@ -153,7 +162,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             guard let self else { return }
             
-            self.setNavigationControllers()
+//            self.setNavigationControllers()
             
             self.window?.rootViewController = self.makeTabbarController()
         }

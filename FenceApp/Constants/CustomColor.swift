@@ -12,4 +12,6 @@ struct CustomColor {
     static let pointColor = UIColor(hexCode: "55BCEF")
 }
 
-
+enum MissingType {
+    case lost, found
+}

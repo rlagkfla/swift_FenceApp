@@ -137,6 +137,18 @@ class MapViewController: UIViewController {
         }
     }
     
+    func changeIndexAndPerformAPIThenSetPins(missingType: MissingType) {
+        Task {
+            do {
+                let index = missingType == .lost ? 0 : 1
+                mainView.segmentedControl.selectedSegmentIndex = index
+                try await performAPIAndSetPins(segmentIndex: index)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     
     //MARK: - Init
     
