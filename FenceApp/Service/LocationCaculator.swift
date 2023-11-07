@@ -61,6 +61,7 @@ struct LocationCalculator {
     }
     
     static func coordinatesWithinDistance(lat: Double, lon: Double, distance: Double) -> [(Double, Double)] {
+        
         let R = 6371.0  // Radius of the Earth in kilometers
 
         // Convert latitude and longitude from degrees to radians
@@ -82,6 +83,51 @@ struct LocationCalculator {
 
         return coordinates
     }
+    
+//    static func filterLostReponseDTOs(lat: Double, lon: Double, distance: Double, lostReponseDTOs: [LostResponseDTO]) -> [LostResponseDTO] {
+//        
+//        coordinatesWithinDistance(lat: lat, lon: lon, distance: distance)
+//    }
+    
+    
+    static func filterLocations(originLat: Double, originLon: Double, distance: Double, lostResponseDTOs: [LostResponseDTO]) -> [LostResponseDTO] {
+        
+        let filteredLocations = lostResponseDTOs.filter { lostResponseDTO in
+            let distanceFromOrigin = getDistanceFromOrigin(lat1: originLat, lon1: originLon, lat2: lostResponseDTO.latitude, lon2: lostResponseDTO.longitude)
+            return distanceFromOrigin <= distance
+        }
+        return filteredLocations
+    }
+
+    static func getDistanceFromOrigin(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
+        let R = 6371.0  // Radius of the Earth in kilometers
+
+        let lat1Rad = lat1 * .pi / 180.0
+        let lon1Rad = lon1 * .pi / 180.0
+        let lat2Rad = lat2 * .pi / 180.0
+        let lon2Rad = lon2 * .pi / 180.0
+
+        let dLat = lat2Rad - lat1Rad
+        let dLon = lon2Rad - lon1Rad
+
+        let a = sin(dLat / 2) * sin(dLat / 2) + sin(dLon / 2) * sin(dLon / 2) * cos(lat1Rad) * cos(lat2Rad)
+        let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        let distance = R * c
+        return distance
+    }
+
+    // Example usage
+//    let origin = (37.7749, -122.4194)  // Origin point (a, b)
+//    let distance = 10.0  // Distance in kilometers
+//
+//    let locations = [(37.7749, -122.4194), (37.8050, -122.4074), (37.7209, -122.3936), (37.6849, -122.4044)]
+//
+//    let filteredLocations = filterLocations(origin: origin, distance: distance, locations: locations)
+//
+//    for location in filteredLocations {
+//        print("Latitude: \(location.0), Longitude: \(location.1)")
+//    }
 
 }
 

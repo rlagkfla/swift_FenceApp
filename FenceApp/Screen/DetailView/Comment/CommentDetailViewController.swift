@@ -113,21 +113,6 @@ final class CommentDetailViewController: UIViewController {
         
         task.resume()
     }
-    
-//    func commentAlert() {
-//        guard let user = CurrentUserInfo.shared.currentUser else { return }
-//        
-//        guard let lastComment = commentList.last else {
-//            return
-//        }
-//        guard user.identifier == lost.userIdentifier else {
-//            return
-//        }
-//        guard user.identifier != lastComment.userIdentifier else {
-//            return
-//        }
-//        UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
-//    }
 }
 
 // MARK: - Private Method
@@ -206,7 +191,6 @@ extension CommentDetailViewController {
                 print(error)
             }
         }
-        
         sendCommentMessaing(comment: comment)
     }
 }
