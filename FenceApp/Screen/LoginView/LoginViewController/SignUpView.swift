@@ -214,7 +214,7 @@ extension SignUpView {
                 let authResult = try await self.authService.signUpUser(email: email, password: password)
                 print("User signed up. UID: \(authResult.user.uid)")
                 
-                let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
+                let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, deviceToken: CurrentUserInfo.shared.userToken ?? "")
                 
                 print("Attempting to create user profile...")
                 try await userService.createUser(userResponseDTO: userResponseDTO)
