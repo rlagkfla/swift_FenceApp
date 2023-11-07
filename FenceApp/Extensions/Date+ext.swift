@@ -9,6 +9,20 @@ import Foundation
 
 extension Date {
     
+    func startOfTheDay() -> Date {
+        
+        let currentCalendar = Calendar.current
+        
+        return currentCalendar.startOfDay(for: Date())
+    }
+    
+    func endOfTheDay() -> Date {
+        
+        let currentCalendar = Calendar.current
+        
+        return currentCalendar.startOfDay(for: currentCalendar.date(byAdding: .day, value: 1, to: self) ?? Date())
+    }
+    
     func dateToString() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
