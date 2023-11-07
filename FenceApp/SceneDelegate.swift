@@ -219,6 +219,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeEnrollViewVC() -> EnrollViewController {
         let vc = EnrollViewController(firebaseLostService: firebaseLostService, locationManager: locationManager)
         
+        vc.finishUploadingLost = { [weak self] missingType in
+            
+            let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
+            
+            displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
+        }
+        
         return vc
     }
     
