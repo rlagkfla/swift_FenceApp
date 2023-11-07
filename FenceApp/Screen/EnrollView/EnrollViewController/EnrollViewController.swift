@@ -39,6 +39,8 @@ class EnrollViewController: UIViewController {
     var selectedCoordinate: CLLocationCoordinate2D? // 선택한 위치를 저장하기 위한 속성
     let annotation = MKPointAnnotation() // 지도 마커
     
+    var finishUploadingLost: ((MissingType) -> ())?
+    
     init(firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
         self.firebaseLostService = firebaseLostService
         self.locationManager = locationManager
@@ -263,6 +265,7 @@ class EnrollViewController: UIViewController {
                 
                 // pop시 delegate로 테이블뷰 페이지 이동
                 delegate?.popEnrollViewController()
+                finishUploadingLost?(.lost)
             }catch{
                 print(error)
             }
