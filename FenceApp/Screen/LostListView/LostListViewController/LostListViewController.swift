@@ -23,6 +23,8 @@ class LostListViewController: UIViewController {
         return view
     }()
     
+    var shouldPaginate = true
+    
     var filterModel = FilterModel(distance: 1, startDate: Date().startOfTheDay(), endDate: Date().endOfTheDay())
     
     var lostList: [Lost] = []
@@ -70,14 +72,19 @@ class LostListViewController: UIViewController {
         lostListView.lostTableView.delegate = self
     }
     
+    
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        guard shouldPaginate == true else { return }
+        
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-        if bottomEdge >= scrollView.contentSize.height {
+        if bottomEdge >= scrollView.contentSize.height - 1000 {
             getLostList()
         }
     }
     
-    private func getLostList(ifEnrolled: Bool = false) {
+    private func getLostList() {
         Task {
             do {
                 if let nextLostWithDocument = self.lostWithDocument {
@@ -189,6 +196,7 @@ extension LostListViewController: EnrollViewControllerDelegate {
 extension LostListViewController: lostListViewDelegate {
     func tapFilterButton() {
         filterTapped?(filterModel)
+        shouldPaginate = false
         
     }
 }
