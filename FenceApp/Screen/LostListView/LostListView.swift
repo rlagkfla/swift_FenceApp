@@ -70,7 +70,7 @@ extension LostListView {
         self.addSubview(filterBtn)
 
         filterLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(105)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(5)
             $0.leading.equalToSuperview().offset(23)
             $0.trailing.equalToSuperview().offset(-23)
         }
