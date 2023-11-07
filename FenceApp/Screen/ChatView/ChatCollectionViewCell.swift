@@ -15,6 +15,8 @@ class ChatCollectionViewCell: UICollectionViewCell {
     // MARK: - UI Properties
     private let foundImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.cornerRadius = 8
+        imageView.clipsToBounds = true
         return imageView
     }()
     

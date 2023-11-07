@@ -53,7 +53,7 @@ final class ChatViewController: UIViewController {
     func configure() {
         view.backgroundColor = .white
         
-        self.navigationItem.title = "FoundList"
+        self.navigationItem.title = "발견한 동물"
         
         configurefoundCollectionView()
         getFoundList()
@@ -62,7 +62,7 @@ final class ChatViewController: UIViewController {
     func setFilterLabel() {
         let convertDate = DateService().converToDateInFilterLabel(fromDate: filterModel.startDate, toDate: filterModel.endDate)
         
-        chatView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내 / 동물 - 전체"
+        chatView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내"
     }
 }
 

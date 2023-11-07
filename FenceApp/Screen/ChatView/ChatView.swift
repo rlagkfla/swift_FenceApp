@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol ChatViewDelegate: AnyObject {
     func filterButtonTapped()
@@ -44,7 +45,7 @@ class ChatView: UIView {
         let label = UILabel()
         label.textColor = .darkGray
         label.text = "전체 리스트"
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
     
@@ -77,7 +78,7 @@ private extension ChatView {
         
         filterLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide).offset(5)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(23)
         }
     }
     
@@ -85,8 +86,8 @@ private extension ChatView {
         self.addSubview(foundCollectionView)
         
         foundCollectionView.snp.makeConstraints {
-            $0.top.equalTo(filterLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(filterLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalTo(self.safeAreaLayoutGuide)
         }
     }

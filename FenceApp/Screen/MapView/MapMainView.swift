@@ -46,8 +46,8 @@ class MapMainView: UIView {
         view.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
         view.backgroundColor = .white
         view.selectedSegmentTintColor = CustomColor.pointColor
-        view.insertSegment(withTitle: "Lost", at: 0, animated: true)
-        view.insertSegment(withTitle: "Found", at: 1, animated: true)
+        view.insertSegment(withTitle: "LOST", at: 0, animated: true)
+        view.insertSegment(withTitle: "FOUND", at: 1, animated: true)
         view.selectedSegmentIndex = 0
         view.addTarget(self, action: #selector(segmentTapped(_:)), for: .valueChanged)
         return view
