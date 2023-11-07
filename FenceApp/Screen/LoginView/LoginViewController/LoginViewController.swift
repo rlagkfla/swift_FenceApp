@@ -113,6 +113,7 @@ extension LoginViewController {
         
         passwordTextField
             .setupForValidation(type: .password)
+            
         
         setupLoginButtonValidate()
         
