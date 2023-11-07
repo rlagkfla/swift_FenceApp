@@ -13,7 +13,7 @@ class CustomTabBarController: UITabBarController{
     let locationManager: LocationManager
     let firebaseFoundSerivce: FirebaseFoundService
     
-    var finishUploadingFound: (() -> Void)?
+    var finishUploadingFound: ((MissingType) -> Void)?
     
     lazy var cameraButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
@@ -140,7 +140,7 @@ extension CustomTabBarController: UITabBarControllerDelegate, UIImagePickerContr
                 let url = try await FirebaseImageUploadService.uploadeFoundImage(image: image)
                 let foundDTD = FoundResponseDTO(latitude: latitude, longitude: longitude, imageURL: url, date: Date(), userIdentifier: "045RhOisSFgjp0AjR2DusTpDsyb2")
                 try await firebaseFoundSerivce.createFound(foundResponseDTO: foundDTD)
-                finishUploadingFound?()
+                finishUploadingFound?(.found)
             } catch {
                 print(error)
             }

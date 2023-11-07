@@ -32,8 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         
-        let launchScreenVC = LaunchScreenViewController()
-        window?.rootViewController = launchScreenVC
+//        let launchScreenVC = LaunchScreenViewController()
+//        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         
 //        let c = LocationCalculator.coordinatesWithinDistance(lat: 37.5519, lon: 126.9918, distance: 10)
@@ -92,8 +92,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
-        TabbarController.finishUploadingFound = {
-            print("Working")
+        TabbarController.finishUploadingFound = { [weak self] missingType in
+            
+            let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
+            
+            displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
+            
         }
         return TabbarController
     }
@@ -158,7 +162,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             guard let self else { return }
             
-            self.setNavigationControllers()
+//            self.setNavigationControllers()
             
             self.window?.rootViewController = self.makeTabbarController()
         }
