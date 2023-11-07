@@ -22,11 +22,12 @@ struct LostResponseDTO {
     var petName: String
     var description: String
     var kind: String
+    var userFCMToken: String
 
     
     // lostIdentifier가 자동으로 주어짐 데이터베이스 불러온 객체를 만듬
     
-    init(lostIdentifier: String, latitude: Double, longitude: Double, userIdentifier: String, userProfileImageURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String) {
+    init(lostIdentifier: String, latitude: Double, longitude: Double, userIdentifier: String, userProfileImageURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String, userFCMToken: String) {
         self.lostIdentifier = lostIdentifier
         self.latitude = latitude
         self.longitude = longitude
@@ -40,11 +41,12 @@ struct LostResponseDTO {
         self.petName = petName
         self.description = description
         self.kind = kind
+        self.userFCMToken = userFCMToken
     }
     
     // lostIdentifier가 자동으로 주어짐 저장하는 객체를 만들때 사용
     
-    init(latitude: Double, longitude: Double, userIdentifier: String, userProfileImageURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String) {
+    init(latitude: Double, longitude: Double, userIdentifier: String, userProfileImageURL: String, userNickName: String, title: String, postDate: Date, lostDate: Date, pictureURL: String, petName: String, description: String, kind: String, userFCMToken: String) {
         self.lostIdentifier = UUID().uuidString
         self.latitude = latitude
         self.longitude = longitude
@@ -58,6 +60,7 @@ struct LostResponseDTO {
         self.petName = petName
         self.description = description
         self.kind = kind
+        self.userFCMToken = userFCMToken
     }
  
     

@@ -15,7 +15,7 @@ struct UserResponseDTO {
     var profileImageURL: String
     let identifier: String
     var nickname: String
-    var deviceToken: String
+    var userFCMToken: String
     
 //    static var dummyUser: [UserResponseDTO] = [
 //        UserResponseDTO(email: "aaa@gmail.com",profileImageURL: "https://i.pinimg.com/1200x/2c/2c/60/2c2c60b20cb817a80afd381ae23dab05.jpg", identifier: "t8lGZWXAJvOkNT3fKtEdVSFbJ7c2", nickname: "user1"),
