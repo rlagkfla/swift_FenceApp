@@ -38,6 +38,7 @@
 		C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
 		D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */; };
+		D61C2B3A2AFA5B120015C7C7 /* PetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B392AFA5B120015C7C7 /* PetError.swift */; };
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
@@ -84,7 +85,6 @@
 		D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */; };
 		D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E872AE0F1E90098F05D /* FoundResponseDTO.swift */; };
 		D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E892AE0FF220098F05D /* CommentResponseDTO.swift */; };
-		D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E8C2AE1022F0098F05D /* PetError.swift */; };
 		D6E10E8F2AE2073A0098F05D /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E8E2AE2073A0098F05D /* MapPin.swift */; };
 		D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E902AE208010098F05D /* ClusterAnnotationView.swift */; };
 		D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E922AE208890098F05D /* CustomAnnotationView.swift */; };
@@ -147,6 +147,7 @@
 		C726A7872AE30067000B8D6D /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
+		D61C2B392AFA5B120015C7C7 /* PetError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetError.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostModalViewController.swift; sourceTree = "<group>"; };
@@ -185,7 +186,6 @@
 		D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostResponseDTO.swift; sourceTree = "<group>"; };
 		D6E10E872AE0F1E90098F05D /* FoundResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundResponseDTO.swift; sourceTree = "<group>"; };
 		D6E10E892AE0FF220098F05D /* CommentResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponseDTO.swift; sourceTree = "<group>"; };
-		D6E10E8C2AE1022F0098F05D /* PetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetError.swift; sourceTree = "<group>"; };
 		D6E10E8E2AE2073A0098F05D /* MapPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		D6E10E902AE208010098F05D /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		D6E10E922AE208890098F05D /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
@@ -276,6 +276,14 @@
 				D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */,
 			);
 			path = Comment;
+			sourceTree = "<group>";
+		};
+		D61C2B382AFA5B120015C7C7 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D61C2B392AFA5B120015C7C7 /* PetError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		D651508B2ADD0C8B002FDD04 /* Service */ = {
@@ -493,7 +501,7 @@
 				D6F1CF3B2AF25C9D00974B1F /* Models */,
 				D6E10EAB2AE383970098F05D /* Mapper */,
 				D6E10E942AE24A630098F05D /* Constants */,
-				D6E10E8B2AE102220098F05D /* Error */,
+				D61C2B382AFA5B120015C7C7 /* Error */,
 				D6E10E7B2AE0D8AF0098F05D /* ResponseDTO */,
 				D6FAD9E02ADD2AA6001EDABC /* Screen */,
 				D65150992ADD0E20002FDD04 /* Asset */,
@@ -525,14 +533,6 @@
 				D6F1CF352AEBDB0A00974B1F /* FoundWithDocument.swift */,
 			);
 			path = ResponseDTO;
-			sourceTree = "<group>";
-		};
-		D6E10E8B2AE102220098F05D /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				D6E10E8C2AE1022F0098F05D /* PetError.swift */,
-			);
-			path = Error;
 			sourceTree = "<group>";
 		};
 		D6E10E942AE24A630098F05D /* Constants */ = {
@@ -726,6 +726,7 @@
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
 				D6F1CF462AF3463600974B1F /* Found.swift in Sources */,
+				D61C2B3A2AFA5B120015C7C7 /* PetError.swift in Sources */,
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
@@ -777,7 +778,6 @@
 				C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */,
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
-				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
 				083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */,
 				D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
