@@ -182,8 +182,14 @@ extension AuthenticationView {
     @objc func sendAuthButtonTapped() {
         authorizePhoneNum()
         authNumberTextField.text = ""
+
+        AlertHandler.shared.presentSuccessAlertWithAction(for: .sendMessageSuccessful("인증번호가 전송되었습니다")) { [weak self] action in
+            DispatchQueue.main.async {
+                self?.authNumberTextField.becomeFirstResponder()
+            }
+        }
     }
-    
+
     @objc func signupButtonTapped() {
         authWithMessage()
         
