@@ -17,7 +17,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var previousNickname: String = ""
     var previousMemo: String = ""
     var previousImage: UIImage?
-
+    
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -141,6 +141,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @objc func doneButtonTapped() {
         if let nickname = nicknameTextField.text, let image = profileImageView.image  {
             delegate?.didSaveProfileInfo(nickname: nickname, image: image)
+            
         }
         
 //           if presentingViewController != nil {

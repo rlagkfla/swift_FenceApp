@@ -19,11 +19,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         return img
     }()
     
-    let deleteButton: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        return btn
-    }()
+//    let deleteButton: UIButton = {
+//        let btn = UIButton()
+//        btn.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+//        return btn
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,17 +40,17 @@ class PhotoCollectionViewCell: UICollectionViewCell {
 extension PhotoCollectionViewCell {
     func configureUI(){
         self.addSubview(imageView)
-        self.addSubview(deleteButton)
+//        self.addSubview(deleteButton)
 //        self.bringSubviewToFront(deleteButton)
         
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(7)
             $0.trailing.bottom.equalToSuperview().offset(-7)
         }
-        deleteButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-1)
-            $0.top.equalToSuperview().offset(1)
-        }
+//        deleteButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().offset(-1)
+//            $0.top.equalToSuperview().offset(1)
+//        }
     }
 }
 

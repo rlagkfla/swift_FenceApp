@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     
     //MARK: - Properties
     
-    var filterModel = FilterModel(distance: 20, startDate: Calendar.yesterday, endDate: Calendar.today)
+    var filterModel = FilterModel(distance: 20, startDate: Date().startOfTheDay(), endDate: Date().endOfTheDay())
     
     var losts: [Lost] = []
     var founds: [Found] = []
@@ -134,6 +134,18 @@ class MapViewController: UIViewController {
             try await getFounds()
             clearPins()
             setPinUsingMKAnnotation(pinables: founds)
+        }
+    }
+    
+    func changeIndexAndPerformAPIThenSetPins(missingType: MissingType) {
+        Task {
+            do {
+                let index = missingType == .lost ? 0 : 1
+                mainView.segmentedControl.selectedSegmentIndex = index
+                try await performAPIAndSetPins(segmentIndex: index)
+            } catch {
+                print(error)
+            }
         }
     }
     

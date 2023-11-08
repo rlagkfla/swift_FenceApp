@@ -25,6 +25,8 @@ class MyInfoViewController: UIViewController {
     let firebaseAuthService: FirebaseAuthService
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
+    let firebaseUserService: FirebaseUserService
+    
     var lostList: [Lost] = []
     var foundList: [Found] = []
     
@@ -121,10 +123,11 @@ class MyInfoViewController: UIViewController {
         configureNavigationBar()
     }
     
-    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, firebaseAuthService: FirebaseAuthService) {
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, firebaseAuthService: FirebaseAuthService, firebaseUserService: FirebaseUserService) {
         self.firebaseLostService = firebaseLostService
         self.firebaseFoundService = firebaseFoundService
         self.firebaseAuthService = firebaseAuthService
+        self.firebaseUserService = firebaseUserService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -257,6 +260,18 @@ extension MyInfoViewController: EditViewControllerDelegate {
             self.nickname.text = nickname
             //                self.memo.text = memo
             self.profileImageView.image = image
+        }
+        
+        Task {
+            do {
+                guard let currentUserFCMToken = CurrentUserInfo.shared.userToken, let currentUserInfo = CurrentUserInfo.shared.currentUser else { return }
+                
+                let imageUrl = try await FirebaseImageUploadService.uploadProfileImage(image: image)
+                
+                try await firebaseUserService.editUser(userResponseDTO: UserResponseDTO(email: currentUserInfo.email, profileImageURL: imageUrl, identifier: currentUserInfo.identifier, nickname: nickname, userFCMToken: currentUserFCMToken))
+            } catch {
+                print(error)
+            }
         }
     }
 }

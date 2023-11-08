@@ -22,4 +22,5 @@ struct Lost: Pinable {
     var petName: String
     var description: String
     var kind: String
+    var userFCMToken: String
 }

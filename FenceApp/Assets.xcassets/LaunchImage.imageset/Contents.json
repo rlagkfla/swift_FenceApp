@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "LaunchImage.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "LaunchImage.svg",
+      "filename" : "LaunchImage 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "LaunchImage 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
