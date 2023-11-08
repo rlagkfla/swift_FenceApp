@@ -790,6 +790,7 @@
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
 				D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
+				D63CF4522AFB7EC3002BB260 /* ReportTableViewCell.swift in Sources */,
 				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
 				D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */,
