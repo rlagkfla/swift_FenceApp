@@ -94,7 +94,6 @@
 		D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E992AE2A8CD0098F05D /* FirebaseFoundService.swift */; };
 		D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */; };
 		D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E9B2AE2A8CD0098F05D /* FirebaseLostCommentService.swift */; };
-		D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */; };
 		D6E10EA42AE2A9E10098F05D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D6E10EA32AE2A9E10098F05D /* FirebaseStorage */; };
 		D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EA52AE2AAA00098F05D /* FirebaseAuthService.swift */; };
 		D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EA72AE2AB290098F05D /* MapMainView.swift */; };
@@ -113,7 +112,6 @@
 		D6F1CF3A2AF2511800974B1F /* CurrentUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */; };
 		D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */; };
 		D6F1CF402AF329AB00974B1F /* Calendar+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */; };
-		D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF412AF32D5D00974B1F /* PinController.swift */; };
 		D6F1CF442AF3409C00974B1F /* Lost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF432AF3409C00974B1F /* Lost.swift */; };
 		D6F1CF462AF3463600974B1F /* Found.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF452AF3463600974B1F /* Found.swift */; };
 		D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF472AF386F300974B1F /* FBUser.swift */; };
@@ -195,7 +193,6 @@
 		D6E10E992AE2A8CD0098F05D /* FirebaseFoundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFoundService.swift; sourceTree = "<group>"; };
 		D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUserService.swift; sourceTree = "<group>"; };
 		D6E10E9B2AE2A8CD0098F05D /* FirebaseLostCommentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseLostCommentService.swift; sourceTree = "<group>"; };
-		D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		D6E10EA52AE2AAA00098F05D /* FirebaseAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		D6E10EA72AE2AB290098F05D /* MapMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
 		D6E10EAC2AE383FC0098F05D /* UserResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseDTOMapper.swift; sourceTree = "<group>"; };
@@ -213,7 +210,6 @@
 		D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserInfo.swift; sourceTree = "<group>"; };
 		D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Ext.swift"; sourceTree = "<group>"; };
-		D6F1CF412AF32D5D00974B1F /* PinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinController.swift; sourceTree = "<group>"; };
 		D6F1CF432AF3409C00974B1F /* Lost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lost.swift; sourceTree = "<group>"; };
 		D6F1CF452AF3463600974B1F /* Found.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Found.swift; sourceTree = "<group>"; };
 		D6F1CF472AF386F300974B1F /* FBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBUser.swift; sourceTree = "<group>"; };
@@ -288,7 +284,6 @@
 				D6E10E982AE2A8CD0098F05D /* FirebaseLostService.swift */,
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
 				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
-				D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
@@ -507,7 +502,6 @@
 				08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */,
 				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
 				D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */,
-				D6F1CF412AF32D5D00974B1F /* PinController.swift */,
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
 			);
@@ -765,11 +759,9 @@
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
 				D6E10E9D2AE2A8CD0098F05D /* FirebaseImageUploadService.swift in Sources */,
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
-				D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
 				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
-				D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */,
 				D6E10E8F2AE2073A0098F05D /* MapPin.swift in Sources */,
 				D6E10EAD2AE383FC0098F05D /* UserResponseDTOMapper.swift in Sources */,
 				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,

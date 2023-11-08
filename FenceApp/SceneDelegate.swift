@@ -29,20 +29,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         window = UIWindow(windowScene: windowScene)
         
-        
-//        let launchScreenVC = LaunchScreenViewController()
-//        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
-        
-//        let c = LocationCalculator.coordinatesWithinDistance(lat: 37.5519, lon: 126.9918, distance: 10)
-//        print(c)
         
         Task {
             
             do {
-                
                 try await checkUserLoggedIn()
                 
             } catch {
@@ -55,7 +49,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
                                       
 
-    
     private func checkUserLoggedIn() async throws {
         
         let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
@@ -79,12 +72,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    
     private func setNavigationControllers() {
         firstTabNavigationController.viewControllers = [makeMapViewVC()]
         secondTabNavigationController.viewControllers = [makeLostViewVC()]
         thirdTabNavigationController.viewControllers = [makeChatViewController()]
         fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
     }
+    
     
     private func makeTabbarController() -> CustomTabBarController {
         
@@ -101,6 +96,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         return TabbarController
     }
+    
     
     private func makeMapViewVC() -> MapViewController {
         
@@ -128,6 +124,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return mapViewController
     }
     
+    
     private func makeLostModalVC(lost: Lost) -> LostModalViewController {
         
         let lostModalViewController = LostModalViewController(lost: lost)
@@ -149,6 +146,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return lostModalViewController
     }
     
+    
     private func makeFoundModalVC(found: Found) -> FoundModalViewController {
         
         let foundModalViewController = FoundModalViewController(found: found)
@@ -161,8 +159,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, locationManager: locationManager) { [weak self] in
             
             guard let self else { return }
-            
-//            self.setNavigationControllers()
             
             self.window?.rootViewController = self.makeTabbarController()
         }
@@ -216,6 +212,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return lostListViewController
     }
     
+    
     private func makeEnrollViewVC() -> EnrollViewController {
         let vc = EnrollViewController(firebaseLostService: firebaseLostService, locationManager: locationManager)
         
@@ -228,6 +225,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         return vc
     }
+    
     
     private func makeDummyViewController() -> UIViewController {
         let vc = UIViewController()
@@ -246,8 +244,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
    
-    
-    
     private func makeMyInfoViewController() -> MyInfoViewController {
         let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService)
         
@@ -256,6 +252,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         return vc
     }
+    
     
     func sceneDidBecomeActive(_ scene: UIScene) {
         UIApplication.shared.applicationIconBadgeNumber = 0

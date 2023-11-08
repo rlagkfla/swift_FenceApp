@@ -55,7 +55,6 @@ class MapMainView: UIView {
     
     private lazy var filterImageView: UIImageView = {
         let iv = UIImageView()
-        
         let image = UIImage(systemName: "line.3.horizontal.decrease.circle.fill", withConfiguration:UIImage.SymbolConfiguration(weight: .medium))?
             .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors:[.white, .systemGray2]))
         iv.image = image
@@ -70,7 +69,6 @@ class MapMainView: UIView {
         let image = UIImage(systemName: "location.circle.fill", withConfiguration:UIImage.SymbolConfiguration(weight: .medium))?
             .applyingSymbolConfiguration(UIImage.SymbolConfiguration(paletteColors:[.white, .label, .systemGray2]))
         iv.image = image
-        //UIColor(hexCode: "55BCEF")
         iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(locationImageViewTapped)))
         iv.isUserInteractionEnabled = true
 
@@ -88,11 +86,6 @@ class MapMainView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-//        mapView.layer.cornerRadius = mapView.frame.height / 40
     }
     
     //MARK: - Actions
