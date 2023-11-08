@@ -47,6 +47,7 @@
 		D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */; };
 		D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4532AFB7FA8002BB260 /* ReportType.swift */; };
 		D63CF4562AFB8CDD002BB260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63CF4552AFB8CDD002BB260 /* MessageUI.framework */; };
+		D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4572AFBB39C002BB260 /* WebViewController.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
@@ -159,6 +160,7 @@
 		D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		D63CF4532AFB7FA8002BB260 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		D63CF4552AFB8CDD002BB260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D63CF4572AFBB39C002BB260 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 				D62D62972AF4D8100050FE12 /* DateService.swift */,
 				D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */,
+				D63CF4572AFBB39C002BB260 /* WebViewController.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */,
+				D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
 				D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */,
@@ -790,7 +794,6 @@
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
 				D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
-				D63CF4522AFB7EC3002BB260 /* ReportTableViewCell.swift in Sources */,
 				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
 				D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */,
