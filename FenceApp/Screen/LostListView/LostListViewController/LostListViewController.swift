@@ -31,15 +31,14 @@ class LostListViewController: UIViewController {
     
     var filterTapped: ( (FilterModel) -> Void)?
     
-    let lostCellTapped: ( (Lost) -> Void )
+    var lostCellTapped: ( (Lost) -> Void )?
     
     var plusButtonTapped: ( () -> Void )?
     
     private var lostWithDocument: LostWithDocument?
     
-    init(fireBaseLostService: FirebaseLostService, lostCellTapped: @escaping (Lost) -> Void) {
+    init(fireBaseLostService: FirebaseLostService) {
         self.fireBaseLostService = fireBaseLostService
-        self.lostCellTapped = lostCellTapped
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -98,11 +97,11 @@ class LostListViewController: UIViewController {
                 } else {
                     // 처음 페이지를 가져올 때는 lastDocument를 nil로 전달
                     lostWithDocument = try await self.fireBaseLostService.fetchLostsWithPagination(int: 10)
-              
+                    
                     lostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
-                
+                    
                 }
-
+                
                 lostList.sort { $0.postDate > $1.postDate }
                 
                 lostListView.lostTableView.reloadData()
@@ -135,8 +134,8 @@ class LostListViewController: UIViewController {
         
         lostListView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내"
     }
-   
-
+    
+    
     
 }
 
@@ -155,6 +154,7 @@ extension LostListViewController {
     }
     
 }
+
 
 extension LostListViewController: UITableViewDataSource {
     
@@ -182,7 +182,7 @@ extension LostListViewController: UITableViewDataSource {
 
 extension LostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        lostCellTapped(lostList[indexPath.row])
+        lostCellTapped?(lostList[indexPath.row])
     }
 }
 
@@ -211,3 +211,13 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
     }
 }
 
+
+extension LostListViewController: DetailViewControllerDelegate {
+    func deleteMenuTapped() {
+        if shouldPaginate == true {
+            getLostList()
+        } else {
+            getLostListWithFilter()
+        }
+    }
+}

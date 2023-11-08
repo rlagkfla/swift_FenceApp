@@ -14,7 +14,7 @@ class MyInfoViewController: UIViewController {
     
     //MARK: - Properties
     
-    private let sectionTitles = ["LOST", "FOUND"]
+    private let sectionTitles = ["내 반려동물", "발견한 동물"]
     
     let user = CurrentUserInfo.shared.currentUser!
     
@@ -32,6 +32,7 @@ class MyInfoViewController: UIViewController {
     
     var logOut: ( () -> Void )?
     var settingButton: ( () -> Void )?
+    var lostCellTapped: ( (Lost) -> Void )?
     
     
     private let profileImageView: UIImageView = {
@@ -41,6 +42,8 @@ class MyInfoViewController: UIViewController {
         iv.layer.cornerRadius = 60
         iv.image = UIImage(named: "profile_image")
         iv.backgroundColor = .lightGray
+        iv.layer.borderColor = UIColor.gray.cgColor
+        iv.layer.borderWidth = 0.7
         return iv
     }()
     
@@ -343,6 +346,10 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        lostCellTapped?(lostList[indexPath.row])
     }
     
 }
