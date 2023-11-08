@@ -82,8 +82,21 @@ private extension DetailViewController {
         self.navigationController?.navigationBar.backgroundColor = .white
         
         let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
+        let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let confirmAction = UIAlertAction(title: "삭제하기", style: .default) { [weak self] _ in
+            Task {
+                do {
+                    try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
+                    self?.navigationController?.popViewController(animated: true)
+                    self?.delegate?.deleteMenuTapped()
+                } catch {
+                    print(error)
+                }
+            }
+        }
         impossibleAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(cancelAction)
         
         let editAction = UIAction(title: "수정하기") { [weak self] _ in
 //            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
@@ -101,15 +114,7 @@ private extension DetailViewController {
         
         let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
             if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-                Task {
-                    do {
-                        try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
-                        self?.navigationController?.popViewController(animated: true)
-                        self?.delegate?.deleteMenuTapped()
-                    } catch {
-                        print(error)
-                    }
-                }
+                self!.present(deleteAlertController, animated: true)
             } else {
                 self!.present(impossibleAlertController, animated: true)
             }
