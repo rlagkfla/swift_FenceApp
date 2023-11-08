@@ -71,8 +71,6 @@ class LostListViewController: UIViewController {
         lostListView.lostTableView.delegate = self
     }
     
-    
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         guard shouldPaginate == true else { return }
@@ -99,12 +97,13 @@ class LostListViewController: UIViewController {
                     lostWithDocument = try await self.fireBaseLostService.fetchLostsWithPagination(int: 10)
                     
                     lostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
-                    
+
                 }
                 
                 lostList.sort { $0.postDate > $1.postDate }
                 
                 lostListView.lostTableView.reloadData()
+                
             } catch {
                 print(error)
             }
@@ -215,6 +214,9 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
 extension LostListViewController: DetailViewControllerDelegate {
     func deleteMenuTapped() {
         if shouldPaginate == true {
+            
+            lostWithDocument = nil
+            
             getLostList()
         } else {
             getLostListWithFilter()

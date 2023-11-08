@@ -192,6 +192,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let detailViewController = self.makeDetailVC(lost: lost)
             
 //            detailViewController.hidesBottomBarWhenPushed = true
+            detailViewController.delegate = lostListViewController
             
             self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
         }
