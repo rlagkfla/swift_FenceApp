@@ -44,6 +44,9 @@
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
 		D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */; };
 		D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B23222AF6213000EFB13A /* CustomColor.swift */; };
+		D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */; };
+		D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4532AFB7FA8002BB260 /* ReportType.swift */; };
+		D63CF4562AFB8CDD002BB260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63CF4552AFB8CDD002BB260 /* MessageUI.framework */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
@@ -153,6 +156,9 @@
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostModalViewController.swift; sourceTree = "<group>"; };
 		D63B23222AF6213000EFB13A /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		D63CF4532AFB7FA8002BB260 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
+		D63CF4552AFB8CDD002BB260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 				D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */,
 				08DB05D92AEE621900A0C589 /* RxBlocking in Frameworks */,
 				08DB05E12AEE621900A0C589 /* RxRelay in Frameworks */,
+				D63CF4562AFB8CDD002BB260 /* MessageUI.framework in Frameworks */,
 				D65150A32ADD0FFB002FDD04 /* FirebaseAnalytics in Frameworks */,
 				08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */,
 				D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */,
@@ -374,6 +381,8 @@
 			isa = PBXGroup;
 			children = (
 				D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */,
+				D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */,
+				D63CF4532AFB7FA8002BB260 /* ReportType.swift */,
 				D66B12C22AE0E47A006A9245 /* Cell */,
 			);
 			name = DetailViewController;
@@ -413,6 +422,7 @@
 		D65150AF2ADD1078002FDD04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D63CF4552AFB8CDD002BB260 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -772,6 +782,7 @@
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
+				D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
@@ -805,6 +816,7 @@
 				D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */,
 				C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */,
 				08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */,
+				D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

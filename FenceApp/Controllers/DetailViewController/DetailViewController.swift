@@ -7,24 +7,31 @@
 
 import UIKit
 
+protocol DetailViewControllerDelegate: AnyObject {
+    func deleteMenuTapped()
+}
+
 final class DetailViewController: UIViewController {
     
     // MARK: - Properties
     private let detailView = DetailView()
     
+    weak var delegate: DetailViewControllerDelegate?
+    
     let firebaseAuthService: FirebaseAuthService
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseUserService: FirebaseUserService
-    
+    let firebaseLostService: FirebaseLostService
     
     let lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     
-    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService) {
+    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService) {
         self.lost = lost
         self.firebaseCommentService = firebaseCommentService
         self.firebaseUserService = firebaseUserService
         self.firebaseAuthService = firebaseAuthService
+        self.firebaseLostService = firebaseLostService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,12 +71,64 @@ private extension DetailViewController {
     private func configure() {
         view.backgroundColor = .white
         
+        configureNavigation()
+        configureCollectionView()
+        getFirstComment()
+    }
+    
+    private func configureNavigation() {
         self.navigationItem.title = "상세 페이지"
         self.navigationItem.backBarButtonItem?.tintColor = .accent
         self.navigationController?.navigationBar.backgroundColor = .white
         
-        configureCollectionView()
-        getFirstComment()
+        let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
+        let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let confirmAction = UIAlertAction(title: "삭제하기", style: .default) { [weak self] _ in
+            Task {
+                do {
+                    try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
+                    self?.navigationController?.popViewController(animated: true)
+                    self?.delegate?.deleteMenuTapped()
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        impossibleAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(cancelAction)
+        
+        let editAction = UIAction(title: "수정하기") { [weak self] _ in
+//            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+//                Task {
+//                    do {
+//                        try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
+//            } else {
+//                self!.present(impossibleAlertController, animated: true)
+//            }
+        }
+        
+        let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
+            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                self!.present(deleteAlertController, animated: true)
+            } else {
+                self!.present(impossibleAlertController, animated: true)
+            }
+        }
+        
+        let reportAction = UIAction(title: "신고하기") { _ in
+            let reportViewController = ReportViewController(lost: self.lost)
+            self.navigationController?.pushViewController(reportViewController, animated: true)
+        }
+        
+        let menu = UIMenu(title: "메뉴", options: .displayInline, children: [editAction, deleteAction, reportAction])
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis"), target: self, action: nil, menu: menu)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
     
     private func configureCollectionView() {
