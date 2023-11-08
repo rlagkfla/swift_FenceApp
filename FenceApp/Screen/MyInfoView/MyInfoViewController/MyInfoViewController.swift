@@ -14,7 +14,7 @@ class MyInfoViewController: UIViewController {
     
     //MARK: - Properties
     
-    private let sectionTitles = ["LOST", "FOUND"]
+    private let sectionTitles = ["내 반려동물", "발견한 동물"]
     
     let user = CurrentUserInfo.shared.currentUser!
     
@@ -42,6 +42,8 @@ class MyInfoViewController: UIViewController {
         iv.layer.cornerRadius = 60
         iv.image = UIImage(named: "profile_image")
         iv.backgroundColor = .lightGray
+        iv.layer.borderColor = UIColor.gray.cgColor
+        iv.layer.borderWidth = 0.7
         return iv
     }()
     
