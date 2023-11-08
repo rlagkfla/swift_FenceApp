@@ -139,7 +139,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let detailViewController = DetailViewController(lost: lost,
                                                             firebaseCommentService: self.firebaseLostCommentService,
                                                             firebaseUserService: self.firebaseUserService,
-                                                            firebaseAuthService: self.firebaseAuthService)
+                                                            firebaseAuthService: self.firebaseAuthService,
+                                                            firebaseLostService: self.firebaseLostService)
             lostModalViewController.dismiss(animated: true)
             
             self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
@@ -175,7 +176,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let detailViewController = DetailViewController(lost: lost,
                                                         firebaseCommentService: firebaseLostCommentService,
                                                         firebaseUserService: firebaseUserService,
-                                                        firebaseAuthService: firebaseAuthService)
+                                                        firebaseAuthService: firebaseAuthService,
+                                                        firebaseLostService: firebaseLostService)
         return detailViewController
     }
     
