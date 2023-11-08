@@ -141,7 +141,7 @@ extension CommentDetailViewController {
     }
     
     @objc func dismissKeyboard() {
-        view.endEditing(true)
+        view.endEditing(true)	
     }
     
     @objc func commentSendButtonTapped() {
@@ -153,9 +153,8 @@ extension CommentDetailViewController {
             do {
                 try await setText(text: commentDetailView.writeCommentTextView.text)
                 getCommentList()
-                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
-                    try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
-                }
+                guard lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier else { return }
+                try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
             } catch {
                 print(error)
             }

@@ -16,7 +16,7 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     private let writerProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor

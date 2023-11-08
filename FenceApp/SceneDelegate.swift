@@ -243,13 +243,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+    
    
     private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService)
+        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
-        vc.logOut = { [weak self] in
-            self?.window?.rootViewController = self?.makeLoginVC()
+        
+        vc.settingButton = { [weak self] in
+            let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
+            
+            settingModalViewController.logOut = {
+                self?.window?.rootViewController = self?.makeLoginVC()
+            }
+            
+            vc.present(settingModalViewController, animated: true)
         }
+        
         return vc
     }
     

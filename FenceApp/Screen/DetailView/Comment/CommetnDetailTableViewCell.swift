@@ -17,7 +17,7 @@ class CommentDetailTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.backgroundColor = .yellow
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
