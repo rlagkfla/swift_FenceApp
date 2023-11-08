@@ -31,6 +31,7 @@ class MyInfoViewController: UIViewController {
     var foundList: [Found] = []
     
     var logOut: ( () -> Void )?
+    var settingButton: ( () -> Void )?
     
     
     private let profileImageView: UIImageView = {
@@ -139,23 +140,7 @@ class MyInfoViewController: UIViewController {
     //MARK: - Actions
     
     @objc func logoutTapped() {
-        
-        let alertController = UIAlertController(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] action in
-            
-            do {
-                try self?.firebaseAuthService.signOutUser()
-                self?.logOut?()
-                
-            } catch {
-                self?.logOut?()
-            }
-        }
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        present(alertController, animated: true, completion: nil)
+        settingButton!()
     }
     
     
@@ -243,7 +228,7 @@ class MyInfoViewController: UIViewController {
         }
         
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
-        let logoutImage = UIImage(systemName: "escape")?.withConfiguration(largeConfig)
+        let logoutImage = UIImage(systemName: "line.3.horizontal")?.withConfiguration(largeConfig)
         let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
         logoutButton.tintColor = UIColor.color1
         navigationItem.rightBarButtonItem = logoutButton

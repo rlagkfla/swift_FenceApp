@@ -36,6 +36,7 @@
 		C3FAAE0E2AF38D5B00089684 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */; };
 		C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C726A7872AE30067000B8D6D /* EditViewController.swift */; };
 		C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */; };
+		D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61308072AFB16AE00BB757E /* SettingModalViewController.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
 		D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */; };
 		D61C2B3A2AFA5B120015C7C7 /* PetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B392AFA5B120015C7C7 /* PetError.swift */; };
@@ -146,6 +147,7 @@
 		C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		C726A7872AE30067000B8D6D /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		D61308072AFB16AE00BB757E /* SettingModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModalViewController.swift; sourceTree = "<group>"; };
 		D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
 		D61C2B392AFA5B120015C7C7 /* PetError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetError.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -266,6 +268,17 @@
 				C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */,
 			);
 			path = LostListViewController;
+			sourceTree = "<group>";
+		};
+		D61308092AFB16B300BB757E /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
+				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
+				D61308072AFB16AE00BB757E /* SettingModalViewController.swift */,
+				D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */,
+			);
+			path = Modals;
 			sourceTree = "<group>";
 		};
 		D61368682AE2130D00DE18DF /* Comment */ = {
@@ -506,9 +519,7 @@
 				D6FAD9E02ADD2AA6001EDABC /* Screen */,
 				D65150992ADD0E20002FDD04 /* Asset */,
 				D651508B2ADD0C8B002FDD04 /* Service */,
-				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
-				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
-				D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */,
+				D61308092AFB16B300BB757E /* Modals */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
@@ -724,6 +735,7 @@
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
 				D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
+				D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
 				D6F1CF462AF3463600974B1F /* Found.swift in Sources */,
 				D61C2B3A2AFA5B120015C7C7 /* PetError.swift in Sources */,
@@ -937,6 +949,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -948,9 +961,10 @@
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "동물촬영을 위해 촬영허가가 필요합니다";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치파악을 위해 권한이 필요합니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치파악을 위해 권한이 필요합니다";
+				INFOPLIST_KEY_NSCameraUsageDescription = "동물 촬영을 위해 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "잃어버린 반려동물 혹은 사용자 프로필 이미지를 추가하실 때 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -980,6 +994,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -991,9 +1006,10 @@
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "동물촬영을 위해 촬영허가가 필요합니다";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치파악을 위해 권한이 필요합니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치파악을 위해 권한이 필요합니다";
+				INFOPLIST_KEY_NSCameraUsageDescription = "동물 촬영을 위해 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "잃어버린 반려동물 혹은 사용자 프로필 이미지를 추가하실 때 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
