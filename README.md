@@ -26,13 +26,12 @@
 
 본인의 페이지에서 본인이 작성한 게시글들 및 닉네임, 프로필 이미지를 수정할 수 있으며, 로그아웃 및 회원탈퇴 기능들도 준비되어 있습니다.
 
-
-### 각 페이지별 스크린샷
------
-- 지도 페이지
-- 잃어버린 반려동물 게시판
-- 발견한 길 잃은 반려동물 게시판
-- 나의 페이지
+#### 이미지
+----
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/ed54087b-25ee-4ce8-8c2b-848656891d69" width = "24%" height = "25%">
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/9a1acc40-a6fb-480e-a44c-025a2510673e" width = "24%" height = "25%">
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/56a5a453-a59c-47bb-a8ce-a0f8d2941661" width = "24%" height = "25%">
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/396708a7-c3cd-487e-8ba2-e9d62f9cf591" width = "24%" height = "25%">
 
 <!-- ### ✅ 프로젝트 결과
 
