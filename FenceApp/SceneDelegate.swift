@@ -252,6 +252,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeMyInfoViewController() -> MyInfoViewController {
         let myInfoViewController = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
+
         myInfoViewController.logOut = { [weak self] in
             self?.window?.rootViewController = self?.makeLoginVC()
         }
@@ -262,6 +263,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            detailViewController.hidesBottomBarWhenPushed = true
             
             self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
+        }
+        
+        
+        myInfoViewController.settingButton = { [weak self] in
+            let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
+            
+            settingModalViewController.logOut = {
+                self?.window?.rootViewController = self?.makeLoginVC()
+            }
+            
+            myInfoViewController.present(settingModalViewController, animated: true)
         }
         
         return myInfoViewController
