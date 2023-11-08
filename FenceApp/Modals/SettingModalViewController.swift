@@ -17,6 +17,7 @@ class SettingModalViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
