@@ -182,16 +182,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeLostViewVC() -> LostListViewController {
         
-        let lostCellTapped = { [weak self] lost in
-            
+        let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService)
+        
+        lostListViewController.lostCellTapped = { [weak self] lost in
             guard let self else { return }
             
             let detailViewController = self.makeDetailVC(lost: lost)
             
+//            detailViewController.hidesBottomBarWhenPushed = true
+            
             self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
         }
-        
-        let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService, lostCellTapped: lostCellTapped)
         
         lostListViewController.plusButtonTapped = {
             let enrollViewController = self.makeEnrollViewVC()
@@ -204,7 +205,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         lostListViewController.filterTapped = { filterModel in
-            
             let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
             
             filterViewController.delegate = lostListViewController
@@ -250,20 +250,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     private func makeMyInfoViewController() -> MyInfoViewController {
-        let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
+        let myInfoViewController = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
+        
+
+        myInfoViewController.logOut = { [weak self] in
+            self?.window?.rootViewController = self?.makeLoginVC()
+        }
+        
+        myInfoViewController.lostCellTapped = { lost in
+            let detailViewController = self.makeDetailVC(lost: lost)
+            
+//            detailViewController.hidesBottomBarWhenPushed = true
+            
+            self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
+        }
         
         
-        vc.settingButton = { [weak self] in
+        myInfoViewController.settingButton = { [weak self] in
             let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
             
             settingModalViewController.logOut = {
                 self?.window?.rootViewController = self?.makeLoginVC()
             }
             
-            vc.present(settingModalViewController, animated: true)
+            myInfoViewController.present(settingModalViewController, animated: true)
         }
         
-        return vc
+        return myInfoViewController
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
