@@ -14,7 +14,7 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "PostInfoCell"
     
-    var mapPin: MapPin!
+    var mapPin: MapPin?
     
     //    let pin: MapPin?
     
@@ -42,13 +42,13 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let dividerView3: UIView = {
+    private let dividerView3: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray4
         return view
     }()
     
-    let dividerView: UIView = {
+    private let dividerView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray4
         return view
@@ -83,7 +83,13 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         postDescriptionLabel.text = postDescription
         lostTimeLabel.text = "실종 시간: \(lostTime.dateToString())"
         
+        clearPin()
         setPin(pinable: lost)
+    }
+    
+    func clearPin() {
+        guard let pin = mapPin else { return }
+        mapView.removeAnnotation(pin)
     }
 }
 
@@ -101,9 +107,9 @@ private extension PostInfoCollectionViewCell {
     
     private func setPin(pinable: Pinable) {
         mapPin = MapPin(pinable: pinable)
-        mapView.addAnnotation(mapPin)
+        mapView.addAnnotation(mapPin!)
         
-        let region = MKCoordinateRegion(center: mapPin.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        let region = MKCoordinateRegion(center: mapPin!.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         
         mapView.setRegion(region, animated: true)
     }

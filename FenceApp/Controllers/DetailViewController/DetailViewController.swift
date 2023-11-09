@@ -112,6 +112,7 @@ private extension DetailViewController {
                     do {
                         let image = try await ImageLoader.fetchPhoto(urlString: self!.lost.imageURL)
                         erollViewController.images.append(image)
+                        
                         self?.navigationController?.pushViewController(erollViewController, animated: true)
                         print("@@@@@@@@@@@@@@@@@@")
                     } catch {
@@ -212,9 +213,8 @@ extension DetailViewController: CommentDetailViewControllerDelegate {
 }
 
 extension DetailViewController: EnrollViewControllerDelegate {
-    func popEnrollViewController(lost: Lost?) {
-        self.lost = lost!
-        print(self.lost)
+    func popEnrollViewController(editLost: Lost?) {
+        self.lost = editLost!
         detailView.detailCollectionView.reloadData()
     }
 }

@@ -11,7 +11,7 @@ import PhotosUI
 import MapKit
 
 protocol EnrollViewControllerDelegate: AnyObject {
-    func popEnrollViewController(lost: Lost?)
+    func popEnrollViewController(editLost: Lost?)
 }
 
 struct SelectedImage {
@@ -275,12 +275,12 @@ class EnrollViewController: UIViewController {
                 
                 if isEdited == false {
                     try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
-                    delegate?.popEnrollViewController(lost: nil)
+                    delegate?.popEnrollViewController(editLost: nil)
                 } else {
-                    let lostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
-                    let lost = Lost(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, imageURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
-                    delegate?.popEnrollViewController(lost: lost)
-                    try await firebaseLostService.editLost(on: lostResponseDTO)
+                    let editLostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
+                    let editLost = Lost(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, imageURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
+                    delegate?.popEnrollViewController(editLost: editLost)
+                    try await firebaseLostService.editLost(on: editLostResponseDTO)
                 }
                 
                 print("lostResponseDTO - \(lostResponseDTO)")
@@ -308,7 +308,9 @@ class EnrollViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    
+    func asdsa() {
+        
+    }
 }
 
 extension EnrollViewController {
@@ -417,8 +419,6 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
         }
         
     }
-    
-    
 }
 
 extension EnrollViewController: MKMapViewDelegate {
