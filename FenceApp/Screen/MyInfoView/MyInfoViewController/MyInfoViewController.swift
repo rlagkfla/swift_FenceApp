@@ -14,7 +14,7 @@ class MyInfoViewController: UIViewController {
     
     //MARK: - Properties
     
-    private let sectionTitles = ["LOST", "FOUND"]
+    private let sectionTitles = ["내 반려동물", "발견한 동물"]
     
     let user = CurrentUserInfo.shared.currentUser!
     
@@ -32,6 +32,7 @@ class MyInfoViewController: UIViewController {
     
     var logOut: ( () -> Void )?
     var settingButton: ( () -> Void )?
+    var lostCellTapped: ( (Lost) -> Void )?
     
     
     private let profileImageView: UIImageView = {
@@ -41,6 +42,8 @@ class MyInfoViewController: UIViewController {
         iv.layer.cornerRadius = 60
         iv.image = UIImage(named: "profile_image")
         iv.backgroundColor = .lightGray
+        iv.layer.borderColor = UIColor.gray.cgColor
+        iv.layer.borderWidth = 0.7
         return iv
     }()
     
@@ -52,14 +55,6 @@ class MyInfoViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-    
-    //    private let memo: UILabel = {
-    //        let label = UILabel()
-    //        //        label.backgroundColor = .red
-    //        label.text = "간단한 메모"
-    //        label.textColor = UIColor.color1
-    //        return label
-    //    }()
     
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
@@ -83,7 +78,6 @@ class MyInfoViewController: UIViewController {
     }()
 
 
-    
     private let borderLine: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
@@ -345,6 +339,10 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        lostCellTapped?(lostList[indexPath.row])
+    }
+    
 }
 
 //MARK: - UI
@@ -385,15 +383,6 @@ extension MyInfoViewController {
         
     }
     
-    //    private func configureMemo(){
-    //        view.addSubview(memo)
-    //        memo.translatesAutoresizingMaskIntoConstraints = false
-    //        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
-    //        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
-    //        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-    //
-    //    }
-    
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
@@ -418,8 +407,8 @@ extension MyInfoViewController {
         view.addSubview(lostCollectionView)
         lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
         lostCollectionView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 5).isActive = true
-        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7).isActive = true
+        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7).isActive = true
         lostCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     

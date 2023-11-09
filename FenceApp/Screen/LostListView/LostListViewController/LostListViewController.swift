@@ -31,15 +31,14 @@ class LostListViewController: UIViewController {
     
     var filterTapped: ( (FilterModel) -> Void)?
     
-    let lostCellTapped: ( (Lost) -> Void )
+    var lostCellTapped: ( (Lost) -> Void )?
     
     var plusButtonTapped: ( () -> Void )?
     
     private var lostWithDocument: LostWithDocument?
     
-    init(fireBaseLostService: FirebaseLostService, lostCellTapped: @escaping (Lost) -> Void) {
+    init(fireBaseLostService: FirebaseLostService) {
         self.fireBaseLostService = fireBaseLostService
-        self.lostCellTapped = lostCellTapped
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -183,7 +182,7 @@ extension LostListViewController: UITableViewDataSource {
 
 extension LostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        lostCellTapped(lostList[indexPath.row])
+        lostCellTapped?(lostList[indexPath.row])
     }
 }
 
