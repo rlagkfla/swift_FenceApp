@@ -22,16 +22,20 @@ final class DetailViewController: UIViewController {
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseUserService: FirebaseUserService
     let firebaseLostService: FirebaseLostService
+    let locationManager: LocationManager
     
-    let lost: Lost
+    var lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     
-    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService) {
+    var editButtonTapped: ( () -> Void )?
+    
+    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
         self.lost = lost
         self.firebaseCommentService = firebaseCommentService
         self.firebaseUserService = firebaseUserService
         self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
+        self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -97,19 +101,26 @@ private extension DetailViewController {
         }
         impossibleAlertController.addAction(cancelAction)
         deleteAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(confirmAction)
         
         let editAction = UIAction(title: "수정하기") { [weak self] _ in
-//            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-//                Task {
-//                    do {
-//                        try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
-//                    } catch {
-//                        print(error)
-//                    }
-//                }
-//            } else {
-//                self!.present(impossibleAlertController, animated: true)
-//            }
+            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                let erollViewController = EnrollViewController(firebaseLostService: self!.firebaseLostService, locationManager: self!.locationManager, lost:  self?.lost)
+                erollViewController.isEdited = true
+                erollViewController.delegate = self
+                Task {
+                    do {
+                        let image = try await ImageLoader.fetchPhoto(urlString: self!.lost.imageURL)
+                        erollViewController.images.append(image)
+                        self?.navigationController?.pushViewController(erollViewController, animated: true)
+                        print("@@@@@@@@@@@@@@@@@@")
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else {
+                self?.present(impossibleAlertController, animated: true)
+            }
         }
         
         let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
@@ -197,5 +208,13 @@ extension DetailViewController: CommentDetailViewControllerDelegate {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
         lastCommentDTO = lastComment
         self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
+    }
+}
+
+extension DetailViewController: EnrollViewControllerDelegate {
+    func popEnrollViewController(lost: Lost?) {
+        self.lost = lost!
+        print(self.lost)
+        detailView.detailCollectionView.reloadData()
     }
 }
