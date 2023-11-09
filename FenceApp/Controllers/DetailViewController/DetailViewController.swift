@@ -24,15 +24,18 @@ final class DetailViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
     
-    var lost: Lost
+    let lostIdentifier: String
+    
+    var lost: Lost!
+    
     var lastCommentDTO: CommentResponseDTO?
     
     var editButtonTapped: ( () -> Void )?
     
     private var menu = UIMenu()
     
-    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
-        self.lost = lost
+    init(firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
+        self.lostIdentifier = lostIdentifier
         self.firebaseCommentService = firebaseCommentService
         self.firebaseUserService = firebaseUserService
         self.firebaseAuthService = firebaseAuthService
@@ -52,8 +55,22 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Task {
+            do {
+                try await getLost()
+                configure()
+            } catch {
+                print(error)
+            }
+        }
+        //        configure()
+    }
+    
+    func getLost() async throws {
         
-        configure()
+        let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier)
+        let lost = LostResponseDTOMapper.makeLost(from: lostResponseDTO)
+        self.lost = lost
     }
     
     // MARK: - Action
@@ -107,7 +124,7 @@ private extension DetailViewController {
         
         let editAction = UIAction(title: "수정하기") { [weak self] _ in
             if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-                let erollViewController = EnrollViewController(firebaseLostService: self!.firebaseLostService, locationManager: self!.locationManager, lost:  self?.lost)
+                let erollViewController = EnrollViewController(firebaseLostService: self!.firebaseLostService, locationManager: self!.locationManager, lostIdentifier: self?.lostIdentifier)
                 erollViewController.isEdited = true
                 erollViewController.delegate = self
                 Task {
@@ -187,6 +204,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if indexPath.section == 0 {
             let imageCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
             imageCell.getImageUrl(urlString: lost.imageURL)
+            imageCell.imageCollectionView.reloadData()
             return imageCell
         } else if indexPath.section == 1 {
             let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
@@ -219,8 +237,14 @@ extension DetailViewController: CommentDetailViewControllerDelegate {
 }
 
 extension DetailViewController: EnrollViewControllerDelegate {
-    func popEnrollViewController(editLost: Lost?) {
-        self.lost = editLost!
-        detailView.detailCollectionView.reloadData()
+    func popEnrollViewController() {
+        Task {
+            do {
+                try await getLost()
+                detailView.detailCollectionView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
     }
 }
