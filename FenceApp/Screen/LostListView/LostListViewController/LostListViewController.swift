@@ -37,6 +37,8 @@ class LostListViewController: UIViewController {
     
     private var lostWithDocument: LostWithDocument?
     
+    private var refreshControl = UIRefreshControl()
+    
     init(fireBaseLostService: FirebaseLostService) {
         self.fireBaseLostService = fireBaseLostService
         super.init(nibName: nil, bundle: nil)
@@ -69,6 +71,14 @@ class LostListViewController: UIViewController {
     private func configureTableView(){
         lostListView.lostTableView.dataSource = self
         lostListView.lostTableView.delegate = self
+        lostListView.lostTableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
+    }
+    
+    @objc private func refreshTable() {
+        lostWithDocument = nil
+        getLostList()
+        self.refreshControl.endRefreshing()
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -76,7 +86,7 @@ class LostListViewController: UIViewController {
         guard shouldPaginate == true else { return }
         
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-        if bottomEdge >= scrollView.contentSize.height - 1000 {
+        if bottomEdge >= scrollView.contentSize.height{
             getLostList()
         }
     }
@@ -87,11 +97,11 @@ class LostListViewController: UIViewController {
                 if let nextLostWithDocument = self.lostWithDocument {
                     // 이전 페이지의 마지막 도큐먼트를 사용하여 다음 페이지를 가져오도록 변경
                     lostWithDocument = try await fireBaseLostService.fetchLostsWithPagination(int: 10, lastDocument: nextLostWithDocument.lastDocument)
-                    
+                   
                     let nextLostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
-                    
+                  
                     lostList += nextLostList
-                    
+                   
                 } else {
                     // 처음 페이지를 가져올 때는 lastDocument를 nil로 전달
                     lostWithDocument = try await self.fireBaseLostService.fetchLostsWithPagination(int: 10)
@@ -103,7 +113,6 @@ class LostListViewController: UIViewController {
                 lostList.sort { $0.postDate > $1.postDate }
                 
                 lostListView.lostTableView.reloadData()
-                
             } catch {
                 print(error)
             }
