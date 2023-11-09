@@ -140,7 +140,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                             firebaseCommentService: self.firebaseLostCommentService,
                                                             firebaseUserService: self.firebaseUserService,
                                                             firebaseAuthService: self.firebaseAuthService,
-                                                            firebaseLostService: self.firebaseLostService)
+                                                            firebaseLostService: self.firebaseLostService, locationManager: self.locationManager)
             lostModalViewController.dismiss(animated: true)
             
             self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
@@ -177,7 +177,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         firebaseCommentService: firebaseLostCommentService,
                                                         firebaseUserService: firebaseUserService,
                                                         firebaseAuthService: firebaseAuthService,
-                                                        firebaseLostService: firebaseLostService)
+                                                        firebaseLostService: firebaseLostService,
+                                                        locationManager: locationManager)
         return detailViewController
     }
     

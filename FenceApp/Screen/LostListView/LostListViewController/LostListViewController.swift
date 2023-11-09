@@ -186,7 +186,7 @@ extension LostListViewController: UITableViewDelegate {
 }
 
 extension LostListViewController: EnrollViewControllerDelegate {
-    func popEnrollViewController() {
+    func popEnrollViewController(lost: Lost?) {
         lostWithDocument = nil
         getLostList()
     }

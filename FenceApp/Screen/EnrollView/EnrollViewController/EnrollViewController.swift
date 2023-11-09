@@ -11,7 +11,7 @@ import PhotosUI
 import MapKit
 
 protocol EnrollViewControllerDelegate: AnyObject {
-    func popEnrollViewController()
+    func popEnrollViewController(lost: Lost?)
 }
 
 struct SelectedImage {
@@ -20,10 +20,11 @@ struct SelectedImage {
 }
 
 class EnrollViewController: UIViewController {
-
+    
     private let enrollView = EnrollView()
     
     let firebaseLostService: FirebaseLostService
+    let lost: Lost?
     var lostList: [LostResponseDTO] = []
     
     weak var delegate: EnrollViewControllerDelegate?
@@ -32,7 +33,7 @@ class EnrollViewController: UIViewController {
     
     // camera
     var images: [UIImage] = [] // 삭제 예정
-//    var selectedImages: [SelectedImage] = []
+    //    var selectedImages: [SelectedImage] = []
     var pickerViewController: PHPickerViewController?
     
     // map
@@ -43,12 +44,13 @@ class EnrollViewController: UIViewController {
     
     var finishUploadingLost: ((MissingType) -> ())?
     
-    init(firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
+    init(firebaseLostService: FirebaseLostService, locationManager: LocationManager, lost: Lost? = nil) {
         self.firebaseLostService = firebaseLostService
         self.locationManager = locationManager
+        self.lost = lost
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -65,8 +67,10 @@ class EnrollViewController: UIViewController {
         // mapView의 delegate 설정
         enrollView.mapView.delegate = self
         
+        print(images.count)
+        
         configureNavBar()
-
+        
         configureAction()
         
         configureCollectionView()
@@ -74,6 +78,8 @@ class EnrollViewController: UIViewController {
         configureMap()
         
         configureKeyboard()
+        
+        configureEditMode()
     }
     
     func configureAction(){
@@ -95,7 +101,20 @@ class EnrollViewController: UIViewController {
         tapGestureRecognizer.cancelsTouchesInView = false
         enrollView.addGestureRecognizer(tapGestureRecognizer)
     }
-
+    
+    func configureEditMode() {
+        guard isEdited == true else { return }
+        guard let lost = self.lost else { return }
+        enrollView.titleTextField.text = lost.title
+        enrollView.nameTextField.text = lost.petName
+        enrollView.textView.text = lost.description
+        enrollView.datePicker.date = lost.lostDate
+        let center = CLLocationCoordinate2D(latitude: lost.latitude, longitude: lost.longitude)
+        //        selectedCoordinate = center
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+        enrollView.mapView.setRegion(region, animated: true)
+    }
+    
     
     @objc func customButtonTapped() {
         // 이미지 배열 비우기 (데이터 저장 로직 수정 후 삭제 예정)
@@ -104,13 +123,13 @@ class EnrollViewController: UIViewController {
         // PHPicker 구성
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 1 // 0은 제한 없음을 의미
-
+        
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
-
+        
         // 뷰 컨트롤러에 참조 저장
         self.pickerViewController = picker
-
+        
         // PHPicker 화면 표시
         self.present(picker, animated: true, completion: nil)
         
@@ -135,7 +154,7 @@ class EnrollViewController: UIViewController {
             let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
             enrollView.scrollView.contentInset = contentInset
             enrollView.scrollView.scrollIndicatorInsets = contentInset
-
+            
             // UITextView가 키보드 아래에 가려지지 않도록 조정
             if let selectedRange = enrollView.textView.selectedTextRange {
                 let caretRect = enrollView.textView.caretRect(for: selectedRange.start)
@@ -159,7 +178,7 @@ class EnrollViewController: UIViewController {
             let caretRect = enrollView.textView.caretRect(for: selectedRange.start)
             let caretY = caretRect.origin.y
             let contentOffset = enrollView.scrollView.contentOffset.y
-
+            
             if caretY < contentOffset {
                 // 커서가 화면에서 가려져 있는 경우 스크롤하여 보이도록 함
                 let offsetY = max(0, contentOffset - (contentOffset - caretY))
@@ -208,10 +227,10 @@ class EnrollViewController: UIViewController {
             showAlert(message: "이미지를 선택하세요.")
             return
         }
-//        guard let picture = selectedImages.first else {
-//            showAlert(message: "이미지를 선택하세요.")
-//            return
-//        }
+        //        guard let picture = selectedImages.first else {
+        //            showAlert(message: "이미지를 선택하세요.")
+        //            return
+        //        }
         guard let enrollTitle = enrollView.titleTextField.text, !enrollTitle.isEmpty else {
             showAlert(message: "제목을 입력하세요.")
             return
@@ -225,7 +244,7 @@ class EnrollViewController: UIViewController {
             return
         }
         guard let enrollSeg = enrollView.segmentedControl.titleForSegment(at: enrollView.segmentedControl.selectedSegmentIndex) else {return}
-             
+        
         // 로딩 인디케이터 추가
         let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
         activityIndicator.center = self.view.center
@@ -248,13 +267,21 @@ class EnrollViewController: UIViewController {
         Task{
             do {
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-//                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
+                //                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
                 
                 guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
                 
                 let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
                 
-                try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
+                if isEdited == false {
+                    try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
+                    delegate?.popEnrollViewController(lost: nil)
+                } else {
+                    let lostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
+                    let lost = Lost(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, imageURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
+                    delegate?.popEnrollViewController(lost: lost)
+                    try await firebaseLostService.editLost(on: lostResponseDTO)
+                }
                 
                 print("lostResponseDTO - \(lostResponseDTO)")
                 
@@ -266,7 +293,6 @@ class EnrollViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
                 
                 // pop시 delegate로 테이블뷰 페이지 이동
-                delegate?.popEnrollViewController()
                 finishUploadingLost?(.lost)
             }catch{
                 print(error)
@@ -290,7 +316,7 @@ extension EnrollViewController {
         self.title = "게시글 등록"
         let appearance = UINavigationBarAppearance()
         // 불투명한 색상의 백그라운드 생성 (불투명한 그림자를 한겹을 쌓는다)
-//        appearance.configureWithOpaqueBackground()
+        //        appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
         // 우측 버튼
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(tapRightBarBtn))
@@ -315,23 +341,24 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return images.count // 삭제 예정
-//        return selectedImages.count
+        //        return selectedImages.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         
         cell.backgroundColor = .white
         
         // selectedImages 배열에서 해당 인덱스의 이미지를 가져와서 셀에 표시
-//        let selectedImage = selectedImages[indexPath.row]
-//        cell.imageView.image = selectedImage.image
+        //        let selectedImage = selectedImages[indexPath.row]
+        //        cell.imageView.image = selectedImage.image
         
         // images 배열에서 해당 인덱스의 이미지를 가져와서 셀에 표시 -> 삭제 예정
+        
         let image = images[indexPath.row]
         cell.imageView.image = image
-        
         return cell
     }
     
@@ -339,7 +366,7 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
         // UICollectionView의 크기를 가져와서 사용
         let collectionViewHeight = collectionView.bounds.height - 15
         let collectionViewWidth = collectionViewHeight
-
+        
         // 각 셀의 크기를 UICollectionView의 크기와 일치하도록 설정
         return CGSize(width: collectionViewWidth, height: collectionViewHeight)
     }
@@ -347,39 +374,39 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
 }
 
 extension EnrollViewController: PHPickerViewControllerDelegate {
-
+    
     // picker가 종료되면 동작 합니다.
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
-
+        
         // 선택한 이미지 처리
-//        for (index, result) in results.enumerated() {
-//            // 이미지 아이템 제공자에서 이미지를 가져옵니다.
-//            result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                if let image = image as? UIImage {
-//                    // 이미지를 배열에 추가
-////                    self.images.append(image)
-//
-//                    // 이미지와 순서 정보를 함께 저장
-//                    self.selectedImages.append(SelectedImage(image: image, index: index))
-//                    
-//                    // 컬렉션 뷰 새로 고침
-//                    DispatchQueue.main.async {
-//                        self.enrollView.collectionView.reloadData()
-//                    }
-//                }
-//            }
-//        }
+        //        for (index, result) in results.enumerated() {
+        //            // 이미지 아이템 제공자에서 이미지를 가져옵니다.
+        //            result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+        //                if let image = image as? UIImage {
+        //                    // 이미지를 배열에 추가
+        ////                    self.images.append(image)
+        //
+        //                    // 이미지와 순서 정보를 함께 저장
+        //                    self.selectedImages.append(SelectedImage(image: image, index: index))
+        //
+        //                    // 컬렉션 뷰 새로 고침
+        //                    DispatchQueue.main.async {
+        //                        self.enrollView.collectionView.reloadData()
+        //                    }
+        //                }
+        //            }
+        //        }
         
         for result in results {
             // 이미지 아이템 제공자에서 이미지를 가져옵니다.
             result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let image = image as? UIImage {
                     // 이미지를 배열에 추가
-//                    self.images.append(image)
-
+                    //                    self.images.append(image)
+                    
                     // 이미지 배열에 새 이미지 설정 (삭제 예정)
-                   self.images = [image]
+                    self.images = [image]
                     
                     // 컬렉션 뷰 새로 고침
                     DispatchQueue.main.async {
@@ -403,14 +430,14 @@ extension EnrollViewController: MKMapViewDelegate {
             let region = MKCoordinateRegion(center: center, span: span)
             enrollView.mapView.setRegion(region, animated: true)
             
-//            // 현재 위치에 대한 지도 마커
+            //            // 현재 위치에 대한 지도 마커
             annotation.coordinate = center
             
             // 마커 추가
             enrollView.mapView.addAnnotation(annotation)
             
             // 마커를 가운데에 고정하기 / 확인필요
-//            enrollView.mapView.setUserTrackingMode(.follow, animated: true)
+            //            enrollView.mapView.setUserTrackingMode(.follow, animated: true)
             
             // 탭 제스처 인식기를 생성하고 지도 뷰에 추가
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleMapTap))
@@ -421,5 +448,5 @@ extension EnrollViewController: MKMapViewDelegate {
         
     }
     
-  
+    
 }
