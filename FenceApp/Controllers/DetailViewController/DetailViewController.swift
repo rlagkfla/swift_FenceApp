@@ -29,7 +29,7 @@ final class DetailViewController: UIViewController {
     
     var editButtonTapped: ( () -> Void )?
     
-    var menu = UIMenu()
+    private var menu = UIMenu()
     
     init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
         self.lost = lost
