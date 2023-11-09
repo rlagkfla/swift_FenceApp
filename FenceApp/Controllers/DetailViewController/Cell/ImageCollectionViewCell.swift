@@ -12,7 +12,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "ImageCell"
     
-    var imageUrl: String = ""
+    var imageUrl: String!
 //    var nowPage: Int = 0
     
     func getImageUrl(urlString: String) {

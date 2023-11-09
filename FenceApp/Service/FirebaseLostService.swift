@@ -111,6 +111,18 @@ struct FirebaseLostService {
         return lostResponseDTOs
     }
     
+    func fetchLost(lostIdentifier: String) async throws -> LostResponseDTO {
+        
+        let ref = COLLECTION_LOST.document(lostIdentifier)
+        
+        let document = try await ref.getDocument()
+        
+        guard let dictionary = document.data() else { throw PetError.noSnapshotDocument}
+        
+        let lostResponseDTO = LostResponseDTOMapper.makeLostResponseDTO(from: dictionary)
+        
+        return lostResponseDTO
+    }
     
     func fetchLostsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> LostWithDocument {
         
@@ -147,7 +159,7 @@ struct FirebaseLostService {
         }
         
         let filteredLostResponseDTOs = lostResponseDTOs.filter { lostResponseDTO in
-         
+            
             let distanceFromOrigin = LocationCalculator.getDistanceFromOrigin(lat1: location.latitude, lon1: location.longitude, lat2: lostResponseDTO.latitude, lon2: lostResponseDTO.longitude)
             
             return distanceFromOrigin <= filterModel.distance
@@ -178,9 +190,9 @@ struct FirebaseLostService {
         return identifiers
     }
 }
-    
-    
-    
-    
-    
+
+
+
+
+
 

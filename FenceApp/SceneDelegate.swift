@@ -136,11 +136,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             guard let self else { return }
             
-            let detailViewController = DetailViewController(lost: lost,
+            let detailViewController = DetailViewController(
+                
                                                             firebaseCommentService: self.firebaseLostCommentService,
                                                             firebaseUserService: self.firebaseUserService,
                                                             firebaseAuthService: self.firebaseAuthService,
-                                                            firebaseLostService: self.firebaseLostService, locationManager: self.locationManager)
+                                                            firebaseLostService: self.firebaseLostService, locationManager: self.locationManager, lostIdentifier: lost.lostIdentifier)
+            
             lostModalViewController.dismiss(animated: true)
             
             self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
@@ -172,13 +174,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-    private func makeDetailVC(lost: Lost) -> DetailViewController {
-        let detailViewController = DetailViewController(lost: lost,
+    private func makeDetailVC(lostIdentifier: String) -> DetailViewController {
+        let detailViewController = DetailViewController(
                                                         firebaseCommentService: firebaseLostCommentService,
                                                         firebaseUserService: firebaseUserService,
                                                         firebaseAuthService: firebaseAuthService,
                                                         firebaseLostService: firebaseLostService,
-                                                        locationManager: locationManager)
+                                                        locationManager: locationManager, lostIdentifier: lostIdentifier)
+        
         return detailViewController
     }
     
@@ -190,7 +193,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         lostListViewController.lostCellTapped = { [weak self] lost in
             guard let self else { return }
             
-            let detailViewController = self.makeDetailVC(lost: lost)
+            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier)
             
 //            detailViewController.hidesBottomBarWhenPushed = true
             detailViewController.delegate = lostListViewController
@@ -264,7 +267,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         myInfoViewController.lostCellTapped = { lost in
-            let detailViewController = self.makeDetailVC(lost: lost)
+            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier)
             
 //            detailViewController.hidesBottomBarWhenPushed = true
             

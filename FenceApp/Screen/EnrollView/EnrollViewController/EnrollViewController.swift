@@ -11,7 +11,7 @@ import PhotosUI
 import MapKit
 
 protocol EnrollViewControllerDelegate: AnyObject {
-    func popEnrollViewController(editLost: Lost?)
+    func popEnrollViewController()
 }
 
 struct SelectedImage {
@@ -24,7 +24,10 @@ class EnrollViewController: UIViewController {
     private let enrollView = EnrollView()
     
     let firebaseLostService: FirebaseLostService
-    let lost: Lost?
+    
+    let lostIdentifier: String?
+    var lost: Lost!
+    
     var lostList: [LostResponseDTO] = []
     
     weak var delegate: EnrollViewControllerDelegate?
@@ -44,10 +47,10 @@ class EnrollViewController: UIViewController {
     
     var finishUploadingLost: ((MissingType) -> ())?
     
-    init(firebaseLostService: FirebaseLostService, locationManager: LocationManager, lost: Lost? = nil) {
+    init(firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String? = nil) {
         self.firebaseLostService = firebaseLostService
         self.locationManager = locationManager
-        self.lost = lost
+        self.lostIdentifier = lostIdentifier
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -79,6 +82,20 @@ class EnrollViewController: UIViewController {
         
         configureKeyboard()
         
+        Task {
+            do {
+                try await getLost()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func getLost() async throws {
+        guard isEdited == true else { return }
+        let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier!)
+        let lost = LostResponseDTOMapper.makeLost(from: lostResponseDTO)
+        self.lost =  lost
         configureEditMode()
     }
     
@@ -103,7 +120,6 @@ class EnrollViewController: UIViewController {
     }
     
     func configureEditMode() {
-        guard isEdited == true else { return }
         guard let lost = self.lost else { return }
         enrollView.titleTextField.text = lost.title
         enrollView.nameTextField.text = lost.petName
@@ -283,11 +299,11 @@ class EnrollViewController: UIViewController {
                 
                 if isEdited == false {
                     try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
-                    delegate?.popEnrollViewController(editLost: nil)
+                    delegate?.popEnrollViewController()
                 } else {
                     let editLostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
                     let editLost = Lost(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, imageURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
-                    delegate?.popEnrollViewController(editLost: editLost)
+                    delegate?.popEnrollViewController()
                     try await firebaseLostService.editLost(on: editLostResponseDTO)
                 }
                 
