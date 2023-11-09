@@ -7,24 +7,37 @@
 
 import UIKit
 
+protocol DetailViewControllerDelegate: AnyObject {
+    func deleteMenuTapped()
+}
+
 final class DetailViewController: UIViewController {
     
     // MARK: - Properties
     private let detailView = DetailView()
     
+    weak var delegate: DetailViewControllerDelegate?
+    
     let firebaseAuthService: FirebaseAuthService
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseUserService: FirebaseUserService
+    let firebaseLostService: FirebaseLostService
+    let locationManager: LocationManager
     
-    
-    let lost: Lost
+    var lost: Lost
     var lastCommentDTO: CommentResponseDTO?
     
-    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService) {
+    var editButtonTapped: ( () -> Void )?
+    
+    private var menu = UIMenu()
+    
+    init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
         self.lost = lost
         self.firebaseCommentService = firebaseCommentService
         self.firebaseUserService = firebaseUserService
         self.firebaseAuthService = firebaseAuthService
+        self.firebaseLostService = firebaseLostService
+        self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,12 +77,76 @@ private extension DetailViewController {
     private func configure() {
         view.backgroundColor = .white
         
+        configureNavigation()
+        configureCollectionView()
+        getFirstComment()
+    }
+    
+    private func configureNavigation() {
         self.navigationItem.title = "상세 페이지"
         self.navigationItem.backBarButtonItem?.tintColor = .accent
         self.navigationController?.navigationBar.backgroundColor = .white
         
-        configureCollectionView()
-        getFirstComment()
+        let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
+        let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let confirmAction = UIAlertAction(title: "삭제하기", style: .default) { [weak self] _ in
+            Task {
+                do {
+                    try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
+                    self?.navigationController?.popViewController(animated: true)
+                    self?.delegate?.deleteMenuTapped()
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        impossibleAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(confirmAction)
+        
+        let editAction = UIAction(title: "수정하기") { [weak self] _ in
+            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                let erollViewController = EnrollViewController(firebaseLostService: self!.firebaseLostService, locationManager: self!.locationManager, lost:  self?.lost)
+                erollViewController.isEdited = true
+                erollViewController.delegate = self
+                Task {
+                    do {
+                        let image = try await ImageLoader.fetchPhoto(urlString: self!.lost.imageURL)
+                        erollViewController.images.append(image)
+                        
+                        self?.navigationController?.pushViewController(erollViewController, animated: true)
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else {
+                self?.present(impossibleAlertController, animated: true)
+            }
+        }
+        
+        let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
+            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                self!.present(deleteAlertController, animated: true)
+            } else {
+                self!.present(impossibleAlertController, animated: true)
+            }
+        }
+        
+        let reportAction = UIAction(title: "신고하기") { _ in
+            let reportViewController = ReportViewController(lost: self.lost)
+            self.navigationController?.pushViewController(reportViewController, animated: true)
+        }
+        
+        
+        if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier  {
+            self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [editAction, deleteAction])
+        } else {
+            self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [reportAction])
+        }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis"), target: self, action: nil, menu: menu)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
     
     private func configureCollectionView() {
@@ -138,5 +215,12 @@ extension DetailViewController: CommentDetailViewControllerDelegate {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
         lastCommentDTO = lastComment
         self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
+    }
+}
+
+extension DetailViewController: EnrollViewControllerDelegate {
+    func popEnrollViewController(editLost: Lost?) {
+        self.lost = editLost!
+        detailView.detailCollectionView.reloadData()
     }
 }

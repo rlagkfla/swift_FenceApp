@@ -17,7 +17,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var previousNickname: String = ""
     var previousMemo: String = ""
     var previousImage: UIImage?
-
+    
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -55,6 +55,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //        setupMemoTextField()
         setupNavigationBar()
         addTapGesture()
+        nicknameTextField.setupForValidation(type: .nickName)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -116,11 +117,12 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
+        if let selectedImage = info[.editedImage] as? UIImage {
             profileImageView.image = selectedImage
         }
         picker.dismiss(animated: true, completion: nil)
@@ -139,6 +141,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @objc func doneButtonTapped() {
         if let nickname = nicknameTextField.text, let image = profileImageView.image  {
             delegate?.didSaveProfileInfo(nickname: nickname, image: image)
+            
         }
         
 //           if presentingViewController != nil {

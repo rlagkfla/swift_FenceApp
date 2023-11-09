@@ -46,17 +46,17 @@ struct CommentResponseDTO {
     
    
     
-    static var dummyComment: [CommentResponseDTO] = [
-        
-        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[0].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[0].identifier, userProfileImageURL: UserResponseDTO.dummyUser[0].profileImageURL, userNickname: UserResponseDTO.dummyUser[0].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!),
-        
-        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[1].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[1].identifier, userProfileImageURL: UserResponseDTO.dummyUser[1].profileImageURL, userNickname: UserResponseDTO.dummyUser[1].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!),
-        
-        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[2].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[2].identifier, userProfileImageURL: UserResponseDTO.dummyUser[2].profileImageURL, userNickname: UserResponseDTO.dummyUser[2].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -2, to: Date())!),
-        
-        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[3].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[3].identifier, userProfileImageURL: UserResponseDTO.dummyUser[3].profileImageURL, userNickname: UserResponseDTO.dummyUser[3].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -3, to: Date())!),
-        
-        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[4].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[4].identifier, userProfileImageURL: UserResponseDTO.dummyUser[4].profileImageURL, userNickname: UserResponseDTO.dummyUser[4].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -4, to: Date())!),
-        
-    ]
+//    static var dummyComment: [CommentResponseDTO] = [
+//        
+//        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[0].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[0].identifier, userProfileImageURL: UserResponseDTO.dummyUser[0].profileImageURL, userNickname: UserResponseDTO.dummyUser[0].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!),
+//        
+//        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[1].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[1].identifier, userProfileImageURL: UserResponseDTO.dummyUser[1].profileImageURL, userNickname: UserResponseDTO.dummyUser[1].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!),
+//        
+//        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[2].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[2].identifier, userProfileImageURL: UserResponseDTO.dummyUser[2].profileImageURL, userNickname: UserResponseDTO.dummyUser[2].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -2, to: Date())!),
+//        
+//        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[3].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[3].identifier, userProfileImageURL: UserResponseDTO.dummyUser[3].profileImageURL, userNickname: UserResponseDTO.dummyUser[3].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -3, to: Date())!),
+//        
+//        CommentResponseDTO(lostIdentifier: LostResponseDTO.dummyLost[4].lostIdentifier, userIdentifier: UserResponseDTO.dummyUser[4].identifier, userProfileImageURL: UserResponseDTO.dummyUser[4].profileImageURL, userNickname: UserResponseDTO.dummyUser[4].nickname, commentDescription: "description1", commentDate: Calendar.current.date(byAdding: .day, value: -4, to: Date())!),
+//        
+//    ]
 }

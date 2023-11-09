@@ -24,7 +24,8 @@ struct LostResponseDTOMapper {
                                pictureURL: dictionary[FB.Lost.pictureURL] as? String ?? "",
                                petName: dictionary[FB.Lost.petName] as? String ?? "",
                                description: dictionary[FB.Lost.lostDescription] as? String ?? "",
-                               kind: dictionary[FB.Lost.kind] as? String ?? "")
+                               kind: dictionary[FB.Lost.kind] as? String ?? "",
+                               userFCMToken: dictionary[FB.Lost.userFCMToken] as? String ?? "")
     }
     
     static func makeLostResponseDTOs(from dictionaries: [[String: Any]]) -> [LostResponseDTO] {
@@ -48,7 +49,8 @@ struct LostResponseDTOMapper {
                                    FB.Lost.pictureURL: lostResponseDTO.imageURL,
                                    FB.Lost.petName: lostResponseDTO.petName,
                                    FB.Lost.lostDescription: lostResponseDTO.description,
-                                   FB.Lost.kind: lostResponseDTO.kind]
+                                   FB.Lost.kind: lostResponseDTO.kind,
+                                   FB.Lost.userFCMToken: lostResponseDTO.userFCMToken]
         
         return data
     }
@@ -67,7 +69,8 @@ struct LostResponseDTOMapper {
              imageURL: lostResponseDTO.imageURL,
              petName: lostResponseDTO.petName,
              description: lostResponseDTO.description,
-             kind: lostResponseDTO.kind)
+             kind: lostResponseDTO.kind,
+             userFCMToken: lostResponseDTO.userFCMToken)
     }
     
     static func makeLosts(from lostResponseDTOs: [LostResponseDTO]) -> [Lost] {

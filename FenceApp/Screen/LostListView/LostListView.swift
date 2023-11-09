@@ -60,20 +60,6 @@ class LostListView: UIView {
         delegate?.tapFilterButton()
     }
 
-//    func setFilterLabel(within: Double, fromDate: Date, toDate: Date) {
-//        let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
-//        
-//        var resultDate = ""
-//        
-//        switch result {
-//        case 86400...:
-//            resultDate = "\(Int(result / 86400))일 이내"
-//        default:
-//            resultDate = "알 수 없는 오류"
-//        }
-//        
-//        filterLabel.text = "거리 - 반경 \(Int(within))km 내 / 시간 - \(resultDate)"
-//    }
 }
 
 extension LostListView {
@@ -84,7 +70,7 @@ extension LostListView {
         self.addSubview(filterBtn)
 
         filterLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(105)
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(5)
             $0.leading.equalToSuperview().offset(23)
             $0.trailing.equalToSuperview().offset(-23)
         }

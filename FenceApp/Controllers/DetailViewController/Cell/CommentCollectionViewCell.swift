@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CommentCollectionViewCell: UICollectionViewCell {
     
@@ -41,9 +42,9 @@ class CommentCollectionViewCell: UICollectionViewCell {
     
     private let commentImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = 0.5
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
     }()
@@ -86,10 +87,10 @@ private extension CommentCollectionViewCell {
         contentView.addSubview(commentView)
         
         commentView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(10)
             $0.bottom.equalToSuperview().inset(5)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
         configureCommentLable()

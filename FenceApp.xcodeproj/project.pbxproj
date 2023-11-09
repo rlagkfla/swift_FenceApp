@@ -36,12 +36,18 @@
 		C3FAAE0E2AF38D5B00089684 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */; };
 		C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C726A7872AE30067000B8D6D /* EditViewController.swift */; };
 		C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */; };
+		D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61308072AFB16AE00BB757E /* SettingModalViewController.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
+		D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */; };
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D632AFF12AE674200063ED76 /* Kingfisher */; };
 		D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */; };
 		D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B23222AF6213000EFB13A /* CustomColor.swift */; };
+		D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */; };
+		D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4532AFB7FA8002BB260 /* ReportType.swift */; };
+		D63CF4562AFB8CDD002BB260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63CF4552AFB8CDD002BB260 /* MessageUI.framework */; };
+		D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4572AFBB39C002BB260 /* WebViewController.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
@@ -145,10 +151,16 @@
 		C3FAAE0D2AF38D5B00089684 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		C726A7872AE30067000B8D6D /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		D61308072AFB16AE00BB757E /* SettingModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModalViewController.swift; sourceTree = "<group>"; };
+		D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostModalViewController.swift; sourceTree = "<group>"; };
 		D63B23222AF6213000EFB13A /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		D63CF4532AFB7FA8002BB260 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
+		D63CF4552AFB8CDD002BB260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D63CF4572AFBB39C002BB260 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -233,6 +245,7 @@
 				D65150B52ADD10BA002FDD04 /* FirebaseFirestore in Frameworks */,
 				08DB05D92AEE621900A0C589 /* RxBlocking in Frameworks */,
 				08DB05E12AEE621900A0C589 /* RxRelay in Frameworks */,
+				D63CF4562AFB8CDD002BB260 /* MessageUI.framework in Frameworks */,
 				D65150A32ADD0FFB002FDD04 /* FirebaseAnalytics in Frameworks */,
 				08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */,
 				D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */,
@@ -266,6 +279,17 @@
 			path = LostListViewController;
 			sourceTree = "<group>";
 		};
+		D61308092AFB16B300BB757E /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
+				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
+				D61308072AFB16AE00BB757E /* SettingModalViewController.swift */,
+				D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
 		D61368682AE2130D00DE18DF /* Comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,12 +309,14 @@
 				D6E10E9B2AE2A8CD0098F05D /* FirebaseLostCommentService.swift */,
 				D6E10E982AE2A8CD0098F05D /* FirebaseLostService.swift */,
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
+				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
 				D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 				D62D62972AF4D8100050FE12 /* DateService.swift */,
 				D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */,
+				D63CF4572AFBB39C002BB260 /* WebViewController.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -358,6 +384,8 @@
 			isa = PBXGroup;
 			children = (
 				D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */,
+				D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */,
+				D63CF4532AFB7FA8002BB260 /* ReportType.swift */,
 				D66B12C22AE0E47A006A9245 /* Cell */,
 			);
 			name = DetailViewController;
@@ -397,6 +425,7 @@
 		D65150AF2ADD1078002FDD04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D63CF4552AFB8CDD002BB260 /* MessageUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -495,9 +524,7 @@
 				D6FAD9E02ADD2AA6001EDABC /* Screen */,
 				D65150992ADD0E20002FDD04 /* Asset */,
 				D651508B2ADD0C8B002FDD04 /* Service */,
-				D651509F2ADD0F9F002FDD04 /* CustomTabBarController.swift */,
-				D6D8062F2AE9FF780002AE3A /* CustomFilterModalViewController.swift */,
-				D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */,
+				D61308092AFB16B300BB757E /* Modals */,
 				D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */,
 				D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */,
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
@@ -714,6 +741,7 @@
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */,
+				D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
 				D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */,
@@ -721,6 +749,7 @@
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
 				D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
+				D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
 				D6F1CF462AF3463600974B1F /* Found.swift in Sources */,
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
@@ -753,9 +782,11 @@
 				D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
+				D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
+				D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
@@ -789,6 +820,7 @@
 				D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */,
 				C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */,
 				08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */,
+				D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -933,20 +965,25 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 필요하다";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 필요하다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 필요하다";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "동물 촬영을 위해 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "잃어버린 반려동물 혹은 사용자 프로필 이미지를 추가하실 때 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -957,6 +994,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FenceApp03;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -972,20 +1010,25 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 필요하다";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 필요하다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치 필요하다";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "동물 촬영을 위해 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 현재 위치를 바탕으로 지도에서 잃어버린, 발견한 반려동물들을 찾는데 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "잃어버린 반려동물 혹은 사용자 프로필 이미지를 추가하실 때 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -996,6 +1039,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FenceApp03;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

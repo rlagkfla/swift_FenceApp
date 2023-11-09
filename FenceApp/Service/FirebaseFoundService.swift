@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 struct FirebaseFoundService {
     
-    
+    let locationManager: LocationManager
     
     func fetchFound(foundIdentifier: String) async throws -> FoundResponseDTO {
         
@@ -36,14 +36,10 @@ struct FirebaseFoundService {
     
     func fetchFounds(filterModel: FilterModel) async throws -> [FoundResponseDTO] {
         
-        let locationManager = LocationManager()
-        
         guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
         
-        let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: filterModel.distance)
-        
-        let ref = COLLECTION_FOUND.whereField(FB.Found.latitude, isLessThan: a.maxLat)
-                                .whereField(FB.Found.latitude, isGreaterThan: a.minLat)
+        let ref = COLLECTION_FOUND.whereField(FB.Found.date, isLessThanOrEqualTo: filterModel.endDate)
+            .whereField(FB.Found.date, isGreaterThanOrEqualTo: filterModel.startDate)
         
         let documents = try await ref.getDocuments().documents
         
@@ -52,26 +48,28 @@ struct FirebaseFoundService {
             return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
         }
         
-        let b = foundResponseDTOs.filter {
-
-            let range = a.minLon...a.maxLon
+        let filteredFoundResponseDTOs = foundResponseDTOs.filter { foundResponseDTO in
+            let distanceFromOrigin = LocationCalculator.getDistanceFromOrigin(lat1: location.latitude, lon1: location.longitude, lat2: foundResponseDTO.latitude, lon2: foundResponseDTO.longitude)
             
-            return range.contains($0.longitude) && $0.date <= filterModel.endDate && $0.date >= filterModel.startDate
+            return distanceFromOrigin <= filterModel.distance
         }
-      
-        return b
+        
+        return filteredFoundResponseDTOs
+        
     }
+    
+    
+    
     
     
     func fetchFounds(within distance: Double, fromDate: Date, toDate: Date) async throws -> [FoundResponseDTO] {
         
-        
-        let locationManager = LocationManager()
-        
         guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
+        
         let a = LocationCalculator.getLocationsOfSqaure(lat: location.latitude, lon: location.longitude, distance: distance)
+        
         let ref = COLLECTION_FOUND.whereField(FB.Found.latitude, isLessThan: a.maxLat)
-                                .whereField(FB.Found.latitude, isGreaterThan: a.minLat)
+            .whereField(FB.Found.latitude, isGreaterThan: a.minLat)
         
         let documents = try await ref.getDocuments().documents
         
@@ -81,12 +79,12 @@ struct FirebaseFoundService {
         }
         
         let b = foundResponseDTOs.filter {
-
+            
             let range = a.minLon...a.maxLon
             
             return range.contains($0.longitude) && $0.date <= toDate && $0.date >= fromDate
         }
-      
+        
         return b
     }
     
@@ -164,8 +162,10 @@ struct FirebaseFoundService {
         }
     }
     
+    init(locationManager: LocationManager) {
+        self.locationManager = locationManager
+    }
     
-  
 }
 
 

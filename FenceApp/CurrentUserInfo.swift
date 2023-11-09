@@ -13,5 +13,7 @@ class CurrentUserInfo {
     
     var currentUser: FBUser?
     
+    var userToken: String?
+    
     private init() {}
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseMessaging
 
 protocol CommentDetailViewControllerDelegate: AnyObject {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO)
@@ -19,6 +20,7 @@ final class CommentDetailViewController: UIViewController {
     
     let lost: Lost
     
+    let firebaseCloudMessaging = FirebaseCloudMessaging()
     let firebaseCommentService: FirebaseLostCommentService
     var commentList: [CommentResponseDTO] = []
     
@@ -78,21 +80,6 @@ final class CommentDetailViewController: UIViewController {
             }
         }
     }
-    
-//    func commentAlert() {
-//        guard let user = CurrentUserInfo.shared.currentUser else { return }
-//        
-//        guard let lastComment = commentList.last else {
-//            return
-//        }
-//        guard user.identifier == lost.userIdentifier else {
-//            return
-//        }
-//        guard user.identifier != lastComment.userIdentifier else {
-//            return
-//        }
-//        UNUserNotificationCenter.current().addNotificationRequest(title: lastComment.userNickname, body: lastComment.commentDescription, id: lastComment.commentIdentifier)
-//    }
 }
 
 // MARK: - Private Method
@@ -154,18 +141,20 @@ extension CommentDetailViewController {
     }
     
     @objc func dismissKeyboard() {
-        view.endEditing(true)
+        view.endEditing(true)	
     }
     
     @objc func commentSendButtonTapped() {
+        guard let comment = commentDetailView.writeCommentTextView.text else { return }
         guard commentDetailView.writeCommentTextView.textColor == .black else { return }
         guard commentDetailView.writeCommentTextView.text != "" else { return }
         
         Task {
             do {
                 try await setText(text: commentDetailView.writeCommentTextView.text)
-                
                 getCommentList()
+                guard lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier else { return }
+                try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
             } catch {
                 print(error)
             }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class WriterInfoCollectionViewCell: UICollectionViewCell {
     
@@ -16,10 +17,10 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     private let writerProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.clear.cgColor
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
         return imageView
     }()
     
@@ -75,7 +76,7 @@ private extension WriterInfoCollectionViewCell {
         
         writerProfileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(contentView.snp.leading).offset(10)
+            $0.leading.equalTo(contentView.snp.leading).offset(15)
             $0.width.height.equalTo(50)
         }
     }
@@ -84,10 +85,10 @@ private extension WriterInfoCollectionViewCell {
         contentView.addSubview(writerNickNameLabel)
         
         writerNickNameLabel.snp.makeConstraints {
-            $0.centerY.equalTo(writerProfileImageView.snp.centerY)
-            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(10)
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(15)
             $0.width.equalTo(200)
-            $0.height.equalTo(50)
+            $0.height.equalTo(30)
         }
     }
     
@@ -95,9 +96,8 @@ private extension WriterInfoCollectionViewCell {
         contentView.addSubview(postWriteTimeLabel)
         
         postWriteTimeLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalTo(writerNickNameLabel.snp.trailing)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.top.equalTo(writerNickNameLabel.snp.bottom).offset(5)
+            $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(15)
             $0.height.equalTo(20)
         }
     }

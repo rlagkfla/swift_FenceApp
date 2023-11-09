@@ -16,7 +16,7 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     let imageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "코주부 원숭이"))
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
@@ -45,7 +45,7 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         
         imageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.leading.trailing.equalToSuperview()
         }
     }
 }
