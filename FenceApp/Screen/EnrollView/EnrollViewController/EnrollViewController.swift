@@ -109,6 +109,14 @@ class EnrollViewController: UIViewController {
         enrollView.nameTextField.text = lost.petName
         enrollView.textView.text = lost.description
         enrollView.datePicker.date = lost.lostDate
+        switch lost.kind {
+        case "dog":
+            enrollView.segmentedControl.selectedSegmentIndex = 0
+        case "cat":
+            enrollView.segmentedControl.selectedSegmentIndex = 1
+        default:
+            enrollView.segmentedControl.selectedSegmentIndex = 2
+        }
         let center = CLLocationCoordinate2D(latitude: lost.latitude, longitude: lost.longitude)
         //        selectedCoordinate = center
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
