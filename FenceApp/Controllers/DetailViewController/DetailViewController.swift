@@ -29,6 +29,8 @@ final class DetailViewController: UIViewController {
     
     var editButtonTapped: ( () -> Void )?
     
+    var menu = UIMenu()
+    
     init(lost: Lost, firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager) {
         self.lost = lost
         self.firebaseCommentService = firebaseCommentService
@@ -114,7 +116,6 @@ private extension DetailViewController {
                         erollViewController.images.append(image)
                         
                         self?.navigationController?.pushViewController(erollViewController, animated: true)
-                        print("@@@@@@@@@@@@@@@@@@")
                     } catch {
                         print(error)
                     }
@@ -137,7 +138,12 @@ private extension DetailViewController {
             self.navigationController?.pushViewController(reportViewController, animated: true)
         }
         
-        let menu = UIMenu(title: "메뉴", options: .displayInline, children: [editAction, deleteAction, reportAction])
+        
+        if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier  {
+            self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [editAction, deleteAction])
+        } else {
+            self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [reportAction])
+        }
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis"), target: self, action: nil, menu: menu)
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
