@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import MessageUI
+import WebKit
 
 class SettingModalViewController: UIViewController {
     
@@ -45,7 +47,7 @@ class SettingModalViewController: UIViewController {
         if let sheet = self.sheetPresentationController {
             let smllId = UISheetPresentationController.Detent.Identifier("settingSmall")
             let smallDetent = UISheetPresentationController.Detent.custom(identifier: smllId) { context in
-                return 120
+                return 260
             }
             sheet.detents = [smallDetent]
         }
@@ -57,20 +59,30 @@ class SettingModalViewController: UIViewController {
         settingListTableView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(90)
+            $0.height.equalTo(240)
         }
     }
 }
 
 extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         if indexPath.row == 0 {
+            cell.textLabel?.text = "앱 피드백"
+            return cell
+        } else if indexPath.row == 1 {
+            cell.textLabel?.text = "서비스 이용약관"
+            return cell
+        } else if indexPath.row == 2 {
+            cell.textLabel?.text = "개인정보처리방침"
+            return cell
+        } else if indexPath.row == 3 {
             cell.textLabel?.text = "로그아웃"
+            cell.textLabel?.textColor = .red
             return cell
         } else {
             cell.textLabel?.text = "회원탈퇴"
@@ -81,6 +93,24 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
+            func sendFeedbackEmail(indexPath: IndexPath) {
+                if MFMailComposeViewController.canSendMail() {
+                    let compseVC = MFMailComposeViewController()
+                    compseVC.mailComposeDelegate = self
+                    compseVC.setToRecipients(["gaemee.88@gmail.com"])
+                    compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
+                    self.present(compseVC, animated: true)
+                } else {
+                    print("실패")
+                }
+            }
+        } else if indexPath.row == 2 {
+            let webViewController = WebViewController(urlString: "https://dandy-temple-d75.notion.site/884b394ea65d4cfd9047b2f1d5010839?pvs=4")
+            self.present(webViewController, animated: true)
+        } else if indexPath.row == 3 {
+            let webViewController = WebViewController(urlString: "https://dandy-temple-d75.notion.site/eeffb1969f0b4c4383f0c5494e99b614?pvs=4")
+            self.present(webViewController, animated: true)
+        } else if indexPath.row == 3 {
             let alertController = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] action in
@@ -123,5 +153,11 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
             alertController.addAction(confirmAction)
             present(alertController, animated: true)
         }
+    }
+}
+
+extension SettingModalViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }
