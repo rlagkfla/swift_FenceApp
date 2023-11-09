@@ -28,6 +28,8 @@ class EnrollViewController: UIViewController {
     
     weak var delegate: EnrollViewControllerDelegate?
     
+    var isEdited: Bool = false
+    
     // camera
     var images: [UIImage] = [] // 삭제 예정
 //    var selectedImages: [SelectedImage] = []
