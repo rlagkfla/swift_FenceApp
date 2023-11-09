@@ -45,7 +45,7 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         
         imageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.leading.trailing.equalToSuperview()
         }
     }
 }

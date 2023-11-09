@@ -12,6 +12,8 @@ struct DateService {
         let result = toDate.timeIntervalSince1970 - fromDate.timeIntervalSince1970
         
         switch result {
+        case ...86400:
+            return "1"
         case 86400...:
             return "\(Int(result / 86400))"
         default:

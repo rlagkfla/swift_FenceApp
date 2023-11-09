@@ -31,15 +31,16 @@ class LostListViewController: UIViewController {
     
     var filterTapped: ( (FilterModel) -> Void)?
     
-    let lostCellTapped: ( (Lost) -> Void )
+    var lostCellTapped: ( (Lost) -> Void )?
     
     var plusButtonTapped: ( () -> Void )?
     
     private var lostWithDocument: LostWithDocument?
     
-    init(fireBaseLostService: FirebaseLostService, lostCellTapped: @escaping (Lost) -> Void) {
+    private var refreshControl = UIRefreshControl()
+    
+    init(fireBaseLostService: FirebaseLostService) {
         self.fireBaseLostService = fireBaseLostService
-        self.lostCellTapped = lostCellTapped
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,16 +71,22 @@ class LostListViewController: UIViewController {
     private func configureTableView(){
         lostListView.lostTableView.dataSource = self
         lostListView.lostTableView.delegate = self
+        lostListView.lostTableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
     }
     
-    
+    @objc private func refreshTable() {
+        lostWithDocument = nil
+        getLostList()
+        self.refreshControl.endRefreshing()
+    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         guard shouldPaginate == true else { return }
         
         let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-        if bottomEdge >= scrollView.contentSize.height - 1000 {
+        if bottomEdge >= scrollView.contentSize.height{
             getLostList()
         }
     }
@@ -90,19 +97,19 @@ class LostListViewController: UIViewController {
                 if let nextLostWithDocument = self.lostWithDocument {
                     // 이전 페이지의 마지막 도큐먼트를 사용하여 다음 페이지를 가져오도록 변경
                     lostWithDocument = try await fireBaseLostService.fetchLostsWithPagination(int: 10, lastDocument: nextLostWithDocument.lastDocument)
-                    
+                   
                     let nextLostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
-                    
+                  
                     lostList += nextLostList
-                    
+                   
                 } else {
                     // 처음 페이지를 가져올 때는 lastDocument를 nil로 전달
                     lostWithDocument = try await self.fireBaseLostService.fetchLostsWithPagination(int: 10)
-              
+                    
                     lostList = LostResponseDTOMapper.makeLosts(from: lostWithDocument?.lostResponseDTOs ?? [])
-                
-                }
 
+                }
+                
                 lostList.sort { $0.postDate > $1.postDate }
                 
                 lostListView.lostTableView.reloadData()
@@ -135,8 +142,8 @@ class LostListViewController: UIViewController {
         
         lostListView.filterLabel.text = "거리 - 반경 \(Int(filterModel.distance))km 내 / 시간 - \(convertDate)일 이내"
     }
-   
-
+    
+    
     
 }
 
@@ -155,6 +162,7 @@ extension LostListViewController {
     }
     
 }
+
 
 extension LostListViewController: UITableViewDataSource {
     
@@ -182,12 +190,12 @@ extension LostListViewController: UITableViewDataSource {
 
 extension LostListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        lostCellTapped(lostList[indexPath.row])
+        lostCellTapped?(lostList[indexPath.row])
     }
 }
 
 extension LostListViewController: EnrollViewControllerDelegate {
-    func popEnrollViewController() {
+    func popEnrollViewController(editLost: Lost?) {
         lostWithDocument = nil
         getLostList()
     }
@@ -211,3 +219,16 @@ extension LostListViewController: CustomFilterModalViewControllerDelegate {
     }
 }
 
+
+extension LostListViewController: DetailViewControllerDelegate {
+    func deleteMenuTapped() {
+        if shouldPaginate == true {
+            
+            lostWithDocument = nil
+            
+            getLostList()
+        } else {
+            getLostListWithFilter()
+        }
+    }
+}
