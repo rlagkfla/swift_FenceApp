@@ -41,20 +41,13 @@ class ReportViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureNavigation()
         configureUI()
-    }
-    
-    private func configureNavigation() {
-        self.title = "신고하기"
-        
-        self.navigationController?.navigationBar.layer.addBorder(edge: .bottom, color: .black, thickness: 0.5)
     }
 }
 
 extension ReportViewController {
     func configureUI() {
+        self.title = "신고하기"
         view.backgroundColor = .white
         
         configureReportingLabel()
