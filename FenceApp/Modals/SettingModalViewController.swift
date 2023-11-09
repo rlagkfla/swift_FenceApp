@@ -97,7 +97,7 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
                 if MFMailComposeViewController.canSendMail() {
                     let compseVC = MFMailComposeViewController()
                     compseVC.mailComposeDelegate = self
-                    compseVC.setToRecipients(["gaemee.88@gmail.com"])
+                    compseVC.setToRecipients(["teamFenceapp@gmail.com"])
                     compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
                     self.present(compseVC, animated: true)
                 } else {
