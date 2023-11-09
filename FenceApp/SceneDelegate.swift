@@ -200,6 +200,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         lostListViewController.plusButtonTapped = {
             let enrollViewController = self.makeEnrollViewVC()
             
+            enrollViewController.isEdited = false
+            
             enrollViewController.hidesBottomBarWhenPushed = true
             
             enrollViewController.delegate = lostListViewController
