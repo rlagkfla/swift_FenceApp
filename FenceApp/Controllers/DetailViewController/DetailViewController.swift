@@ -55,6 +55,7 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         Task {
             do {
                 try await getLost()
@@ -63,14 +64,6 @@ final class DetailViewController: UIViewController {
                 print(error)
             }
         }
-        //        configure()
-    }
-    
-    func getLost() async throws {
-        
-        let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier)
-        let lost = LostResponseDTOMapper.makeLost(from: lostResponseDTO)
-        self.lost = lost
     }
     
     // MARK: - Action
@@ -91,19 +84,23 @@ final class DetailViewController: UIViewController {
 
 // MARK: - Priavte Method
 private extension DetailViewController {
-    private func configure() {
+    func getLost() async throws {
+        
+        let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier)
+        let lost = LostResponseDTOMapper.makeLost(from: lostResponseDTO)
+        self.lost = lost
+    }
+    
+    func configure() {
         view.backgroundColor = .white
         
+        configureMenu()
         configureNavigation()
         configureCollectionView()
         getFirstComment()
     }
     
-    private func configureNavigation() {
-        self.navigationItem.title = "상세 페이지"
-        self.navigationItem.backBarButtonItem?.tintColor = .accent
-        self.navigationController?.navigationBar.backgroundColor = .white
-        
+    func configureMenu() {
         let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
         let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -166,12 +163,26 @@ private extension DetailViewController {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
     
-    private func configureCollectionView() {
+    func configureNavigation() {
+        let naviAppearance = UINavigationBarAppearance()
+        naviAppearance.backgroundColor = .white
+        
+        self.navigationItem.title = "상세 페이지"
+        self.navigationItem.backBarButtonItem?.tintColor = .accent
+        self.navigationController?.navigationBar.backgroundColor = .white
+        
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.standardAppearance = naviAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = naviAppearance
+        self.navigationController?.navigationBar.compactAppearance = naviAppearance
+    }
+    
+    func configureCollectionView() {
         detailView.detailCollectionView.dataSource = self
         detailView.detailCollectionView.delegate = self
     }
     
-    private func getFirstComment() {
+    func getFirstComment() {
         Task {
             do {
                 lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier).last
