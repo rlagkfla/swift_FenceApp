@@ -65,13 +65,6 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    func getLost() async throws {
-        
-        let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier)
-        let lost = LostResponseDTOMapper.makeLost(from: lostResponseDTO)
-        self.lost = lost
-    }
-    
     // MARK: - Action
     @objc func tapped() {
         let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost)
@@ -90,7 +83,14 @@ final class DetailViewController: UIViewController {
 
 // MARK: - Priavte Method
 private extension DetailViewController {
-    private func configure() {
+    func getLost() async throws {
+        
+        let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier)
+        let lost = LostResponseDTOMapper.makeLost(from: lostResponseDTO)
+        self.lost = lost
+    }
+    
+    func configure() {
         view.backgroundColor = .white
         
         configureMenu()
@@ -162,7 +162,7 @@ private extension DetailViewController {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
     
-    private func configureNavigation() {
+    func configureNavigation() {
         let appearnace = UINavigationBarAppearance()
         appearnace.backgroundColor = .white
         
@@ -176,12 +176,12 @@ private extension DetailViewController {
         self.navigationController?.navigationBar.compactAppearance = appearnace
     }
     
-    private func configureCollectionView() {
+    func configureCollectionView() {
         detailView.detailCollectionView.dataSource = self
         detailView.detailCollectionView.delegate = self
     }
     
-    private func getFirstComment() {
+    func getFirstComment() {
         Task {
             do {
                 lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier).last
