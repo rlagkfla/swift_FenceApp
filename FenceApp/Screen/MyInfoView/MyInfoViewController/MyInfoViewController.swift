@@ -56,14 +56,6 @@ class MyInfoViewController: UIViewController {
         return label
     }()
     
-    //    private let memo: UILabel = {
-    //        let label = UILabel()
-    //        //        label.backgroundColor = .red
-    //        label.text = "간단한 메모"
-    //        label.textColor = UIColor.color1
-    //        return label
-    //    }()
-    
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
@@ -86,7 +78,6 @@ class MyInfoViewController: UIViewController {
     }()
 
 
-    
     private let borderLine: UILabel = {
         let lb = UILabel()
         lb.layer.borderWidth = 1
@@ -392,15 +383,6 @@ extension MyInfoViewController {
         
     }
     
-    //    private func configureMemo(){
-    //        view.addSubview(memo)
-    //        memo.translatesAutoresizingMaskIntoConstraints = false
-    //        memo.leadingAnchor.constraint(equalTo: nickname.leadingAnchor).isActive = true
-    //        memo.topAnchor.constraint(equalTo: nickname.bottomAnchor, constant: 16).isActive = true
-    //        memo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-    //
-    //    }
-    
     private func configureEditProfileButton() {
         view.addSubview(editProfileButton)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
@@ -425,8 +407,8 @@ extension MyInfoViewController {
         view.addSubview(lostCollectionView)
         lostCollectionView.translatesAutoresizingMaskIntoConstraints = false
         lostCollectionView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 5).isActive = true
-        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        lostCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7).isActive = true
+        lostCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7).isActive = true
         lostCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     

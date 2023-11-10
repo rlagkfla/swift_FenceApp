@@ -10,8 +10,7 @@
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
 		083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */; };
 		0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */; };
-		0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */; };
-		08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */; };
+		08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653F8E2AF8BFE400B5BCAD /* LoadingViewHandler.swift */; };
 		08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08653F902AF8C01D00B5BCAD /* FirebaseMessaging */; };
 		08653FA02AF901AA00B5BCAD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
@@ -46,9 +45,9 @@
 		D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */; };
 		D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63B23222AF6213000EFB13A /* CustomColor.swift */; };
 		D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */; };
-		D63CF4522AFB7EC3002BB260 /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4512AFB7EC3002BB260 /* ReportTableViewCell.swift */; };
 		D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4532AFB7FA8002BB260 /* ReportType.swift */; };
 		D63CF4562AFB8CDD002BB260 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63CF4552AFB8CDD002BB260 /* MessageUI.framework */; };
+		D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4572AFBB39C002BB260 /* WebViewController.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
@@ -130,8 +129,7 @@
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
 		0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHandler.swift; sourceTree = "<group>"; };
 		0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Bold.otf"; sourceTree = "<group>"; };
-		0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Binggrae-Regular.otf"; sourceTree = "<group>"; };
-		08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		08653F8E2AF8BFE400B5BCAD /* LoadingViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewHandler.swift; sourceTree = "<group>"; };
 		08653F922AF8C03000B5BCAD /* FenceApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceApp.entitlements; sourceTree = "<group>"; };
 		08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -159,9 +157,9 @@
 		D63ADF942AEBC29C0077AD81 /* LostModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostModalViewController.swift; sourceTree = "<group>"; };
 		D63B23222AF6213000EFB13A /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
-		D63CF4512AFB7EC3002BB260 /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
 		D63CF4532AFB7FA8002BB260 /* ReportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportType.swift; sourceTree = "<group>"; };
 		D63CF4552AFB8CDD002BB260 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D63CF4572AFBB39C002BB260 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -324,6 +322,7 @@
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 				D62D62972AF4D8100050FE12 /* DateService.swift */,
 				D6535B602AF66A5C00F8DCFD /* SettingHandler.swift */,
+				D63CF4572AFBB39C002BB260 /* WebViewController.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -382,7 +381,7 @@
 				08DB05D32AEE61E100A0C589 /* ValidationHandler.swift */,
 				08DB05D52AEE620000A0C589 /* KeyboardHandler.swift */,
 				0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */,
-				08653F8E2AF8BFE400B5BCAD /* LaunchScreenViewController.swift */,
+				08653F8E2AF8BFE400B5BCAD /* LoadingViewHandler.swift */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -393,7 +392,6 @@
 				D6FAD9E62ADD2B9E001EDABC /* DetailViewController.swift */,
 				D63CF44F2AFB65DF002BB260 /* ReportViewController.swift */,
 				D63CF4532AFB7FA8002BB260 /* ReportType.swift */,
-				D63CF4512AFB7EC3002BB260 /* ReportTableViewCell.swift */,
 				D66B12C22AE0E47A006A9245 /* Cell */,
 			);
 			name = DetailViewController;
@@ -424,7 +422,6 @@
 				08DB05E52AEE62B600A0C589 /* cat.riv */,
 				08DB05E72AEE62BE00A0C589 /* profile.riv */,
 				0854D9742AF3B38E006C92A5 /* Binggrae-Bold.otf */,
-				0854D9762AF3B394006C92A5 /* Binggrae-Regular.otf */,
 				08206A462ADD43A000C110C0 /* background.riv */,
 			);
 			path = Asset;
@@ -712,7 +709,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0854D9772AF3B394006C92A5 /* Binggrae-Regular.otf in Resources */,
 				08206A472ADD43A000C110C0 /* background.riv in Resources */,
 				08DB05E82AEE62BE00A0C589 /* profile.riv in Resources */,
 				0854D9752AF3B38E006C92A5 /* Binggrae-Bold.otf in Resources */,
@@ -741,6 +737,7 @@
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */,
+				D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
 				D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */,
@@ -785,7 +782,7 @@
 				D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
-				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
+				08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */,
 				D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
@@ -794,7 +791,6 @@
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
 				D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
-				D63CF4522AFB7EC3002BB260 /* ReportTableViewCell.swift in Sources */,
 				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
 				D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */,
@@ -1013,11 +1009,9 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VGM28F2FH7;
+				DEVELOPMENT_TEAM = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -1039,7 +1033,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FenceApp03;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

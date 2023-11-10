@@ -1,8 +1,5 @@
 
 
-
-
-
 import UIKit
 
 // MARK: - Success Types
@@ -10,6 +7,7 @@ enum SuccessMessage {
     case registrationComplete(String)
     case operationSuccessful(String)
     case sendMessageSuccessful(String)
+    case sendAuthSuccessful(String)
 }
 
 // MARK: - Error Types
@@ -85,6 +83,8 @@ class AlertHandler {
             return ("🥳작업 성공🥳", customMessage)
         case .sendMessageSuccessful(let customMessage):
             return("🥳이메일 전송 성공🥳", customMessage)
+        case .sendAuthSuccessful(let customMessage):
+            return("🥳인증번호 전송 성공🥳", customMessage)
         }
     }
     

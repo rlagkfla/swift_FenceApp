@@ -39,13 +39,17 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         imageView.kf.setImage(with: url)
     }
     
+    func clearImage() {
+        imageView.image = nil
+    }
+    
     // MARK: - AutoLayout
     private func configure() {
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.leading.trailing.equalToSuperview()
         }
     }
 }

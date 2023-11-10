@@ -364,6 +364,24 @@ extension UITextField {
         
         return self
     }
+    
+    @discardableResult
+    func withKeyboardType(_ type: UIKeyboardType) -> Self {
+        keyboardType = type
+        return self
+    }
+
+    @discardableResult
+    func withCapitalization(_ type: UITextAutocapitalizationType) -> Self {
+        autocapitalizationType = type
+        return self
+    }
+    
+    @discardableResult
+    func withNoAutocorrection() -> Self {
+        autocorrectionType = .no
+        return self
+    }
 }
 
 // MARK: - UILabel Extensions
