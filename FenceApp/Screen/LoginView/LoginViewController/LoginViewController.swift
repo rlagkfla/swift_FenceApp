@@ -45,11 +45,13 @@ final class LoginViewController: UIViewController {
         .withBottomBorder(width: 3.0)
     
     private lazy var emailTextField = UITextField()
+        
         .withPlaceholder("Email@gmail.com")
         .withInsets(left: 5, right: 20)
         .withBottomBorder(width: 3.0)
-        .setCharacterLimit(20)
+        .setCharacterLimit(30)
         .withKeyboardType(.emailAddress)
+        
         .withCapitalization(.none)
         .withNoAutocorrection()
     
@@ -58,7 +60,7 @@ final class LoginViewController: UIViewController {
         .withSecured()
         .withInsets(left: 5, right: 20)
         .setCharacterLimit(20)
-        .withKeyboardType(.decimalPad)
+        .withKeyboardType(.emailAddress)
         .withNoAutocorrection()
 
     
@@ -133,7 +135,6 @@ extension LoginViewController {
 private extension LoginViewController {
     
     func setupUI() {
-        
         view
             .withBackgroundColor(.white)
             .handleKeyboardAdjustment(adjustmentFactor: 0.4)

@@ -31,7 +31,7 @@ final class SignUpView: UIView {
     private lazy var emailTextField = UITextField()
         .withPlaceholder("Email@gmail.com")
         .withInsets(left: 5, right: 20)
-        .setCharacterLimit(20)
+        .setCharacterLimit(30)
         .withCapitalization(.none)
         .withKeyboardType(.emailAddress)
         .withNoAutocorrection()
@@ -51,7 +51,7 @@ final class SignUpView: UIView {
         .withInsets(left: 5, right: 20)
         .withSecured()
         .setCharacterLimit(20)
-        .withKeyboardType(.decimalPad)
+        .withKeyboardType(.emailAddress)
         .withNoAutocorrection()
     
     private lazy var signupButton = UIButton()
