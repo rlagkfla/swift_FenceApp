@@ -88,7 +88,7 @@ extension ValidationHandler {
 
     func isValidNickName(_ nickName: String?) -> Bool {
         guard let nickName else {return false}
-        return nickName.count >= 6 ? true : false
+        return nickName.count >= 3 ? true : false
     }
     
     func isValidAuthNumber(_ authNumber: String?) -> Bool {
@@ -115,7 +115,7 @@ extension UITextField {
     
     func setupForValidation(type: ValidationHandler.ValidationType) -> Self {
         let initialColor = UIColor(hexCode: "6C5F5B")
-        self.withBottomBorder(color: initialColor, width: 3.0)
+        self.withBottomBorder(color: initialColor, width: 2.0)
         
         if validationHandler == nil {
             validationHandler = ValidationHandler(type: type)
@@ -131,10 +131,41 @@ extension UITextField {
             .subscribe(onNext: { [weak self] isValid in
                 DispatchQueue.main.async {
                     let borderColor = isValid ? UIColor(hexCode: "55BCEF") : UIColor(hexCode: "A9A9A9")
-                    self?.withBottomBorder(color: borderColor, width: 3.0)
+                    self?.withBottomBorder(color: borderColor, width: 2.0)
                 }
             })
             .disposed(by: validationHandler!.disposeBag)
         return self
+    }
+}
+
+
+extension UITextField {
+
+    func setCharacterLimit(_ limit: Int) -> Self {
+        self.delegate = self
+        objc_setAssociatedObject(self, &UITextField.maxCharactersKey, limit, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        return self
+    }
+
+    private var characterLimit: Int? {
+        get {
+            objc_getAssociatedObject(self, &UITextField.maxCharactersKey) as? Int
+        }
+    }
+
+    private static var maxCharactersKey = 0
+}
+
+extension UITextField: UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let characterLimit = characterLimit else {
+            return true
+        }
+
+        let currentText = textField.text ?? ""
+        let prospectiveText = (currentText as NSString).replacingCharacters(in: range, with: string)
+
+        return prospectiveText.count <= characterLimit
     }
 }
