@@ -55,6 +55,7 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         Task {
             do {
                 try await getLost()
@@ -163,17 +164,17 @@ private extension DetailViewController {
     }
     
     func configureNavigation() {
-        let appearnace = UINavigationBarAppearance()
-        appearnace.backgroundColor = .white
+        let naviAppearance = UINavigationBarAppearance()
+        naviAppearance.backgroundColor = .white
         
         self.navigationItem.title = "상세 페이지"
         self.navigationItem.backBarButtonItem?.tintColor = .accent
         self.navigationController?.navigationBar.backgroundColor = .white
         
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.standardAppearance = appearnace
-        self.navigationController?.navigationBar.scrollEdgeAppearance = appearnace
-        self.navigationController?.navigationBar.compactAppearance = appearnace
+        self.navigationController?.navigationBar.standardAppearance = naviAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = naviAppearance
+        self.navigationController?.navigationBar.compactAppearance = naviAppearance
     }
     
     func configureCollectionView() {
