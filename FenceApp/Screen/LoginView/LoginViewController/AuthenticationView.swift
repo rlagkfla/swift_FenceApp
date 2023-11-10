@@ -280,11 +280,29 @@ extension AuthenticationView {
           
             LoadingViewHandler.hideLoading()
             self?.authenticationSuccessful.onNext(())
-          
+            self?.deleteFirebaseUser()
 
             print("Successfully signed in with phone number!")
         }
     }
+    
+    func deleteFirebaseUser() {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("No current user found")
+            return
+        }
+
+        currentUser.delete { error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+                return
+            }
+
+            print("User successfully deleted from Firebase")
+            self.authenticationSuccessful.onNext(())
+        }
+    }
+
 }
 
 
