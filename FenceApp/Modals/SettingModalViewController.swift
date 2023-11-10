@@ -62,6 +62,25 @@ class SettingModalViewController: UIViewController {
             $0.height.equalTo(240)
         }
     }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "메일을 보내려면 'Mail' 앱이 필요합니다. App Store에서 해당 앱을 복원하거나 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let goAppStoreAction = UIAlertAction(title: "App Store로 이동하기", style: .default) { _ in
+            // 앱스토어로 이동하기(Mail)
+            if let url = URL(string: "https://apps.apple.com/kr/app/mail/id1108187098"), UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+        let cancleAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+        
+        sendMailErrorAlert.addAction(goAppStoreAction)
+        sendMailErrorAlert.addAction(cancleAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
 }
 
 extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource {
@@ -93,16 +112,14 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            func sendFeedbackEmail(indexPath: IndexPath) {
-                if MFMailComposeViewController.canSendMail() {
-                    let compseVC = MFMailComposeViewController()
-                    compseVC.mailComposeDelegate = self
-                    compseVC.setToRecipients(["teamFenceapp@gmail.com"])
-                    compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
-                    self.present(compseVC, animated: true)
-                } else {
-                    print("실패")
-                }
+            if MFMailComposeViewController.canSendMail() {
+                let compseVC = MFMailComposeViewController()
+                compseVC.mailComposeDelegate = self
+                compseVC.setToRecipients(["teamfenceapp@gmail.com"])
+                compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
+                self.present(compseVC, animated: true)
+            } else {
+                showSendMailErrorAlert()
             }
         } else if indexPath.row == 1 {
             let webViewController = WebViewController(urlString: "https://dandy-temple-d75.notion.site/884b394ea65d4cfd9047b2f1d5010839?pvs=4")
