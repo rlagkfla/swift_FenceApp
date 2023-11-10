@@ -68,6 +68,18 @@ class LostListViewController: UIViewController {
         plusButtonTapped?()
     }
     
+    func getLost() {
+        Task {
+            do {
+                let lostDTO = try await fireBaseLostService.fetchLost(lostIdentifier: "C29B6E15-ED0E-4200-9B23-4D2450E3F0B3")
+                let lost = LostResponseDTOMapper.makeLost(from: lostDTO)
+                print(lost)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     private func configureTableView(){
         lostListView.lostTableView.dataSource = self
         lostListView.lostTableView.delegate = self
@@ -195,7 +207,7 @@ extension LostListViewController: UITableViewDelegate {
 }
 
 extension LostListViewController: EnrollViewControllerDelegate {
-    func popEnrollViewController(editLost: Lost?) {
+    func popEnrollViewController() {
         lostWithDocument = nil
         getLostList()
     }
