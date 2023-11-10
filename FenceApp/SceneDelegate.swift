@@ -181,7 +181,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                         firebaseAuthService: firebaseAuthService,
                                                         firebaseLostService: firebaseLostService,
                                                         locationManager: locationManager, lostIdentifier: lostIdentifier)
-        
+        detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
     }
     
