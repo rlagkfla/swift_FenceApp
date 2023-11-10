@@ -93,16 +93,14 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            func sendFeedbackEmail(indexPath: IndexPath) {
-                if MFMailComposeViewController.canSendMail() {
-                    let compseVC = MFMailComposeViewController()
-                    compseVC.mailComposeDelegate = self
-                    compseVC.setToRecipients(["teamFenceapp@gmail.com"])
-                    compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
-                    self.present(compseVC, animated: true)
-                } else {
-                    print("실패")
-                }
+            if MFMailComposeViewController.canSendMail() {
+                let compseVC = MFMailComposeViewController()
+                compseVC.mailComposeDelegate = self
+                compseVC.setToRecipients(["teamfenceapp@gmail.com"])
+                compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
+                self.present(compseVC, animated: true)
+            } else {
+                print("실패")
             }
         } else if indexPath.row == 1 {
             let webViewController = WebViewController(urlString: "https://dandy-temple-d75.notion.site/884b394ea65d4cfd9047b2f1d5010839?pvs=4")
