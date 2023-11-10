@@ -1,8 +1,5 @@
 
 
-
-
-
 import UIKit
 
 // MARK: - Success Types
