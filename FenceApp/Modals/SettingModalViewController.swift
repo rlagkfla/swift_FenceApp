@@ -62,6 +62,16 @@ class SettingModalViewController: UIViewController {
             $0.height.equalTo(240)
         }
     }
+    
+    func showSendMailErrorAlert() {
+            let sendMailErrorAlert = UIAlertController(title: "메일을 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: "확인", style: .default) {
+                (action) in
+                print("확인")
+            }
+            sendMailErrorAlert.addAction(confirmAction)
+            self.present(sendMailErrorAlert, animated: true, completion: nil)
+        }
 }
 
 extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource {
@@ -93,16 +103,14 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            func sendFeedbackEmail(indexPath: IndexPath) {
-                if MFMailComposeViewController.canSendMail() {
-                    let compseVC = MFMailComposeViewController()
-                    compseVC.mailComposeDelegate = self
-                    compseVC.setToRecipients(["teamFenceapp@gmail.com"])
-                    compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
-                    self.present(compseVC, animated: true)
-                } else {
-                    print("실패")
-                }
+            if MFMailComposeViewController.canSendMail() {
+                let compseVC = MFMailComposeViewController()
+                compseVC.mailComposeDelegate = self
+                compseVC.setToRecipients(["teamfenceapp@gmail.com"])
+                compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
+                self.present(compseVC, animated: true)
+            } else {
+                showSendMailErrorAlert()
             }
         } else if indexPath.row == 1 {
             let webViewController = WebViewController(urlString: "https://dandy-temple-d75.notion.site/884b394ea65d4cfd9047b2f1d5010839?pvs=4")
