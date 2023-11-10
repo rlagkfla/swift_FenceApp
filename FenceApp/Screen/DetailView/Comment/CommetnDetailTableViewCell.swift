@@ -117,7 +117,6 @@ private extension CommentDetailTableViewCell {
             $0.top.equalTo(commenterNickName.snp.bottom)
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(5)
         }
     }
 }
