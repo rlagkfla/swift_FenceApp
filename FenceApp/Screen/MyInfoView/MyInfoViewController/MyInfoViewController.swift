@@ -59,7 +59,7 @@ class MyInfoViewController: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let button = UIButton()
         button.setTitle("프로필 편집", for: .normal)
-        button.setTitleColor(.white, for: .normal) 
+        button.setTitleColor(.white, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
         button.layer.borderColor = UIColor.color2.cgColor
@@ -339,9 +339,9 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        lostCellTapped?(lostList[indexPath.row])
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        lostCellTapped?(lostList[indexPath.row])
+//    }
     
 }
 
