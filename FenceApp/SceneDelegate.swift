@@ -34,9 +34,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window?.makeKeyAndVisible()
         
+        
         Task {
-            
+           
             do {
+                
                 try await checkUserLoggedIn()
                 
             } catch {
@@ -167,27 +169,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-    private func makeDetailVC(lost: Lost) -> DetailViewController {
+    private func makeDetailVC(lost: Lost, sender viewController: UIViewController) -> DetailViewController {
         let detailViewController = DetailViewController(lost: lost,
                                                         firebaseCommentService: firebaseLostCommentService,
                                                         firebaseUserService: firebaseUserService,
                                                         firebaseAuthService: firebaseAuthService)
+        
+        
+        // retain cycle
+        
+        detailViewController.pushToCommentVC = { [weak self] in
+            
+            guard let self else { return }
+            
+            let commentCollectionVC = self.makeCommentCollectionViewController(lostIdentifier: lost.lostIdentifier)
+            
+            viewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+        }
+        
+        detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
     }
     
     
     private func makeLostViewVC() -> LostListViewController {
         
-        let lostCellTapped = { [weak self] lost in
+        let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService)
+        
+        lostListViewController.lostCellTapped = { [weak self] lost in
             
             guard let self else { return }
             
-            let detailViewController = self.makeDetailVC(lost: lost)
+            let detailViewController = self.makeDetailVC(lost: lost, sender: lostListViewController)
             
             self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
+            
         }
-        
-        let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService, lostCellTapped: lostCellTapped)
         
         lostListViewController.plusButtonTapped = {
             let enrollViewController = self.makeEnrollViewVC()
@@ -221,6 +238,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
             
             displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
+            
+            
         }
         
         return vc
@@ -243,7 +262,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
-    
+    private func makeCommentCollectionViewController(lostIdentifier: String) -> CommentViewController {
+        let commentCollectionViewController = CommentViewController(lostIdentifier: lostIdentifier, firebaseLostCommentService: firebaseLostCommentService)
+        
+        return commentCollectionViewController
+    }
    
     private func makeMyInfoViewController() -> MyInfoViewController {
         let vc = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
@@ -268,4 +291,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
-
+// 로스트테이블 -> 글내용으로 들어가고 -> 수정을 누른다 -> 디테일은 변화해있다 -> 테이블뷰는 그대로있다 -> 테이블뷰를 누르면은 수정되기 전 그 로스트를 이용해서 다시 디테일을 그린다 -> 수정하기전 디테일이다
+///                                                                                                                              ->  테이블뷰를 바꿔주던가
+///                                                                                                                              -> identifier API를 새로해가지고 만들어준다 디테일 들어갈때마다 API를 한다
+///
