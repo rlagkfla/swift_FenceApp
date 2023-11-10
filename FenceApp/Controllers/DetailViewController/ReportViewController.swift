@@ -80,7 +80,7 @@ extension ReportViewController {
         if MFMailComposeViewController.canSendMail() {
             let compseVC = MFMailComposeViewController()
             compseVC.mailComposeDelegate = self
-            compseVC.setToRecipients(["gaemee.88@gmail.com"])
+            compseVC.setToRecipients(["teamfenceapp@gmail.com"])
             compseVC.setSubject(ReportType.allCases[indexPath.row].rawValue)
             compseVC.setMessageBody("게시글 식별코드: \(lost.lostIdentifier)", isHTML: false)
             
