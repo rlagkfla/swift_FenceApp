@@ -17,7 +17,7 @@ class ResetPasswordView: UIView {
         .withTextColor(ColorHandler.shared.titleColor)
     
     private lazy var emailTextField = UITextField()
-        .withPlaceholder("Email")
+        .withPlaceholder("Email@gmail.com")
         .withInsets(left: 5, right: 20)
     
     private lazy var resetPasswordButton = UIButton()
@@ -100,17 +100,20 @@ extension ResetPasswordView {
 extension ResetPasswordView {
     
     @objc func resetPasswordButtonTapped() {
+        LoadingViewHandler.showLoading()
         guard let email = emailTextField.text, !email.isEmpty else {
+            LoadingViewHandler.hideLoading()
             showInvalidEmailAlert()
             return
         }
 
         Auth.auth().sendPasswordReset(withEmail: email) { [weak self] (error) in
             if let error = error {
+                LoadingViewHandler.hideLoading()
                 self?.showErrorAlert(message: error.localizedDescription)
                 return
             }
-            
+            LoadingViewHandler.hideLoading()
             self?.resetEmailSent.onNext(())
         }
     }

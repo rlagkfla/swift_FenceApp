@@ -13,6 +13,8 @@ class AuthenticationView: UIView {
     let keyboardHeight = PublishSubject<CGFloat>()
     let deinitAuthView = PublishSubject<Void>()
     
+    private var verificationID: String?
+
     private lazy var titleLabel = UILabel()
         .withText("번호인증")
         .withFont(30, fontName: "Binggrae-Bold")
@@ -28,6 +30,9 @@ class AuthenticationView: UIView {
         .withPlaceholder("전화번호")
         .withInsets(left: 5, right: 50)
         .withBottomBorder(width: 3)
+        .setCharacterLimit(11)
+        .withKeyboardType(.phonePad)
+        .withNoAutocorrection()
         
     
     private lazy var authNumberTextField = UITextField()
@@ -35,6 +40,9 @@ class AuthenticationView: UIView {
         .withInsets(left: 5, right: 20)
         .withSecured()
         .withBottomBorder(width: 3)
+        .setCharacterLimit(6)
+        .withKeyboardType(.numberPad)
+        .withNoAutocorrection()
     
     
     private lazy var signupButton = UIButton()
@@ -180,17 +188,20 @@ extension AuthenticationView {
 extension AuthenticationView {
     
     @objc func sendAuthButtonTapped() {
+        LoadingViewHandler.showLoading()
         authorizePhoneNum()
         authNumberTextField.text = ""
 
-        AlertHandler.shared.presentSuccessAlertWithAction(for: .sendMessageSuccessful("인증번호가 전송되었습니다")) { [weak self] action in
+        AlertHandler.shared.presentSuccessAlertWithAction(for: .sendAuthSuccessful("인증번호가 전송되었습니다")) { [weak self] action in
             DispatchQueue.main.async {
+                LoadingViewHandler.hideLoading()
                 self?.authNumberTextField.becomeFirstResponder()
             }
         }
     }
 
     @objc func signupButtonTapped() {
+        LoadingViewHandler.showLoading()
         authWithMessage()
         
     }
@@ -217,35 +228,38 @@ extension AuthenticationView {
         
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
             guard let self = self else { return }
-            if let error = error { print("Error during phone number verification: \(error.localizedDescription)"); return }
-            UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+            if let error = error {
+                print("Error during phone number verification: \(error.localizedDescription)")
+                LoadingViewHandler.hideLoading()
+                return
+            }
+            self.verificationID = verificationID
         }
     }
     
     func authWithMessage() {
-        guard let verificationCode = authNumberTextField.text else {
+        guard let verificationCode = authNumberTextField.text, !verificationCode.isEmpty else {
             print("Error: Verification code is missing.")
+            DispatchQueue.main.async {
+                LoadingViewHandler.hideLoading()
+                AlertHandler.shared.presentErrorAlert(for: .authenticationError("인증번호를 재확인해주세요"))
+
+            }
             return
         }
         
-        guard let verificationID = fetchVerificationIDFromUserDefaults() else {
-            print("Error: VerificationID retrieval failed.")
-            AlertHandler.shared.presentErrorAlert(for: .authenticationError("인증번호가 잘못되었습니다"))
+        guard let verificationID = self.verificationID else {
+            DispatchQueue.main.async {
+                LoadingViewHandler.hideLoading()
+                AlertHandler.shared.presentErrorAlert(for: .authenticationError("인증번호를 재확인해주세요"))
+
+            }
             return
         }
-        
+
         authenticateUser(verificationID: verificationID, verificationCode: verificationCode)
     }
-    
-    private func fetchVerificationIDFromUserDefaults() -> String? {
-        let storedVerificationID = UserDefaults.standard.string(forKey: "authVerificationID")
-        clearVerificationIDFromUserDefaults()
-        return storedVerificationID
-    }
-    
-    private func clearVerificationIDFromUserDefaults() {
-        UserDefaults.standard.removeObject(forKey: "authVerificationID")
-    }
+
     
     private func authenticateUser(verificationID: String, verificationCode: String) {
         let credential = PhoneAuthProvider.provider().credential(
@@ -254,22 +268,21 @@ extension AuthenticationView {
         )
         
         Auth.auth().signIn(with: credential) { [weak self](authResult, error) in
-            if let error = error {print("\(error.localizedDescription)");return}
-            self?.deletePhoneNumber()
-            print("Successfully signed in with phone number!")
-        }
-    }
-    
-    
-    func deletePhoneNumber() {
-        Auth.auth().currentUser?.delete { error in
             if let error = error {
-                print("Error deleting user: \(error.localizedDescription)")
-            } else {
-                self.authenticationSuccessful.onNext(())
-                print("User successfully deleted")
-                
+                print("\(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    LoadingViewHandler.hideLoading()
+                    AlertHandler.shared.presentErrorAlert(for: .authenticationError("인증번호가 잘못되었습니다"))
+                }
+                return
             }
+            
+          
+            LoadingViewHandler.hideLoading()
+            self?.authenticationSuccessful.onNext(())
+          
+
+            print("Successfully signed in with phone number!")
         }
     }
 }

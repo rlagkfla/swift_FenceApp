@@ -48,11 +48,20 @@ final class LoginViewController: UIViewController {
         .withPlaceholder("Email@gmail.com")
         .withInsets(left: 5, right: 20)
         .withBottomBorder(width: 3.0)
+        .setCharacterLimit(20)
+        .withKeyboardType(.emailAddress)
+        .withCapitalization(.none)
+        .withNoAutocorrection()
     
     private let passwordTextField = UITextField()
         .withPlaceholder("비밀번호 6글자 이상")
         .withSecured()
         .withInsets(left: 5, right: 20)
+        .setCharacterLimit(20)
+        .withKeyboardType(.decimalPad)
+        .withNoAutocorrection()
+
+    
     
     private lazy var loginButton = UIButton()
         .withTitle("로그인")
@@ -61,7 +70,6 @@ final class LoginViewController: UIViewController {
         .withFont(size: 20)
         .withTarget(self, action: #selector(loginButtonTapped))
         .withCornerRadius(15)
-    
     
     private lazy var signUpButton = UIButton()
         .withTitle("회원 가입")
@@ -127,14 +135,15 @@ private extension LoginViewController {
     func setupUI() {
         
         view
-            .handleKeyboardAdjustment(adjustmentFactor: 0.4)
             .withBackgroundColor(.white)
+            .handleKeyboardAdjustment(adjustmentFactor: 0.4)
             .withBackgroundImage(
                 named: "background",
                 at: CGPoint(x: view.bounds.midX, y: view.bounds.midY/1.1),
                 size: CGSize(width: view.bounds.width/0.75, height: view.bounds.height/0.3)
             )
             .addSubviews(emailTextField,titleLabel,passwordTextField,loginButton,signUpButton,findPasswordButton,buttonStack)
+
         
         buttonStack
             .withArrangedSubviews(signUpButton,findPasswordButton)
@@ -176,6 +185,7 @@ private extension LoginViewController {
     
 
     @objc func loginButtonTapped() {
+        LoadingViewHandler.showLoading()
         if locationManager?.fetchStatus() == false {
             AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in SettingHandler.moveToSetting() }
             return
@@ -191,9 +201,11 @@ private extension LoginViewController {
                 let authResult = try await firebaseAuthService.loginUser(email: email, password: password)
                 print("Successfully logged in")
                 await fetchAndStoreCurrentUser(identifier: authResult.user.uid)
+                LoadingViewHandler.hideLoading()
                 enterMainView()
             } catch {
                 print("Login error: \(error)")
+                LoadingViewHandler.hideLoading()
                 AlertHandler.shared.presentErrorAlert(for: .formatError("비밀번호가 잘못되었습니다"))
             }
         }
@@ -215,8 +227,11 @@ private extension LoginViewController {
     func handleTextFormatError() {
         if !emailTextField.validationHandler!.isValidEmail(emailTextField.text) {
             AlertHandler.shared.presentErrorAlert(for: .formatError("잘못된 이메일 형식입니다"))
+            LoadingViewHandler.hideLoading()
         } else if !passwordTextField.validationHandler!.isValidPassWord(passwordTextField.text) {
             AlertHandler.shared.presentErrorAlert(for: .formatError("패스워드는 6글자 이상입니다"))
+            LoadingViewHandler.hideLoading()
+
         }
     }
     
@@ -537,3 +552,4 @@ extension LoginViewController: PHPickerViewControllerDelegate {
     }
     
 }
+
