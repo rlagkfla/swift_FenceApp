@@ -295,7 +295,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
         }
         
-        
         myInfoViewController.settingButton = { [weak self] in
             let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
             
@@ -304,6 +303,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             
             myInfoViewController.present(settingModalViewController, animated: true)
+        }
+        
+        myInfoViewController.foundCellTapped = { found in
+            let foundDetailViewController = self.makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: myInfoViewController)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            self.fourthTabNavigationController.pushViewController(foundDetailViewController, animated: true)
         }
         
         return myInfoViewController

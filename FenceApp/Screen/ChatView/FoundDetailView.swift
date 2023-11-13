@@ -94,24 +94,31 @@ class FoundDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configureCell(postTime: String, found: Found){
+//        writerNickNameLabel.text = userNickName
+//        writerProfileImageView.kf.setImage(with: URL(string: userProfileImageURL))
+        
+        let postWriteTime = postTime.getHowLongAgo()
+        postWriteTimeLabel.text = postWriteTime
+        
+        clearPin()
+        setPin(pinable: found)
+    }
+    
+    private func setPin(pinable: Pinable) {
+        mapPin = MapPin(pinable: pinable)
+        mapView.addAnnotation(mapPin!)
+        
+        let region = MKCoordinateRegion(center: mapPin!.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func clearPin() {
+        guard let pin = mapPin else { return }
+        mapView.removeAnnotation(pin)
+    }
 }
-
-//extension FoundDetailView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 1
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: FoundDetailCollectionViewCell.identifier, for: indexPath) as! FoundDetailCollectionViewCell
-////        cell.setImage(urlString: imageUrl)
-//        return cell
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: imageCollectionView.frame.width, height: imageCollectionView.frame.height)
-//    }
-//}
 
 extension FoundDetailView: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

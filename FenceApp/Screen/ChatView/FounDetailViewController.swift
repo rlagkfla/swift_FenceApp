@@ -9,20 +9,15 @@ import UIKit
 
 class FounDetailViewController: UIViewController {
 
-//    lazy var foundDetailView: FoundDetailView = {
-//        let view = FoundDetailView()
-//        view.delegate = self
-//        return view
-//    }()
-    
     private let foundDetailView = FoundDetailView()
-    
+    // user정보 필요 -> userservice 가져오기
     let firebaseFoundService: FirebaseFoundService
+//    let firebaseUserService: FirebaseUserService
     let locationManager: LocationManager
     let foundIdentifier: String
+//    let userIdentifier: String
     
     var found: Found!
-    var foundList: [Found] = []
     
     init(firebaseFoundService: FirebaseFoundService, locationManager: LocationManager, foundIdentifier: String) {
         self.firebaseFoundService = firebaseFoundService
@@ -47,6 +42,7 @@ class FounDetailViewController: UIViewController {
             do {
                 try await getFound()
                 configureCollectionView()
+                getData()
             } catch {
                 print(error)
             }
@@ -54,15 +50,21 @@ class FounDetailViewController: UIViewController {
         
     }
     
-    func getFound() async throws {
+    private func getFound() async throws {
         let foundResponseDTO = try await firebaseFoundService.fetchFound(foundIdentifier: self.foundIdentifier)
         let found = FoundResponseDTOMapper.makeFound(from: foundResponseDTO)
         self.found = found
+        
+//        let userResponseDTO = try await firebaseUserService.fetchUser(userIdentifier: )
     }
 
     private func configureCollectionView(){
         foundDetailView.imageCollectionView.dataSource = self
         foundDetailView.imageCollectionView.delegate = self
+    }
+    
+    private func getData(){
+        foundDetailView.configureCell(postTime: "\(found.date)", found: found)
     }
 }
 
@@ -73,13 +75,11 @@ extension FounDetailViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoundDetailCollectionViewCell.identifier, for: indexPath) as! FoundDetailCollectionViewCell
-//        print("111")
-//        let foundPost = foundList[indexPath.row]
-//        print("222")
-//        cell.setImage(urlString: foundPost.imageURL)
-//        print("333")
-//        foundDetailView.imageCollectionView.reloadData()
-//        print("444")
+
+        cell.setImage(urlString: found.imageURL)
+
+        foundDetailView.imageCollectionView.reloadData()
+  
         return cell
     }
     
