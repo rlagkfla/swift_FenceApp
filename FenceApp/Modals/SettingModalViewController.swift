@@ -117,6 +117,7 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
                 compseVC.mailComposeDelegate = self
                 compseVC.setToRecipients(["teamfenceapp@gmail.com"])
                 compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
+                compseVC.setMessageBody("피드백 내용을 입력해주세요.", isHTML: false)
                 self.present(compseVC, animated: true)
             } else {
                 showSendMailErrorAlert()

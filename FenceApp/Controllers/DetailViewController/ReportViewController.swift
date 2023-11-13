@@ -12,15 +12,22 @@ class ReportViewController: UIViewController {
     
     let lost: Lost
     
-    let reportingLabel: UILabel = {
+    private let reportingLabel: UILabel = {
         let label = UILabel()
         label.text = "신고하는 이유를 선택하세요."
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .left
         return label
     }()
+    private let reportLabel: UILabel = {
+        let label = UILabel()
+        label.text = "누적 신고 횟수가 3회 이상인 사용자는 앱 사용이 제한됩니다."
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .systemGray2
+        return label
+    }()
     
-    lazy var reportTalbeView: UITableView = {
+    private lazy var reportTalbeView: UITableView = {
         let tableView = UITableView()
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .singleLine
@@ -51,6 +58,7 @@ extension ReportViewController {
         view.backgroundColor = .white
         
         configureReportingLabel()
+        configureReportLabel()
         configureReportTableView()
     }
     
@@ -64,11 +72,20 @@ extension ReportViewController {
         }
     }
     
+    func configureReportLabel() {
+        view.addSubview(reportLabel)
+        
+        reportLabel.snp.makeConstraints {
+            $0.top.equalTo(reportingLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+    }
+    
     func configureReportTableView() {
         view.addSubview(reportTalbeView)
         
         reportTalbeView.snp.makeConstraints {
-            $0.top.equalTo(reportingLabel.snp.bottom).offset(20)
+            $0.top.equalTo(reportLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(300)
         }
@@ -88,10 +105,6 @@ extension ReportViewController {
         } else {
             showSendMailErrorAlert()
         }
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
     }
     
     func showSendMailErrorAlert() {
@@ -114,7 +127,7 @@ extension ReportViewController {
     }
 }
 
-extension ReportViewController: UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
+extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ReportType.allCases.count
     }
@@ -139,5 +152,15 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate, MFMa
         alertController.addAction(confirmAction)
         
         present(alertController, animated: true)
+    }
+}
+
+extension ReportViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+        let finishAlertController = UIAlertController(title: "신고", message: "신고 내용은 24시간 이내 관리자로부터 조취됩니다.", preferredStyle: .alert)
+        let cancelAtion = UIAlertAction(title: "확인", style: .cancel)
+        finishAlertController.addAction(cancelAtion)
+        present(finishAlertController, animated: true)
     }
 }
