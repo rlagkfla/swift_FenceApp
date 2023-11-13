@@ -9,86 +9,6 @@ import Foundation
 
 struct LocationCalculator {
     
-    func calculateMaxMinLatitude(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double) {
-        let R = 6371.0  // Radius of the Earth in kilometers
-
-        // Convert latitude and longitude from degrees to radians
-        let latRad = lat * .pi / 180.0
-
-        // Calculate the angular distance in radians
-        let angularDistance = distance / R
-
-        // Calculate the minimum and maximum latitude
-        let minLatRad = latRad - angularDistance
-        let maxLatRad = latRad + angularDistance
-
-        // Convert radians back to degrees
-        let minLat = minLatRad * 180.0 / .pi
-        let maxLat = maxLatRad * 180.0 / .pi
-
-        return (minLat, maxLat)
-    }
-      
-    
-    
-    static func getLocationsOfSqaure(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) {
-        let R = 6371.0  // Radius of the Earth in kilometers
-
-        // Convert latitude and longitude from degrees to radians
-        let latRad = lat * .pi / 180.0
-        let lonRad = lon * .pi / 180.0
-
-        let angularDistance = distance / R
-
-        // Calculate minimum and maximum latitude
-        let minLatRad = latRad - angularDistance
-        let maxLatRad = latRad + angularDistance
-
-        // Calculate differences in longitude
-        let deltaLon = asin(sin(angularDistance) / cos(latRad))
-
-        // Calculate minimum and maximum longitude
-        let minLonRad = lonRad - deltaLon
-        let maxLonRad = lonRad + deltaLon
-
-        // Convert radians back to degrees
-        let minLat = minLatRad * 180.0 / .pi
-        let maxLat = maxLatRad * 180.0 / .pi
-        let minLon = minLonRad * 180.0 / .pi
-        let maxLon = maxLonRad * 180.0 / .pi
-
-        return (minLat, maxLat, minLon, maxLon)
-    }
-    
-    static func coordinatesWithinDistance(lat: Double, lon: Double, distance: Double) -> [(Double, Double)] {
-        
-        let R = 6371.0  // Radius of the Earth in kilometers
-
-        // Convert latitude and longitude from degrees to radians
-        let latRad = lat * .pi / 180.0
-        let lonRad = lon * .pi / 180.0
-
-        var coordinates: [(Double, Double)] = []
-
-        for theta in stride(from: 0, through: 360, by: 1) {
-            let thetaRad = Double(theta) * .pi / 180.0
-            let newLat = asin(sin(latRad) * cos(distance / R) + cos(latRad) * sin(distance / R) * cos(thetaRad))
-            let newLon = lonRad + atan2(sin(thetaRad) * sin(distance / R) * cos(latRad), cos(distance / R) - sin(latRad) * sin(newLat))
-            
-            let newLatDeg = newLat * 180.0 / .pi
-            let newLonDeg = newLon * 180.0 / .pi
-
-            coordinates.append((newLatDeg, newLonDeg))
-        }
-
-        return coordinates
-    }
-    
-//    static func filterLostReponseDTOs(lat: Double, lon: Double, distance: Double, lostReponseDTOs: [LostResponseDTO]) -> [LostResponseDTO] {
-//        
-//        coordinatesWithinDistance(lat: lat, lon: lon, distance: distance)
-//    }
-    
     
     static func filterLocations(originLat: Double, originLon: Double, distance: Double, lostResponseDTOs: [LostResponseDTO]) -> [LostResponseDTO] {
         
@@ -98,6 +18,7 @@ struct LocationCalculator {
         }
         return filteredLocations
     }
+    
 
     static func getDistanceFromOrigin(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
         let R = 6371.0  // Radius of the Earth in kilometers
@@ -116,19 +37,81 @@ struct LocationCalculator {
         let distance = R * c
         return distance
     }
+    
 
-    // Example usage
-//    let origin = (37.7749, -122.4194)  // Origin point (a, b)
-//    let distance = 10.0  // Distance in kilometers
-//
-//    let locations = [(37.7749, -122.4194), (37.8050, -122.4074), (37.7209, -122.3936), (37.6849, -122.4044)]
-//
-//    let filteredLocations = filterLocations(origin: origin, distance: distance, locations: locations)
-//
-//    for location in filteredLocations {
-//        print("Latitude: \(location.0), Longitude: \(location.1)")
-//    }
+//    static func getLocationsOfSqaure(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double, minLon: Double, maxLon: Double) {
+  //        let R = 6371.0  // Radius of the Earth in kilometers
+  //
+  //        // Convert latitude and longitude from degrees to radians
+  //        let latRad = lat * .pi / 180.0
+  //        let lonRad = lon * .pi / 180.0
+  //
+  //        let angularDistance = distance / R
+  //
+  //        // Calculate minimum and maximum latitude
+  //        let minLatRad = latRad - angularDistance
+  //        let maxLatRad = latRad + angularDistance
+  //
+  //        // Calculate differences in longitude
+  //        let deltaLon = asin(sin(angularDistance) / cos(latRad))
+  //
+  //        // Calculate minimum and maximum longitude
+  //        let minLonRad = lonRad - deltaLon
+  //        let maxLonRad = lonRad + deltaLon
+  //
+  //        // Convert radians back to degrees
+  //        let minLat = minLatRad * 180.0 / .pi
+  //        let maxLat = maxLatRad * 180.0 / .pi
+  //        let minLon = minLonRad * 180.0 / .pi
+  //        let maxLon = maxLonRad * 180.0 / .pi
+  //
+  //        return (minLat, maxLat, minLon, maxLon)
+  //    }
 
+    
+    //    func calculateMaxMinLatitude(lat: Double, lon: Double, distance: Double) -> (minLat: Double, maxLat: Double) {
+    //        let R = 6371.0  // Radius of the Earth in kilometers
+    //
+    //        // Convert latitude and longitude from degrees to radians
+    //        let latRad = lat * .pi / 180.0
+    //
+    //        // Calculate the angular distance in radians
+    //        let angularDistance = distance / R
+    //
+    //        // Calculate the minimum and maximum latitude
+    //        let minLatRad = latRad - angularDistance
+    //        let maxLatRad = latRad + angularDistance
+    //
+    //        // Convert radians back to degrees
+    //        let minLat = minLatRad * 180.0 / .pi
+    //        let maxLat = maxLatRad * 180.0 / .pi
+    //
+    //        return (minLat, maxLat)
+    //    }
+    
+//    static func coordinatesWithinDistance(lat: Double, lon: Double, distance: Double) -> [(Double, Double)] {
+ //
+ //        let R = 6371.0  // Radius of the Earth in kilometers
+ //
+ //        // Convert latitude and longitude from degrees to radians
+ //        let latRad = lat * .pi / 180.0
+ //        let lonRad = lon * .pi / 180.0
+ //
+ //        var coordinates: [(Double, Double)] = []
+ //
+ //        for theta in stride(from: 0, through: 360, by: 1) {
+ //            let thetaRad = Double(theta) * .pi / 180.0
+ //            let newLat = asin(sin(latRad) * cos(distance / R) + cos(latRad) * sin(distance / R) * cos(thetaRad))
+ //            let newLon = lonRad + atan2(sin(thetaRad) * sin(distance / R) * cos(latRad), cos(distance / R) - sin(latRad) * sin(newLat))
+ //
+ //            let newLatDeg = newLat * 180.0 / .pi
+ //            let newLonDeg = newLon * 180.0 / .pi
+ //
+ //            coordinates.append((newLatDeg, newLonDeg))
+ //        }
+ //
+ //        return coordinates
+ //    }
 }
 
 

@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    
     func getHowLongAgo() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"

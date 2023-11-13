@@ -83,6 +83,16 @@
 		D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */; };
 		D6D9A7382ADD05EF006A5B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */; };
 		D6D9A73B2ADD05EF006A5B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6D9A7392ADD05EF006A5B8B /* LaunchScreen.storyboard */; };
+		D6DE4A602AFB8C9C0092DD43 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A5F2AFB8C9C0092DD43 /* CommentCell.swift */; };
+		D6DE4A622AFBC4460092DD43 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A612AFBC4460092DD43 /* CommentViewController.swift */; };
+		D6DE4A642AFBCAF40092DD43 /* CommentCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A632AFBCAF40092DD43 /* CommentCompositionalLayout.swift */; };
+		D6DE4A662AFCD07A0092DD43 /* CommentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A652AFCD07A0092DD43 /* CommentHeaderView.swift */; };
+		D6DE4A682AFDAECC0092DD43 /* CommentFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A672AFDAECC0092DD43 /* CommentFooterView.swift */; };
+		D6DE4A6A2AFDB1A50092DD43 /* CommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A692AFDB1A50092DD43 /* CommentInputView.swift */; };
+		D6DE4A6C2AFDB6B00092DD43 /* CommentNextLastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A6B2AFDB6AF0092DD43 /* CommentNextLastView.swift */; };
+		D6DE4A6E2AFDE5EC0092DD43 /* CommentNextLastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A6D2AFDE5EC0092DD43 /* CommentNextLastCell.swift */; };
+		D6DE4A702AFE39F10092DD43 /* CommentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A6F2AFE39F10092DD43 /* CommentMainView.swift */; };
+		D6DE4A722AFE3C390092DD43 /* CommentTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6DE4A712AFE3C390092DD43 /* CommentTextFieldView.swift */; };
 		D6E10E722ADFD3740098F05D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E712ADFD3740098F05D /* Constant.swift */; };
 		D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E7F2AE0EDA90098F05D /* UserResponseDTO.swift */; };
 		D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */; };
@@ -98,7 +108,6 @@
 		D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E992AE2A8CD0098F05D /* FirebaseFoundService.swift */; };
 		D6E10EA02AE2A8CD0098F05D /* FirebaseUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */; };
 		D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E9B2AE2A8CD0098F05D /* FirebaseLostCommentService.swift */; };
-		D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */; };
 		D6E10EA42AE2A9E10098F05D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D6E10EA32AE2A9E10098F05D /* FirebaseStorage */; };
 		D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EA52AE2AAA00098F05D /* FirebaseAuthService.swift */; };
 		D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EA72AE2AB290098F05D /* MapMainView.swift */; };
@@ -117,7 +126,6 @@
 		D6F1CF3A2AF2511800974B1F /* CurrentUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */; };
 		D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */; };
 		D6F1CF402AF329AB00974B1F /* Calendar+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */; };
-		D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF412AF32D5D00974B1F /* PinController.swift */; };
 		D6F1CF442AF3409C00974B1F /* Lost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF432AF3409C00974B1F /* Lost.swift */; };
 		D6F1CF462AF3463600974B1F /* Found.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF452AF3463600974B1F /* Found.swift */; };
 		D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F1CF472AF386F300974B1F /* FBUser.swift */; };
@@ -188,6 +196,16 @@
 		D6D9A7372ADD05EF006A5B8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6D9A73A2ADD05EF006A5B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6D9A73C2ADD05EF006A5B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6DE4A5F2AFB8C9C0092DD43 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		D6DE4A612AFBC4460092DD43 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		D6DE4A632AFBCAF40092DD43 /* CommentCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCompositionalLayout.swift; sourceTree = "<group>"; };
+		D6DE4A652AFCD07A0092DD43 /* CommentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentHeaderView.swift; sourceTree = "<group>"; };
+		D6DE4A672AFDAECC0092DD43 /* CommentFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFooterView.swift; sourceTree = "<group>"; };
+		D6DE4A692AFDB1A50092DD43 /* CommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputView.swift; sourceTree = "<group>"; };
+		D6DE4A6B2AFDB6AF0092DD43 /* CommentNextLastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentNextLastView.swift; sourceTree = "<group>"; };
+		D6DE4A6D2AFDE5EC0092DD43 /* CommentNextLastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentNextLastCell.swift; sourceTree = "<group>"; };
+		D6DE4A6F2AFE39F10092DD43 /* CommentMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentMainView.swift; sourceTree = "<group>"; };
+		D6DE4A712AFE3C390092DD43 /* CommentTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextFieldView.swift; sourceTree = "<group>"; };
 		D6E10E712ADFD3740098F05D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D6E10E7F2AE0EDA90098F05D /* UserResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseDTO.swift; sourceTree = "<group>"; };
 		D6E10E832AE0EE450098F05D /* LostResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostResponseDTO.swift; sourceTree = "<group>"; };
@@ -203,7 +221,6 @@
 		D6E10E992AE2A8CD0098F05D /* FirebaseFoundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseFoundService.swift; sourceTree = "<group>"; };
 		D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUserService.swift; sourceTree = "<group>"; };
 		D6E10E9B2AE2A8CD0098F05D /* FirebaseLostCommentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseLostCommentService.swift; sourceTree = "<group>"; };
-		D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		D6E10EA52AE2AAA00098F05D /* FirebaseAuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		D6E10EA72AE2AB290098F05D /* MapMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
 		D6E10EAC2AE383FC0098F05D /* UserResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseDTOMapper.swift; sourceTree = "<group>"; };
@@ -221,7 +238,6 @@
 		D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserInfo.swift; sourceTree = "<group>"; };
 		D6F1CF3C2AF25CB700974B1F /* FilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModel.swift; sourceTree = "<group>"; };
 		D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Ext.swift"; sourceTree = "<group>"; };
-		D6F1CF412AF32D5D00974B1F /* PinController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinController.swift; sourceTree = "<group>"; };
 		D6F1CF432AF3409C00974B1F /* Lost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lost.swift; sourceTree = "<group>"; };
 		D6F1CF452AF3463600974B1F /* Found.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Found.swift; sourceTree = "<group>"; };
 		D6F1CF472AF386F300974B1F /* FBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBUser.swift; sourceTree = "<group>"; };
@@ -308,7 +324,6 @@
 				D6E10E982AE2A8CD0098F05D /* FirebaseLostService.swift */,
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
 				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
-				D6E10E9C2AE2A8CD0098F05D /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
@@ -348,6 +363,7 @@
 				D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */,
 				D65150922ADD0CE3002FDD04 /* DetailViewController */,
 				D61368682AE2130D00DE18DF /* Comment */,
+				D6DE4A5F2AFB8C9C0092DD43 /* CommentCell.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -528,9 +544,17 @@
 				08653F9F2AF901AA00B5BCAD /* GoogleService-Info.plist */,
 				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
 				D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */,
-				D6F1CF412AF32D5D00974B1F /* PinController.swift */,
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
+				D6DE4A612AFBC4460092DD43 /* CommentViewController.swift */,
+				D6DE4A632AFBCAF40092DD43 /* CommentCompositionalLayout.swift */,
+				D6DE4A652AFCD07A0092DD43 /* CommentHeaderView.swift */,
+				D6DE4A672AFDAECC0092DD43 /* CommentFooterView.swift */,
+				D6DE4A692AFDB1A50092DD43 /* CommentInputView.swift */,
+				D6DE4A6B2AFDB6AF0092DD43 /* CommentNextLastView.swift */,
+				D6DE4A6D2AFDE5EC0092DD43 /* CommentNextLastCell.swift */,
+				D6DE4A6F2AFE39F10092DD43 /* CommentMainView.swift */,
+				D6DE4A712AFE3C390092DD43 /* CommentTextFieldView.swift */,
 			);
 			path = FenceApp;
 			sourceTree = "<group>";
@@ -734,16 +758,19 @@
 				D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
 				D687F0952AE3EE4200E98EA4 /* LoginViewController.swift in Sources */,
+				D6DE4A6E2AFDE5EC0092DD43 /* CommentNextLastCell.swift in Sources */,
 				D687F0962AE3EE4200E98EA4 /* CustomTabBarController.swift in Sources */,
 				D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */,
 				D6F1CF362AEBDB0A00974B1F /* FoundWithDocument.swift in Sources */,
 				D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
+				D6DE4A682AFDAECC0092DD43 /* CommentFooterView.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
 				D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */,
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
 				D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */,
+				D6DE4A642AFBCAF40092DD43 /* CommentCompositionalLayout.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
@@ -769,6 +796,7 @@
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
+				D6DE4A662AFCD07A0092DD43 /* CommentHeaderView.swift in Sources */,
 				D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */,
 				08DB05D62AEE620000A0C589 /* KeyboardHandler.swift in Sources */,
 				D6E10EAF2AE388AD0098F05D /* LostResponseDTOMapper.swift in Sources */,
@@ -776,9 +804,12 @@
 				D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */,
 				D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */,
 				D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */,
+				D6DE4A6C2AFDB6B00092DD43 /* CommentNextLastView.swift in Sources */,
+				D6DE4A6A2AFDB1A50092DD43 /* CommentInputView.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */,
+				D6DE4A702AFE39F10092DD43 /* CommentMainView.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */,
@@ -788,11 +819,9 @@
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
 				D6E10E9D2AE2A8CD0098F05D /* FirebaseImageUploadService.swift in Sources */,
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
-				D6F1CF422AF32D5D00974B1F /* PinController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
 				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
-				D6E10EA22AE2A8CD0098F05D /* ImageLoader.swift in Sources */,
 				D6E10E8F2AE2073A0098F05D /* MapPin.swift in Sources */,
 				D6E10EAD2AE383FC0098F05D /* UserResponseDTOMapper.swift in Sources */,
 				D6E10E912AE208010098F05D /* ClusterAnnotationView.swift in Sources */,
@@ -808,6 +837,7 @@
 				D6F1CF442AF3409C00974B1F /* Lost.swift in Sources */,
 				D62D62982AF4D8100050FE12 /* DateService.swift in Sources */,
 				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
+				D6DE4A602AFB8C9C0092DD43 /* CommentCell.swift in Sources */,
 				08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */,
 				08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
