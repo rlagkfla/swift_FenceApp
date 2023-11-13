@@ -124,7 +124,6 @@ struct FirebaseLostService {
         return lostResponseDTO
     }
     
-    
     func fetchLostsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> LostWithDocument {
         
         var ref = COLLECTION_LOST.limit(to: int).order(by: FB.Lost.postDate, descending: true)

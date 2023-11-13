@@ -1,9 +1,10 @@
 import UIKit
 import RiveRuntime
 import RxSwift
+import FirebaseAuth
 
 final class SignUpView: UIView {
-        
+    
     private var userService: FirebaseUserService
     private var authService: FirebaseAuthService
     
@@ -18,33 +19,41 @@ final class SignUpView: UIView {
     let cancelSignupViewSubject = PublishSubject<Void>()
     
     private let disposeBag = DisposeBag()
-
+    
     private var profileAnimationViewModel = RiveViewModel(fileName: "profile")
     private(set) lazy var profileRiveAnimationView: RiveView = RiveView().withViewModel(profileAnimationViewModel)
     private(set) lazy var profileImageButton: UIButton = UIButton()
         .withTarget(self, action: #selector(profileImageButtonTapped))
         .withCornerRadius(50)
         .withBottomBorder(width: 3)
-
-
+    
+    
     private lazy var emailTextField = UITextField()
-        .withPlaceholder("Email")
+        .withPlaceholder("Email@gmail.com")
         .withInsets(left: 5, right: 20)
-      
-
-
+        .setCharacterLimit(30)
+        .withCapitalization(.none)
+        .withKeyboardType(.emailAddress)
+        .withNoAutocorrection()
+    
+    
     private lazy var nicknameTextField = UITextField()
-        .withPlaceholder("Nick Name")
+        .withPlaceholder("닉네임: 3글자 이상")
         .withInsets(left: 5, right: 20)
-        
-
+        .setCharacterLimit(20)
+        .withKeyboardType(.alphabet)
+        .withCapitalization(.none)
+        .withNoAutocorrection()
+    
+    
     private lazy var passwordTextField = UITextField()
-        .withPlaceholder("Password")
+        .withPlaceholder("비밀번호: 6글자 이상")
         .withInsets(left: 5, right: 20)
         .withSecured()
-        
-
-
+        .setCharacterLimit(20)
+        .withKeyboardType(.emailAddress)
+        .withNoAutocorrection()
+    
     private lazy var signupButton = UIButton()
         .withTitle("가입 완료!")
         .withCornerRadius(20)
@@ -70,6 +79,7 @@ final class SignUpView: UIView {
         validateSignupButton()
     }
     
+    
     init(authService: FirebaseAuthService, userService: FirebaseUserService) {
         self.authService = authService
         self.userService = userService
@@ -77,13 +87,11 @@ final class SignUpView: UIView {
         configureUI()
         fetchImageURL()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
 
 extension SignUpView {
     func validateSignupButton() {
@@ -111,7 +119,7 @@ private extension SignUpView {
     
     func configureUI() {
         self.backgroundColor = .white
-
+        
         addSubviews(emailTextField,profileImageButton,nicknameTextField,passwordTextField,signupButton,cancelButton)
         profileImageButton.addSubview(profileRiveAnimationView)
         configureConstraints()
@@ -170,6 +178,7 @@ private extension SignUpView {
     
     
     @objc func signupButtonTapped() {
+        LoadingViewHandler.showLoading()
         print("signupButtonTapped called")
         signupWithFirebase()
     }
@@ -202,7 +211,10 @@ extension SignUpView {
         guard let email = emailTextField.text,
               let password = passwordTextField.text,
               let nickname = nicknameTextField.text else {
-            print("Validation failed: One of the fields is empty or invalid.")
+            DispatchQueue.main.async {
+                LoadingViewHandler.hideLoading()
+                AlertHandler.shared.presentErrorAlert(for: .formatError("모든 필드를 채워주세요"))
+            }
             return
         }
         
@@ -210,31 +222,48 @@ extension SignUpView {
         
         Task {
             do {
-                print("Attempting to sign up user...")
                 let authResult = try await self.authService.signUpUser(email: email, password: password)
-                print("User signed up. UID: \(authResult.user.uid)")
-                
                 let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
-                
-                print("Attempting to create user profile...")
                 try await userService.createUser(userResponseDTO: userResponseDTO)
                 
                 let fbUser = UserResponseDTOMapper.makeFBUser(from: userResponseDTO)
                 
                 CurrentUserInfo.shared.currentUser = fbUser
-                
-                print("Sign up and user profile creation successful.")
                 DispatchQueue.main.async {
+                    LoadingViewHandler.hideLoading()
                     self.signUpAuthSuccessful.onNext(())
                 }
-            } catch {
-                print("Error occurred during sign up: \(error)")
+            } catch let error as NSError {
                 DispatchQueue.main.async {
-                    AlertHandler.shared.presentErrorAlert(for: .networkError("네트워크 통신에 문제가 생겼습니다"))
+                    LoadingViewHandler.hideLoading()
+                    self.handleSignUpError(error)
                 }
             }
         }
     }
+    
+    // MARK: - SignUp
+    
+    private func handleSignUpError(_ error: Error) {
+        let nsError = error as NSError
+        
+        var errorMessage = "회원가입 중 에러가 발생했습니다"
+        switch nsError.code {
+        case AuthErrorCode.networkError.rawValue:
+            errorMessage = "네트워크 연결을 확인해주세요."
+        case AuthErrorCode.emailAlreadyInUse.rawValue:
+            errorMessage = "이미 사용중인 이메일입니다."
+        case AuthErrorCode.userDisabled.rawValue:
+            errorMessage = "사용자 계정이 비활성화되었습니다."
+        default:
+            errorMessage = nsError.localizedDescription
+        }
+        
+        DispatchQueue.main.async {
+            AlertHandler.shared.presentErrorAlert(for: .authenticationError(errorMessage))
+        }
+    }
 }
+
 
 

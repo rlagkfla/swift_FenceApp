@@ -18,8 +18,8 @@ class CommentDetailTableViewCell: UITableViewCell {
         imageView.backgroundColor = .yellow
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.clear.cgColor
+        imageView.layer.borderWidth = 0.5
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
         return imageView
     }()
     
@@ -117,7 +117,6 @@ private extension CommentDetailTableViewCell {
             $0.top.equalTo(commenterNickName.snp.bottom)
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(5)
         }
     }
 }

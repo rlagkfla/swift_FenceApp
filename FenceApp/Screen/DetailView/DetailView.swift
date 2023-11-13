@@ -46,8 +46,7 @@ private extension DetailView {
         self.addSubview(detailCollectionView)
         
         detailCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-//            $0.edges.equalTo(self.safeAreaLayoutGuide.snp.edges).inset(5)
+            $0.edges.equalTo(self.safeAreaLayoutGuide.snp.edges)
         }
     }
 }
