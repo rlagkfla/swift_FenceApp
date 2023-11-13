@@ -28,7 +28,6 @@
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
-		275B3E3D2B02099B0032AA21 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */; };
 		C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */; };
 		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
 		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
@@ -475,6 +474,14 @@
 			path = FoundModalView;
 			sourceTree = "<group>";
 		};
+		D65D25122B0224AC000496DB /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		D66470512AE5F6FE0041643E /* ChatViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,6 +527,7 @@
 				D6D9A72D2ADD05EC006A5B8B /* FenceApp */,
 				D6D9A72C2ADD05EC006A5B8B /* Products */,
 				D65150AF2ADD1078002FDD04 /* Frameworks */,
+				D65D25122B0224AC000496DB /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -825,7 +833,6 @@
 				08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */,
 				D63CF4502AFB65DF002BB260 /* ReportViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
-				275B3E3D2B02099B0032AA21 /* UIColor+Ext.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
 				D6E10E9D2AE2A8CD0098F05D /* FirebaseImageUploadService.swift in Sources */,
