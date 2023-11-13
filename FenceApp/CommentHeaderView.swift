@@ -47,7 +47,7 @@ class CommentHeaderView: UICollectionReusableView {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selfTapped)))
     }
     
-    func hideIcon() {
-        label.text = "댓글 1"
+    func hideIcon(number: Int) {
+        label.text = "댓글 \(number)"
     }
 }
