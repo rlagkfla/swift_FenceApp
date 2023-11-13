@@ -259,7 +259,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             filterViewController.delegate = vc
             vc.present(filterViewController, animated: true)
         }
+        vc.foundCellTapped = { found in
+            let foundDetailViewController = self.makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: vc)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            self.thirdTabNavigationController.pushViewController(foundDetailViewController, animated: true)
+        }
+        
         return vc
+    }
+    
+    private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
+        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, locationManager: locationManager, foundIdentifier: foundIdentifier)
+        return foundDetailViewController
     }
     
     private func makeCommentCollectionViewController(lostIdentifier: String) -> CommentViewController {
