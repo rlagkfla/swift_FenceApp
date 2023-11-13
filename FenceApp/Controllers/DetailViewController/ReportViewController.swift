@@ -21,7 +21,7 @@ class ReportViewController: UIViewController {
     }()
     private let reportLabel: UILabel = {
         let label = UILabel()
-        label.text = "누적 신고 횟수가 3회 이상인 사용자는 앱 사용이 제한됩니다."
+        label.text = "누적 신고 횟수가 3회 이상인 사용자는 게시글 작성이 제한됩니다."
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .systemGray2
         return label
