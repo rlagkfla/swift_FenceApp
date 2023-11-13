@@ -63,7 +63,7 @@ class MyInfoViewController: UIViewController {
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
         button.layer.borderColor = UIColor.color2.cgColor
-        button.backgroundColor = UIColor.color1
+        button.backgroundColor = CustomColor.pointColor
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
     
         if let titleLabel = button.titleLabel {
@@ -224,7 +224,7 @@ class MyInfoViewController: UIViewController {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         let logoutImage = UIImage(systemName: "line.3.horizontal")?.withConfiguration(largeConfig)
         let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
-        logoutButton.tintColor = UIColor.color1
+        logoutButton.tintColor = CustomColor.pointColor
         navigationItem.rightBarButtonItem = logoutButton
     }
 

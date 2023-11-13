@@ -18,14 +18,12 @@ final class DetailViewController: UIViewController {
     
     weak var delegate: DetailViewControllerDelegate?
     
-    let firebaseAuthService: FirebaseAuthService
     let firebaseCommentService: FirebaseLostCommentService
-    let firebaseUserService: FirebaseUserService
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
     
     var pushToCommentVC: ( () -> Void )?
-    let lost: Lost
+    var lost: Lost!
     var comments: [Comment] = []
     let lostIdentifier: String
     
@@ -33,11 +31,9 @@ final class DetailViewController: UIViewController {
     
     private var menu = UIMenu()
     
-    init(firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
+    init(firebaseCommentService: FirebaseLostCommentService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
         self.lostIdentifier = lostIdentifier
         self.firebaseCommentService = firebaseCommentService
-        self.firebaseUserService = firebaseUserService
-        self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
         self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)

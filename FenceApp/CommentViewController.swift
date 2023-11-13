@@ -30,7 +30,6 @@ class CommentViewController: UIViewController {
         
         Task {
             do {
-                
                 try await getComments()
                 mainView.collectionView.reloadData()
                 
