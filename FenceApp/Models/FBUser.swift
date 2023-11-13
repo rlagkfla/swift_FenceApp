@@ -12,5 +12,6 @@ struct FBUser {
     var profileImageURL: String
     let identifier: String
     var nickname: String
+    var reportCount: Int
 }
 

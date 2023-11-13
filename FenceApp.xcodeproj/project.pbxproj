@@ -29,6 +29,7 @@
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
+		275B3E3D2B02099B0032AA21 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */; };
 		C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */; };
 		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
 		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
@@ -148,6 +149,7 @@
 		08E537BC2AE276EF001F08B2 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtentsion.swift; sourceTree = "<group>"; };
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				D6D806352AEA52D90002AE3A /* String+Ext.swift */,
 				D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */,
 				D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */,
+				275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -806,6 +809,7 @@
 				D6DE4A622AFBC4460092DD43 /* CommentViewController.swift in Sources */,
 				08653F8F2AF8BFE400B5BCAD /* LaunchScreenViewController.swift in Sources */,
 				D6E10E932AE208890098F05D /* CustomAnnotationView.swift in Sources */,
+				275B3E3D2B02099B0032AA21 /* UIColor+Ext.swift in Sources */,
 				D6E10E962AE24ABD0098F05D /* FB.swift in Sources */,
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
 				D6E10E9D2AE2A8CD0098F05D /* FirebaseImageUploadService.swift in Sources */,

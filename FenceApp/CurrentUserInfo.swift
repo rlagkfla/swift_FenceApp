@@ -15,5 +15,12 @@ class CurrentUserInfo {
     
     var userToken: String?
     
+    var checkIfReportExceeed: Bool {
+      
+        guard let reportCount = currentUser?.reportCount else { return false }
+        
+        return reportCount >= 3 ? true : false
+    }
+    
     private init() {}
 }

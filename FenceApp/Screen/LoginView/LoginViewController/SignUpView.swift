@@ -219,7 +219,8 @@ extension SignUpView {
                 print("Attempting to create user profile...")
                 try await userService.createUser(userResponseDTO: userResponseDTO)
                 
-                let fbUser = FBUser(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
+                let fbUser = UserResponseDTOMapper.makeFBUser(from: userResponseDTO)
+                
                 CurrentUserInfo.shared.currentUser = fbUser
                 
                 print("Sign up and user profile creation successful.")
