@@ -50,4 +50,8 @@ class CommentHeaderView: UICollectionReusableView {
     func hideIcon() {
         label.text = "댓글 1"
     }
+    
+    func setText(number: Int) {
+        label.text = "댓글 \(number) 〉"
+    }
 }
