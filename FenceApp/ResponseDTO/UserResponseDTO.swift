@@ -16,6 +16,17 @@ struct UserResponseDTO {
     let identifier: String
     var nickname: String
     var userFCMToken: String
+    var reportCount: Int
+    
+    
+    init(email: String, profileImageURL: String, identifier: String, nickname: String, userFCMToken: String, reportCount: Int = 0) {
+        self.email = email
+        self.profileImageURL = profileImageURL
+        self.identifier = identifier
+        self.nickname = nickname
+        self.userFCMToken = userFCMToken
+        self.reportCount = reportCount
+    }
     
 //    static var dummyUser: [UserResponseDTO] = [
 //        UserResponseDTO(email: "aaa@gmail.com",profileImageURL: "https://i.pinimg.com/1200x/2c/2c/60/2c2c60b20cb817a80afd381ae23dab05.jpg", identifier: "t8lGZWXAJvOkNT3fKtEdVSFbJ7c2", nickname: "user1"),

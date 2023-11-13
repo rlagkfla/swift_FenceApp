@@ -13,7 +13,9 @@ struct UserResponseDTOMapper {
                         profileImageURL: dictionary[FB.User.profileImageURL] as? String ?? "",
                         identifier: dictionary[FB.User.useridentifier] as? String ?? "",
                         nickname: dictionary[FB.User.userNickname] as? String ?? "",
-                        userFCMToken: dictionary[FB.User.userFCMToken] as? String ?? "")
+                        userFCMToken: dictionary[FB.User.userFCMToken] as? String ?? "",
+                        reportCount: dictionary[FB.User.reportCount] as? Int ?? 0
+        )
     }
     
     static func makeUserResponseDTOs(from dictionaries: [[String: Any]]) -> [UserResponseDTO] {
@@ -28,7 +30,8 @@ struct UserResponseDTOMapper {
                                    FB.User.userNickname: userResponseDTO.nickname,
                                    FB.User.profileImageURL: userResponseDTO.profileImageURL,
                                    FB.User.useridentifier: userResponseDTO.identifier,
-                                   FB.User.userFCMToken: userResponseDTO.userFCMToken]
+                                   FB.User.userFCMToken: userResponseDTO.userFCMToken,
+                                   FB.User.reportCount: userResponseDTO.reportCount]
         
         return data
         
@@ -39,7 +42,9 @@ struct UserResponseDTOMapper {
         return FBUser(email: userResponseDTO.email,
                       profileImageURL: userResponseDTO.profileImageURL,
                       identifier: userResponseDTO.identifier,
-                      nickname: userResponseDTO.nickname)
+                      nickname: userResponseDTO.nickname,
+                      reportCount: userResponseDTO.reportCount
+                        )
     }
     
     static func makeFBUsers(from userResponseDTOs: [UserResponseDTO]) -> [FBUser] {

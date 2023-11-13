@@ -62,6 +62,7 @@ class MyInfoViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
+        
         button.layer.borderColor = UIColor.color2.cgColor
         button.backgroundColor = CustomColor.pointColor
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
@@ -414,3 +415,4 @@ extension MyInfoViewController {
     
     
 }
+
