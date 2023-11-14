@@ -7,7 +7,20 @@ import RiveRuntime
 // MARK: - UIView Extensions
 extension UIView {
     
+    
     // MARK: Positioning
+    
+    @discardableResult
+    func putTop(of superView: UIView, offset: CGFloat = 0) -> UIView {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.topAnchor.constraint(equalTo: superView.topAnchor, constant: offset),
+            self.leadingAnchor.constraint(equalTo: superView.leadingAnchor),
+            self.trailingAnchor.constraint(equalTo: superView.trailingAnchor)
+        ])
+        return self
+    }
+
     @discardableResult
     func positionCenterX() -> Self {
         guard let superview = self.superview else { return self }
@@ -388,6 +401,19 @@ extension UITextField {
 extension UILabel {
     
     @discardableResult
+    func addTapGesture(target: Any, action: Selector) -> UILabel {
+        let tapGesture = UITapGestureRecognizer(target: target, action: action)
+        self.addGestureRecognizer(tapGesture)
+        return self
+    }
+
+    @discardableResult
+    func withUserInteraction(enabled: Bool) -> Self {
+        self.isUserInteractionEnabled = enabled
+        return self
+    }
+    
+    @discardableResult
     func withText(_ text: String) -> Self {
         self.text = text
         return self
@@ -421,9 +447,8 @@ extension UILabel {
 extension UIStackView {
     
     @discardableResult
-    func withArrangedSubviews(_ views: UIView...) -> Self {        for view in views {
-        addArrangedSubview(view)
-    }
+    func withArrangedSubviews(_ views: UIView...) -> Self {
+        for view in views { addArrangedSubview(view) }
         return self
     }
     

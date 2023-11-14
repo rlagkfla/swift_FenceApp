@@ -23,8 +23,8 @@ final class DetailViewController: UIViewController {
     let locationManager: LocationManager
     
     var reportOptionView = ReportOptionView()
-    
-    var pushToCommentVC: ( () -> Void )?
+    var pushToCommentVC: ( (Lost) -> Void )?
+
     var lost: Lost!
     var comments: [Comment] = []
     let lostIdentifier: String
@@ -281,7 +281,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier, for: indexPath) as! CommentHeaderView
             header.setText(number: comments.count)
             header.commentHeaderViewTapped = { [weak self] in
-                self?.pushToCommentVC?()
+                self?.pushToCommentVC?(self!.lost)
             }
             return header
             
@@ -289,7 +289,7 @@ extension DetailViewController: UICollectionViewDataSource {
             
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier, for: indexPath) as! CommentFooterView
             footer.commentFooterViewTapped = { [weak self] in
-                self?.pushToCommentVC?()
+                self?.pushToCommentVC?(self!.lost)
             }
             return footer
         }
