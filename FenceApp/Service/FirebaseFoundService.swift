@@ -110,7 +110,16 @@ struct FirebaseFoundService {
         return FoundWithDocument(foundResponseDTOs: foundResponseDTOs, lastDocument: lastDocument)
     }
     
-    
+    func deleteFound(foundIdentifier: String) async throws {
+        
+        let batchController = BatchController()
+        
+        let ref = COLLECTION_FOUND.document(foundIdentifier)
+        
+        batchController.batch.deleteDocument(ref)
+        
+        try await batchController.batch.commit()
+    }
     
     
     func deleteFounds(writtenBy userIdentifier: String, batchController: BatchController) async throws {

@@ -152,7 +152,7 @@ private extension DetailViewController {
         }
         
         let reportAction = UIAction(title: "신고하기") { _ in
-            let reportViewController = ReportViewController(lost: self.lost)
+            let reportViewController = ReportViewController(lost: self.lost, postKind: PostKind.lost)
             self.navigationController?.pushViewController(reportViewController, animated: true)
         }
         
@@ -251,8 +251,7 @@ extension DetailViewController: UICollectionViewDataSource {
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
-                    let reportViewController = ReportViewController(comment: comment)
-                    reportViewController.isLost = false
+                    let reportViewController = ReportViewController(comment: comment, postKind: PostKind.comment)
                     self?.navigationController?.pushViewController(reportViewController, animated: true)
                 }
                 let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
