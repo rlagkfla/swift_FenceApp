@@ -2,6 +2,7 @@ import UIKit
 import RiveRuntime
 import RxSwift
 import FirebaseAuth
+import SafariServices
 
 final class SignUpView: UIView {
     
@@ -14,7 +15,6 @@ final class SignUpView: UIView {
     private(set) var didRequestImagePicker = PublishSubject<Void>()
     private var didFinishPickingImage = PublishSubject<UIImage>()
     private var didCancelImagePicker = PublishSubject<Void>()
-    private lazy var authenticationView = AuthenticationView()
     let signUpAuthSuccessful = PublishSubject<Void>()
     let cancelSignupViewSubject = PublishSubject<Void>()
     
@@ -65,6 +65,25 @@ final class SignUpView: UIView {
         .withCornerRadius(20)
         .withTarget(self, action: #selector(cancelButtonTapped))
     
+    private lazy var termCheckboxButton = UIButton()
+        .withSFImage(systemName: "square", for: .normal)
+        .withSFImage(systemName: "square.fill", for: .selected)
+        .withTarget(self, action: #selector(termCheckboxButtonTapped))
+        
+    let gesture = UITapGestureRecognizer(target: self, action: #selector(termsLabelTapped))
+
+    private lazy var termsLabel = UILabel()
+        .withText("이용약관을 확인해주세요")
+        .withTextColor(ColorHandler.shared.textColor)
+        .withUserInteraction(enabled: true)
+        .addTapGesture(target: self, action: #selector(termsLabelTapped))
+
+    private lazy var termStackView = UIStackView()
+        .withArrangedSubviews(termCheckboxButton,termsLabel)
+        .withAxis(.horizontal)
+        .withAlignment(.center)
+        .withDistribution(.fillProportionally)
+        .withSpacing(10)
     
     // MARK: - Initialization
     
@@ -100,8 +119,8 @@ extension SignUpView {
                 emailTextField.validationHandler!.isValidRelay,
                 nicknameTextField.validationHandler!.isValidRelay,
                 passwordTextField.validationHandler!.isValidRelay
-            ) {isEmailValid, isNicknameValid, isPasswordValid in
-                return isEmailValid && isNicknameValid && isPasswordValid
+            ) { isEmailValid, isNicknameValid, isPasswordValid in
+                return isEmailValid && isNicknameValid && isPasswordValid && self.termCheckboxButton.isSelected
             }
             .subscribe(onNext: { [weak self] allValid in
                 DispatchQueue.main.async {
@@ -110,6 +129,7 @@ extension SignUpView {
                     self?.signupButton.isEnabled = allValid
                 }
             })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -120,7 +140,7 @@ private extension SignUpView {
     func configureUI() {
         self.backgroundColor = .white
         
-        addSubviews(emailTextField,profileImageButton,nicknameTextField,passwordTextField,signupButton,cancelButton)
+        addSubviews(emailTextField,profileImageButton,nicknameTextField,passwordTextField,signupButton,cancelButton,termStackView)
         profileImageButton.addSubview(profileRiveAnimationView)
         configureConstraints()
         
@@ -128,13 +148,16 @@ private extension SignUpView {
     
     
     func configureConstraints() {
+        
         profileImageButton
             .withSize(100,100)
             .positionCenterX()
             .positionMultipleY(multiplier: 0.4)
         
+        profileRiveAnimationView.snp.makeConstraints { $0.edges.equalTo(profileImageButton) }
+        
         emailTextField
-            .withSize(widthRatioOfSuperview: 0.7)
+            .withSize(widthRatioOfSuperview: 0.65)
             .withHeight(40)
             .putBelow(profileImageButton, 50)
             .positionCenterX()
@@ -151,10 +174,15 @@ private extension SignUpView {
             .putBelow(nicknameTextField, 20)
             .positionCenterX()
         
+        termStackView
+            .positionCenterX()
+            .putBelow(passwordTextField, 20)
+
+        
         signupButton
             .withSize(widthRatioOfSuperview: 0.5)
             .withHeight(40)
-            .putBelow(passwordTextField, 40)
+            .putBelow(termStackView, 30)
             .positionCenterX()
         
         cancelButton
@@ -163,10 +191,8 @@ private extension SignUpView {
             .putBelow(signupButton, 10)
             .positionCenterX()
         
-        profileRiveAnimationView.snp.makeConstraints { $0.edges.equalTo(profileImageButton) }
     }
 }
-
 
 
 //MARK: - Action
@@ -178,6 +204,10 @@ private extension SignUpView {
     
     
     @objc func signupButtonTapped() {
+        guard termCheckboxButton.isSelected else {
+            AlertHandler.shared.presentErrorAlert(for: .formatError("이용약관에 동의해주세요"))
+            return
+        }
         LoadingViewHandler.showLoading()
         print("signupButtonTapped called")
         signupWithFirebase()
@@ -186,8 +216,19 @@ private extension SignUpView {
     @objc func cancelButtonTapped() {
         cancelSignupViewSubject.onNext(())
     }
+    
+    @objc func termCheckboxButtonTapped(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        validateSignupButton()
+    }
+    
+    @objc func termsLabelTapped() {
+        if let url = URL(string: "https://dandy-temple-d75.notion.site/884b394ea65d4cfd9047b2f1d5010839?pvs=4") {
+            let safariVC = SFSafariViewController(url: url)
+            UIApplication.shared.windows.first?.rootViewController?.present(safariVC, animated: true)
+        }
+    }
 }
-
 
 
 //MARK: - Fetch Image URL From LoginVC
@@ -226,7 +267,7 @@ extension SignUpView {
                 let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
                 try await userService.createUser(userResponseDTO: userResponseDTO)
                 
-                let fbUser = FBUser(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
+                let fbUser = FBUser(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, reportCount: 0)
                 CurrentUserInfo.shared.currentUser = fbUser
                 DispatchQueue.main.async {
                     LoadingViewHandler.hideLoading()

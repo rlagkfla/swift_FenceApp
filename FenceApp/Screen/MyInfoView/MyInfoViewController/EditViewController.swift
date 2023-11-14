@@ -60,7 +60,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        nicknameTextField.layer.addBorder([.bottom], color: UIColor.color1, width: 3.0)
+        nicknameTextField.layer.addBorder([.bottom], color: CustomColor.pointColor, width: 3.0)
 
     }
     

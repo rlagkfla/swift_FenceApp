@@ -18,27 +18,25 @@ final class DetailViewController: UIViewController {
     
     weak var delegate: DetailViewControllerDelegate?
     
-    let firebaseAuthService: FirebaseAuthService
     let firebaseCommentService: FirebaseLostCommentService
-    let firebaseUserService: FirebaseUserService
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
-    
-    let lostIdentifier: String
-    
+
+    var pushToCommentVC: ( (Lost) -> Void )?
+
     var lost: Lost!
-    
-    var lastCommentDTO: CommentResponseDTO?
+    var comments: [Comment] = []
+    let lostIdentifier: String
     
     var editButtonTapped: ( () -> Void )?
     
+    var isYourComment = false
+    
     private var menu = UIMenu()
     
-    init(firebaseCommentService: FirebaseLostCommentService, firebaseUserService: FirebaseUserService, firebaseAuthService: FirebaseAuthService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
+    init(firebaseCommentService: FirebaseLostCommentService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
         self.lostIdentifier = lostIdentifier
         self.firebaseCommentService = firebaseCommentService
-        self.firebaseUserService = firebaseUserService
-        self.firebaseAuthService = firebaseAuthService
         self.firebaseLostService = firebaseLostService
         self.locationManager = locationManager
         super.init(nibName: nil, bundle: nil)
@@ -56,15 +54,19 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         Task {
             do {
                 try await getLost()
+                try await getComment()
                 configure()
+                detailView.detailCollectionView.reloadData()
             } catch {
                 print(error)
             }
         }
     }
+    
     
     // MARK: - Action
     @objc func tapped() {
@@ -92,13 +94,15 @@ private extension DetailViewController {
     }
     
     func configure() {
-        view.backgroundColor = .white
+        
         
         configureMenu()
         configureNavigation()
         configureCollectionView()
-        getFirstComment()
+       
+        
     }
+
     
     func configureMenu() {
         let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
@@ -182,22 +186,32 @@ private extension DetailViewController {
         detailView.detailCollectionView.delegate = self
     }
     
-    func getFirstComment() {
-        Task {
-            do {
-                lastCommentDTO = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier).last
-            } catch {
-                print(error)
-            }
-        }
+    func getComment() async throws {
+        
+        
+        let CommentDTOs = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier)
+        comments = CommentResponseDTOMapper.makeComments(from: CommentDTOs)
+        
     }
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
-extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+
+//MARK: - Collectionview Delegate
+
+extension DetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //        if indexPath.section == 4 {
+        //            print("I am five")
+        //        }
     }
+}
+// MARK: - UICollectionViewDataSource
+extension DetailViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
@@ -206,43 +220,100 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return 1
         } else if section == 2 {
             return 1
+        } else if section == 3 {
+            return comments.count == 0 ? 0: min(10, comments.count)
         } else {
-            return 1
+            return comments.count == 0 ? 0 : 1
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let imageCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
+            let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
             imageCell.getImageUrl(urlString: lost.imageURL)
             imageCell.imageCollectionView.reloadData()
             return imageCell
         } else if indexPath.section == 1 {
-            let writerCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
+            let writerCell = collectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
             writerCell.configureCell(userNickName: lost.userNickName, userProfileImageURL: lost.userProfileImageURL, postTime: "\(lost.postDate)")
             return writerCell
         } else if indexPath.section == 2 {
-            let postCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
+            let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
             postCell.configureCell(postTitle: lost.title, postDescription: lost.description, lostTime: lost.lostDate, lost: lost)
             return postCell
-        } else {
-            let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-            commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
-            if let lastCommentDescription = lastCommentDTO?.commentDescription, let lastCommentUserImageUrl = lastCommentDTO?.userProfileImageURL {
-                let commentCell = detailView.detailCollectionView.dequeueReusableCell(withReuseIdentifier: CommentCollectionViewCell.identifier, for: indexPath) as! CommentCollectionViewCell
-                commentCell.configureCell(lastCommetString: lastCommentDescription, userProfileImageUrl: lastCommentUserImageUrl)
-                commentCell.commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
-                return commentCell
+        } else if indexPath.section == 3 {
+            let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
+            let comment = comments[indexPath.item]
+            commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
+            commentCell.optionImageTapped = { [weak self] in
+                self?.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+                
+                let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
+                    let reportViewController = ReportViewController(comment: comment)
+                    reportViewController.isLost = false
+                    self?.navigationController?.pushViewController(reportViewController, animated: true)
+                }
+                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+                    let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                        Task {
+                            do {
+                                try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }
+                    deleteAlertController.addAction(cancelAction)
+                    deleteAlertController.addAction(deleteAction)
+                    self?.present(deleteAlertController, animated: true)
+                }
+                alertController.addAction(cancelAction)
+                self!.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
+                self?.present(alertController, animated: true)
             }
+            
             return commentCell
+            
+        } else {
+            
+            let lastNextCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentNextLastCell.identifier, for: indexPath) as! CommentNextLastCell
+            
+            return lastNextCell
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier, for: indexPath) as! CommentHeaderView
+            header.setText(number: comments.count)
+            header.commentHeaderViewTapped = { [weak self] in
+                self?.pushToCommentVC?(self!.lost)
+            }
+            return header
+            
+        } else {
+            
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier, for: indexPath) as! CommentFooterView
+            footer.commentFooterViewTapped = { [weak self] in
+                self?.pushToCommentVC?(self!.lost)
+            }
+            return footer
         }
     }
 }
 
+
 // MARK: - CustomDelegate
 extension DetailViewController: CommentDetailViewControllerDelegate {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
-        lastCommentDTO = lastComment
+        //        lastCommentDTO = lastComment
         self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
     }
 }

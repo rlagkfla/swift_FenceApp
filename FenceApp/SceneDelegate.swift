@@ -23,24 +23,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     
-    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
+    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService, locationManager: locationManager)
+    lazy var firebaseCloudMessaing = FirebaseCloudMessaging()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         window = UIWindow(windowScene: windowScene)
         
-        
-//        let launchScreenVC = LaunchScreenViewController()
-//        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         
-//        let c = LocationCalculator.coordinatesWithinDistance(lat: 37.5519, lon: 126.9918, distance: 10)
-//        print(c)
         
         Task {
-            
+           
             do {
                 
                 try await checkUserLoggedIn()
@@ -55,7 +52,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
                                       
 
-    
     private func checkUserLoggedIn() async throws {
         
         let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
@@ -79,12 +75,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    
     private func setNavigationControllers() {
         firstTabNavigationController.viewControllers = [makeMapViewVC()]
         secondTabNavigationController.viewControllers = [makeLostViewVC()]
         thirdTabNavigationController.viewControllers = [makeChatViewController()]
         fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
     }
+    
     
     private func makeTabbarController() -> CustomTabBarController {
         
@@ -101,6 +99,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         return TabbarController
     }
+    
     
     private func makeMapViewVC() -> MapViewController {
         
@@ -128,6 +127,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return mapViewController
     }
     
+    
     private func makeLostModalVC(lost: Lost) -> LostModalViewController {
         
         let lostModalViewController = LostModalViewController(lost: lost)
@@ -137,11 +137,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let self else { return }
             
             let detailViewController = DetailViewController(
-                
                                                             firebaseCommentService: self.firebaseLostCommentService,
-                                                            firebaseUserService: self.firebaseUserService,
-                                                            firebaseAuthService: self.firebaseAuthService,
-                                                            firebaseLostService: self.firebaseLostService, locationManager: self.locationManager, lostIdentifier: lost.lostIdentifier)
+                                                            firebaseLostService: self.firebaseLostService, 
+                                                            locationManager: self.locationManager,
+                                                            lostIdentifier: lost.lostIdentifier)
             
             lostModalViewController.dismiss(animated: true)
             
@@ -151,6 +150,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         return lostModalViewController
     }
+    
     
     private func makeFoundModalVC(found: Found) -> FoundModalViewController {
         
@@ -165,8 +165,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             guard let self else { return }
             
-//            self.setNavigationControllers()
-            
             self.window?.rootViewController = self.makeTabbarController()
         }
         
@@ -174,13 +172,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-    private func makeDetailVC(lostIdentifier: String) -> DetailViewController {
-        let detailViewController = DetailViewController(
-                                                        firebaseCommentService: firebaseLostCommentService,
-                                                        firebaseUserService: firebaseUserService,
-                                                        firebaseAuthService: firebaseAuthService,
-                                                        firebaseLostService: firebaseLostService,
-                                                        locationManager: locationManager, lostIdentifier: lostIdentifier)
+    private func makeDetailVC(lostIdentifier: String, sender viewController: UIViewController) -> DetailViewController {
+        let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
+        
+        
+        // retain cycle
+        
+        detailViewController.pushToCommentVC = { [weak self] lost in
+            
+            guard let self else { return }
+            
+            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
+            
+            viewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+        }
+        
         detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
     }
@@ -191,14 +197,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService)
         
         lostListViewController.lostCellTapped = { [weak self] lost in
+            
             guard let self else { return }
             
-            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier)
-            
-//            detailViewController.hidesBottomBarWhenPushed = true
-            detailViewController.delegate = lostListViewController
+            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostListViewController)
             
             self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
+            
         }
         
         lostListViewController.plusButtonTapped = {
@@ -225,6 +230,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return lostListViewController
     }
     
+    
     private func makeEnrollViewVC() -> EnrollViewController {
         let vc = EnrollViewController(firebaseLostService: firebaseLostService, locationManager: locationManager)
         
@@ -233,10 +239,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
             
             displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
+            
+            
         }
         
         return vc
     }
+    
     
     private func makeDummyViewController() -> UIViewController {
         let vc = UIViewController()
@@ -251,13 +260,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             filterViewController.delegate = vc
             vc.present(filterViewController, animated: true)
         }
+        vc.foundCellTapped = { found in
+            let foundDetailViewController = self.makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: vc)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            self.thirdTabNavigationController.pushViewController(foundDetailViewController, animated: true)
+        }
+        
         return vc
     }
     
+    private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
+        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, locationManager: locationManager, foundIdentifier: foundIdentifier)
+        return foundDetailViewController
+    }
     
+    private func makeCommentCollectionViewController(lost: Lost) -> CommentViewController {
+        let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost)
+        
+        return commentCollectionViewController
+    }
    
-    
-    
     private func makeMyInfoViewController() -> MyInfoViewController {
         let myInfoViewController = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
@@ -267,13 +289,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         myInfoViewController.lostCellTapped = { lost in
-            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier)
+            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: myInfoViewController)
             
 //            detailViewController.hidesBottomBarWhenPushed = true
             
             self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
         }
-        
         
         myInfoViewController.settingButton = { [weak self] in
             let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
@@ -285,12 +306,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             myInfoViewController.present(settingModalViewController, animated: true)
         }
         
+        myInfoViewController.foundCellTapped = { found in
+            let foundDetailViewController = self.makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: myInfoViewController)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            self.fourthTabNavigationController.pushViewController(foundDetailViewController, animated: true)
+        }
+        
         return myInfoViewController
     }
+    
     
     func sceneDidBecomeActive(_ scene: UIScene) {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
 }
 
-
+// 로스트테이블 -> 글내용으로 들어가고 -> 수정을 누른다 -> 디테일은 변화해있다 -> 테이블뷰는 그대로있다 -> 테이블뷰를 누르면은 수정되기 전 그 로스트를 이용해서 다시 디테일을 그린다 -> 수정하기전 디테일이다
+///                                                                                                                              ->  테이블뷰를 바꿔주던가
+///                                                                                                                              -> identifier API를 새로해가지고 만들어준다 디테일 들어갈때마다 API를 한다
+///
