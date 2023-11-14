@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCem80Ps-mwJY1vDfvakI9YdkRaTAFNPKM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>776734142647</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hyeok.FenceApp03</string>
+	<key>PROJECT_ID</key>
+	<string>fenceapp-debug</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fenceapp-debug.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:776734142647:ios:5ffc97a232411df76c9d32</string>
+</dict>
+</plist>
