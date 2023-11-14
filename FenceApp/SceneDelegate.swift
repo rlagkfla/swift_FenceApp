@@ -260,11 +260,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             filterViewController.delegate = vc
             vc.present(filterViewController, animated: true)
         }
+        vc.foundCellTapped = { found in
+            let foundDetailViewController = self.makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: vc)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            self.thirdTabNavigationController.pushViewController(foundDetailViewController, animated: true)
+        }
+        
         return vc
     }
     
-    private func makeCommentCollectionViewController(lost: Lost) -> CommentViewController {
-        let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost)
+    private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
+        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, locationManager: locationManager, foundIdentifier: foundIdentifier)
+        return foundDetailViewController
+    }
+    
+    private func makeCommentCollectionViewController(lostIdentifier: String) -> CommentViewController {
+        let commentCollectionViewController = CommentViewController(lostIdentifier: lostIdentifier, firebaseLostCommentService: firebaseLostCommentService)
         
         return commentCollectionViewController
     }
@@ -285,7 +296,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
         }
         
-        
         myInfoViewController.settingButton = { [weak self] in
             let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
             
@@ -294,6 +304,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             
             myInfoViewController.present(settingModalViewController, animated: true)
+        }
+        
+        myInfoViewController.foundCellTapped = { found in
+            let foundDetailViewController = self.makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: myInfoViewController)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            self.fourthTabNavigationController.pushViewController(foundDetailViewController, animated: true)
         }
         
         return myInfoViewController
