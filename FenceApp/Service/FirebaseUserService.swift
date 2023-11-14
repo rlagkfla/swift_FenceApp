@@ -13,6 +13,7 @@ struct FirebaseUserService {
     
     let firebaseLostService: FirebaseLostService
     let firebaseLostCommentService: FirebaseLostCommentService
+    let firebaseFoundService: FirebaseFoundService
     
     
     func createUser(userResponseDTO: UserResponseDTO) async throws {
@@ -44,6 +45,7 @@ struct FirebaseUserService {
                 group.addTask {
                     try await firebaseLostService.editUserInformationOnLostDTO(with: userResponseDTO, batchController: batchController)
                     try await firebaseLostCommentService.editUserInformationOnComments(with: userResponseDTO, batchController: batchController)
+                    try await firebaseFoundService.editUserInformationOnFoundResponseDTO(with: userResponseDTO, batchController: batchController)
                 }
             }
         
@@ -82,10 +84,12 @@ struct FirebaseUserService {
     
     
     init(firebaseLostService: FirebaseLostService,
-         firebaseLostCommentService: FirebaseLostCommentService) {
+         firebaseLostCommentService: FirebaseLostCommentService,
+         firebaseFoundService: FirebaseFoundService) {
         
         self.firebaseLostService = firebaseLostService
         self.firebaseLostCommentService = firebaseLostCommentService
+        self.firebaseFoundService = firebaseFoundService
     }
     
     //MARK: - Helper

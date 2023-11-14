@@ -22,7 +22,9 @@ final class DetailViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
     
+    var reportOptionView = ReportOptionView()
     var pushToCommentVC: ( (Lost) -> Void )?
+
     var lost: Lost!
     var comments: [Comment] = []
     let lostIdentifier: String
@@ -51,6 +53,8 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        configureOptionView()
         Task {
             do {
                 try await getLost()
@@ -62,6 +66,20 @@ final class DetailViewController: UIViewController {
             }
         }
     }
+    
+    private func configureOptionView() {
+        reportOptionView.frame = UIScreen.main.bounds
+        reportOptionView.isHidden = false
+        
+        reportOptionView.tableView.dataSource = self
+        reportOptionView.tableView.delegate = self
+
+        let window = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first
+        window?.addSubview(reportOptionView)
+            
+        
+        }
+    
     
     // MARK: - Action
     @objc func tapped() {
@@ -94,8 +112,10 @@ private extension DetailViewController {
         configureMenu()
         configureNavigation()
         configureCollectionView()
+       
         
     }
+
     
     func configureMenu() {
         let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
@@ -238,7 +258,10 @@ extension DetailViewController: UICollectionViewDataSource {
             let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
-            commentCell.optionImageTapped = { print("Tapped") }
+            commentCell.optionImageTapped = { [weak self] in
+                self?.reportOptionView.isHidden = false
+                
+            }
             
             return commentCell
             
@@ -292,5 +315,30 @@ extension DetailViewController: EnrollViewControllerDelegate {
                 print(error)
             }
         }
+    }
+}
+
+// MARK: - TableView Datasource
+
+extension DetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.selectionStyle = .none
+        cell.textLabel?.text = "\(indexPath.row)"
+        return cell
+    }
+    
+    
+}
+
+// MARK: - TableView Delegate
+
+extension DetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
 }
