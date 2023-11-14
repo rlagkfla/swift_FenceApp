@@ -51,7 +51,6 @@ class CommentCell: UICollectionViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
-        label.backgroundColor = .systemGray6
         label.text = "암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다 암표 사기 많습니다"
         label.numberOfLines = 0
         return label
@@ -112,7 +111,7 @@ class CommentCell: UICollectionViewCell {
         contentView.addSubview(optionImageView)
         optionImageView.snp.makeConstraints {
             $0.centerY.equalTo(profileImageView)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(20)
             $0.width.height.equalTo(20)
         }
     }
@@ -132,7 +131,7 @@ class CommentCell: UICollectionViewCell {
         stackView.snp.makeConstraints {
             $0.top.equalTo(nickNameLabel.snp.bottom)
             $0.leading.equalTo(nickNameLabel)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(25)
             $0.bottom.equalTo(dateLabel.snp.top)
         }
     }
