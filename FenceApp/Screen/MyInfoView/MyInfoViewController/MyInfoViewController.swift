@@ -33,7 +33,7 @@ class MyInfoViewController: UIViewController {
     var logOut: ( () -> Void )?
     var settingButton: ( () -> Void )?
     var lostCellTapped: ( (Lost) -> Void )?
-    
+    var foundCellTapped: ( (Found) -> Void)?
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -340,9 +340,16 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        lostCellTapped?(lostList[indexPath.row])
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = indexPath.section
+        
+        if section == 0 {
+            lostCellTapped?(lostList[indexPath.row])
+        }else{
+            foundCellTapped?(foundList[indexPath.row])
+        }
+               
+    }
     
 }
 

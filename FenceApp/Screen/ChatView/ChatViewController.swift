@@ -17,6 +17,7 @@ final class ChatViewController: UIViewController {
     var foundList: [Found] = []
     
     var filterTapped: ((FilterModel) -> Void)?
+    var foundCellTapped: ( (Found) -> Void )?
     
     // MARK: - Properties
     private lazy var chatView: ChatView = {
@@ -132,5 +133,9 @@ extension ChatViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: chatView.foundCollectionView.frame.width / 3 - 2, height: chatView.foundCollectionView.frame.width / 3 - 2)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        foundCellTapped?(foundList[indexPath.row])
     }
 }
