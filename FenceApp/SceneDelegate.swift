@@ -274,8 +274,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return foundDetailViewController
     }
     
-    private func makeCommentCollectionViewController(lostIdentifier: String) -> CommentViewController {
-        let commentCollectionViewController = CommentViewController(lostIdentifier: lostIdentifier, firebaseLostCommentService: firebaseLostCommentService)
+    private func makeCommentCollectionViewController(lost: Lost) -> CommentViewController {
+        let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost)
         
         return commentCollectionViewController
     }

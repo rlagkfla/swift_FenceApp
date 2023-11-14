@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
 		083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */; };
-		084D9B362B02FEB6008EF320 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084D9B352B02FEB5008EF320 /* ImageLoader.swift */; };
 		084DFDE22AFE4EE500DEB6EA /* Binggrae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 084DFDE12AFE4EE400DEB6EA /* Binggrae-Bold.otf */; };
 		08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653F8E2AF8BFE400B5BCAD /* LoadingViewHandler.swift */; };
 		08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08653F902AF8C01D00B5BCAD /* FirebaseMessaging */; };
@@ -29,7 +28,6 @@
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
-		C392FDD32B0237C9004447B9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD22B0237C9004447B9 /* ImageLoader.swift */; };
 		C392FDD52B023964004447B9 /* FoundDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD42B023964004447B9 /* FoundDetailView.swift */; };
 		C392FDD72B0239BB004447B9 /* FounDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */; };
 		C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */; };
@@ -162,7 +160,7 @@
 		C392FDD22B0237C9004447B9 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		C392FDD42B023964004447B9 /* FoundDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundDetailView.swift; sourceTree = "<group>"; };
 		C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounDetailViewController.swift; sourceTree = "<group>"; };
-		C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundDetailCollectionViewCell.swift; sourceTree = "<group>"; };                                                 
+		C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 		D651508B2ADD0C8B002FDD04 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				27EA11B82B0251BD00EA01D6 /* ImageLoader.swift */,
 				D6E10EA52AE2AAA00098F05D /* FirebaseAuthService.swift */,
 				D6E10E992AE2A8CD0098F05D /* FirebaseFoundService.swift */,
 				D6E10E972AE2A8CD0098F05D /* FirebaseImageUploadService.swift */,
@@ -845,7 +842,6 @@
 				D6F1CF3D2AF25CB700974B1F /* FilterModel.swift in Sources */,
 				D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */,
 				D6DE4A702AFE39F10092DD43 /* CommentMainView.swift in Sources */,
-				27EA11B92B0251BD00EA01D6 /* ImageLoader.swift in Sources */,
 				D6E10E722ADFD3740098F05D /* Constant.swift in Sources */,
 				D6535B612AF66A5C00F8DCFD /* SettingHandler.swift in Sources */,
 				08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */,
@@ -1079,9 +1075,11 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = FenceApp/FenceApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VGM28F2FH7;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VGM28F2FH7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FenceApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "찾아줄개";
@@ -1103,6 +1101,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = FenceApp03;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
