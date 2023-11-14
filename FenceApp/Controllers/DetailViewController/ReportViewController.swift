@@ -10,7 +10,10 @@ import MessageUI
 
 class ReportViewController: UIViewController {
     
-    let lost: Lost
+    let lost: Lost?
+    let comment: Comment?
+    
+    var isLost: Bool = true
     
     private let reportingLabel: UILabel = {
         let label = UILabel()
@@ -37,8 +40,9 @@ class ReportViewController: UIViewController {
         return tableView
     }()
     
-    init(lost: Lost) {
+    init(lost: Lost? = nil, comment: Comment? = nil) {
         self.lost = lost
+        self.comment = comment
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -99,8 +103,10 @@ extension ReportViewController {
             compseVC.mailComposeDelegate = self
             compseVC.setToRecipients(["teamfenceapp@gmail.com"])
             compseVC.setSubject(ReportType.allCases[indexPath.row].rawValue)
-            compseVC.setMessageBody("게시글 식별코드: \(lost.lostIdentifier)", isHTML: false)
-            
+            let identifier = isLost ? lost?.lostIdentifier : comment?.commentIdentifier
+            let bodyText = isLost ? "잃어버린 반려동물 게시판" : "댓글"
+            compseVC.setMessageBody("\(bodyText)\n식별코드: \(identifier!)", isHTML: false)
+            	
             self.present(compseVC, animated: true)
         } else {
             showSendMailErrorAlert()

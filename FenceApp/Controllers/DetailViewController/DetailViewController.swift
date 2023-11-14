@@ -21,8 +21,7 @@ final class DetailViewController: UIViewController {
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
-    
-    var reportOptionView = ReportOptionView()
+
     var pushToCommentVC: ( (Lost) -> Void )?
 
     var lost: Lost!
@@ -30,6 +29,8 @@ final class DetailViewController: UIViewController {
     let lostIdentifier: String
     
     var editButtonTapped: ( () -> Void )?
+    
+    var isYourComment = false
     
     private var menu = UIMenu()
     
@@ -54,7 +55,6 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        configureOptionView()
         Task {
             do {
                 try await getLost()
@@ -66,19 +66,6 @@ final class DetailViewController: UIViewController {
             }
         }
     }
-    
-    private func configureOptionView() {
-        reportOptionView.frame = UIScreen.main.bounds
-        reportOptionView.isHidden = false
-        
-        reportOptionView.tableView.dataSource = self
-        reportOptionView.tableView.delegate = self
-
-        let window = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first
-        window?.addSubview(reportOptionView)
-            
-        
-        }
     
     
     // MARK: - Action
@@ -259,8 +246,34 @@ extension DetailViewController: UICollectionViewDataSource {
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
             commentCell.optionImageTapped = { [weak self] in
-                self?.reportOptionView.isHidden = false
+                self?.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
                 
+                let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
+                    let reportViewController = ReportViewController(comment: comment)
+                    reportViewController.isLost = false
+                    self?.navigationController?.pushViewController(reportViewController, animated: true)
+                }
+                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+                    let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                        Task {
+                            do {
+                                try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }
+                    deleteAlertController.addAction(cancelAction)
+                    deleteAlertController.addAction(deleteAction)
+                    self?.present(deleteAlertController, animated: true)
+                }
+                alertController.addAction(cancelAction)
+                self!.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
+                self?.present(alertController, animated: true)
             }
             
             return commentCell
@@ -315,30 +328,5 @@ extension DetailViewController: EnrollViewControllerDelegate {
                 print(error)
             }
         }
-    }
-}
-
-// MARK: - TableView Datasource
-
-extension DetailViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.selectionStyle = .none
-        cell.textLabel?.text = "\(indexPath.row)"
-        return cell
-    }
-    
-    
-}
-
-// MARK: - TableView Delegate
-
-extension DetailViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
     }
 }

@@ -12,15 +12,15 @@ class ReportOptionView: UIView {
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.rowHeight = 100
+        tableView.rowHeight = 50
         
         return tableView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
-        addGestureOnSelf()
+//        configureUI()
+//        addGestureOnSelf()
     }
     
     var gesture: UITapGestureRecognizer!
@@ -42,7 +42,8 @@ class ReportOptionView: UIView {
         
         tableView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.height.equalTo(200)
+            $0.width.equalTo(100)
+            $0.height.equalTo(100)
         }
     }
     
