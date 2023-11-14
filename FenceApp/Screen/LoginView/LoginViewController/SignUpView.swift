@@ -226,7 +226,8 @@ extension SignUpView {
                 let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
                 try await userService.createUser(userResponseDTO: userResponseDTO)
                 
-                let fbUser = FBUser(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname)
+                let fbUser = UserResponseDTOMapper.makeFBUser(from: userResponseDTO)
+                
                 CurrentUserInfo.shared.currentUser = fbUser
                 DispatchQueue.main.async {
                     LoadingViewHandler.hideLoading()

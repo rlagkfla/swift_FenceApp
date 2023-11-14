@@ -13,6 +13,7 @@ struct FB {
         static let profileImageURL = "profileImageURL"
         static let useridentifier = "userIdentifier"
         static let userFCMToken = "userFCMToken"
+        static let reportCount = "reportCount"
     }
     
     struct Lost {
