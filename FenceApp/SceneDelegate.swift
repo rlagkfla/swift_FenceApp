@@ -23,8 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     
-    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
+    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService, locationManager: locationManager)
+    lazy var firebaseCloudMessaing = FirebaseCloudMessaging()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -177,11 +178,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // retain cycle
         
-        detailViewController.pushToCommentVC = { [weak self] in
+        detailViewController.pushToCommentVC = { [weak self] lost in
             
             guard let self else { return }
             
-            let commentCollectionVC = self.makeCommentCollectionViewController(lostIdentifier: lostIdentifier)
+            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
             
             viewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
         }
@@ -273,8 +274,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return foundDetailViewController
     }
     
-    private func makeCommentCollectionViewController(lostIdentifier: String) -> CommentViewController {
-        let commentCollectionViewController = CommentViewController(lostIdentifier: lostIdentifier, firebaseLostCommentService: firebaseLostCommentService)
+    private func makeCommentCollectionViewController(lost: Lost) -> CommentViewController {
+        let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost)
         
         return commentCollectionViewController
     }

@@ -17,6 +17,18 @@ struct FirebaseFoundService {
         self.locationManager = locationManager
     }
     
+    func editUserInformationOnFoundResponseDTO(with userResponseDTO: UserResponseDTO, batchController: BatchController) async throws {
+        
+        let foundResponseDTOs = try await fetchFounds(writtenBy: userResponseDTO.identifier)
+        
+        foundResponseDTOs.forEach { foundResponseDTO in
+            let identifier = foundResponseDTO.foundIdentifier
+            batchController.batch.updateData([FB.Found.userProfileImageURL: userResponseDTO.profileImageURL,
+                                              FB.Found.userNickname: userResponseDTO.nickname],
+                                             forDocument: COLLECTION_FOUND.document(identifier))
+        }
+    }
+    
     func fetchFound(foundIdentifier: String) async throws -> FoundResponseDTO {
         
         guard let dictionary = try await COLLECTION_FOUND.document(foundIdentifier).getDocument().data() else { throw PetError.noSnapshotDocument}
@@ -24,6 +36,21 @@ struct FirebaseFoundService {
         let foundResponseDTO = FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: dictionary)
         
         return foundResponseDTO
+    }
+    
+    private func fetchFounds(writtenBy userIdentifier: String) async throws -> [FoundResponseDTO] {
+        
+        let ref = COLLECTION_FOUND.whereField(FB.Found.userIdentifier, isEqualTo: userIdentifier)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let foundResponseDTOs = documents.map { document in
+            FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        return foundResponseDTOs
+        
+        
     }
     
     
@@ -83,7 +110,16 @@ struct FirebaseFoundService {
         return FoundWithDocument(foundResponseDTOs: foundResponseDTOs, lastDocument: lastDocument)
     }
     
-    
+    func deleteFound(foundIdentifier: String) async throws {
+        
+        let batchController = BatchController()
+        
+        let ref = COLLECTION_FOUND.document(foundIdentifier)
+        
+        batchController.batch.deleteDocument(ref)
+        
+        try await batchController.batch.commit()
+    }
     
     
     func deleteFounds(writtenBy userIdentifier: String, batchController: BatchController) async throws {

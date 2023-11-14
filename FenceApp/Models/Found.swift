@@ -15,4 +15,6 @@ struct Found: Pinable {
     let date: Date
     let userIdentifier: String
     let foundIdentifier: String
+    let userProfileImageURL: String
+    let userNickname: String
 }

@@ -17,6 +17,8 @@ class FounDetailViewController: UIViewController {
     let foundIdentifier: String
 //    let userIdentifier: String
     
+    var menu = UIMenu()
+    
     var found: Found!
     
     init(firebaseFoundService: FirebaseFoundService, locationManager: LocationManager, foundIdentifier: String) {
@@ -42,6 +44,7 @@ class FounDetailViewController: UIViewController {
             do {
                 try await getFound()
                 configureCollectionView()
+                configureMenu()
                 getData()
             } catch {
                 print(error)
@@ -65,6 +68,48 @@ class FounDetailViewController: UIViewController {
     
     private func getData(){
         foundDetailView.configureCell(postTime: "\(found.date)", found: found)
+    }
+    
+    func configureMenu() {
+        let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
+        let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let confirmAction = UIAlertAction(title: "삭제하기", style: .default) { [weak self] _ in
+            Task {
+                do {
+                    try await self!.firebaseFoundService.deleteFound(foundIdentifier: self!.found.foundIdentifier)
+                    self?.navigationController?.popViewController(animated: true)
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        impossibleAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(cancelAction)
+        deleteAlertController.addAction(confirmAction)
+        
+        let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
+            if self?.found.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                self!.present(deleteAlertController, animated: true)
+            } else {
+                self!.present(impossibleAlertController, animated: true)
+            }
+        }
+        
+        let reportAction = UIAction(title: "신고하기") { _ in
+            let reportViewController = ReportViewController(found: self.found, postKind: .found)
+            self.navigationController?.pushViewController(reportViewController, animated: true)
+        }
+        
+        
+        if self.found.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier  {
+            self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [deleteAction])
+        } else {
+            self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [reportAction])
+        }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis"), target: self, action: nil, menu: menu)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(hexCode: "55BCEF")
     }
 }
 

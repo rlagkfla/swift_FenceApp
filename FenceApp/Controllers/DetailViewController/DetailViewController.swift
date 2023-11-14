@@ -21,13 +21,16 @@ final class DetailViewController: UIViewController {
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
-    
-    var pushToCommentVC: ( () -> Void )?
+
+    var pushToCommentVC: ( (Lost) -> Void )?
+
     var lost: Lost!
     var comments: [Comment] = []
     let lostIdentifier: String
     
     var editButtonTapped: ( () -> Void )?
+    
+    var isYourComment = false
     
     private var menu = UIMenu()
     
@@ -51,6 +54,7 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         Task {
             do {
                 try await getLost()
@@ -62,6 +66,7 @@ final class DetailViewController: UIViewController {
             }
         }
     }
+    
     
     // MARK: - Action
     @objc func tapped() {
@@ -94,8 +99,10 @@ private extension DetailViewController {
         configureMenu()
         configureNavigation()
         configureCollectionView()
+       
         
     }
+
     
     func configureMenu() {
         let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
@@ -145,7 +152,7 @@ private extension DetailViewController {
         }
         
         let reportAction = UIAction(title: "신고하기") { _ in
-            let reportViewController = ReportViewController(lost: self.lost)
+            let reportViewController = ReportViewController(lost: self.lost, postKind: PostKind.lost)
             self.navigationController?.pushViewController(reportViewController, animated: true)
         }
         
@@ -238,7 +245,35 @@ extension DetailViewController: UICollectionViewDataSource {
             let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
-            commentCell.optionImageTapped = { print("Tapped") }
+            commentCell.optionImageTapped = { [weak self] in
+                self?.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+                
+                let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
+                    let reportViewController = ReportViewController(comment: comment, postKind: PostKind.comment)
+                    self?.navigationController?.pushViewController(reportViewController, animated: true)
+                }
+                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+                    let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                        Task {
+                            do {
+                                try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }
+                    deleteAlertController.addAction(cancelAction)
+                    deleteAlertController.addAction(deleteAction)
+                    self?.present(deleteAlertController, animated: true)
+                }
+                alertController.addAction(cancelAction)
+                self!.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
+                self?.present(alertController, animated: true)
+            }
             
             return commentCell
             
@@ -258,7 +293,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier, for: indexPath) as! CommentHeaderView
             header.setText(number: comments.count)
             header.commentHeaderViewTapped = { [weak self] in
-                self?.pushToCommentVC?()
+                self?.pushToCommentVC?(self!.lost)
             }
             return header
             
@@ -266,7 +301,7 @@ extension DetailViewController: UICollectionViewDataSource {
             
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier, for: indexPath) as! CommentFooterView
             footer.commentFooterViewTapped = { [weak self] in
-                self?.pushToCommentVC?()
+                self?.pushToCommentVC?(self!.lost)
             }
             return footer
         }
