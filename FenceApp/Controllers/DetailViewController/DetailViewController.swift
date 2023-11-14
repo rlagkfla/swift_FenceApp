@@ -54,7 +54,9 @@ final class DetailViewController: UIViewController {
         Task {
             do {
                 try await getLost()
+                try await getComment()
                 configure()
+                detailView.detailCollectionView.reloadData()
             } catch {
                 print(error)
             }
@@ -87,12 +89,12 @@ private extension DetailViewController {
     }
     
     func configure() {
-        view.backgroundColor = .white
+        
         
         configureMenu()
         configureNavigation()
         configureCollectionView()
-        getFirstComment()
+        
     }
     
     func configureMenu() {
@@ -177,25 +179,23 @@ private extension DetailViewController {
         detailView.detailCollectionView.delegate = self
     }
     
-    func getFirstComment() {
-        Task {
-            do {
-                let CommentDTOs = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier)
-                comments = CommentResponseDTOMapper.makeComments(from: CommentDTOs)
-            } catch {
-                print(error)
-            }
-        }
+    func getComment() async throws {
+        
+        
+        let CommentDTOs = try await firebaseCommentService.fetchComments(lostIdentifier: lost.lostIdentifier)
+        comments = CommentResponseDTOMapper.makeComments(from: CommentDTOs)
+        
     }
 }
+
 
 //MARK: - Collectionview Delegate
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.section == 4 {
-//            print("I am five")
-//        }
+        //        if indexPath.section == 4 {
+        //            print("I am five")
+        //        }
     }
 }
 // MARK: - UICollectionViewDataSource
@@ -204,7 +204,7 @@ extension DetailViewController: UICollectionViewDataSource {
         return 5
     }
     
-   
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
@@ -214,9 +214,9 @@ extension DetailViewController: UICollectionViewDataSource {
         } else if section == 2 {
             return 1
         } else if section == 3 {
-            return 10
-        } else {
             return comments.count == 0 ? 0: min(10, comments.count)
+        } else {
+            return comments.count == 0 ? 0 : 1
         }
     }
     
@@ -236,8 +236,10 @@ extension DetailViewController: UICollectionViewDataSource {
             return postCell
         } else if indexPath.section == 3 {
             let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
+            let comment = comments[indexPath.item]
+            commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
             commentCell.optionImageTapped = { print("Tapped") }
-
+            
             return commentCell
             
         } else {
@@ -254,6 +256,7 @@ extension DetailViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier, for: indexPath) as! CommentHeaderView
+            header.setText(number: comments.count)
             header.commentHeaderViewTapped = { [weak self] in
                 self?.pushToCommentVC?()
             }
@@ -274,7 +277,7 @@ extension DetailViewController: UICollectionViewDataSource {
 // MARK: - CustomDelegate
 extension DetailViewController: CommentDetailViewControllerDelegate {
     func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
-//        lastCommentDTO = lastComment
+        //        lastCommentDTO = lastComment
         self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
     }
 }
