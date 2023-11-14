@@ -111,7 +111,7 @@ class FoundDetailView: UIView {
         
         let region = MKCoordinateRegion(center: mapPin!.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         
-        mapView.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: false)
     }
     
     func clearPin() {
