@@ -241,7 +241,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
             postCell.configureCell(postTitle: lost.title, postDescription: lost.description, lostTime: lost.lostDate, lost: lost)
             return postCell
-        } else if indexPath.section == 3 {
+        } else {
             let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
@@ -277,11 +277,12 @@ extension DetailViewController: UICollectionViewDataSource {
             
             return commentCell
             
-        } else {
-            
-            let lastNextCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentNextLastCell.identifier, for: indexPath) as! CommentNextLastCell
-            
-            return lastNextCell
+            //        } else {
+            //            
+            //            let lastNextCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentNextLastCell.identifier, for: indexPath) as! CommentNextLastCell
+            //            
+            //            return lastNextCell
+            //        }
         }
         
     }

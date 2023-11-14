@@ -13,7 +13,12 @@ enum MessagingError: Error {
 }
 
 struct FirebaseCloudMessaging {
+#if DEBUG
+    let serverKey = "AAAAtNj2cLc:APA91bHsWiMCrG_469-gifRFfTZ92d2ZQ_UeyQD2tXaVvE_S7orkWneLTYPGa8Sxr3VGx6A9TC-ArfQ3NzhWTQ4ekgcck9OjqeLeKcEw1Yetf34DQ_K1P6cB7gmHtrNYMj0zpnv4hLZH"
+#else
     let serverKey = "AAAAZ4CjZqE:APA91bEW-e0wS7MSHeg2SpcMkQSQzSy0JiK448yYW6ZxnXc1eKkQ4u_jw1t5BV_rDpF0OtMS9aNLz31UaWMthSDXCeem5vpndqN6l_lqN3bxr6pI-hWxIFypAE225of79de-GdSf4hZd"
+#endif
+    
     let fcmSendUrl = URL(string: "https://fcm.googleapis.com/fcm/send")
     
     func sendCommentMessaing(userToken: String, title: String, comment: String) async throws {
