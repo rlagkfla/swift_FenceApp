@@ -28,7 +28,10 @@
 		08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E537BC2AE276EF001F08B2 /* SignUpView.swift */; };
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
-		27EA11B92B0251BD00EA01D6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EA11B82B0251BD00EA01D6 /* ImageLoader.swift */; };
+		C392FDD32B0237C9004447B9 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD22B0237C9004447B9 /* ImageLoader.swift */; };
+		C392FDD52B023964004447B9 /* FoundDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD42B023964004447B9 /* FoundDetailView.swift */; };
+		C392FDD72B0239BB004447B9 /* FounDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */; };
+		C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */; };
 		C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */; };
 		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
 		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
@@ -153,7 +156,10 @@
 		08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtentsion.swift; sourceTree = "<group>"; };
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
-		27EA11B82B0251BD00EA01D6 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		C392FDD22B0237C9004447B9 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		C392FDD42B023964004447B9 /* FoundDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundDetailView.swift; sourceTree = "<group>"; };
+		C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounDetailViewController.swift; sourceTree = "<group>"; };
+		C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundDetailCollectionViewCell.swift; sourceTree = "<group>"; };                                                 
 		C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
@@ -331,6 +337,7 @@
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
 				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
+				C392FDD22B0237C9004447B9 /* ImageLoader.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
 				D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */,
 				D62D62972AF4D8100050FE12 /* DateService.swift */,
@@ -426,6 +433,8 @@
 				D664704F2AE5F48E0041643E /* ChatView.swift */,
 				D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */,
 				D66470512AE5F6FE0041643E /* ChatViewController */,
+				C392FDD42B023964004447B9 /* FoundDetailView.swift */,
+				C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */,
 			);
 			path = ChatView;
 			sourceTree = "<group>";
@@ -486,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				D65150BE2ADD1249002FDD04 /* ChatViewController.swift */,
+				C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */,
 			);
 			name = ChatViewController;
 			sourceTree = "<group>";
@@ -770,6 +780,7 @@
 				D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */,
 				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
+				C392FDD32B0237C9004447B9 /* ImageLoader.swift in Sources */,
 				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
 				D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
@@ -781,6 +792,7 @@
 				D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */,
 				D6E10E9F2AE2A8CD0098F05D /* FirebaseFoundService.swift in Sources */,
 				D6DE4A682AFDAECC0092DD43 /* CommentFooterView.swift in Sources */,
+				C392FDD52B023964004447B9 /* FoundDetailView.swift in Sources */,
 				D6E10EA62AE2AAA00098F05D /* FirebaseAuthService.swift in Sources */,
 				D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */,
 				D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */,
@@ -857,12 +869,14 @@
 				D62D62982AF4D8100050FE12 /* DateService.swift in Sources */,
 				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
 				D6DE4A602AFB8C9C0092DD43 /* CommentCell.swift in Sources */,
+				C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */,
 				08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */,
 				D631B9862B02072D00898441 /* CommentViewController.swift in Sources */,
 				08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
 				08DB05D42AEE61E100A0C589 /* ValidationHandler.swift in Sources */,
 				D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */,
+				C392FDD72B0239BB004447B9 /* FounDetailViewController.swift in Sources */,
 				D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */,
 				C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */,
 				08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */,
