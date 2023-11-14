@@ -29,6 +29,7 @@
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
 		27EA11B92B0251BD00EA01D6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EA11B82B0251BD00EA01D6 /* ImageLoader.swift */; };
+		27EA11BB2B025B9500EA01D6 /* ReportOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EA11BA2B025B9500EA01D6 /* ReportOptionView.swift */; };
 		C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */; };
 		C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */; };
 		C3F5C3272AE227AE00D6DA16 /* LostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F5C3242AE227AE00D6DA16 /* LostListView.swift */; };
@@ -154,6 +155,7 @@
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		27EA11B82B0251BD00EA01D6 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		27EA11BA2B025B9500EA01D6 /* ReportOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOptionView.swift; sourceTree = "<group>"; };
 		C397DDD92AE54308006903E9 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3F5C3232AE227AE00D6DA16 /* LostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListViewController.swift; sourceTree = "<group>"; };
 		C3F5C3242AE227AE00D6DA16 /* LostListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostListView.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				D6DE4A6D2AFDE5EC0092DD43 /* CommentNextLastCell.swift */,
 				D6DE4A6F2AFE39F10092DD43 /* CommentMainView.swift */,
 				D631B9812B0204D300898441 /* CommentTextFieldView.swift */,
+				27EA11BA2B025B9500EA01D6 /* ReportOptionView.swift */,
 			);
 			path = FenceApp;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */,
 				08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */,
 				D63CF4542AFB7FA8002BB260 /* ReportType.swift in Sources */,
+				27EA11BB2B025B9500EA01D6 /* ReportOptionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

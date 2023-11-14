@@ -28,6 +28,8 @@ class DetailView: UIView {
         return collectionView
     }()
     
+//    let reportOptionView = ReportOptionView()
+    
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,10 +45,23 @@ class DetailView: UIView {
 // MARK: - AutoLayout
 private extension DetailView {
     func configureUI() {
+        configureCollectionView()
+//        configureReportOptionView()
+    }
+    
+    func configureCollectionView() {
         self.addSubview(detailCollectionView)
         
         detailCollectionView.snp.makeConstraints {
             $0.edges.equalTo(self.safeAreaLayoutGuide.snp.edges)
         }
     }
+    
+//    func configureReportOptionView() {
+//        addSubviews(reportOptionView)
+//        
+//        reportOptionView.snp.makeConstraints {
+//            $0.edges.equalToSuperview()
+//        }
+//    }
 }
