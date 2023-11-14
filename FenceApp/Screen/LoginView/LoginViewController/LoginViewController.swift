@@ -214,10 +214,8 @@ private extension LoginViewController {
     
     func fetchAndStoreCurrentUser(identifier: String) async {
         do {
-            let userResponseDTO = try await firebaseUserService.fetchUser(userIdentifier: identifier)
-            
-            let fbUser = UserResponseDTOMapper.makeFBUser(from: userResponseDTO)
-//            let fbUser = FBUser(email: user.email, profileImageURL: user.profileImageURL, identifier: user.identifier, nickname: user.nickname)
+            let user = try await firebaseUserService.fetchUser(userIdentifier: identifier)
+            let fbUser = FBUser(email: user.email, profileImageURL: user.profileImageURL, identifier: user.identifier, nickname: user.nickname, reportCount: user.reportCount)
             CurrentUserInfo.shared.currentUser = fbUser
             print("Current User Info\(String(describing: CurrentUserInfo.shared.currentUser))")
         } catch {

@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
     lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService, locationManager: locationManager)
+    lazy var firebaseCloudMessaing = FirebaseCloudMessaging()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -177,11 +178,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // retain cycle
         
-        detailViewController.pushToCommentVC = { [weak self] in
+        detailViewController.pushToCommentVC = { [weak self] lost in
             
             guard let self else { return }
             
-            let commentCollectionVC = self.makeCommentCollectionViewController(lostIdentifier: lostIdentifier)
+            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
             
             viewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
         }

@@ -12,8 +12,7 @@ class CommentTextFieldView: UIView {
     
     let textView: UITextView = {
         let tv = UITextView()
-        
-        tv.backgroundColor = .systemGray6
+        tv.backgroundColor = .gray
         return tv
     }()
     
@@ -37,6 +36,4 @@ class CommentTextFieldView: UIView {
             $0.height.equalTo(30)
         }
     }
-    
-    
 }
