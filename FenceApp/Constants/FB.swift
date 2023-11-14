@@ -41,6 +41,8 @@ struct FB {
         static let date = "date"
         static let userIdentifier = "userIdentifier"
         static let foundIdentifier = "foundIdentifier"
+        static let userProfileImageURL = "userProfileImageURL"
+        static let userNickname = "userNickname"
     }
     
     struct Comment {

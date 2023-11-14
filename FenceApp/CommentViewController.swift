@@ -15,6 +15,8 @@ class CommentViewController: UIViewController {
     let firebaseCloudMessaging: FirebaseCloudMessaging
     let lost: Lost
     
+    var isMyComment: Bool = false
+    
     init(firebaseLostCommentService: FirebaseLostCommentService, firebaseCloudMessaging: FirebaseCloudMessaging, lost: Lost) {
         self.firebaseLostCommentService = firebaseLostCommentService
         self.firebaseCloudMessaging = firebaseCloudMessaging
@@ -152,9 +154,36 @@ extension CommentViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
         
         let comment = comments[indexPath.item]
-        
         cell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
-        
+        cell.optionImageTapped = {
+            self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+            
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
+                let reportViewController = ReportViewController(comment: comment, postKind: PostKind.comment)
+                self.navigationController?.pushViewController(reportViewController, animated: true)
+            }
+            let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+                let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                    Task {
+                        do {
+                            try await self?.firebaseLostCommentService.deleteComment(lostIdentifier: self!.lost.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+                deleteAlertController.addAction(cancelAction)
+                deleteAlertController.addAction(deleteAction)
+                self.present(deleteAlertController, animated: true)
+            }
+            alertController.addAction(cancelAction)
+            self.isMyComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
+            self.present(alertController, animated: true)
+        }
         return cell
     }
 }

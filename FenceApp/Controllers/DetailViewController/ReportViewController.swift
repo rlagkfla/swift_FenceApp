@@ -8,9 +8,19 @@
 import UIKit
 import MessageUI
 
+enum PostKind {
+    case lost
+    case found
+    case comment
+}
+
 class ReportViewController: UIViewController {
     
-    let lost: Lost
+    let lost: Lost?
+    let comment: Comment?
+    let found: Found?
+    
+    let postKind: PostKind
     
     private let reportingLabel: UILabel = {
         let label = UILabel()
@@ -37,8 +47,11 @@ class ReportViewController: UIViewController {
         return tableView
     }()
     
-    init(lost: Lost) {
+    init(lost: Lost? = nil, comment: Comment? = nil, found: Found? = nil, postKind: PostKind) {
         self.lost = lost
+        self.comment = comment
+        self.found = found
+        self.postKind = postKind
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -93,14 +106,27 @@ extension ReportViewController {
 }
 
 extension ReportViewController {
-    func sendReportEmail(indexPath: IndexPath) {
+    func sendReportEmail(indexPath: IndexPath, postKind: PostKind) {
         if MFMailComposeViewController.canSendMail() {
             let compseVC = MFMailComposeViewController()
             compseVC.mailComposeDelegate = self
             compseVC.setToRecipients(["teamfenceapp@gmail.com"])
             compseVC.setSubject(ReportType.allCases[indexPath.row].rawValue)
-            compseVC.setMessageBody("게시글 식별코드: \(lost.lostIdentifier)", isHTML: false)
-            
+            var identifier: String = ""
+            var postKindTitle: String = ""
+            switch postKind {
+            case .lost:
+                identifier = lost!.lostIdentifier
+                postKindTitle = "잃어버린 반려동물 게시판"
+            case .found:
+                identifier = found!.foundIdentifier
+                postKindTitle = "발견한 반려동물 게시판"
+            case .comment:
+                identifier = comment!.commentIdentifier
+                postKindTitle = "댓글"
+            }
+            compseVC.setMessageBody("\(postKindTitle)\n식별코드: \(identifier)", isHTML: false)
+            	
             self.present(compseVC, animated: true)
         } else {
             showSendMailErrorAlert()
@@ -146,7 +172,7 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
         let alertController = UIAlertController(title: "신고하시겠습니까?", message: nil, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let confirmAction = UIAlertAction(title: "신고하기", style: .default) { [weak self] _ in
-            self?.sendReportEmail(indexPath: indexPath)
+            self?.sendReportEmail(indexPath: indexPath, postKind: self!.postKind)
         }
         alertController.addAction(cancelAction)
         alertController.addAction(confirmAction)
