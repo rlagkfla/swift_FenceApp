@@ -57,6 +57,7 @@
 		D63CF4582AFBB39C002BB260 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63CF4572AFBB39C002BB260 /* WebViewController.swift */; };
 		D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */; };
 		D6414A782ADFA36C002522D7 /* ImageViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */; };
+		D645F3662B025B2D00E14DB8 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D645F3652B025B2D00E14DB8 /* ImageLoader.swift */; };
 		D64D76A12ADE097F00E9815B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A02ADE097F00E9815B /* DetailView.swift */; };
 		D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */; };
 		D651509E2ADD0F2E002FDD04 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D651509D2ADD0F2E002FDD04 /* SnapKit */; };
@@ -184,6 +185,7 @@
 		D63CF4572AFBB39C002BB260 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		D6414A712ADF6B74002522D7 /* DetailViewCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayout.swift; sourceTree = "<group>"; };
 		D6414A772ADFA36C002522D7 /* ImageViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		D645F3652B025B2D00E14DB8 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		D64D76A02ADE097F00E9815B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		D64D76A22ADE17FD00E9815B /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		D651509A2ADD0E4E002FDD04 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				D6E10E982AE2A8CD0098F05D /* FirebaseLostService.swift */,
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
 				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
+				D645F3652B025B2D00E14DB8 /* ImageLoader.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				C392FDD22B0237C9004447B9 /* ImageLoader.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
@@ -783,7 +786,7 @@
 				D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */,
 				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
-				C392FDD32B0237C9004447B9 /* ImageLoader.swift in Sources */,
+				D645F3662B025B2D00E14DB8 /* ImageLoader.swift in Sources */,
 				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
 				D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
