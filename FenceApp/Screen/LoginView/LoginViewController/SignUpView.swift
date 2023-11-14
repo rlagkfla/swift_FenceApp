@@ -3,6 +3,8 @@ import RiveRuntime
 import RxSwift
 import FirebaseAuth
 import SafariServices
+import FirebaseFirestore
+
 
 final class SignUpView: UIView {
     
@@ -258,15 +260,21 @@ extension SignUpView {
             }
             return
         }
-        
-        let imageUrlString = pickedImageURL?.absoluteString ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Cute_dog.jpg/1024px-Cute_dog.jpg"
-        
+
         Task {
             do {
+                let imageUrlString: String
+                if let pickedImageURL = pickedImageURL, let image = UIImage(contentsOfFile: pickedImageURL.path) {
+                    imageUrlString = try await FirebaseImageUploadService.uploadProfileImage(image: image)
+                } else {
+                    let defaultImage = UIImage(named: "defaultPerson")
+                    imageUrlString = try await FirebaseImageUploadService.uploadProfileImage(image: defaultImage!)
+                }
+
                 let authResult = try await self.authService.signUpUser(email: email, password: password)
                 let userResponseDTO = UserResponseDTO(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
                 try await userService.createUser(userResponseDTO: userResponseDTO)
-                
+
                 let fbUser = FBUser(email: email, profileImageURL: imageUrlString, identifier: authResult.user.uid, nickname: nickname, reportCount: 0)
                 CurrentUserInfo.shared.currentUser = fbUser
                 DispatchQueue.main.async {
@@ -281,7 +289,7 @@ extension SignUpView {
             }
         }
     }
-    
+
     // MARK: - SignUp
     
     private func handleSignUpError(_ error: Error) {
