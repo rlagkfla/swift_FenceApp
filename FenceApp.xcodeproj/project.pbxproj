@@ -17,7 +17,8 @@
 		08885E8E2B045EF1003A6E05 /* MessageRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E8D2B045EF1003A6E05 /* MessageRoomModel.swift */; };
 		08885E912B04609F003A6E05 /* MessageRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E902B04609F003A6E05 /* MessageRoomViewController.swift */; };
 		08885E932B0460FF003A6E05 /* MessageRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E922B0460FF003A6E05 /* MessageRoomCell.swift */; };
-		08885E952B047EE5003A6E05 /* ChatRoomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E942B047EE5003A6E05 /* ChatRoomsViewModel.swift */; };
+		08885E952B047EE5003A6E05 /* MessageRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E942B047EE5003A6E05 /* MessageRoomViewModel.swift */; };
+		08D1D3212B04D865003ED029 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1D3202B04D865003ED029 /* MessageViewController.swift */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
 		08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */; };
 		08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */; };
@@ -156,7 +157,8 @@
 		08885E8D2B045EF1003A6E05 /* MessageRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomModel.swift; sourceTree = "<group>"; };
 		08885E902B04609F003A6E05 /* MessageRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomViewController.swift; sourceTree = "<group>"; };
 		08885E922B0460FF003A6E05 /* MessageRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomCell.swift; sourceTree = "<group>"; };
-		08885E942B047EE5003A6E05 /* ChatRoomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsViewModel.swift; sourceTree = "<group>"; };
+		08885E942B047EE5003A6E05 /* MessageRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomViewModel.swift; sourceTree = "<group>"; };
+		08D1D3202B04D865003ED029 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -306,7 +308,7 @@
 				08885E8D2B045EF1003A6E05 /* MessageRoomModel.swift */,
 				08885E902B04609F003A6E05 /* MessageRoomViewController.swift */,
 				08885E922B0460FF003A6E05 /* MessageRoomCell.swift */,
-				08885E942B047EE5003A6E05 /* ChatRoomsViewModel.swift */,
+				08885E942B047EE5003A6E05 /* MessageRoomViewModel.swift */,
 			);
 			name = MessageRoom;
 			sourceTree = "<group>";
@@ -462,6 +464,7 @@
 				D66470512AE5F6FE0041643E /* ChatViewController */,
 				C392FDD42B023964004447B9 /* FoundDetailView.swift */,
 				C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */,
+				08D1D3202B04D865003ED029 /* MessageViewController.swift */,
 			);
 			path = ChatView;
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
+				08D1D3212B04D865003ED029 /* MessageViewController.swift in Sources */,
 				D631B9882B020A9200898441 /* UIColor+Ext.swift in Sources */,
 				083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */,
 				08885E8E2B045EF1003A6E05 /* MessageRoomModel.swift in Sources */,
@@ -900,7 +904,7 @@
 				D62D62982AF4D8100050FE12 /* DateService.swift in Sources */,
 				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
 				D6DE4A602AFB8C9C0092DD43 /* CommentCell.swift in Sources */,
-				08885E952B047EE5003A6E05 /* ChatRoomsViewModel.swift in Sources */,
+				08885E952B047EE5003A6E05 /* MessageRoomViewModel.swift in Sources */,
 				C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */,
 				08885E912B04609F003A6E05 /* MessageRoomViewController.swift in Sources */,
 				08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */,

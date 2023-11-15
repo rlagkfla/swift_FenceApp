@@ -13,7 +13,9 @@ class MessageRoomViewModel {
     let messageRooms = BehaviorSubject<[MessageRoom]>(value: [])
     
     init() { loadChatRooms() }
-    deinit { stopListening() }
+    deinit {
+        stopListening()
+    }
 }
 
 
