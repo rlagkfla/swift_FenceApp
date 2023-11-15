@@ -48,6 +48,10 @@ final class DetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("DetailViewController - Deinit")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = detailView
@@ -151,7 +155,8 @@ private extension DetailViewController {
             }
         }
         
-        let reportAction = UIAction(title: "신고하기") { _ in
+        let reportAction = UIAction(title: "신고하기") { [weak self] _ in
+            guard let self else { return }
             let reportViewController = ReportViewController(lost: self.lost, postKind: PostKind.lost)
             self.navigationController?.pushViewController(reportViewController, animated: true)
         }
@@ -258,7 +263,7 @@ extension DetailViewController: UICollectionViewDataSource {
                 let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                     let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                         Task {
                             do {
                                 try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
