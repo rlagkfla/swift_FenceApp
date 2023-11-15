@@ -83,6 +83,20 @@ final class DetailViewController: UIViewController {
             }
         }
     }
+    
+    @objc func refreshControlActive() {
+        lost = nil
+        Task {
+            do {
+                try await getLost()
+                try await getComment()
+                self.refreshControl.endRefreshing()
+                detailView.detailCollectionView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 // MARK: - Priavte Method
