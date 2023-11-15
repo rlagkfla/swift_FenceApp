@@ -61,7 +61,6 @@ class LostListViewController: UIViewController {
         configureTableView()
         
         configureNavBar()
-        
     }
     
     @objc func tapRightBarBtn(){
@@ -90,6 +89,7 @@ class LostListViewController: UIViewController {
     @objc private func refreshTable() {
         lostWithDocument = nil
         getLostList()
+        
         self.refreshControl.endRefreshing()
     }
     

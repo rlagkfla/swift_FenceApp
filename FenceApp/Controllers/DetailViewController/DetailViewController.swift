@@ -32,6 +32,8 @@ final class DetailViewController: UIViewController {
     
     var isYourComment = false
     
+    let refreshControl = UIRefreshControl()
+    
     private var menu = UIMenu()
     
     init(firebaseCommentService: FirebaseLostCommentService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
@@ -67,7 +69,6 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    
     // MARK: - Action
     @objc func tapped() {
         let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost)
@@ -82,6 +83,20 @@ final class DetailViewController: UIViewController {
         
         present(commentVC, animated: true)
     }
+    
+    @objc func refreshControlActive() {
+        lost = nil
+        Task {
+            do {
+                try await getLost()
+                try await getComment()
+                self.refreshControl.endRefreshing()
+                detailView.detailCollectionView.reloadData()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 // MARK: - Priavte Method
@@ -94,13 +109,12 @@ private extension DetailViewController {
     }
     
     func configure() {
-        
-        
         configureMenu()
         configureNavigation()
         configureCollectionView()
         
-        
+        detailView.detailCollectionView.refreshControl = self.refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlActive), for: .valueChanged)
     }
     
     
@@ -208,7 +222,7 @@ extension DetailViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension DetailViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return 4
     }
     
     
@@ -220,11 +234,12 @@ extension DetailViewController: UICollectionViewDataSource {
             return 1
         } else if section == 2 {
             return 1
-        } else if section == 3 {
-            return comments.count == 0 ? 0: min(10, comments.count)
         } else {
-            return comments.count == 0 ? 0 : 1
+            return comments.count == 0 ? 0 : min(10, comments.count)
         }
+//        } else {
+//            return comments.count == 0 ? 0 : 1
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

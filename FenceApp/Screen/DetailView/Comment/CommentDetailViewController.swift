@@ -149,12 +149,15 @@ extension CommentDetailViewController {
         guard commentDetailView.writeCommentTextView.textColor == .black else { return }
         guard commentDetailView.writeCommentTextView.text != "" else { return }
         
+        let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        self.present(alertController, animated: true)
         Task {
             do {
                 try await setText(text: commentDetailView.writeCommentTextView.text)
                 getCommentList()
                 guard lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier else { return }
                 try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                alertController.dismiss(animated: true)
             } catch {
                 print(error)
             }

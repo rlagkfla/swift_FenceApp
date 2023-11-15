@@ -270,7 +270,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
-        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, locationManager: locationManager, foundIdentifier: foundIdentifier)
+        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, foundIdentifier: foundIdentifier)
         return foundDetailViewController
     }
     

@@ -94,14 +94,10 @@ class FoundDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(postTime: String, found: Found){
-//        writerNickNameLabel.text = userNickName
-//        writerProfileImageView.kf.setImage(with: URL(string: userProfileImageURL))
-        
-        let postWriteTime = postTime.getHowLongAgo()
-        postWriteTimeLabel.text = postWriteTime
-        
-        clearPin()
+    func configureCell(found: Found){
+        writerNickNameLabel.text = found.userNickname
+        writerProfileImageView.kf.setImage(with: URL(string: found.userProfileImageURL))
+        postWriteTimeLabel.text = (found.date).dateToString()
         setPin(pinable: found)
     }
     

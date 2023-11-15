@@ -20,7 +20,7 @@ class DetailView: UIView {
         collectionView.register(CommentCollectionViewCell.self, forCellWithReuseIdentifier: CommentCollectionViewCell.identifier)
         
         collectionView.register(CommentCell.self, forCellWithReuseIdentifier: CommentCell.identifier)
-        collectionView.register(CommentNextLastCell.self, forCellWithReuseIdentifier: CommentNextLastCell.identifier)
+//        collectionView.register(CommentNextLastCell.self, forCellWithReuseIdentifier: CommentNextLastCell.identifier)
         
         collectionView.register(CommentHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier)
         collectionView.register(CommentFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier)
