@@ -79,7 +79,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func setNavigationControllers() {
         firstTabNavigationController.viewControllers = [makeMapViewVC()]
         secondTabNavigationController.viewControllers = [makeLostViewVC()]
-        thirdTabNavigationController.viewControllers = [makeChatViewController()]
+        thirdTabNavigationController.viewControllers = [MessageRoomViewController()]
         fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
     }
     

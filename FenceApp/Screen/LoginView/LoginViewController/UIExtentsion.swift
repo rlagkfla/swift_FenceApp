@@ -20,7 +20,7 @@ extension UIView {
         ])
         return self
     }
-
+    
     @discardableResult
     func positionCenterX() -> Self {
         guard let superview = self.superview else { return self }
@@ -34,6 +34,17 @@ extension UIView {
         snp.makeConstraints { $0.centerY.equalTo(superview) }
         return self
     }
+    @discardableResult
+    func leadingToSuperview(offset: CGFloat) -> Self {
+        guard let superview = self.superview else {
+            fatalError("Superview not found. Make sure to add the view to the superview before setting constraints.")
+        }
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: offset).isActive = true
+        return self
+    }
+    
     
     
     @discardableResult
@@ -175,7 +186,7 @@ extension UIView {
         }
         return self
     }
-
+    
     
     @discardableResult
     func withShadowContainer(color: UIColor = .black, opacity: Float = 0.5, offset: CGSize = CGSize(width: 0, height: 2), radius: CGFloat = 4) -> UIView {
@@ -341,12 +352,12 @@ extension UITextField {
     
     
     @discardableResult
-        func withText(_ text: String) -> UITextField {
-            self.text = text
-            return self
-        }
+    func withText(_ text: String) -> UITextField {
+        self.text = text
+        return self
+    }
     
-
+    
     @discardableResult
     func withSecured() -> Self {
         isSecureTextEntry = true
@@ -363,7 +374,7 @@ extension UITextField {
         self.layer.addSublayer(border)
         return self
     }
-
+    
     
     @discardableResult
     func withInsets(top: CGFloat = 0, left: CGFloat = 0, bottom: CGFloat = 0, right: CGFloat = 0) -> Self {
@@ -383,7 +394,7 @@ extension UITextField {
         keyboardType = type
         return self
     }
-
+    
     @discardableResult
     func withCapitalization(_ type: UITextAutocapitalizationType) -> Self {
         autocapitalizationType = type
@@ -406,7 +417,7 @@ extension UILabel {
         self.addGestureRecognizer(tapGesture)
         return self
     }
-
+    
     @discardableResult
     func withUserInteraction(enabled: Bool) -> Self {
         self.isUserInteractionEnabled = enabled
@@ -494,6 +505,12 @@ extension UIImageView {
     @discardableResult
     func withImage(_ named: String) -> Self {
         self.image = UIImage(named: named)
+        return self
+    }
+    
+    @discardableResult
+    func withContentMode(_ mode: UIView.ContentMode) -> Self {
+        self.contentMode = mode
         return self
     }
 }

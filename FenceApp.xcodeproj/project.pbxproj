@@ -14,6 +14,10 @@
 		08653F8F2AF8BFE400B5BCAD /* LoadingViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653F8E2AF8BFE400B5BCAD /* LoadingViewHandler.swift */; };
 		08653F912AF8C01D00B5BCAD /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 08653F902AF8C01D00B5BCAD /* FirebaseMessaging */; };
 		08653FA02AF901AA00B5BCAD /* GoogleService-Info-Release.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08653F9F2AF901AA00B5BCAD /* GoogleService-Info-Release.plist */; };
+		08885E8E2B045EF1003A6E05 /* MessageRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E8D2B045EF1003A6E05 /* MessageRoomModel.swift */; };
+		08885E912B04609F003A6E05 /* MessageRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E902B04609F003A6E05 /* MessageRoomViewController.swift */; };
+		08885E932B0460FF003A6E05 /* MessageRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E922B0460FF003A6E05 /* MessageRoomCell.swift */; };
+		08885E952B047EE5003A6E05 /* ChatRoomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08885E942B047EE5003A6E05 /* ChatRoomsViewModel.swift */; };
 		08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */; };
 		08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */; };
 		08DB05D22AEE61CC00A0C589 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */; };
@@ -149,6 +153,10 @@
 		08653F8E2AF8BFE400B5BCAD /* LoadingViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewHandler.swift; sourceTree = "<group>"; };
 		08653F922AF8C03000B5BCAD /* FenceApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FenceApp.entitlements; sourceTree = "<group>"; };
 		08653F9F2AF901AA00B5BCAD /* GoogleService-Info-Release.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Release.plist"; sourceTree = "<group>"; };
+		08885E8D2B045EF1003A6E05 /* MessageRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomModel.swift; sourceTree = "<group>"; };
+		08885E902B04609F003A6E05 /* MessageRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomViewController.swift; sourceTree = "<group>"; };
+		08885E922B0460FF003A6E05 /* MessageRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomCell.swift; sourceTree = "<group>"; };
+		08885E942B047EE5003A6E05 /* ChatRoomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsViewModel.swift; sourceTree = "<group>"; };
 		08DB05CD2AEE61A100A0C589 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		08DB05CF2AEE61B900A0C589 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		08DB05D12AEE61CC00A0C589 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -292,6 +300,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08885E8F2B04608F003A6E05 /* MessageRoom */ = {
+			isa = PBXGroup;
+			children = (
+				08885E8D2B045EF1003A6E05 /* MessageRoomModel.swift */,
+				08885E902B04609F003A6E05 /* MessageRoomViewController.swift */,
+				08885E922B0460FF003A6E05 /* MessageRoomCell.swift */,
+				08885E942B047EE5003A6E05 /* ChatRoomsViewModel.swift */,
+			);
+			name = MessageRoom;
+			sourceTree = "<group>";
+		};
 		C3F5C3212AE227AE00D6DA16 /* LostListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +456,7 @@
 		D65150972ADD0DDD002FDD04 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				08885E8F2B04608F003A6E05 /* MessageRoom */,
 				D664704F2AE5F48E0041643E /* ChatView.swift */,
 				D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */,
 				D66470512AE5F6FE0041643E /* ChatViewController */,
@@ -832,6 +852,7 @@
 				D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */,
 				D6D806362AEA52D90002AE3A /* String+Ext.swift in Sources */,
 				D6F1CF402AF329AB00974B1F /* Calendar+Ext.swift in Sources */,
+				08885E932B0460FF003A6E05 /* MessageRoomCell.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
@@ -871,6 +892,7 @@
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
 				D631B9882B020A9200898441 /* UIColor+Ext.swift in Sources */,
 				083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */,
+				08885E8E2B045EF1003A6E05 /* MessageRoomModel.swift in Sources */,
 				D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */,
 				D6E10EA82AE2AB290098F05D /* MapMainView.swift in Sources */,
 				D6FAD9E72ADD2B9E001EDABC /* DetailViewController.swift in Sources */,
@@ -878,7 +900,9 @@
 				D62D62982AF4D8100050FE12 /* DateService.swift in Sources */,
 				D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */,
 				D6DE4A602AFB8C9C0092DD43 /* CommentCell.swift in Sources */,
+				08885E952B047EE5003A6E05 /* ChatRoomsViewModel.swift in Sources */,
 				C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */,
+				08885E912B04609F003A6E05 /* MessageRoomViewController.swift in Sources */,
 				08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */,
 				D631B9862B02072D00898441 /* CommentViewController.swift in Sources */,
 				08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */,
@@ -1060,7 +1084,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1102,7 +1126,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeok.FenceApp03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
