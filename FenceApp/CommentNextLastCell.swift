@@ -11,9 +11,12 @@ class CommentNextLastCell: UICollectionViewCell {
     
     static let identifier = "CommentNextLastCell"
     
-    private let nextCommentLabel: UILabel = {
+    var nextCommentLabelTapped: (() -> Void)?
+    
+    private lazy var nextCommentLabel: UILabel = {
         let label = UILabel()
         label.text = "다음 댓글 더보기"
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTapped)))
         return label
     }()
     
@@ -30,6 +33,10 @@ class CommentNextLastCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func labelTapped() {
+        nextCommentLabelTapped?()
     }
     
     private func configureUI() {

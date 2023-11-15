@@ -275,8 +275,10 @@ class EnrollViewController: UIViewController{
         
         Task{
             do {
+                let alertTitle: String = isEdited ? "수정 중입니다." : "등록 중입니다."
+                let alertController = UIAlertController(title: alertTitle, message: "잠시만 기다려주세요.", preferredStyle: .alert)
+                self.present(alertController, animated: true)
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                //                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
                 
                 guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
                 
@@ -286,8 +288,7 @@ class EnrollViewController: UIViewController{
                     try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                     delegate?.popEnrollViewController()
                 } else {
-                    let editLostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
-                    let editLost = Lost(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, imageURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
+                    let editLostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: lost.postDate, lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
                     delegate?.popEnrollViewController()
                     try await firebaseLostService.editLost(on: editLostResponseDTO)
                 }
@@ -298,7 +299,7 @@ class EnrollViewController: UIViewController{
                 activityIndicator.stopAnimating()
                 activityIndicator.removeFromSuperview()
                 self.view.isUserInteractionEnabled = true
-                
+                alertController.dismiss(animated: true)
                 self.navigationController?.popViewController(animated: true)
                 
                 // pop시 delegate로 테이블뷰 페이지 이동

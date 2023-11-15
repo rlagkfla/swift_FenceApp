@@ -21,9 +21,9 @@ final class DetailViewController: UIViewController {
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
-
+    
     var pushToCommentVC: ( (Lost) -> Void )?
-
+    
     var lost: Lost!
     var comments: [Comment] = []
     let lostIdentifier: String
@@ -99,10 +99,10 @@ private extension DetailViewController {
         configureMenu()
         configureNavigation()
         configureCollectionView()
-       
+        
         
     }
-
+    
     
     func configureMenu() {
         let impossibleAlertController = UIAlertController(title: "불가능합니다", message: "본인 게시글이 아니므로 불가능합니다.", preferredStyle: .alert)
@@ -278,13 +278,14 @@ extension DetailViewController: UICollectionViewDataSource {
             return commentCell
             
             //        } else {
-            //            
             //            let lastNextCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentNextLastCell.identifier, for: indexPath) as! CommentNextLastCell
-            //            
+            //            lastNextCell.nextCommentLabelTapped = {
+            //                self.pushToCommentVC?(self.lost)
+            //            }
+            //
             //            return lastNextCell
             //        }
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
