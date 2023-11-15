@@ -10,7 +10,7 @@ import SnapKit
 import FirebaseMessaging
 
 protocol CommentDetailViewControllerDelegate: AnyObject {
-    func dismissCommetnDetailViewController(lastComment: CommentResponseDTO)
+    func dismissCommetnDetailViewController()
 }
 
 final class CommentDetailViewController: UIViewController {
@@ -60,10 +60,6 @@ final class CommentDetailViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        guard let lastCommet = commentList.last else { return }
-        
-        delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -89,6 +85,7 @@ private extension CommentDetailViewController {
         
         view.backgroundColor = .white
         
+        configureNavigationBackButton()
         configureTalbeView()
         configureActions()
         
@@ -96,7 +93,6 @@ private extension CommentDetailViewController {
     }
     
     func configureActions() {
-        commentDetailView.rightButtonItem.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
         commentDetailView.commentSendButton.addTarget(self, action: #selector(commentSendButtonTapped), for: .touchUpInside)
         
         commentDetailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
@@ -115,14 +111,14 @@ private extension CommentDetailViewController {
         
         try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: text, commentDate: Date()))
     }
+    
+    func configureNavigationBackButton() {
+        let backButton = UIBarButtonItem(title: nil, style: .plain, target: self, action: #selector(popCommentDetail))
+    }
 }
 
 // MARK: - Actions
 extension CommentDetailViewController {
-    @objc func rightButtonTapped() {
-        dismiss(animated: true)
-    }
-    
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -134,6 +130,11 @@ extension CommentDetailViewController {
                 }
             )
         }
+    }
+    
+    @objc func popCommentDetail() {
+        self.navigationController?.popToRootViewController(animated: true)
+        print("@@@@@@@@@@@@@@@")
     }
     
     @objc func keyboardDown(notification: NSNotification) {
@@ -149,12 +150,15 @@ extension CommentDetailViewController {
         guard commentDetailView.writeCommentTextView.textColor == .black else { return }
         guard commentDetailView.writeCommentTextView.text != "" else { return }
         
+        let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        self.present(alertController, animated: true)
         Task {
             do {
                 try await setText(text: commentDetailView.writeCommentTextView.text)
                 getCommentList()
                 guard lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier else { return }
                 try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                alertController.dismiss(animated: true)
             } catch {
                 print(error)
             }

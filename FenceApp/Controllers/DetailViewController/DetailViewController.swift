@@ -32,6 +32,8 @@ final class DetailViewController: UIViewController {
     
     var isYourComment = false
     
+    let refreshControl = UIRefreshControl()
+    
     private var menu = UIMenu()
     
     init(firebaseCommentService: FirebaseLostCommentService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
@@ -44,6 +46,10 @@ final class DetailViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("DetailViewController - Deinit")
     }
     
     // MARK: - Life Cycle
@@ -67,20 +73,19 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    
     // MARK: - Action
-    @objc func tapped() {
-        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost)
-        commentVC.modalTransitionStyle = .coverVertical
-        commentVC.modalPresentationStyle = .pageSheet
-        commentVC.delegate = self
-        
-        if let sheet = commentVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
+    @objc func refreshControlActive() {
+        lost = nil
+        Task {
+            do {
+                try await getLost()
+                try await getComment()
+                self.refreshControl.endRefreshing()
+                detailView.detailCollectionView.reloadData()
+            } catch {
+                print(error)
+            }
         }
-        
-        present(commentVC, animated: true)
     }
 }
 
@@ -94,13 +99,12 @@ private extension DetailViewController {
     }
     
     func configure() {
-        
-        
         configureMenu()
         configureNavigation()
         configureCollectionView()
         
-        
+        detailView.detailCollectionView.refreshControl = self.refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlActive), for: .valueChanged)
     }
     
     
@@ -151,7 +155,8 @@ private extension DetailViewController {
             }
         }
         
-        let reportAction = UIAction(title: "신고하기") { _ in
+        let reportAction = UIAction(title: "신고하기") { [weak self] _ in
+            guard let self else { return }
             let reportViewController = ReportViewController(lost: self.lost, postKind: PostKind.lost)
             self.navigationController?.pushViewController(reportViewController, animated: true)
         }
@@ -208,7 +213,7 @@ extension DetailViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension DetailViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return 4
     }
     
     
@@ -220,11 +225,12 @@ extension DetailViewController: UICollectionViewDataSource {
             return 1
         } else if section == 2 {
             return 1
-        } else if section == 3 {
-            return comments.count == 0 ? 0: min(10, comments.count)
         } else {
-            return comments.count == 0 ? 0 : 1
+            return comments.count == 0 ? 0 : min(10, comments.count)
         }
+//        } else {
+//            return comments.count == 0 ? 0 : 1
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -257,7 +263,7 @@ extension DetailViewController: UICollectionViewDataSource {
                 let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                     let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                         Task {
                             do {
                                 try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
@@ -312,10 +318,16 @@ extension DetailViewController: UICollectionViewDataSource {
 
 
 // MARK: - CustomDelegate
-extension DetailViewController: CommentDetailViewControllerDelegate {
-    func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
-        //        lastCommentDTO = lastComment
-        self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
+extension DetailViewController: CommentViewControllerDelegate {
+    func disappearCommentViewController() {
+        Task {
+            do {
+                try await getComment()
+                detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CommentViewControllerDelegate: AnyObject {
+    func disappearCommentViewController()
+}
+
 class CommentViewController: UIViewController {
     
     let mainView = CommentMainView()
@@ -14,6 +18,8 @@ class CommentViewController: UIViewController {
     let firebaseLostCommentService: FirebaseLostCommentService
     let firebaseCloudMessaging: FirebaseCloudMessaging
     let lost: Lost
+    
+    weak var delegate: CommentViewControllerDelegate?
     
     var isMyComment: Bool = false
     
@@ -56,6 +62,7 @@ class CommentViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        delegate?.disappearCommentViewController()
     }
     
     func configureAction() {
@@ -96,13 +103,18 @@ class CommentViewController: UIViewController {
         guard commentTextView.textColor == .black else { return }
         guard commentTextView.text != "" else { return }
         
+        let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        self.present(alertController, animated: true)
         Task {
             do {
                 try await setText(text: comment)
                 try await getComments()
-                try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
+                    try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                }
                 mainView.writeCommentTextView.text = ""
                 mainView.collectionView.reloadData()
+                alertController.dismiss(animated: true)
             } catch {
                 print(error)
             }

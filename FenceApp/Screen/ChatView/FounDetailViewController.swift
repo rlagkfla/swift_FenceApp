@@ -13,7 +13,7 @@ class FounDetailViewController: UIViewController {
     // user정보 필요 -> userservice 가져오기
     let firebaseFoundService: FirebaseFoundService
 //    let firebaseUserService: FirebaseUserService
-    let locationManager: LocationManager
+//    let locationManager: LocationManager
     let foundIdentifier: String
 //    let userIdentifier: String
     
@@ -21,9 +21,8 @@ class FounDetailViewController: UIViewController {
     
     var found: Found!
     
-    init(firebaseFoundService: FirebaseFoundService, locationManager: LocationManager, foundIdentifier: String) {
+    init(firebaseFoundService: FirebaseFoundService, foundIdentifier: String) {
         self.firebaseFoundService = firebaseFoundService
-        self.locationManager = locationManager
         self.foundIdentifier = foundIdentifier
         super.init(nibName: nil, bundle: nil)
     }
@@ -45,7 +44,7 @@ class FounDetailViewController: UIViewController {
                 try await getFound()
                 configureCollectionView()
                 configureMenu()
-                getData()
+                foundDetailView.configureCell(found: self.found)
             } catch {
                 print(error)
             }
@@ -64,10 +63,6 @@ class FounDetailViewController: UIViewController {
     private func configureCollectionView(){
         foundDetailView.imageCollectionView.dataSource = self
         foundDetailView.imageCollectionView.delegate = self
-    }
-    
-    private func getData(){
-        foundDetailView.configureCell(postTime: "\(found.date)", found: found)
     }
     
     func configureMenu() {
