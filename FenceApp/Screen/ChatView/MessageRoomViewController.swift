@@ -5,7 +5,7 @@ import RxCocoa
 class MessageRoomViewController: UIViewController {
     
     private let tableView = UITableView()
-    private let viewModel = ChatRoomsViewModel()
+    private let viewModel = MessageRoomViewModel()
     private let disposeBag = DisposeBag()
 
     
@@ -30,7 +30,7 @@ class MessageRoomViewController: UIViewController {
     }
 
     private func bindViewModel() {
-        viewModel.chatRooms
+        viewModel.messageRooms
             .observe(on: MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: "MessageRoomCell", cellType: MessageRoomCell.self)) { (row, chatRoom, cell) in
                 cell.configure(with: chatRoom)

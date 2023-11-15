@@ -21,8 +21,6 @@ class MessageRoomCell: UITableViewCell {
         
         contentView.addSubviews(profileImageView,nameLabel,lastMessageLabel,timestampLabel)
 
-
-
         profileImageView.layer.cornerRadius = 25
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
@@ -56,11 +54,11 @@ class MessageRoomCell: UITableViewCell {
     }
 
 
-    func configure(with chatRoom: ChatRoom) {
-        nameLabel.text = chatRoom.userNickName
-        lastMessageLabel.text = chatRoom.lastMessage
-        timestampLabel.text = formatDate(chatRoom.timestamp)
-        loadImage(from: chatRoom.profileImageURL, into: profileImageView)
+    func configure(with messageRoom: MessageRoom) {
+        nameLabel.text = messageRoom.userNickName
+        lastMessageLabel.text = messageRoom.lastMessage
+        timestampLabel.text = formatDate(messageRoom.timestamp)
+        loadImage(from: messageRoom.profileImageURL, into: profileImageView)
     }
 
     private func formatDate(_ date: Date) -> String {
