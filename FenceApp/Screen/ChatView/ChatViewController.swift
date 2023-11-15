@@ -7,7 +7,7 @@
 
 import UIKit
 import Kingfisher
-
+import MessageKit
 final class ChatViewController: UIViewController {
     
     // MARK: - Properties
@@ -56,10 +56,18 @@ final class ChatViewController: UIViewController {
         view.backgroundColor = .white
         
         self.navigationItem.title = "발견한 동물"
-        
+        // 우측 버튼(삭제 예정)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(tapRightBarBtn))
         configurefoundCollectionView()
         getFoundList()
     }
+    // 우측 버튼(삭제 예정)
+    @objc func tapRightBarBtn(){
+        let messageViewController = MessageViewController()
+        messageViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(messageViewController, animated: true)
+    }
+
     
     func setFilterLabel() {
         let convertDate = DateService().converToDateInFilterLabel(fromDate: filterModel.startDate, toDate: filterModel.endDate)

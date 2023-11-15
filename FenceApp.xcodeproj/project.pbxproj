@@ -30,6 +30,13 @@
 		08FBFFA92AE0FB77004CEB1A /* UIExtentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFA82AE0FB77004CEB1A /* UIExtentsion.swift */; };
 		08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */; };
 		27EA11BB2B025B9500EA01D6 /* ReportOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EA11BA2B025B9500EA01D6 /* ReportOptionView.swift */; };
+		C31BF4512B04AF970016B2A2 /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = C31BF4502B04AF970016B2A2 /* MessageKit */; };
+		C31BF4562B04E5370016B2A2 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31BF4552B04E5370016B2A2 /* Sender.swift */; };
+		C31BF4592B04E7970016B2A2 /* ImageMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31BF4582B04E7970016B2A2 /* ImageMediaItem.swift */; };
+		C31BF45B2B04E80C0016B2A2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31BF45A2B04E80C0016B2A2 /* Message.swift */; };
+		C31BF45D2B04EC630016B2A2 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31BF45C2B04EC630016B2A2 /* Mocks.swift */; };
+		C31BF45F2B04ECD40016B2A2 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31BF45E2B04ECD40016B2A2 /* MessageViewController.swift */; };
+		C31BF4622B04EFC30016B2A2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31BF4612B04EFC30016B2A2 /* UIColor.swift */; };
 		C392FDD52B023964004447B9 /* FoundDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD42B023964004447B9 /* FoundDetailView.swift */; };
 		C392FDD72B0239BB004447B9 /* FounDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */; };
 		C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FDD82B024922004447B9 /* FoundDetailCollectionViewCell.swift */; };
@@ -161,6 +168,12 @@
 		08FBFFAA2AE0FB96004CEB1A /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		275B3E3C2B02099B0032AA21 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		27EA11BA2B025B9500EA01D6 /* ReportOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOptionView.swift; sourceTree = "<group>"; };
+		C31BF4552B04E5370016B2A2 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		C31BF4582B04E7970016B2A2 /* ImageMediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMediaItem.swift; sourceTree = "<group>"; };
+		C31BF45A2B04E80C0016B2A2 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C31BF45C2B04EC630016B2A2 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		C31BF45E2B04ECD40016B2A2 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		C31BF4612B04EFC30016B2A2 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		C392FDD22B0237C9004447B9 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		C392FDD42B023964004447B9 /* FoundDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundDetailView.swift; sourceTree = "<group>"; };
 		C392FDD62B0239BB004447B9 /* FounDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounDetailViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +281,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C31BF4512B04AF970016B2A2 /* MessageKit in Frameworks */,
 				08DB05E42AEE622300A0C589 /* RxKeyboard in Frameworks */,
 				D632AFF22AE674200063ED76 /* Kingfisher in Frameworks */,
 				D65150A72ADD0FFB002FDD04 /* FirebaseAnalyticsSwift in Frameworks */,
@@ -292,6 +306,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C31BF4522B04AFCE0016B2A2 /* MessageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C31BF4602B04ED120016B2A2 /* Extension */,
+				C31BF4572B04E7370016B2A2 /* Model */,
+				C31BF45E2B04ECD40016B2A2 /* MessageViewController.swift */,
+			);
+			name = MessageViewController;
+			sourceTree = "<group>";
+		};
+		C31BF4572B04E7370016B2A2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C31BF4552B04E5370016B2A2 /* Sender.swift */,
+				C31BF4582B04E7970016B2A2 /* ImageMediaItem.swift */,
+				C31BF45A2B04E80C0016B2A2 /* Message.swift */,
+				C31BF45C2B04EC630016B2A2 /* Mocks.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C31BF4602B04ED120016B2A2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C31BF4612B04EFC30016B2A2 /* UIColor.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
 		C3F5C3212AE227AE00D6DA16 /* LostListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +480,7 @@
 		D65150972ADD0DDD002FDD04 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				C31BF4522B04AFCE0016B2A2 /* MessageViewController */,
 				D664704F2AE5F48E0041643E /* ChatView.swift */,
 				D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */,
 				D66470512AE5F6FE0041643E /* ChatViewController */,
@@ -717,6 +761,7 @@
 				08DB05E32AEE622300A0C589 /* RxKeyboard */,
 				08DB05ED2AEE875900A0C589 /* FirebaseAuth */,
 				08653F902AF8C01D00B5BCAD /* FirebaseMessaging */,
+				C31BF4502B04AF970016B2A2 /* MessageKit */,
 			);
 			productName = FenceApp;
 			productReference = D6D9A72B2ADD05EC006A5B8B /* FenceApp.app */;
@@ -753,6 +798,7 @@
 				D632AFF02AE674200063ED76 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				08DB05D72AEE621800A0C589 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				08DB05E22AEE622300A0C589 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
+				C31BF44F2B04AF970016B2A2 /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = D6D9A72C2ADD05EC006A5B8B /* Products */;
 			projectDirPath = "";
@@ -811,6 +857,7 @@
 				D6DE4A642AFBCAF40092DD43 /* CommentCompositionalLayout.swift in Sources */,
 				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */,
+				C31BF45F2B04ECD40016B2A2 /* MessageViewController.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
 				D6F1CF462AF3463600974B1F /* Found.swift in Sources */,
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
@@ -827,6 +874,7 @@
 				C3F5C3282AE227AE00D6DA16 /* LostListViewCell.swift in Sources */,
 				D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */,
 				08FBFFAB2AE0FB96004CEB1A /* AlertView.swift in Sources */,
+				C31BF45B2B04E80C0016B2A2 /* Message.swift in Sources */,
 				08E537BD2AE276EF001F08B2 /* SignUpView.swift in Sources */,
 				D6EE094F2ADE9AB5007E8328 /* WriterInfoCollectionViewCell.swift in Sources */,
 				D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */,
@@ -835,6 +883,7 @@
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
 				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
+				C31BF4592B04E7970016B2A2 /* ImageMediaItem.swift in Sources */,
 				D6DE4A662AFCD07A0092DD43 /* CommentHeaderView.swift in Sources */,
 				D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */,
 				08DB05D62AEE620000A0C589 /* KeyboardHandler.swift in Sources */,
@@ -867,8 +916,10 @@
 				D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */,
 				C7B109D82AF0E00100B41A09 /* MyInfoCollectionViewCell.swift in Sources */,
 				D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */,
+				C31BF4622B04EFC30016B2A2 /* UIColor.swift in Sources */,
 				D6D806302AE9FF780002AE3A /* CustomFilterModalViewController.swift in Sources */,
 				D6E10E8D2AE1022F0098F05D /* PetError.swift in Sources */,
+				C31BF4562B04E5370016B2A2 /* Sender.swift in Sources */,
 				D631B9882B020A9200898441 /* UIColor+Ext.swift in Sources */,
 				083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */,
 				D6F1CF482AF386F300974B1F /* FBUser.swift in Sources */,
@@ -881,6 +932,7 @@
 				C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */,
 				08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */,
 				D631B9862B02072D00898441 /* CommentViewController.swift in Sources */,
+				C31BF45D2B04EC630016B2A2 /* Mocks.swift in Sources */,
 				08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
 				08DB05D42AEE61E100A0C589 /* ValidationHandler.swift in Sources */,
@@ -1161,6 +1213,14 @@
 				minimumVersion = 2.0.1;
 			};
 		};
+		C31BF44F2B04AF970016B2A2 /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
 		D632AFF02AE674200063ED76 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1225,6 +1285,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D65150A12ADD0FFB002FDD04 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		C31BF4502B04AF970016B2A2 /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C31BF44F2B04AF970016B2A2 /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
 		};
 		D615FA992ADFEEB2002F2C44 /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
