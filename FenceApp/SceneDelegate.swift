@@ -174,8 +174,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeDetailVC(lostIdentifier: String, sender viewController: UIViewController) -> DetailViewController {
         let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
-        
-        
         // retain cycle
         
         detailViewController.pushToCommentVC = { [weak self] lost in
@@ -183,6 +181,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let self else { return }
             
             let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
+            commentCollectionVC.delegate = detailViewController
             
             viewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
         }
@@ -270,13 +269,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
-        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, locationManager: locationManager, foundIdentifier: foundIdentifier)
+        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, foundIdentifier: foundIdentifier)
         return foundDetailViewController
     }
     
     private func makeCommentCollectionViewController(lost: Lost) -> CommentViewController {
         let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost)
-        
         return commentCollectionViewController
     }
    
