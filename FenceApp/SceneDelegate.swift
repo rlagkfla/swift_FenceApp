@@ -179,15 +179,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] lost in
             
             guard let detailViewController else { return }
-            //
-            //            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
-            //            commentCollectionVC.delegate = detailViewController
-            //
-            //            viewController?.navigationController?.pushViewController(commentCollectionVC, animated: true)
-            //            self.secondTabNavigationController.pushViewController(commentCollectionVC, animated: true)
-            
-            
-            
+          
             let commentCollectionVC = makeCommentCollectionViewController(lost: lost)
             commentCollectionVC.delegate = detailViewController
             
