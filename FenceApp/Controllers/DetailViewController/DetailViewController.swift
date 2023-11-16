@@ -30,6 +30,8 @@ final class DetailViewController: UIViewController {
     
     var editButtonTapped: ( () -> Void )?
     
+    var moveToChatting: ( () -> Void )?
+    
     var isYourComment = false
     
     let refreshControl = UIRefreshControl()
@@ -91,6 +93,7 @@ final class DetailViewController: UIViewController {
 
 // MARK: - Priavte Method
 private extension DetailViewController {
+    
     func getLost() async throws {
         
         let lostResponseDTO = try await firebaseLostService.fetchLost(lostIdentifier: self.lostIdentifier)
@@ -245,6 +248,9 @@ extension DetailViewController: UICollectionViewDataSource {
         } else if indexPath.section == 1 {
             let writerCell = collectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
             writerCell.configureCell(userNickName: lost.userNickName, userProfileImageURL: lost.userProfileImageURL, postTime: "\(lost.postDate)")
+            writerCell.moveToChatting = { [weak self] in
+                self?.moveToChatting?()
+            }
             return writerCell
         } else if indexPath.section == 2 {
             let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
