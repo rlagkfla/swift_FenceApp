@@ -30,11 +30,16 @@ class CommentCell: UICollectionViewCell {
         return label
     }()
     
+    lazy var optionButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(optionButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var optionImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "ellipsis")
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
+        
         return iv
     }()
     
@@ -44,7 +49,7 @@ class CommentCell: UICollectionViewCell {
         return stackView
     }()
     
-    @objc func imageTapped() {
+    @objc func optionButtonTapped() {
         optionImageTapped?()
     }
     
@@ -85,6 +90,7 @@ class CommentCell: UICollectionViewCell {
         configureProfileImageView()
         configureNicknameLabel()
         configureOptionImageView()
+        configureContainerView()
         configureDateLabel()
         configureStackView()
     }
@@ -107,12 +113,23 @@ class CommentCell: UICollectionViewCell {
         }
     }
     
+   
     private func configureOptionImageView() {
         contentView.addSubview(optionImageView)
         optionImageView.snp.makeConstraints {
             $0.centerY.equalTo(profileImageView)
             $0.trailing.equalToSuperview().inset(20)
             $0.width.height.equalTo(20)
+        }
+    }
+    
+    private func configureContainerView() {
+        contentView.addSubview(optionButton)
+
+        optionButton.snp.makeConstraints {
+            $0.centerY.centerX.equalTo(optionImageView)
+            $0.width.height.equalTo(60)
+            
         }
     }
     
