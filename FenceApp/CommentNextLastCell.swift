@@ -7,22 +7,34 @@
 
 import UIKit
 
+enum CommentTo {
+    case normal
+    case next
+    case last
+    case write
+}
+
 class CommentNextLastCell: UICollectionViewCell {
     
     static let identifier = "CommentNextLastCell"
     
-    var nextCommentLabelTapped: (() -> Void)?
+    var nextCommentLabelTapped: ((CommentTo) -> Void)?
     
     private lazy var nextCommentLabel: UILabel = {
         let label = UILabel()
         label.text = "다음 댓글 더보기"
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTapped)))
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(nextLabelTapped)))
         return label
     }()
     
-    private let LastCommentLabel: UILabel = {
+    private lazy var LastCommentLabel: UILabel = {
         let label = UILabel()
         label.text = "마지막 댓글로"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(lastLabelTapped)))
         return label
     }()
     
@@ -35,8 +47,12 @@ class CommentNextLastCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func labelTapped() {
-        nextCommentLabelTapped?()
+    @objc func nextLabelTapped() {
+        nextCommentLabelTapped?(.next)
+    }
+    
+    @objc func lastLabelTapped() {
+        nextCommentLabelTapped?(.last)
     }
     
     private func configureUI() {

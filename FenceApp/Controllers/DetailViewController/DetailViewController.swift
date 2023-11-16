@@ -22,7 +22,7 @@ final class DetailViewController: UIViewController {
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
     
-    var pushToCommentVC: ( (Lost) -> Void )?
+    var pushToCommentVC: ( (Lost, CommentTo) -> Void )?
     
     var lost: Lost!
     var comments: [Comment] = []
@@ -219,7 +219,7 @@ extension DetailViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension DetailViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return 5
     }
     
     
@@ -231,12 +231,11 @@ extension DetailViewController: UICollectionViewDataSource {
             return 1
         } else if section == 2 {
             return 1
-        } else {
+        } else if section == 3 {
             return comments.count == 0 ? 0 : min(10, comments.count)
+        } else {
+            return 1
         }
-//        } else {
-//            return comments.count == 0 ? 0 : 1
-//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -257,7 +256,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
             postCell.configureCell(postTitle: lost.title, postDescription: lost.description, lostTime: lost.lostDate, lost: lost)
             return postCell
-        } else {
+        } else if indexPath.section == 3 {
             let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
@@ -295,16 +294,17 @@ extension DetailViewController: UICollectionViewDataSource {
             
             return commentCell
             
-            //        } else {
-            //            let lastNextCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentNextLastCell.identifier, for: indexPath) as! CommentNextLastCell
-            //            lastNextCell.nextCommentLabelTapped = {
-            //                self.pushToCommentVC?(self.lost)
-            //            }
-            //
-            //            return lastNextCell
-            //        }
+        } else {
+            let lastNextCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentNextLastCell.identifier, for: indexPath) as! CommentNextLastCell
+            lastNextCell.nextCommentLabelTapped = { [weak self] commentTo in
+                guard let self else { return }
+                self.pushToCommentVC?(self.lost, commentTo)
+            }
+            
+            return lastNextCell
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
@@ -314,7 +314,7 @@ extension DetailViewController: UICollectionViewDataSource {
             header.setText(number: comments.count)
             header.commentHeaderViewTapped = { [weak self] in
                 guard let self else { return }
-                self.pushToCommentVC?(self.lost)
+                self.pushToCommentVC?(self.lost, .normal)
             }
             return header
             
@@ -323,7 +323,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier, for: indexPath) as! CommentFooterView
             footer.commentFooterViewTapped = { [weak self] in
                 guard let self else { return }
-                self.pushToCommentVC?(self.lost)
+                self.pushToCommentVC?(self.lost, .write)
             }
             return footer
         }
