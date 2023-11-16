@@ -255,13 +255,14 @@ extension DetailViewController: UICollectionViewDataSource {
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
             commentCell.optionImageTapped = { [weak self] in
-                self?.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+                guard let self else { return }
+                self.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
                 
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
                     let reportViewController = ReportViewController(comment: comment, postKind: PostKind.comment)
-                    self?.navigationController?.pushViewController(reportViewController, animated: true)
+                    self.navigationController?.pushViewController(reportViewController, animated: true)
                 }
                 let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
@@ -269,7 +270,8 @@ extension DetailViewController: UICollectionViewDataSource {
                     let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                         Task {
                             do {
-                                try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                                let comments = self.comments
+                                try await self.firebaseCommentService.deleteComment(lostIdentifier: self.lostIdentifier, commentIdentifier: comments[indexPath.row].commentIdentifier)
                             } catch {
                                 print(error)
                             }
@@ -277,11 +279,11 @@ extension DetailViewController: UICollectionViewDataSource {
                     }
                     deleteAlertController.addAction(cancelAction)
                     deleteAlertController.addAction(deleteAction)
-                    self?.present(deleteAlertController, animated: true)
+                    self.present(deleteAlertController, animated: true)
                 }
                 alertController.addAction(cancelAction)
-                self!.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
-                self?.present(alertController, animated: true)
+                self.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
+                self.present(alertController, animated: true)
             }
             
             return commentCell
@@ -304,7 +306,8 @@ extension DetailViewController: UICollectionViewDataSource {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier, for: indexPath) as! CommentHeaderView
             header.setText(number: comments.count)
             header.commentHeaderViewTapped = { [weak self] in
-                self?.pushToCommentVC?(self!.lost)
+                guard let self else { return }
+                self.pushToCommentVC?(self.lost)
             }
             return header
             
@@ -312,7 +315,8 @@ extension DetailViewController: UICollectionViewDataSource {
             
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier, for: indexPath) as! CommentFooterView
             footer.commentFooterViewTapped = { [weak self] in
-                self?.pushToCommentVC?(self!.lost)
+                guard let self else { return }
+                self.pushToCommentVC?(self.lost)
             }
             return footer
         }

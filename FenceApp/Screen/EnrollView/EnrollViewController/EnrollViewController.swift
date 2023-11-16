@@ -60,6 +60,7 @@ class EnrollViewController: UIViewController{
     }
     
     deinit {
+        print("EnrollViewController deinit")
         
     }
     

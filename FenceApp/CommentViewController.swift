@@ -85,7 +85,8 @@ class CommentViewController: UIViewController {
             
             UIView.animate(
                 withDuration: 0.3
-                , animations: {
+                , animations: { [weak self] in
+                    guard let self else { return }
                     self.mainView.writeCommentView.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
                 }
             )
