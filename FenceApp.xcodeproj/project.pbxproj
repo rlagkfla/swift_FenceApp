@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080B62F02B05F80500A577D7 /* MessageRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B62EF2B05F80500A577D7 /* MessageRoomViewController.swift */; };
+		080B62F22B05F81100A577D7 /* MessageRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B62F12B05F81100A577D7 /* MessageRoomViewModel.swift */; };
+		080B62F42B05F81F00A577D7 /* MessageRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B62F32B05F81F00A577D7 /* MessageRoomModel.swift */; };
+		080B62F62B05F83100A577D7 /* MessageRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080B62F52B05F83100A577D7 /* MessageRoomCell.swift */; };
 		08206A472ADD43A000C110C0 /* background.riv in Resources */ = {isa = PBXBuildFile; fileRef = 08206A462ADD43A000C110C0 /* background.riv */; };
 		083821302AF5F0DB00EB6B6D /* ColorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */; };
 		084D9B3C2B03404D008EF320 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 084D9B3B2B03404D008EF320 /* GoogleService-Info-Debug.plist */; };
@@ -148,6 +152,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		080B62EF2B05F80500A577D7 /* MessageRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomViewController.swift; sourceTree = "<group>"; };
+		080B62F12B05F81100A577D7 /* MessageRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomViewModel.swift; sourceTree = "<group>"; };
+		080B62F32B05F81F00A577D7 /* MessageRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomModel.swift; sourceTree = "<group>"; };
+		080B62F52B05F83100A577D7 /* MessageRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomCell.swift; sourceTree = "<group>"; };
 		08206A462ADD43A000C110C0 /* background.riv */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.riv; sourceTree = "<group>"; };
 		0838212F2AF5F0DB00EB6B6D /* ColorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHandler.swift; sourceTree = "<group>"; };
 		084D9B352B02FEB5008EF320 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
@@ -306,6 +314,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		080B62EE2B05F7EC00A577D7 /* MessageRoomViewController */ = {
+			isa = PBXGroup;
+			children = (
+				080B62EF2B05F80500A577D7 /* MessageRoomViewController.swift */,
+				080B62F12B05F81100A577D7 /* MessageRoomViewModel.swift */,
+				080B62F32B05F81F00A577D7 /* MessageRoomModel.swift */,
+				080B62F52B05F83100A577D7 /* MessageRoomCell.swift */,
+			);
+			name = MessageRoomViewController;
+			sourceTree = "<group>";
+		};
 		C31BF4522B04AFCE0016B2A2 /* MessageViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,6 +499,7 @@
 		D65150972ADD0DDD002FDD04 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				080B62EE2B05F7EC00A577D7 /* MessageRoomViewController */,
 				C31BF4522B04AFCE0016B2A2 /* MessageViewController */,
 				D664704F2AE5F48E0041643E /* ChatView.swift */,
 				D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */,
@@ -835,8 +855,10 @@
 				D687F0972AE3F11100E98EA4 /* AppDelegate.swift in Sources */,
 				D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */,
 				D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */,
+				080B62F62B05F83100A577D7 /* MessageRoomCell.swift in Sources */,
 				D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */,
 				D645F3662B025B2D00E14DB8 /* ImageLoader.swift in Sources */,
+				080B62F22B05F81100A577D7 /* MessageRoomViewModel.swift in Sources */,
 				D66470502AE5F48E0041643E /* ChatView.swift in Sources */,
 				D63ADF952AEBC29C0077AD81 /* LostModalViewController.swift in Sources */,
 				D687F0942AE3EE4200E98EA4 /* MapViewController.swift in Sources */,
@@ -907,6 +929,7 @@
 				D6E10E9E2AE2A8CD0098F05D /* FirebaseLostService.swift in Sources */,
 				D6E10E9D2AE2A8CD0098F05D /* FirebaseImageUploadService.swift in Sources */,
 				D6E10E882AE0F1E90098F05D /* FoundResponseDTO.swift in Sources */,
+				080B62F02B05F80500A577D7 /* MessageRoomViewController.swift in Sources */,
 				D6E10EA12AE2A8CD0098F05D /* FirebaseLostCommentService.swift in Sources */,
 				C397DDDA2AE54308006903E9 /* PhotoCollectionViewCell.swift in Sources */,
 				D6E10E802AE0EDA90098F05D /* UserResponseDTO.swift in Sources */,
@@ -932,6 +955,7 @@
 				C392FDD92B024922004447B9 /* FoundDetailCollectionViewCell.swift in Sources */,
 				08DB05D02AEE61B900A0C589 /* KeychainManager.swift in Sources */,
 				D631B9862B02072D00898441 /* CommentViewController.swift in Sources */,
+				080B62F42B05F81F00A577D7 /* MessageRoomModel.swift in Sources */,
 				C31BF45D2B04EC630016B2A2 /* Mocks.swift in Sources */,
 				08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,

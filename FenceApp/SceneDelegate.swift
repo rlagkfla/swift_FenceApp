@@ -79,7 +79,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func setNavigationControllers() {
         firstTabNavigationController.viewControllers = [makeMapViewVC()]
         secondTabNavigationController.viewControllers = [makeLostViewVC()]
-        thirdTabNavigationController.viewControllers = [makeChatViewController()]
+        thirdTabNavigationController.viewControllers = [MessageRoomViewController()]
         fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
     }
     
@@ -158,9 +158,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeLoginVC() -> LoginViewController {
         
         let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, locationManager: locationManager) { [unowned self] in
-            
-            
-            
+        
             window?.rootViewController = makeTabbarController()
         }
         
@@ -186,7 +184,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
-        
     }
     
     
