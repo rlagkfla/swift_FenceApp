@@ -19,7 +19,7 @@ class CommentInputView: UIView {
     private let label: UILabel = {
        let label = UILabel()
         label.text = "댓글을 남겨보세요"
-        label.backgroundColor = .systemGray3
+        label.textColor = .gray
         return label
     }()
     

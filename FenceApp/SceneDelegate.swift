@@ -132,15 +132,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let lostModalViewController = LostModalViewController(lost: lost)
         
-        lostModalViewController.transitToDetailVC = { [unowned self] lost in
+        lostModalViewController.transitToDetailVC = { [unowned self, weak lostModalViewController] lost in
             
+            guard let lostModalViewController else { return }
             
-            
-            let detailViewController = DetailViewController(
-                firebaseCommentService: firebaseLostCommentService,
-                firebaseLostService: firebaseLostService,
-                locationManager: locationManager,
-                lostIdentifier: lost.lostIdentifier)
+            let detailViewController = makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostModalViewController)
             
             lostModalViewController.dismiss(animated: true)
             
@@ -174,24 +170,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeDetailVC(lostIdentifier: String, sender viewController: UIViewController) -> DetailViewController {
         let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
-        // retain cycle
         
         detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] lost in
             
             guard let detailViewController else { return }
-            //
-            //            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
-            //            commentCollectionVC.delegate = detailViewController
-            //
-            //            viewController?.navigationController?.pushViewController(commentCollectionVC, animated: true)
-            //            self.secondTabNavigationController.pushViewController(commentCollectionVC, animated: true)
-            
-            
-            
+          
             let commentCollectionVC = makeCommentCollectionViewController(lost: lost)
             commentCollectionVC.delegate = detailViewController
             
-            secondTabNavigationController.pushViewController(commentCollectionVC, animated: true)
+            detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+        }
+        
+        detailViewController.moveToChatting = {
+            print("Move to chatting")
         }
         detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
