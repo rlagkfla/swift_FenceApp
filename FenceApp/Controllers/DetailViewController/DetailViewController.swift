@@ -249,6 +249,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let writerCell = collectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
             writerCell.configureCell(userNickName: lost.userNickName, userProfileImageURL: lost.userProfileImageURL, postTime: "\(lost.postDate)")
             writerCell.moveToChatting = { [weak self] in
+                
                 self?.moveToChatting?()
             }
             return writerCell

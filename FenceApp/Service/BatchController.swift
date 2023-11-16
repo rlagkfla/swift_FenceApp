@@ -10,6 +10,9 @@ import FirebaseFirestore
 struct BatchController {
     
     let batch = Firestore.firestore().batch()
+    
+    
+    
 }
 
 

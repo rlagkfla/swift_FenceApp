@@ -182,8 +182,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         detailViewController.moveToChatting = {
-            print("Move to chatting")
+            
+            
         }
+        
         detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
         
