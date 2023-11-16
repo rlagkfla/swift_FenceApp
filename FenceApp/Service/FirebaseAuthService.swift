@@ -1,10 +1,3 @@
-//
-//  FirebaseAuthService.swift
-//  FenceApp
-//
-//  Created by Woojun Lee on 10/18/23.
-//
-
 import Foundation
 import FirebaseAuth
 
@@ -22,12 +15,11 @@ struct FirebaseAuthService {
     }
     
     
-    func signInUser(email: String, password: String) async throws {
+    func loginUser(email: String, password: String) async throws -> AuthDataResult {
         let result = try await Auth.auth().signIn(withEmail: email, password: password)
-        print(result.user)
-        
+        return result
     }
-    
+
     func sendPasswordReset(withEmail: String) async throws {
         try await Auth.auth().sendPasswordReset(withEmail: withEmail)
         
@@ -36,6 +28,7 @@ struct FirebaseAuthService {
     
     func signOutUser() throws {
         try Auth.auth().signOut()
+        CurrentUserInfo.shared.currentUser = nil
     }
     
     

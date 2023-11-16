@@ -10,61 +10,59 @@ import SnapKit
 
 class LostListViewCell: UITableViewCell {
     
-    let lostimgView: UIImageView = {
+    private let lostimgView: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(systemName: "person")
-//        img.clipsToBounds = true
-        img.layer.cornerRadius = img.frame.size.width / 2
-//        img.layer.cornerRadius = img.frame.height / 2
-        img.layer.masksToBounds = true
-        img.backgroundColor = .cyan
+        img.clipsToBounds = true
+        img.layer.borderWidth = 1
+        img.layer.borderColor = UIColor.clear.cgColor
         return img
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let lb = UILabel()
         lb.text = "test"
-        lb.font = UIFont.systemFont(ofSize: 18)
+        lb.font = UIFont.systemFont(ofSize: 19)
         lb.textColor = .black
-        lb.backgroundColor = .systemPink
         return lb
     }()
     
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "test"
+        lb.font = UIFont.systemFont(ofSize: 14)
+        lb.textColor = .darkGray
+        return lb
+    }()
+    
+    private let nickNameLabel: UILabel = {
         let lb = UILabel()
         lb.text = "test"
         lb.font = UIFont.systemFont(ofSize: 14)
         lb.textColor = .black
-        lb.backgroundColor = .green
         return lb
     }()
-    
-    let nickNameLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "test"
-        lb.font = UIFont.systemFont(ofSize: 14)
-        lb.textColor = .black
-        lb.backgroundColor = .yellow
-        return lb
-    }()
-
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         configureUI()
+    }
+    
+    func configure(lostPostImageUrl: String, lostPostTitle: String, lostPostDate: String, lostPostUserNickName: String) {
+        lostimgView.kf.setImage(with: URL(string: lostPostImageUrl))
+        titleLabel.text = lostPostTitle
+        nickNameLabel.text = lostPostUserNickName
         
+        let lostWriteDate = lostPostDate.getHowLongAgo()
+        dateLabel.text = lostWriteDate
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        lostimgView.layer.cornerRadius = 8
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 13, left: 0, bottom: 13, right: 0))
     }
     
     required init?(coder: NSCoder) {
@@ -72,31 +70,32 @@ class LostListViewCell: UITableViewCell {
     }
 }
 
-extension LostListViewCell {
+// MARK: - AutoLayout
+private extension LostListViewCell {
     
     func configureUI(){
-        self.addSubviews(lostimgView, titleLabel, dateLabel, nickNameLabel)
+        contentView.addSubviews(lostimgView, titleLabel, dateLabel, nickNameLabel)
         
         lostimgView.snp.makeConstraints {
             $0.top.leading.bottom.equalToSuperview()
-            $0.width.equalTo(110)
+            $0.width.equalTo(125)
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(5)
-            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(13)
             $0.trailing.equalToSuperview()
 
         }
         
         dateLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(5)
-            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(13)
             $0.trailing.equalToSuperview()
         }
         
         nickNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(lostimgView.snp.trailing).offset(10)
+            $0.leading.equalTo(lostimgView.snp.trailing).offset(13)
             $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-5)
         }

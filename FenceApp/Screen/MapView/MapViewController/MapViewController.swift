@@ -5,152 +5,210 @@
 //  Created by JeonSangHyeok on 10/16/23.
 //
 
-import UIKit
+
 import MapKit
 import SnapKit
 
 class MapViewController: UIViewController {
     
-    //MARK: - Properties
-    
-    var lostResponseDTOs: [LostResponseDTO] = []
-    var foundResponseDTOs: [FoundResponseDTO] = []
-    var pinTogether: [Pinable] = []
+    //MARK: - Services
+    //
     let firebaseLostService: FirebaseLostService
     let firebaseFoundService: FirebaseFoundService
+    let locationManager: LocationManager
     
-    let mapMainView = MapMainView()
+    //MARK: - Properties
     
-    lazy var mapView: MKMapView = {
-        let mapView = MKMapView()
-        mapView.showsUserLocation = true
-        mapView.delegate = self
-        
-        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
-        mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
-        mapView.register(MKUserLocationView.self, forAnnotationViewWithReuseIdentifier: "user")
-        return mapView
+    var filterModel = FilterModel(distance: 20, startDate: Date().startOfTheDay(), endDate: Date().endOfTheDay())
+    
+    var losts: [Lost] = []
+    var founds: [Found] = []
+    var pins: [MapPin] = []
+    
+    var annotationViewTapped: ( (Pinable) -> Void )?
+    
+    var filterTapped: ( (FilterModel) -> Void )?
+    
+    lazy var mainView: MapMainView = {
+        let view = MapMainView()
+        view.delegate = self
+        return view
     }()
     
-    let locationManager: LocationManager
     
     //MARK: - Lifecycle
     
-//    override func loadView() {
-//        view = mapMainView
-//    }
+    override func loadView() {
+        view = mainView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "제목을 바꿔요 손모가지 검"
-        
-                
-        configureUI()
-       
         
         Task {
             do {
-                lostResponseDTOs = try await firebaseLostService.fetchLosts()
-                foundResponseDTOs = try await firebaseFoundService.fetchFounds()
-                pinTogether = lostResponseDTOs + foundResponseDTOs
-                setPinUsingMKAnnotation(pinables: pinTogether)
+                centerViewOnUserLocation()
+                
+                try await performAPIAndSetPins(segmentIndex: mainView.segmentedControl.selectedSegmentIndex)
+                
             } catch {
                 print(error)
             }
         }
-        
-        centerViewOnUserLocation()
-      
     }
     
-    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
-        
-        self.firebaseLostService = firebaseLostService
-        self.firebaseFoundService = firebaseFoundService
-        self.locationManager = locationManager
-        print("I am inited")
-        super.init(nibName: nil, bundle: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     //MARK: - Actions
     
     //MARK: - Helpers
     
-    //MARK: - UI
-    
-    private func configureUI() {
-        configureMapView()
-    }
-    
-    private func configureMapView() {
-        view.addSubview(mapView)
-        mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
-    func setPinUsingMKAnnotation(pinables: [Pinable]) {
-        pinables.forEach { pinable in
-            let pin1 = MapPin(pinable: pinable)
-            mapView.addAnnotations([pin1])
-            
-        }
+    private func setPinUsingMKAnnotation(pinables: [Pinable]) {
+        
+        pins = pinables.map { MapPin(pinable: $0) }
+        
+        mainView.mapView.addAnnotations(pins)
     }
     
     private func centerViewOnUserLocation() {
         
         guard let location = locationManager.fetchLocation() else { return }
         
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        let region = MKCoordinateRegion(center: location, latitudinalMeters: 2500, longitudinalMeters: 2500)
         
-        mapView.setRegion(region, animated: true)
+        mainView.mapView.setRegion(region, animated: true)
         
+    }
+    
+    
+    private func getLosts() async throws {
+        
+        let lostResponseDTOs = try await firebaseLostService.fetchLosts(filterModel: filterModel)
+        
+        losts = LostResponseDTOMapper.makeLosts(from: lostResponseDTOs)
+        
+    }
+    
+    private func getFounds() async throws {
+        
+        let foundResponseDTOs = try await firebaseFoundService.fetchFounds(filterModel: filterModel)
+        
+        founds = FoundResponseDTOMapper.makeFounds(from: foundResponseDTOs)
+        
+        
+    }
+    
+    private func clearPins() {
+        mainView.mapView.removeAnnotations(pins)
+        
+    }
+    
+    private func performAPIAndSetPins(segmentIndex: Int) async throws {
+        
+        if segmentIndex == 0 {
+            
+            try await getLosts()
+            clearPins()
+            setPinUsingMKAnnotation(pinables: losts)
+            
+        } else {
+            
+            try await getFounds()
+            clearPins()
+            setPinUsingMKAnnotation(pinables: founds)
+        }
+    }
+    
+    func changeIndexAndPerformAPIThenSetPins(missingType: MissingType) {
+        Task {
+            do {
+                let index = missingType == .lost ? 0 : 1
+                mainView.segmentedControl.selectedSegmentIndex = index
+                try await performAPIAndSetPins(segmentIndex: index)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    
+    //MARK: - Init
+    
+    init(firebaseLostService: FirebaseLostService, firebaseFoundService: FirebaseFoundService, locationManager: LocationManager) {
+        
+        self.firebaseLostService = firebaseLostService
+        self.firebaseFoundService = firebaseFoundService
+        self.locationManager = locationManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
-extension MapViewController: MKMapViewDelegate {
+//MARK: - MapMainView Delegate
+
+extension MapViewController: MapMainViewDelegate {
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func segmentTapped(onIndex: Int) {
         
-        
-                if annotation is MKClusterAnnotation {
-                    //            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "mapItem", for: annotation) as! MKAnnotationView
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ClusterAnnotationView.identifier, for: annotation) as! ClusterAnnotationView
-                    let count = (annotation as! MKClusterAnnotation).memberAnnotations.count
-                    annotationView.setTitle(count: count)
-        
-                    print(count)
-        
-                    return annotationView
-                } else if annotation is MKUserLocation {
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
-//                    annotationView.displayPriority = .defaultHigh
-                    return annotationView
-                } else {
-                    let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
-                    //            annotationView.clusteringIdentifier = String(describing: LocationDataMapAnnotationView.self)
-        
-                    
-                    
-                    Task {
-                        do {
-                            
-                            let image = try await ImageLoader.fetchPhoto(urlString: (annotation as! MapPin).pinable.imageURL)
-        
-                            annotationView.setImage(image: image)
-        
-                        } catch {
-                            print(error)
-                        }
-                    }
-        
-                    return annotationView
-                }
+        Task {
+            do {
+                try await performAPIAndSetPins(segmentIndex: onIndex)
+                
+            } catch {
+                print(error)
             }
+        }
+    }
     
+    func petImageTappedOnMap(annotation: MKAnnotation) {
+        
+        if let pinable = (annotation as? MapPin)?.pinable {
+            
+            annotationViewTapped?(pinable)
+            print(pinable.imageURL, pinable.latitude, pinable.longitude)
+            
+        }
+    }
+    
+    func filterImageViewTapped() {
+        filterTapped?(filterModel)
+    }
+    
+    func locationImageViewTapped() {
+        centerViewOnUserLocation()
+    }
+}
+
+//MARK: - FilterModalViewController Delegate
+
+extension MapViewController: CustomFilterModalViewControllerDelegate {
+    func applyTapped(filterModel: FilterModel) {
+        
+        self.filterModel = filterModel
+        
+        Task {
+            
+            do {
+                let segmentIndex = mainView.segmentedControl.selectedSegmentIndex
+                
+                try await performAPIAndSetPins(segmentIndex: segmentIndex)
+                
+            } catch {
+                print(error)
+            }
+        }
+        
+    }
 }
 

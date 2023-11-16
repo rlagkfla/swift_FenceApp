@@ -6,6 +6,7 @@
 //
 
 import CoreLocation
+import UIKit
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
@@ -18,41 +19,55 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        
+        locationManager.requestAlwaysAuthorization()
     }
     
     func fetchLocation() -> CLLocationCoordinate2D? {
-        locationManager.location?.coordinate
+        locationManager.requestLocation()
+        
+        return locationManager.location?.coordinate
+        
     }
     
+    func fetchStatus() -> Bool {
+        let authorization = locationManager.authorizationStatus
+        switch authorization {
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            return true
+        default:
+            return false
+        }
+    }
     
-//    func fetchLocation(completion: @escaping FetchLocationCompletion) {
-//        self.requestLocation()
-//        // completion 동작을 didFetchLocation 동작에 담는다.
-//        self.fetchLocationCompletion = completion
-//    }
-//    
-//    func fetchLocation
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+    }
     
-    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) -> String {
-    //        <#code#>
-    //    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+    }
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let location = locations.first
-//    }
-    
-    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) -> String {
-    //        var urlString = ""
-    //        if let location = locations.first {
-    //            // 위도와 경도 가져오기
-    //            let latitude = location.coordinate.latitude
-    //            let longitude = location.coordinate.longitude
-    //
-    //            // OpenWeatherMap API 요청 URL 생성
-    //            urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(WeatherAPIService().apiKey)"
-    //        }
-    //        return urlString
-    //    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+            //location5
+            switch status {
+            case .authorizedAlways, .authorizedWhenInUse:
+                locationManager.requestLocation()
+                
+            case .restricted, .notDetermined:
+                print("GPS 권한 설정되지 않음")
+                
+            case .denied:
+                AlertHandler.shared.presentErrorAlertWithAction(for: .permissionError("위치 서비스 권한이 필요합니다. 설정으로 이동하여 권한을 허용해 주세요.")) { _ in
+                    SettingHandler.moveToSetting()
+                    return
+                }
+
+            default:
+                print("GPS: Default")
+            }
+        }
 }

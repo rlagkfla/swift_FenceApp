@@ -14,37 +14,60 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     static let identifier: String = "PostInfoCell"
     
+    var mapPin: MapPin?
+    
+    //    let pin: MapPin?
+    
     // MARK: - UI Properties
-    let postTitleLabel: UILabel = {
+    private let postTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "강아지 찾아주세요"
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .left
         return label
     }()
     
-    let lostTimeLabel: UILabel = {
+    private let lostTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .left
+        label.textColor = .darkGray
         return label
     }()
     
-    let postDescriptionLabel: UILabel = {
+    private let postDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ강아지 잃어버렸어용ㅠㅠ"
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
     }()
     
-    let mapView: MKMapView = {
+    private let dividerView3: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray4
+        return view
+    }()
+    
+    private let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray4
+        return view
+    }()
+    
+    private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.showsUserLocation = true
+        mapView.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: ClusterAnnotationView.identifier)
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
+        mapView.register(MKUserLocationView.self, forAnnotationViewWithReuseIdentifier: "user")
+        mapView.delegate = self
+        mapView.clipsToBounds = true
+        mapView.layer.cornerRadius = 10
+        mapView.layer.borderWidth = 1
+        mapView.layer.borderColor = UIColor.systemGray.cgColor
         return mapView
     }()
-
+    
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,42 +78,71 @@ class PostInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLabel(lostTime: String) {
-        lostTimeLabel.text = "잃어버린 시간: \(lostTime)"
+    func configureCell(postTitle: String, postDescription: String, lostTime: Date, lost: Lost) {
+        postTitleLabel.text = postTitle
+        postDescriptionLabel.text = postDescription
+        lostTimeLabel.text = "실종 시간: \(lostTime.dateToString())"
+        
+        clearPin()
+        setPin(pinable: lost)
     }
     
-    func setMapViewRegion(latitude: Double, longitude: Double) {
-        let center = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-        let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
-        let region = MKCoordinateRegion(center: center, span: span)
+    func clearPin() {
+        guard let pin = mapPin else { return }
+        mapView.removeAnnotation(pin)
+    }
+}
+
+// MARK: - Private Method
+private extension PostInfoCollectionViewCell {
+    private func setLabel(lostTime: Date) {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+        
+        let converDate = formatter.string(from: lostTime)
+        
+        lostTimeLabel.text = "잃어버린 시간: \(String(describing: converDate))"
+    }
+    
+    private func setPin(pinable: Pinable) {
+        mapPin = MapPin(pinable: pinable)
+        mapView.addAnnotation(mapPin!)
+        
+        let region = MKCoordinateRegion(center: mapPin!.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        
         mapView.setRegion(region, animated: true)
-        
-        let mark = MKPointAnnotation()
-        
-        mark.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        mark.title = "Mark"
-        
-        mapView.addAnnotation(mark)
     }
 }
 
 // MARK: - AutoLayout
 private extension PostInfoCollectionViewCell {
     func configureUI() {
+        configureDividerView3()
         configurePostTitleLabel()
         configureLostTimeLabel()
-        configureMapView()
         configurePostDescriptionLabel()
+        configureDividerView()
+        configureMapView()
+        
+    }
+    
+    func configureDividerView3() {
+        contentView.addSubview(dividerView3)
+        
+        dividerView3.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(0.5)
+        }
     }
     
     func configurePostTitleLabel() {
         contentView.addSubview(postTitleLabel)
         
         postTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).offset(5)
-            $0.leading.equalTo(contentView.snp.leading).offset(10)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
-            $0.height.equalTo(30)
+            $0.top.equalTo(dividerView3.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(15)
         }
     }
     
@@ -98,10 +150,9 @@ private extension PostInfoCollectionViewCell {
         contentView.addSubview(lostTimeLabel)
         
         lostTimeLabel.snp.makeConstraints {
-            $0.top.equalTo(postTitleLabel.snp.bottom).offset(5)
-            $0.leading.equalTo(contentView.snp.leading).offset(10)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
-            $0.height.equalTo(30)
+            $0.top.equalTo(postTitleLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(contentView.snp.leading).offset(15)
+            $0.trailing.equalTo(contentView.snp.trailing).offset(-15)
         }
     }
     
@@ -109,10 +160,19 @@ private extension PostInfoCollectionViewCell {
         contentView.addSubview(postDescriptionLabel)
         
         postDescriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(lostTimeLabel.snp.bottom).offset(5)
-            $0.leading.equalTo(contentView.snp.leading).offset(10)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
-            $0.bottom.equalTo(mapView.snp.top).offset(-5)
+            $0.top.equalTo(lostTimeLabel.snp.bottom).offset(20)
+            $0.leading.equalTo(contentView.snp.leading).offset(15)
+            $0.trailing.equalTo(contentView.snp.trailing).offset(-15)
+        }
+    }
+    
+    func configureDividerView() {
+        contentView.addSubview(dividerView)
+        
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(postDescriptionLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(0.6)
         }
     }
     
@@ -121,9 +181,45 @@ private extension PostInfoCollectionViewCell {
         
         mapView.snp.makeConstraints {
             $0.bottom.equalToSuperview()
-            $0.leading.equalTo(contentView.snp.leading).offset(10)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            $0.top.equalTo(dividerView.snp.bottom).offset(20)
+            $0.leading.equalTo(contentView.snp.leading).offset(15)
+            $0.trailing.equalTo(contentView.snp.trailing).offset(-15)
             $0.height.equalTo(250)
         }
     }
+}
+
+// MARK: - MKMapViewDelegate
+extension PostInfoCollectionViewCell: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        
+        if annotation is MKClusterAnnotation {
+            //            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "mapItem", for: annotation) as! MKAnnotationView
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ClusterAnnotationView.identifier, for: annotation) as! ClusterAnnotationView
+            
+            let count = (annotation as! MKClusterAnnotation).memberAnnotations.count
+            
+            annotationView.setTitle(count: count)
+            
+            print(count)
+            
+            return annotationView
+            
+        } else if annotation is MKUserLocation {
+            
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "user", for: annotation)
+            //                    annotationView.displayPriority = .defaultHigh
+            return annotationView
+            
+        } else {
+            
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier, for: annotation) as! CustomAnnotationView
+            
+            annotationView.setImage(urlString: (annotation as! MapPin).pinable.imageURL)
+            
+            return annotationView
+        }
+    }
+    
 }

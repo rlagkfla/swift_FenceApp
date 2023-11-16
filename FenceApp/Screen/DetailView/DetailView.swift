@@ -18,9 +18,17 @@ class DetailView: UIView {
         collectionView.register(WriterInfoCollectionViewCell.self, forCellWithReuseIdentifier: WriterInfoCollectionViewCell.identifier)
         collectionView.register(PostInfoCollectionViewCell.self, forCellWithReuseIdentifier: PostInfoCollectionViewCell.identifier)
         collectionView.register(CommentCollectionViewCell.self, forCellWithReuseIdentifier: CommentCollectionViewCell.identifier)
+        
+        collectionView.register(CommentCell.self, forCellWithReuseIdentifier: CommentCell.identifier)
+//        collectionView.register(CommentNextLastCell.self, forCellWithReuseIdentifier: CommentNextLastCell.identifier)
+        
+        collectionView.register(CommentHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier)
+        collectionView.register(CommentFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier)
         collectionView.showsVerticalScrollIndicator = true
         return collectionView
     }()
+    
+//    let reportOptionView = ReportOptionView()
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {
@@ -37,13 +45,23 @@ class DetailView: UIView {
 // MARK: - AutoLayout
 private extension DetailView {
     func configureUI() {
+        configureCollectionView()
+//        configureReportOptionView()
+    }
+    
+    func configureCollectionView() {
         self.addSubview(detailCollectionView)
         
         detailCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
-            $0.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
+            $0.edges.equalTo(self.safeAreaLayoutGuide.snp.edges)
         }
     }
+    
+//    func configureReportOptionView() {
+//        addSubviews(reportOptionView)
+//        
+//        reportOptionView.snp.makeConstraints {
+//            $0.edges.equalToSuperview()
+//        }
+//    }
 }

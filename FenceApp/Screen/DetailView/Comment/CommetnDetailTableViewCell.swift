@@ -13,31 +13,32 @@ class CommentDetailTableViewCell: UITableViewCell {
     static let identifier: String = "CommentDetailCell"
     
     // MARK: - UI Properties
-    let commentUserProfileImageView: UIImageView = {
+    private let commentUserProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .yellow
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleToFill
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.clear.cgColor
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.borderWidth = 0.5
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
         return imageView
     }()
     
-    let commenterNickName: UILabel = {
+    private let commenterNickName: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
-    let commentDate: UILabel = {
+    private let commentDate: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .systemGray2
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .right
         return label
     }()
     
-    let commentTextLabel: UILabel = {
+    private let commentTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
@@ -58,6 +59,14 @@ class CommentDetailTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         commentUserProfileImageView.layer.cornerRadius = 15
     }
+    
+    func configureCell(commentUserNickName: String, commentUserProfileImageUrl: String, commentDescription: String, commentTime: String) {
+        commenterNickName.text = commentUserNickName
+        commentUserProfileImageView.kf.setImage(with: URL(string: commentUserProfileImageUrl))
+        commentTextLabel.text = commentDescription
+        let commentDateFormatter = commentTime.getHowLongAgo()
+        commentDate.text = commentDateFormatter
+    }
 }
 
 // MARK: - AutoLayout
@@ -73,7 +82,7 @@ private extension CommentDetailTableViewCell {
         contentView.addSubview(commentUserProfileImageView)
         
         commentUserProfileImageView.snp.makeConstraints {
-            
+            $0.top.equalToSuperview().offset(8)
             $0.leading.equalToSuperview().offset(10)
             $0.width.height.equalTo(30)
         }
@@ -85,8 +94,8 @@ private extension CommentDetailTableViewCell {
         commenterNickName.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
-            $0.width.equalTo(80)
-            $0.height.equalTo(16)
+            $0.width.equalTo(200)
+            $0.height.equalTo(20)
         }
     }
     
@@ -96,7 +105,7 @@ private extension CommentDetailTableViewCell {
         commentDate.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(50)
+            $0.width.equalTo(80)
             $0.height.equalTo(16)
         }
     }
@@ -105,10 +114,9 @@ private extension CommentDetailTableViewCell {
         contentView.addSubview(commentTextLabel)
         
         commentTextLabel.snp.makeConstraints {
-            $0.top.equalTo(commenterNickName.snp.bottom).offset(3)
+            $0.top.equalTo(commenterNickName.snp.bottom)
             $0.leading.equalTo(commentUserProfileImageView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview().inset(5)
         }
     }
 }

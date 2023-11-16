@@ -16,7 +16,7 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     let imageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "코주부 원숭이"))
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
@@ -33,18 +33,23 @@ class ImageViewCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        
+        imageView.kf.setImage(with: url)
+    }
+    
+    func clearImage() {
+        imageView.image = nil
+    }
+    
     // MARK: - AutoLayout
     private func configure() {
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
-    }
-    
-    func setImage(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        
-        imageView.kf.setImage(with: url)
     }
 }

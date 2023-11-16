@@ -12,6 +12,8 @@ struct FB {
         static let userNickname = "userNickname"
         static let profileImageURL = "profileImageURL"
         static let useridentifier = "userIdentifier"
+        static let userFCMToken = "userFCMToken"
+        static let reportCount = "reportCount"
     }
     
     struct Lost {
@@ -29,6 +31,7 @@ struct FB {
         static let petName = "petName"
         static let lostDescription = "lostDescription"
         static let kind = "petKind"
+        static let userFCMToken = "userFCMToken"
     }
     
     struct Found {
@@ -38,6 +41,8 @@ struct FB {
         static let date = "date"
         static let userIdentifier = "userIdentifier"
         static let foundIdentifier = "foundIdentifier"
+        static let userProfileImageURL = "userProfileImageURL"
+        static let userNickname = "userNickname"
     }
     
     struct Comment {

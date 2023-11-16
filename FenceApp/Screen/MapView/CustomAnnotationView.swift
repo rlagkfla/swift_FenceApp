@@ -6,16 +6,22 @@
 //
 
 import MapKit
+import Kingfisher
+
+protocol CustomAnnotationViewDelegate: AnyObject {
+    func annotationViewTapped(annotation: MKAnnotation)
+}
 
 class CustomAnnotationView: MKAnnotationView {
     
     static let identifier = "CustomAnnotationView"
     
+    weak var delegate: CustomAnnotationViewDelegate?
+    
     override var annotation: MKAnnotation? {
         didSet {
             
             clusteringIdentifier = "shop"
-            //            image = UIImage(systemName: "house")
         }
     }
     
@@ -24,8 +30,17 @@ class CustomAnnotationView: MKAnnotationView {
         view.contentMode = .scaleToFill
         view.backgroundColor = .lightGray
         view.clipsToBounds = true
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
         return view
     }()
+    
+    @objc func imageTapped() {
+
+        guard let annotation else { return }
+        
+        delegate?.annotationViewTapped(annotation: annotation)
+    }
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -51,8 +66,9 @@ class CustomAnnotationView: MKAnnotationView {
         }
     }
     
-    func setImage(image: UIImage) {
-        customImageView.image = image
+    func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        customImageView.kf.setImage(with: url)
     }
     
     // Annotation도 재사용을 하므로 재사용 전 값을 초기화 시켜서 다른 값이 들어가는 것을 방지

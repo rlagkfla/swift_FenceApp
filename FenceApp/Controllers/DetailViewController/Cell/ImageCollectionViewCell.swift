@@ -6,15 +6,15 @@
 //
 
 import UIKit
+import SnapKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let identifier: String = "ImageCell"
     
-    var imageUrl: String = ""
-    
-    var nowPage: Int = 0
+    var imageUrl: String!
+//    var nowPage: Int = 0
     
     func getImageUrl(urlString: String) {
         imageUrl = urlString
@@ -35,13 +35,16 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return collectionView
     }()
     
-    let pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.numberOfPages = 3
-        pageControl.currentPage = 0
-        pageControl.isUserInteractionEnabled = false
-        return pageControl
-    }()
+//    let pageControl: UIPageControl = {
+//        let pageControl = UIPageControl()
+//        pageControl.numberOfPages = 3
+//        pageControl.currentPage = 0
+//        pageControl.isUserInteractionEnabled = false
+//        pageControl.currentPageIndicatorTintColor = UIColor(hexCode: "5DDFDE")
+//        pageControl.backgroundStyle = .prominent
+//        pageControl.pageIndicatorTintColor = .black
+//        return pageControl
+//    }()
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {
@@ -59,7 +62,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
 private extension ImageCollectionViewCell {
     func configureUI() {
         configureImageCollectionView()
-        configurePageControl()
+//        configurePageControl()
     }
     
     func configureImageCollectionView() {
@@ -69,28 +72,28 @@ private extension ImageCollectionViewCell {
             make.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        configurePageControl()
+//        configurePageControl()
     }
     
-    func configurePageControl() {
-        contentView.addSubview(pageControl)
-        
-        pageControl.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(275)
-        }
-    }
+//    func configurePageControl() {
+//        contentView.addSubview(pageControl)
+//        
+//        pageControl.snp.makeConstraints {
+//            $0.centerX.equalToSuperview()
+//            $0.top.equalToSuperview().offset(270)
+//        }
+//    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension ImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageViewCollectionViewCell.identifier, for: indexPath) as! ImageViewCollectionViewCell
-        cell.imageView.kf.setImage(with: URL(string: imageUrl))
+        cell.setImage(urlString: imageUrl)
         return cell
     }
     
@@ -98,16 +101,16 @@ extension ImageCollectionViewCell: UICollectionViewDelegate, UICollectionViewDat
         return CGSize(width: imageCollectionView.frame.width, height: imageCollectionView.frame.height)
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.x > 0 {
-            self.nowPage += 1
-        } else if velocity.x < 0 {
-            self.nowPage -= 1
-            
-            if self.nowPage < 0 {
-                self.nowPage = 0
-            }
-        }
-        pageControl.currentPage = nowPage
-    }
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        if velocity.x > 0 {
+//            self.nowPage += 1
+//        } else if velocity.x < 0 {
+//            self.nowPage -= 1
+//            
+//            if self.nowPage < 0 {
+//                self.nowPage = 0
+//            }
+//        }
+//        pageControl.currentPage = nowPage
+//    }
 }

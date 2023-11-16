@@ -32,19 +32,20 @@ class CommentDetailView: UIView {
     let commentTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CommentDetailTableViewCell.self, forCellReuseIdentifier: CommentDetailTableViewCell.identifier)
+        tableView.separatorStyle = .none
         return tableView
     }()
     
     let myCommentTextView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hexCode: "5DDFDE")
+        view.backgroundColor = .white
         return view
     }()
     
     let myProfileImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "코주부 원숭이"))
+        let imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
@@ -53,15 +54,22 @@ class CommentDetailView: UIView {
     
     let writeCommentTextView: UITextView = {
         let textView = UITextView()
+        textView.text = "댓글을 입력해주세요."
+        textView.textColor = .lightGray
         textView.font = UIFont.systemFont(ofSize: 18)
-        textView.layer.cornerRadius = 5
+        textView.layer.cornerRadius = 20
+        textView.textContainerInset.left = 5
+        textView.textContainerInset.right = 45
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.black.cgColor
+        textView.isScrollEnabled = false
         return textView
     }()
     
     let commentSendButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        button.tintColor = .white
+        button.setTitle("작성", for: .normal)
+        button.setTitleColor(UIColor(hexCode: "5DDFDE"), for: .normal)
         return button
     }()
     
@@ -75,6 +83,7 @@ class CommentDetailView: UIView {
     
     override func layoutSubviews() {
         myProfileImageView.layer.cornerRadius = 17.5
+        myCommentTextView.layer.addBorder(edge: .top, color: .black, thickness: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -109,7 +118,7 @@ private extension CommentDetailView {
         self.addSubview(commentTableView)
         
         commentTableView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(10)
+            $0.top.equalTo(navigationBar.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(100)
         }
@@ -119,22 +128,22 @@ private extension CommentDetailView {
         self.addSubview(myCommentTextView)
         
         myCommentTextView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.greaterThanOrEqualTo(50)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
         
-        configureMyProfileImageView()
-        configureCommentSendButton()
         configureMyCommentTextField()
+        configureCommentSendButton()
     }
     
-    func configureMyProfileImageView() {
-        myCommentTextView.addSubview(myProfileImageView)
+    func configureMyCommentTextField() {
+        myCommentTextView.addSubview(writeCommentTextView)
         
-        myProfileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(35)
+        writeCommentTextView.snp.makeConstraints {
+            $0.top.greaterThanOrEqualToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.bottom.equalToSuperview().inset(30)
         }
     }
     
@@ -142,20 +151,36 @@ private extension CommentDetailView {
         myCommentTextView.addSubview(commentSendButton)
         
         commentSendButton.snp.makeConstraints {
-            $0.centerY.equalTo(myProfileImageView.snp.centerY)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.width.height.equalTo(35)
+            $0.trailing.equalTo(writeCommentTextView.snp.trailing).inset(10)
+            $0.bottom.equalTo(writeCommentTextView.snp.bottom).inset(3)
         }
     }
-    
-    func configureMyCommentTextField() {
-        myCommentTextView.addSubview(writeCommentTextView)
-        
-        writeCommentTextView.snp.makeConstraints {
-            $0.centerY.equalTo(myProfileImageView.snp.centerY)
-            $0.leading.equalTo(myProfileImageView.snp.trailing).offset(10)
-            $0.trailing.equalTo(commentSendButton.snp.leading).offset(-10)
-            $0.height.equalTo(50)
-        }
+}
+
+extension CALayer {
+
+  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+
+    let border = CALayer()
+
+    switch edge {
+    case UIRectEdge.top:
+        border.frame = CGRect(x: 0, y: 0, width: frame.width, height: thickness)
+
+    case UIRectEdge.bottom:
+        border.frame = CGRect(x:0, y: frame.height - thickness, width: frame.width, height:thickness)
+
+    case UIRectEdge.left:
+        border.frame = CGRect(x:0, y:0, width: thickness, height: frame.height)
+
+    case UIRectEdge.right:
+        border.frame = CGRect(x: frame.width - thickness, y: 0, width: thickness, height: frame.height)
+
+    default: do {}
     }
+
+    border.backgroundColor = color.cgColor
+
+    addSublayer(border)
+ }
 }

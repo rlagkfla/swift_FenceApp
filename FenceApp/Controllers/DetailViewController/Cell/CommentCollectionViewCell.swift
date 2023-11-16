@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CommentCollectionViewCell: UICollectionViewCell {
     
@@ -39,16 +40,16 @@ class CommentCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let commentImageView: UIImageView = {
+    private let commentImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = 0.5
         imageView.layer.borderColor = UIColor.clear.cgColor
         return imageView
     }()
     
-    let commentTextLabel: UILabel = {
+    private let commentTextLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .left
@@ -56,6 +57,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -69,6 +71,11 @@ class CommentCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configureCell(lastCommetString: String, userProfileImageUrl: String) {
+        commentTextLabel.text = lastCommetString
+        commentImageView.kf.setImage(with: URL(string: userProfileImageUrl))
+    }
 }
 
 private extension CommentCollectionViewCell {
@@ -80,10 +87,10 @@ private extension CommentCollectionViewCell {
         contentView.addSubview(commentView)
         
         commentView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(10)
             $0.bottom.equalToSuperview().inset(5)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().offset(15)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
         configureCommentLable()

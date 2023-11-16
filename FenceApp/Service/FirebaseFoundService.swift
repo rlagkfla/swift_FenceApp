@@ -6,10 +6,28 @@
 //
 
 import Foundation
+import FirebaseFirestore
+
 
 struct FirebaseFoundService {
     
+    let locationManager: LocationManager
     
+    init(locationManager: LocationManager) {
+        self.locationManager = locationManager
+    }
+    
+    func editUserInformationOnFoundResponseDTO(with userResponseDTO: UserResponseDTO, batchController: BatchController) async throws {
+        
+        let foundResponseDTOs = try await fetchFounds(writtenBy: userResponseDTO.identifier)
+        
+        foundResponseDTOs.forEach { foundResponseDTO in
+            let identifier = foundResponseDTO.foundIdentifier
+            batchController.batch.updateData([FB.Found.userProfileImageURL: userResponseDTO.profileImageURL,
+                                              FB.Found.userNickname: userResponseDTO.nickname],
+                                             forDocument: COLLECTION_FOUND.document(identifier))
+        }
+    }
     
     func fetchFound(foundIdentifier: String) async throws -> FoundResponseDTO {
         
@@ -18,6 +36,21 @@ struct FirebaseFoundService {
         let foundResponseDTO = FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: dictionary)
         
         return foundResponseDTO
+    }
+    
+    private func fetchFounds(writtenBy userIdentifier: String) async throws -> [FoundResponseDTO] {
+        
+        let ref = COLLECTION_FOUND.whereField(FB.Found.userIdentifier, isEqualTo: userIdentifier)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let foundResponseDTOs = documents.map { document in
+            FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        return foundResponseDTOs
+        
+        
     }
     
     
@@ -30,6 +63,62 @@ struct FirebaseFoundService {
         }
         
         return foundResponseDTOs
+    }
+    
+    func fetchFounds(filterModel: FilterModel) async throws -> [FoundResponseDTO] {
+        
+        guard let location = locationManager.fetchLocation() else { throw PetError.failTask }
+        
+        let ref = COLLECTION_FOUND.whereField(FB.Found.date, isLessThanOrEqualTo: filterModel.endDate)
+            .whereField(FB.Found.date, isGreaterThanOrEqualTo: filterModel.startDate)
+        
+        let documents = try await ref.getDocuments().documents
+        
+        let foundResponseDTOs = documents.map { document in
+            
+            return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        let filteredFoundResponseDTOs = foundResponseDTOs.filter { foundResponseDTO in
+            let distanceFromOrigin = LocationCalculator.getDistanceFromOrigin(lat1: location.latitude, lon1: location.longitude, lat2: foundResponseDTO.latitude, lon2: foundResponseDTO.longitude)
+            
+            return distanceFromOrigin <= filterModel.distance
+        }
+        
+        return filteredFoundResponseDTOs
+        
+    }
+
+    
+    func fetchFoundsWithPagination(int: Int, lastDocument: DocumentSnapshot? = nil) async throws -> FoundWithDocument {
+        
+        var ref = COLLECTION_FOUND.limit(to: int)
+        
+        if let lastDocument {
+            ref = ref.start(afterDocument: lastDocument)
+        }
+        let snapshot = try await ref.getDocuments()
+        
+        let documents = snapshot.documents
+        
+        guard let lastDocument = documents.last else { throw PetError.noSnapshotDocument }
+        
+        let foundResponseDTOs = documents.map { document in
+            return FoundResponseDTOMapper.makeFoundResponseDTOs(dictionary: document.data())
+        }
+        
+        return FoundWithDocument(foundResponseDTOs: foundResponseDTOs, lastDocument: lastDocument)
+    }
+    
+    func deleteFound(foundIdentifier: String) async throws {
+        
+        let batchController = BatchController()
+        
+        let ref = COLLECTION_FOUND.document(foundIdentifier)
+        
+        batchController.batch.deleteDocument(ref)
+        
+        try await batchController.batch.commit()
     }
     
     
@@ -85,7 +174,7 @@ struct FirebaseFoundService {
     }
     
     
-  
+    
 }
 
 

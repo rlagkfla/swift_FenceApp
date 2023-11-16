@@ -13,8 +13,10 @@ class ChatCollectionViewCell: UICollectionViewCell {
     static let identifier: String = "ChatCell"
     
     // MARK: - UI Properties
-    let foundImageView: UIImageView = {
+    private let foundImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.cornerRadius = 8
+        imageView.clipsToBounds = true
         imageView.image = UIImage(systemName: "photo")
         imageView.contentMode = .scaleToFill
         return imageView
@@ -29,6 +31,10 @@ class ChatCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setFoundImageView(foundImageUrl: String) {
+        foundImageView.kf.setImage(with: URL(string: foundImageUrl))
     }
     
     // MARK: - AutoLayout
