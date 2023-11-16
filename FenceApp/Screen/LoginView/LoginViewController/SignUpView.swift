@@ -43,7 +43,6 @@ final class SignUpView: UIView {
         .withPlaceholder("닉네임: 3글자 이상")
         .withInsets(left: 5, right: 20)
         .setCharacterLimit(20)
-        .withKeyboardType(.alphabet)
         .withCapitalization(.none)
         .withNoAutocorrection()
     

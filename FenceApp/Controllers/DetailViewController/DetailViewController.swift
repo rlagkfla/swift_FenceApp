@@ -49,7 +49,7 @@ final class DetailViewController: UIViewController {
     }
     
     deinit {
-        print("DetailviewController deinited")
+        print("DetailViewController - Deinit")
     }
     
     // MARK: - Life Cycle
@@ -74,20 +74,6 @@ final class DetailViewController: UIViewController {
     }
     
     // MARK: - Action
-    @objc func tapped() {
-        let commentVC = CommentDetailViewController(firebaseCommentService: firebaseCommentService, lost: lost)
-        commentVC.modalTransitionStyle = .coverVertical
-        commentVC.modalPresentationStyle = .pageSheet
-        commentVC.delegate = self
-        
-        if let sheet = commentVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-        }
-        
-        present(commentVC, animated: true)
-    }
-    
     @objc func refreshControlActive() {
         lost = nil
         Task {
@@ -281,7 +267,7 @@ extension DetailViewController: UICollectionViewDataSource {
                 let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                     let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) {  _ in
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                         Task {
                             do {
                                 let comments = self.comments
@@ -339,10 +325,16 @@ extension DetailViewController: UICollectionViewDataSource {
 
 
 // MARK: - CustomDelegate
-extension DetailViewController: CommentDetailViewControllerDelegate {
-    func dismissCommetnDetailViewController(lastComment: CommentResponseDTO) {
-        //        lastCommentDTO = lastComment
-        self.detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
+extension DetailViewController: CommentViewControllerDelegate {
+    func disappearCommentViewController() {
+        Task {
+            do {
+                try await getComment()
+                detailView.detailCollectionView.reloadSections(IndexSet(integer: 3))
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 

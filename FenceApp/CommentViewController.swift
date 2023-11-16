@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CommentViewControllerDelegate: AnyObject {
+    func disappearCommentViewController()
+}
+
 class CommentViewController: UIViewController {
     
     let mainView = CommentMainView()
@@ -15,6 +19,8 @@ class CommentViewController: UIViewController {
     let firebaseCloudMessaging: FirebaseCloudMessaging
     let lost: Lost
     
+    weak var delegate: CommentViewControllerDelegate?
+    
     var isMyComment: Bool = false
     
     init(firebaseLostCommentService: FirebaseLostCommentService, firebaseCloudMessaging: FirebaseCloudMessaging, lost: Lost) {
@@ -22,6 +28,10 @@ class CommentViewController: UIViewController {
         self.firebaseCloudMessaging = firebaseCloudMessaging
         self.lost = lost
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        print("CommentVC - Deinit")
     }
     
     override func loadView() {
@@ -59,7 +69,8 @@ class CommentViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        print("Bye Bye Bye")
+        
+        delegate?.disappearCommentViewController()
     }
     
     func configureAction() {
@@ -101,13 +112,18 @@ class CommentViewController: UIViewController {
         guard commentTextView.textColor == .black else { return }
         guard commentTextView.text != "" else { return }
         
+        let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        self.present(alertController, animated: true)
         Task {
             do {
                 try await setText(text: comment)
                 try await getComments()
-                try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
+                    try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                }
                 mainView.writeCommentTextView.text = ""
                 mainView.collectionView.reloadData()
+                alertController.dismiss(animated: true)
             } catch {
                 print(error)
             }
@@ -173,10 +189,11 @@ extension CommentViewController: UICollectionViewDataSource {
             let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                 let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     Task {
                         do {
-                            try await self?.firebaseLostCommentService.deleteComment(lostIdentifier: self!.lost.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                            let comments = self.comments
+                            try await self.firebaseLostCommentService.deleteComment(lostIdentifier: self.lost.lostIdentifier, commentIdentifier: comments[indexPath.row].commentIdentifier)
                         } catch {
                             print(error)
                         }

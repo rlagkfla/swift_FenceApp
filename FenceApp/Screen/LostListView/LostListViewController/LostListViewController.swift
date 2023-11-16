@@ -48,7 +48,9 @@ class LostListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-   
+    deinit {
+        print("LostVC - Deinit")
+    }
     
     // MARK: - Life Cycle
     override func loadView() {

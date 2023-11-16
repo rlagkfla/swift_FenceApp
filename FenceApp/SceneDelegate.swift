@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         Task {
-           
+            
             do {
                 
                 try await checkUserLoggedIn()
@@ -50,8 +50,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-                                      
-
+    
+    
     private func checkUserLoggedIn() async throws {
         
         let isUserLoggedIn = firebaseAuthService.checkIfUserLoggedIn()
@@ -120,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let self else { return }
             
             let modalViewController = pinable is Lost ? self.makeLostModalVC(lost: pinable as! Lost) : self.makeFoundModalVC(found: pinable as! Found)
-
+            
             mapViewController.present(modalViewController, animated: true)
         }
         
@@ -137,10 +137,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let self else { return }
             
             let detailViewController = DetailViewController(
-                                                            firebaseCommentService: self.firebaseLostCommentService,
-                                                            firebaseLostService: self.firebaseLostService, 
-                                                            locationManager: self.locationManager,
-                                                            lostIdentifier: lost.lostIdentifier)
+                firebaseCommentService: self.firebaseLostCommentService,
+                firebaseLostService: self.firebaseLostService,
+                locationManager: self.locationManager,
+                lostIdentifier: lost.lostIdentifier)
             
             lostModalViewController.dismiss(animated: true)
             
@@ -174,25 +174,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeDetailVC(lostIdentifier: String, sender viewController: UIViewController) -> DetailViewController {
         let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
-        
-        
         // retain cycle
         
         detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] lost in
             
             guard let detailViewController else { return }
+            //
+            //            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
+            //            commentCollectionVC.delegate = detailViewController
+            //
+            //            viewController?.navigationController?.pushViewController(commentCollectionVC, animated: true)
+            //            self.secondTabNavigationController.pushViewController(commentCollectionVC, animated: true)
+            
+            
             
             let commentCollectionVC = makeCommentCollectionViewController(lost: lost)
+            commentCollectionVC.delegate = detailViewController
             
-            detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
-            
-//            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
-//            
-//            detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+            self.secondTabNavigationController.pushViewController(commentCollectionVC, animated: true)
         }
-        
         detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
+        
     }
     
     
@@ -200,15 +203,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService)
         
-        lostListViewController.lostCellTapped = { [unowned self, weak lostListViewController] lost in
+        lostListViewController.lostCellTapped = { [ unowned self, weak lostListViewController ] lost in
             
             guard let lostListViewController else { return }
             
             let detailViewController = makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostListViewController)
             
             lostListViewController.navigationController?.pushViewController(detailViewController, animated: true)
-            
-//            secondTabNavigationController.pushViewController(detailViewController, animated: true)
             
         }
         
@@ -283,14 +284,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeCommentCollectionViewController(lost: Lost) -> CommentViewController {
         let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost)
-        
         return commentCollectionViewController
     }
-   
+    
     private func makeMyInfoViewController() -> MyInfoViewController {
         let myInfoViewController = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
-
+        
         myInfoViewController.logOut = { [weak self] in
             self?.window?.rootViewController = self?.makeLoginVC()
         }
@@ -298,7 +298,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         myInfoViewController.lostCellTapped = { lost in
             let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: myInfoViewController)
             
-//            detailViewController.hidesBottomBarWhenPushed = true
+            //            detailViewController.hidesBottomBarWhenPushed = true
             
             self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
         }
