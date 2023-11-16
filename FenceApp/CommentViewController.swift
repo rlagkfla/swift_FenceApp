@@ -30,6 +30,10 @@ class CommentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    deinit {
+        print("CommentVC - Deinit")
+    }
+    
     override func loadView() {
         view = mainView
     }
@@ -167,7 +171,8 @@ extension CommentViewController: UICollectionViewDataSource {
         
         let comment = comments[indexPath.item]
         cell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
-        cell.optionImageTapped = {
+        cell.optionImageTapped = { [weak self] in
+            guard let self else { return }
             self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
             
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -179,10 +184,11 @@ extension CommentViewController: UICollectionViewDataSource {
             let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                 let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     Task {
                         do {
-                            try await self?.firebaseLostCommentService.deleteComment(lostIdentifier: self!.lost.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                            let comments = self.comments
+                            try await self.firebaseLostCommentService.deleteComment(lostIdentifier: self.lost.lostIdentifier, commentIdentifier: comments[indexPath.row].commentIdentifier)
                         } catch {
                             print(error)
                         }

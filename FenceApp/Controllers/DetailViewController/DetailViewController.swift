@@ -113,11 +113,12 @@ private extension DetailViewController {
         let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let confirmAction = UIAlertAction(title: "삭제하기", style: .default) { [weak self] _ in
+            guard let self else { return }
             Task {
                 do {
-                    try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
-                    self?.navigationController?.popViewController(animated: true)
-                    self?.delegate?.deleteMenuTapped()
+                    try await self.firebaseLostService.deleteLost(lostIdentifier: self.lost.lostIdentifier)
+                    self.navigationController?.popViewController(animated: true)
+                    self.delegate?.deleteMenuTapped()
                 } catch {
                     print(error)
                 }
@@ -128,30 +129,32 @@ private extension DetailViewController {
         deleteAlertController.addAction(confirmAction)
         
         let editAction = UIAction(title: "수정하기") { [weak self] _ in
-            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-                let erollViewController = EnrollViewController(firebaseLostService: self!.firebaseLostService, locationManager: self!.locationManager, lostIdentifier: self?.lostIdentifier)
+            guard let self else { return }
+            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                let erollViewController = EnrollViewController(firebaseLostService: self.firebaseLostService, locationManager: self.locationManager, lostIdentifier: self.lostIdentifier)
                 erollViewController.isEdited = true
                 erollViewController.delegate = self
                 Task {
                     do {
-                        let image = try await ImageLoader.fetchPhoto(urlString: self!.lost.imageURL)
+                        let image = try await ImageLoader.fetchPhoto(urlString: self.lost.imageURL)
                         erollViewController.images.append(image)
                         
-                        self?.navigationController?.pushViewController(erollViewController, animated: true)
+                        self.navigationController?.pushViewController(erollViewController, animated: true)
                     } catch {
                         print(error)
                     }
                 }
             } else {
-                self?.present(impossibleAlertController, animated: true)
+                self.present(impossibleAlertController, animated: true)
             }
         }
         
         let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
-            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-                self!.present(deleteAlertController, animated: true)
+            guard let self else { return }
+            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                self.present(deleteAlertController, animated: true)
             } else {
-                self!.present(impossibleAlertController, animated: true)
+                self.present(impossibleAlertController, animated: true)
             }
         }
         

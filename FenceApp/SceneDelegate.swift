@@ -176,9 +176,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
         // retain cycle
         
-        detailViewController.pushToCommentVC = { [weak self ] lost in
+        detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] lost in
             
-                        guard let self else { return }
+            guard let detailViewController else { return }
             //
             //            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
             //            commentCollectionVC.delegate = detailViewController
@@ -189,6 +189,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             
             let commentCollectionVC = makeCommentCollectionViewController(lost: lost)
+            commentCollectionVC.delegate = detailViewController
             
             self.secondTabNavigationController.pushViewController(commentCollectionVC, animated: true)
         }
@@ -208,7 +209,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostListViewController)
             
-            self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
+            lostListViewController.navigationController?.pushViewController(detailViewController, animated: true)
             
         }
         
