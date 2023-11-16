@@ -36,6 +36,10 @@ final class CommentDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("I am deinited")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = commentDetailView
@@ -64,6 +68,7 @@ final class CommentDetailViewController: UIViewController {
         guard let lastCommet = commentList.last else { return }
         
         delegate?.dismissCommetnDetailViewController(lastComment: lastCommet)
+        print("Am I called?, ******")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

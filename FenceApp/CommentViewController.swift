@@ -44,6 +44,10 @@ class CommentViewController: UIViewController {
         configureWriteCommentView()
     }
     
+    deinit {
+        print("Deinited")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -55,7 +59,7 @@ class CommentViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        print("Bye Bye Bye")
     }
     
     func configureAction() {
@@ -74,7 +78,8 @@ class CommentViewController: UIViewController {
             
             UIView.animate(
                 withDuration: 0.3
-                , animations: {
+                , animations: { [weak self] in
+                    guard let self else { return }
                     self.mainView.writeCommentView.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
                 }
             )
@@ -155,7 +160,8 @@ extension CommentViewController: UICollectionViewDataSource {
         
         let comment = comments[indexPath.item]
         cell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
-        cell.optionImageTapped = {
+        cell.optionImageTapped = { [weak self] in
+            guard let self else { return }
             self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
             
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

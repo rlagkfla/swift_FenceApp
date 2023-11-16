@@ -178,13 +178,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // retain cycle
         
-        detailViewController.pushToCommentVC = { [weak self] lost in
+        detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] lost in
             
-            guard let self else { return }
+            guard let detailViewController else { return }
             
-            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
+            let commentCollectionVC = makeCommentCollectionViewController(lost: lost)
             
-            viewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+            detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+            
+//            let commentCollectionVC = self.makeCommentCollectionViewController(lost: lost)
+//            
+//            detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
         }
         
         detailViewController.hidesBottomBarWhenPushed = true
@@ -196,17 +200,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService)
         
-        lostListViewController.lostCellTapped = { [weak self] lost in
+        lostListViewController.lostCellTapped = { [unowned self, weak lostListViewController] lost in
             
-            guard let self else { return }
+            guard let lostListViewController else { return }
             
-            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostListViewController)
+            let detailViewController = makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostListViewController)
             
-            self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
+            lostListViewController.navigationController?.pushViewController(detailViewController, animated: true)
+            
+//            secondTabNavigationController.pushViewController(detailViewController, animated: true)
             
         }
         
-        lostListViewController.plusButtonTapped = {
+        lostListViewController.plusButtonTapped = { [weak self] in
+            guard let self else { return }
             let enrollViewController = self.makeEnrollViewVC()
             
             enrollViewController.isEdited = false

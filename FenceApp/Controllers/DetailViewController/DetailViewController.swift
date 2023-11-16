@@ -48,6 +48,10 @@ final class DetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("DetailviewController deinited")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = detailView
@@ -123,11 +127,12 @@ private extension DetailViewController {
         let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let confirmAction = UIAlertAction(title: "삭제하기", style: .default) { [weak self] _ in
+            guard let self else { return }
             Task {
                 do {
-                    try await self!.firebaseLostService.deleteLost(lostIdentifier: self!.lost.lostIdentifier)
-                    self?.navigationController?.popViewController(animated: true)
-                    self?.delegate?.deleteMenuTapped()
+                    try await self.firebaseLostService.deleteLost(lostIdentifier: self.lost.lostIdentifier)
+                    self.navigationController?.popViewController(animated: true)
+                    self.delegate?.deleteMenuTapped()
                 } catch {
                     print(error)
                 }
@@ -138,34 +143,37 @@ private extension DetailViewController {
         deleteAlertController.addAction(confirmAction)
         
         let editAction = UIAction(title: "수정하기") { [weak self] _ in
-            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-                let erollViewController = EnrollViewController(firebaseLostService: self!.firebaseLostService, locationManager: self!.locationManager, lostIdentifier: self?.lostIdentifier)
+            guard let self else { return }
+            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                let erollViewController = EnrollViewController(firebaseLostService: self.firebaseLostService, locationManager: self.locationManager, lostIdentifier: self.lostIdentifier)
                 erollViewController.isEdited = true
                 erollViewController.delegate = self
                 Task {
                     do {
-                        let image = try await ImageLoader.fetchPhoto(urlString: self!.lost.imageURL)
+                        let image = try await ImageLoader.fetchPhoto(urlString: self.lost.imageURL)
                         erollViewController.images.append(image)
                         
-                        self?.navigationController?.pushViewController(erollViewController, animated: true)
+                        self.navigationController?.pushViewController(erollViewController, animated: true)
                     } catch {
                         print(error)
                     }
                 }
             } else {
-                self?.present(impossibleAlertController, animated: true)
+                self.present(impossibleAlertController, animated: true)
             }
         }
         
         let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
-            if self?.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
-                self!.present(deleteAlertController, animated: true)
+            guard let self else { return }
+            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+                self.present(deleteAlertController, animated: true)
             } else {
-                self!.present(impossibleAlertController, animated: true)
+                self.present(impossibleAlertController, animated: true)
             }
         }
         
-        let reportAction = UIAction(title: "신고하기") { _ in
+        let reportAction = UIAction(title: "신고하기") { [weak self] _ in
+            guard let self else { return }
             let reportViewController = ReportViewController(lost: self.lost, postKind: PostKind.lost)
             self.navigationController?.pushViewController(reportViewController, animated: true)
         }
@@ -261,21 +269,23 @@ extension DetailViewController: UICollectionViewDataSource {
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
             commentCell.optionImageTapped = { [weak self] in
-                self?.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+                guard let self else { return }
+                self.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
                 
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
                     let reportViewController = ReportViewController(comment: comment, postKind: PostKind.comment)
-                    self?.navigationController?.pushViewController(reportViewController, animated: true)
+                    self.navigationController?.pushViewController(reportViewController, animated: true)
                 }
                 let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
                     let deleteAlertController = UIAlertController(title: "삭제하기", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                     let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { [weak self] _ in
+                    let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) {  _ in
                         Task {
                             do {
-                                try await self?.firebaseCommentService.deleteComment(lostIdentifier: self!.lostIdentifier, commentIdentifier: self!.comments[indexPath.row].commentIdentifier)
+                                let comments = self.comments
+                                try await self.firebaseCommentService.deleteComment(lostIdentifier: self.lostIdentifier, commentIdentifier: comments[indexPath.row].commentIdentifier)
                             } catch {
                                 print(error)
                             }
@@ -283,11 +293,11 @@ extension DetailViewController: UICollectionViewDataSource {
                     }
                     deleteAlertController.addAction(cancelAction)
                     deleteAlertController.addAction(deleteAction)
-                    self?.present(deleteAlertController, animated: true)
+                    self.present(deleteAlertController, animated: true)
                 }
                 alertController.addAction(cancelAction)
-                self!.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
-                self?.present(alertController, animated: true)
+                self.isYourComment ? alertController.addAction(deleteAction) : alertController.addAction(reportAction)
+                self.present(alertController, animated: true)
             }
             
             return commentCell
@@ -310,7 +320,8 @@ extension DetailViewController: UICollectionViewDataSource {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CommentHeaderView.identifier, for: indexPath) as! CommentHeaderView
             header.setText(number: comments.count)
             header.commentHeaderViewTapped = { [weak self] in
-                self?.pushToCommentVC?(self!.lost)
+                guard let self else { return }
+                self.pushToCommentVC?(self.lost)
             }
             return header
             
@@ -318,7 +329,8 @@ extension DetailViewController: UICollectionViewDataSource {
             
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CommentFooterView.identifier, for: indexPath) as! CommentFooterView
             footer.commentFooterViewTapped = { [weak self] in
-                self?.pushToCommentVC?(self!.lost)
+                guard let self else { return }
+                self.pushToCommentVC?(self.lost)
             }
             return footer
         }
