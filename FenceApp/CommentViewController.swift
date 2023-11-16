@@ -54,10 +54,6 @@ class CommentViewController: UIViewController {
         configureWriteCommentView()
     }
     
-    deinit {
-        print("Deinited")
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
