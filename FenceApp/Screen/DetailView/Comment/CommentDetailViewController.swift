@@ -36,6 +36,10 @@ final class CommentDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("I am deinited")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = commentDetailView

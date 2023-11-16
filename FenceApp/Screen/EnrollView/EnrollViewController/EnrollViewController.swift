@@ -59,6 +59,11 @@ class EnrollViewController: UIViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("EnrollViewController deinit")
+        
+    }
+    
     
     override func loadView() {
         view = enrollView
