@@ -12,13 +12,13 @@ enum Section {
     case second
     case third
     case fourth
-//    case fifth
+    case fifth
 }
 
 struct DetailViewCompositionalLayout {
     func configureLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviro in
-            let section: Section = [.first, .second, .third, .fourth][sectionIndex]
+            let section: Section = [.first, .second, .third, .fourth, .fifth][sectionIndex]
             switch section {
             case .first:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
@@ -47,20 +47,20 @@ struct DetailViewCompositionalLayout {
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [supplementaryHeaderItem(), supplementaryFooterItem()]
+                section.boundarySupplementaryItems = [supplementaryHeaderItem()]
                 
                 return section
                 
-//            case .fifth:
-//                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
-//                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(40))
-//
-//                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-//                let section = NSCollectionLayoutSection(group: group)
-//                section.boundarySupplementaryItems = [supplementaryFooterItem()]
-//                
-//                return section
+            case .fifth:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(40))
+
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [supplementaryFooterItem()]
+                
+                return section
             }
         }
         

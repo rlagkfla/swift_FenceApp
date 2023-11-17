@@ -18,15 +18,16 @@ class CommentViewController: UIViewController {
     let firebaseLostCommentService: FirebaseLostCommentService
     let firebaseCloudMessaging: FirebaseCloudMessaging
     let lost: Lost
-    
+    let commentTo: CommentTo
     weak var delegate: CommentViewControllerDelegate?
     
     var isMyComment: Bool = false
     
-    init(firebaseLostCommentService: FirebaseLostCommentService, firebaseCloudMessaging: FirebaseCloudMessaging, lost: Lost) {
+    init(firebaseLostCommentService: FirebaseLostCommentService, firebaseCloudMessaging: FirebaseCloudMessaging, lost: Lost, commentTo: CommentTo) {
         self.firebaseLostCommentService = firebaseLostCommentService
         self.firebaseCloudMessaging = firebaseCloudMessaging
         self.lost = lost
+        self.commentTo = commentTo
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,6 +46,13 @@ class CommentViewController: UIViewController {
             do {
                 try await getComments()
                 mainView.collectionView.reloadData()
+                if commentTo == .last {
+                    mainView.collectionView.scrollToItem(at: IndexPath(item: comments.count - 1, section: 0), at: .bottom, animated: true)
+                } else if commentTo == .next {
+                    mainView.collectionView.scrollToItem(at: IndexPath(item: 10, section: 0), at: .top, animated: true)
+                }
+                
+              
                 
             } catch {
                 print(error)
@@ -52,6 +60,14 @@ class CommentViewController: UIViewController {
         }
         configureAction()
         configureWriteCommentView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if commentTo == .write {
+            mainView.writeCommentTextView.becomeFirstResponder()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +125,9 @@ class CommentViewController: UIViewController {
         guard commentTextView.text != "" else { return }
         
         let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        commentTextView.resignFirstResponder()
+        commentTextView.text = "댓글을 입력해주세요."
+        commentTextView.textColor = .lightGray
         self.present(alertController, animated: true)
         Task {
             do {
@@ -117,8 +136,8 @@ class CommentViewController: UIViewController {
                 if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
                     try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
                 }
-                mainView.writeCommentTextView.text = ""
                 mainView.collectionView.reloadData()
+                mainView.collectionView.scrollToItem(at: IndexPath(item: comments.count - 1, section: 0), at: .bottom, animated: true)
                 alertController.dismiss(animated: true)
             } catch {
                 print(error)
@@ -221,4 +240,6 @@ extension CommentViewController: UITextViewDelegate {
             mainView.writeCommentTextView.textColor = .lightGray
         }
     }
+    
+    
 }

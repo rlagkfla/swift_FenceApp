@@ -46,6 +46,34 @@ struct FirebaseCloudMessaging {
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw MessagingError.netWorkError }
         
-        let responseJSON = try JSONSerialization.jsonObject(with: data)
+        try JSONSerialization.jsonObject(with: data)
+    }
+    
+    func sendChatMessaing(userToken: String, userName: String, message: String) async throws {
+        guard let url = fcmSendUrl else {
+            throw MessagingError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("key=\(serverKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let message: [String: Any] = [
+            "to": userToken,
+            "notification": [
+                "title": userName,
+                "body": message
+            ]
+        ]
+        
+        let jsonData = try JSONSerialization.data(withJSONObject: message)
+        request.httpBody = jsonData
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { throw MessagingError.netWorkError }
+        
+        try JSONSerialization.jsonObject(with: data)
     }
 }
