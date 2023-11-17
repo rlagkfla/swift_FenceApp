@@ -61,12 +61,15 @@ class CommentMainView: UIView {
     private func configureUI() {
         configureCollectionView()
         configureWriteCommentView()
+       
+        
     }
     
     private func configureCollectionView() {
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
     

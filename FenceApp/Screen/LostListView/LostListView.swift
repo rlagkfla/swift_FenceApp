@@ -25,7 +25,9 @@ class LostListView: UIView {
     }()
     
     lazy var lostTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        tableView.backgroundColor = .white
+        tableView.directionalLayoutMargins = .init(top: 0, leading: 18, bottom: 0, trailing: 18)
         tableView.register(LostListViewCell.self, forCellReuseIdentifier: "LostListViewCell")
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
@@ -77,8 +79,7 @@ extension LostListView {
         
         lostTableView.snp.makeConstraints {
             $0.top.equalTo(filterLabel.snp.bottom).offset(7)
-            $0.leading.equalToSuperview().offset(18)
-            $0.trailing.equalToSuperview().offset(-18)
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom)
             
         }
