@@ -1,15 +1,16 @@
 import Foundation
 import FirebaseFirestore
 
+
 class MessageViewModel {
 
     var messages: [Message] = []
-    var chatRoomId: String //Current User ID
-    var senderUserIdentifier: String
+    var lost: Lost
+    var currentUser: CurrentUserInfo
 
-    init(chatRoomId: String, senderUserIdentifier: String) {
-        self.chatRoomId = chatRoomId
-        self.senderUserIdentifier = senderUserIdentifier
+    init(lost: Lost, currentUser: CurrentUserInfo) {
+        self.lost = lost
+        self.currentUser = currentUser
     }
     
     func sendMessage(_ message: Message) {
@@ -22,31 +23,53 @@ class MessageViewModel {
     private func addMessageToFirestore(_ message: Message) {
         let db = Firestore.firestore()
 
-        let messageData: [String: Any] = [
-            "senderId": senderUserIdentifier,
-            "recipientId": CurrentUserInfo.shared.currentUser?.userIdentifier,
-            "content": message.content,
-            "timestamp": Timestamp(date: Date()),
+        let timestamp = Timestamp(date: Date())
+        let lostUserIdentifier = lost.userIdentifier
+
+        let chatMessageData: [String: Any] = [
+            "currentUserImageURL": currentUser.currentUser?.profileImageURL,
+            "currentUserText": message.content,
+            "lostUserImageURL": lost.userProfileImageURL,
+            "lostUserNickName": lost.userNickName,
+            "lostUserProfileImageURL": lost.userProfileImageURL,
+            "lostUserText": message.content,
+            "timestamp": timestamp
         ]
 
-        db.collection("chat_list").document(chatRoomId).collection("messages").addDocument(data: messageData) { error in
+        db.collection("chat_message").document(lostUserIdentifier).collection("messages").addDocument(data: chatMessageData) { error in
             if let error = error {
-                print("Error adding message: \(error)")
+                print("Error adding message to chat_message: \(error)")
             } else {
-                print("Message successfully added to Firestore")
+                print("Message successfully added to chat_message")
             }
         }
+
+        let chatListData: [String: Any] = [
+            "lastMessage": message.content,
+            "profileImageURL": currentUser.currentUser?.profileImageURL,
+            "timestamp": timestamp,
+            "userIdentifier": currentUser.currentUser?.userIdentifier,
+            "userNickName": currentUser.currentUser?.nickname
+        ]
+
+        db.collection("chat_list").document(lostUserIdentifier).updateData(chatListData) { error in
+            if let error = error {
+                print("Error updating chat_list: \(error)")
+            } else {
+                print("Chat list successfully updated!")
+            }
+        }
+        updateChatRoomInFirestore(message)
     }
 
     private func updateChatRoomInFirestore(_ message: Message) {
         let db = Firestore.firestore()
+        let lostUserIdentifier = lost.userIdentifier
         let chatRoomData: [String: Any] = [
             "lastMessage": message.content,
             "timestamp": Timestamp(date: Date()),
-            // other chat room-related fields
         ]
-
-        db.collection("chat_list").document(chatRoomId).updateData(chatRoomData) { error in
+        db.collection("chat_list").document(lostUserIdentifier).updateData(chatRoomData) { error in
             if let error = error {
                 print("Error updating chat room: \(error)")
             } else {
@@ -56,6 +79,6 @@ class MessageViewModel {
     }
 
     private func sendPushNotification(_ messageContent: String) {
-        // Implement push notification logic here
+     
     }
 }

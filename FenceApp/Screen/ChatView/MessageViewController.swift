@@ -21,6 +21,7 @@ class MessageViewController: MessagesViewController {
 //    let channel: Channel
     var sender = Sender(senderId: "any_unique_id", displayName: "rimkim")
     var messages = [Message]()
+    
     private var isSendingPhoto = false {
       didSet {
         messageInputBar.leftStackViewItems.forEach { item in
@@ -179,34 +180,42 @@ extension MessageViewController: InputBarAccessoryViewDelegate {
 }
 
 extension MessageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-        
-        if let asset = info[.phAsset] as? PHAsset {
-            let imageSize = CGSize(width: 500, height: 500)
-            PHImageManager.default().requestImage(for: asset,
-                                                     targetSize: imageSize,
-                                                     contentMode: .aspectFit,
-                                                     options: nil) { image, _ in
-                guard let image = image else { return }
-                self.sendPhoto(image)
-            }
-        } else if let image = info[.originalImage] as? UIImage {
-            sendPhoto(image)
-        }
-    }
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        picker.dismiss(animated: true)
+//        
+//        if let asset = info[.phAsset] as? PHAsset {
+//            let imageSize = CGSize(width: 500, height: 500)
+//            PHImageManager.default().requestImage(for: asset,
+//                                                     targetSize: imageSize,
+//                                                     contentMode: .aspectFit,
+//                                                     options: nil) { image, _ in
+//                guard let image = image else { return }
+//                self.sendPhoto(image)
+//            }
+//        } else if let image = info[.originalImage] as? UIImage {
+//            sendPhoto(image)
+//        }
+//    }
     
-    private func sendPhoto(_ image: UIImage) {
-        isSendingPhoto = true
-        // TODO: upload to firebase
-        isSendingPhoto = false
-        let message = Message(image: image)
-        insertNewMessage(message)
-        
-        viewModel.sendMessage(message)
+//    private func sendPhoto(_ image: UIImage) {
+//        isSendingPhoto = true
+//
+//        // TODO: Upload the image to Firebase Storage and get the URL
+//        // For now, let's assume you have a function in viewModel to handle this
+//        viewModel.uploadImage(image) { [weak self] url in
+//            guard let self = self, let imageUrl = url else {
+//                self?.isSendingPhoto = false
+//                return
+//            }
+//
+//            // Create a new message with the image URL
+//            let message = Message(imageUrl: imageUrl)
+//            self.insertNewMessage(message)
+//            self.viewModel.sendMessage(message)
+//            self.isSendingPhoto = false
+//        }
+//    }
 
-    }
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }

@@ -192,10 +192,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func presentMessageViewController(with lost: Lost) {
 
-        let chatRoomId = lost.userIdentifier
         let senderUserIdentifier = CurrentUserInfo.shared.currentUser?.userIdentifier ?? ""
 
-        let messageViewModel = MessageViewModel(chatRoomId: chatRoomId, senderUserIdentifier: senderUserIdentifier)
+        let messageViewModel = MessageViewModel(lost: lost, currentUser: CurrentUserInfo.shared)
         let messageVC = MessageViewController(viewModel: messageViewModel)
         
         if let rootViewController = window?.rootViewController {

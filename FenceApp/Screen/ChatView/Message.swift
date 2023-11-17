@@ -1,9 +1,3 @@
-//
-//  Message.swift
-//  FenceApp
-//
-//  Created by t2023-m0067 on 11/15/23.
-//
 import Foundation
 import MessageKit
 import UIKit
@@ -15,7 +9,7 @@ class Message: MessageType {
     }
     let content: String
     let sentDate: Date
-    let sender: SenderType
+    let sender: SenderType // Represents the sender of the message
     var kind: MessageKind {
         if let image = image {
             let mediaItem = ImageMediaItem(image: image)
@@ -27,20 +21,31 @@ class Message: MessageType {
     
     var image: UIImage?
     var downloadURL: URL?
-    
+
+    // Use this initializer for text messages
     init(content: String) {
-        sender = Sender(senderId: "id(TODO...)", displayName: "rimkim")
+        // Assuming CurrentUserInfo.shared.currentUser contains the current user's details
+        if let currentUser = CurrentUserInfo.shared.currentUser {
+            self.sender = Sender(senderId: currentUser.userIdentifier, displayName: currentUser.nickname)
+        } else {
+            // Fallback sender details if current user is not available
+            self.sender = Sender(senderId: "unknown", displayName: "Unknown")
+        }
         self.content = content
-        sentDate = Date()
-        id = nil
+        self.sentDate = Date()
+        self.id = nil
     }
-    
+
     init(image: UIImage) {
-        sender = Sender(senderId: "id(TODO...)", displayName: "rimkim")
+        if let currentUser = CurrentUserInfo.shared.currentUser {
+            self.sender = Sender(senderId: currentUser.userIdentifier, displayName: currentUser.nickname)
+        } else {
+            self.sender = Sender(senderId: "unknown", displayName: "Unknown")
+        }
         self.image = image
-        sentDate = Date()
-        content = ""
-        id = nil
+        self.sentDate = Date()
+        self.content = ""
+        self.id = nil
     }
 }
 
@@ -53,7 +58,3 @@ extension Message: Comparable {
         return lhs.sentDate < rhs.sentDate
     }
 }
-
-
-
-
