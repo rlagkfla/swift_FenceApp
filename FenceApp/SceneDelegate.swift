@@ -183,23 +183,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         detailViewController.hidesBottomBarWhenPushed = true
         
-        detailViewController.onMoveToChatting = { [weak self] userResponseDTO in
-            self?.presentMessageViewController(with: userResponseDTO)
+        detailViewController.onMoveToChatting = { [weak self] lost in
+            self?.presentMessageViewController(with: lost)
         }
 
         return detailViewController
     }
     
     func presentMessageViewController(with lost: Lost) {
-
-        let senderUserIdentifier = CurrentUserInfo.shared.currentUser?.userIdentifier ?? ""
-
         let messageViewModel = MessageViewModel(lost: lost, currentUser: CurrentUserInfo.shared)
         let messageVC = MessageViewController(viewModel: messageViewModel)
-        
-        if let rootViewController = window?.rootViewController {
-            rootViewController.present(messageVC, animated: true)
-        }
+
+        // Present the message view controller
+        window?.rootViewController?.present(messageVC, animated: true)
     }
 
 
