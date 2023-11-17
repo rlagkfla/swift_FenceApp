@@ -61,7 +61,8 @@ class CommentMainView: UIView {
     private func configureUI() {
         configureCollectionView()
         configureWriteCommentView()
-       
+        configureWriteCommentTextView()
+        configureCommentSendButton()
         
     }
     
@@ -69,7 +70,7 @@ class CommentMainView: UIView {
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            $0.bottom.equalToSuperview().inset(75)
         }
     }
     
@@ -81,9 +82,6 @@ class CommentMainView: UIView {
             $0.bottom.lessThanOrEqualToSuperview()
             $0.height.greaterThanOrEqualTo(50)
         }
-        
-        configureWriteCommentTextView()
-        configureCommentSendButton()
     }
     
     func configureWriteCommentTextView() {

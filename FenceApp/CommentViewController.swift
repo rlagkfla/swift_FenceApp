@@ -125,6 +125,9 @@ class CommentViewController: UIViewController {
         guard commentTextView.text != "" else { return }
         
         let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        commentTextView.resignFirstResponder()
+        commentTextView.text = "댓글을 입력해주세요."
+        commentTextView.textColor = .lightGray
         self.present(alertController, animated: true)
         Task {
             do {
@@ -133,9 +136,8 @@ class CommentViewController: UIViewController {
                 if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
                     try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
                 }
-                mainView.writeCommentTextView.text = ""
-                mainView.writeCommentTextView.resignFirstResponder()
                 mainView.collectionView.reloadData()
+                mainView.collectionView.scrollToItem(at: IndexPath(item: comments.count - 1, section: 0), at: .bottom, animated: true)
                 alertController.dismiss(animated: true)
             } catch {
                 print(error)
