@@ -69,7 +69,7 @@ class CommentMainView: UIView {
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            $0.bottom.equalToSuperview().inset(75)
         }
     }
     
