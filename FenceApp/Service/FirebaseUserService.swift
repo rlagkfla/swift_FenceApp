@@ -5,6 +5,7 @@
 //  Created by Woojun Lee on 10/18/23.
 //
 
+import FirebaseFirestore
 
 
 struct FirebaseUserService {
@@ -102,5 +103,4 @@ struct FirebaseUserService {
             batchController.batch.updateData(dictionary, forDocument: ref)
         
     }
-   
 }

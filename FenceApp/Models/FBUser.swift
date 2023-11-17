@@ -10,7 +10,7 @@ import Foundation
 struct FBUser {
     let email: String
     var profileImageURL: String
-    let identifier: String
+    let userIdentifier: String
     var nickname: String
     var reportCount: Int
 }

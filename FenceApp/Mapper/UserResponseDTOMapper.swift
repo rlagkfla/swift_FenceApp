@@ -41,7 +41,7 @@ struct UserResponseDTOMapper {
         
         return FBUser(email: userResponseDTO.email,
                       profileImageURL: userResponseDTO.profileImageURL,
-                      identifier: userResponseDTO.identifier,
+                      userIdentifier: userResponseDTO.identifier,
                       nickname: userResponseDTO.nickname,
                       reportCount: userResponseDTO.reportCount
                         )

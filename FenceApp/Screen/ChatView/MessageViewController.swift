@@ -1,9 +1,3 @@
-//
-//  MessageViewController.swift
-//  FenceApp
-//
-//  Created by t2023-m0067 on 11/15/23.
-//
 
 import UIKit
 import MessageKit
@@ -11,6 +5,10 @@ import InputBarAccessoryView
 import Photos
 
 class MessageViewController: MessagesViewController {
+    
+    var userIdentifier: String?
+    var viewModel: MessageViewModel!
+
     
     lazy var cameraBarButtonItem: InputBarButtonItem = {
         let button = InputBarButtonItem(type: .system)
@@ -34,24 +32,29 @@ class MessageViewController: MessagesViewController {
       }
     }
     
-//    init(channel: Channel) {
-//      self.channel = channel
-//      super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError()
-//    }
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         confirmDelegates()
         configure()
         setupMessageInputBar()
         removeOutgoingMessageAvatars()
         addCameraBarButtonToMessageInputBar()
+        
+
     }
+    
+    
+    init(viewModel: MessageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     deinit {
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -94,7 +97,6 @@ class MessageViewController: MessagesViewController {
     private func insertNewMessage(_ message: Message) {
         messages.append(message)
         messages.sort()
-        
         messagesCollectionView.reloadData()
     }
     
@@ -163,25 +165,16 @@ extension MessageViewController: MessagesDisplayDelegate {
 
 extension MessageViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        guard let viewModel = viewModel else { return }
+
         let message = Message(content: text)
+        viewModel.sendMessage(message)
         
-        // TODO
-//        saveMessageAndScrollToLastItem(message)
-        
-        insertNewMessage(message)
-        inputBar.inputTextView.text.removeAll()
-        
-        // 현재 사용자 정보를 동적으로 생성, 실제 사용자 정보
-//        let currentUser = Sender(senderId: "yourSenderId", displayName: "yourDisplayName")
-//        sender = currentUser
-//
-//        let message = Message(content: text)
-//        insertNewMessage(message)
-//
-//        // 메시지 전송 후 다시 초기 사용자 정보로 변경
-//        sender = Sender(senderId: "any_unique_id", displayName: "rimkim")
-//
-//        inputBar.inputTextView.text.removeAll()
+        messages.append(message)
+        messages.sort()
+        messagesCollectionView.reloadData()
+
+        inputBar.inputTextView.text = ""
     }
 }
 
@@ -209,6 +202,9 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
         isSendingPhoto = false
         let message = Message(image: image)
         insertNewMessage(message)
+        
+        viewModel.sendMessage(message)
+
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

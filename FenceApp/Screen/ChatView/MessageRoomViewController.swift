@@ -21,6 +21,7 @@ class MessageRoomViewController: UIViewController {
         super.viewWillDisappear(animated)
         viewModel.stopListening()
         print("\(#function)")
+
     }
     
     
@@ -53,17 +54,17 @@ extension MessageRoomViewController: UITableViewDelegate {
         return view.frame.height/10
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
         if let messageRoom = try? viewModel.messageRooms.value()[indexPath.row] {
             presentMessageViewController(with: messageRoom)
         }
     }
-    
+
     private func presentMessageViewController(with messageRoom: MessageRoom) {
-        let messageVC = MessageViewController()
-        present(messageVC, animated: true, completion: nil)
+//        let messaageViewModel = MessageViewModel(recipientUser: CurrentUserInfo.shared.currentUser?.userIdentifier, chatRoomId: CurrentUserInfo.shared.currentUser?.userIdentifier, senderUserIdentifier: <#String#>)
+//        let messageVC = MessageViewController(viewModel: messaageViewModel, userIdentifier: CurrentUserInfo.shared.currentUser?.userIdentifier ?? "")
+//        messageVC.userIdentifier = messageRoom.userIdentifier
+//        present(messageVC, animated: true, completion: nil)
     }
 }

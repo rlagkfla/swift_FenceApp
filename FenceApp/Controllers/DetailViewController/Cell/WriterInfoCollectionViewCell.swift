@@ -48,8 +48,8 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    var moveToChatting: ( () -> Void )?
-    
+    var moveToChatting: (() -> Void)?
+
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,13 +60,15 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         writerProfileImageView.layer.cornerRadius = 25
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     @objc func chattingButtonTapped() {
         moveToChatting?()
+        print(#function)
+
     }
     
     func configureCell(userNickName: String, userProfileImageURL: String, postTime: String) {

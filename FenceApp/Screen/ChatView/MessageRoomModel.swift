@@ -6,11 +6,5 @@ struct MessageRoom {
     let profileImageURL: String
     let timestamp: Date
     let userNickName: String
+    let userIdentifier: String
 }
-
-//struct MessageMdodel {
-//    let userNickName: String
-//    let text: String
-//    let timestamp: Date
-//    let senderFCMToken: String
-//}

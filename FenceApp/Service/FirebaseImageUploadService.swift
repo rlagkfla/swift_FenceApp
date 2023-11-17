@@ -47,11 +47,8 @@ struct FirebaseImageUploadService {
         guard let imageData = image.jpegData(compressionQuality: 0.75) else { throw PetError.invalidImage }
         
         let fileName = UUID().uuidString
-        
         let ref = IMAGE_STORAGE.reference(withPath: "/found_images/\(fileName)")
-        
         let _ = try await ref.putDataAsync(imageData)
-        
         let urlString = try await ref.downloadURL().absoluteString
         
         return urlString

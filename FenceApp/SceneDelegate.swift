@@ -83,6 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
     }
     
+  
     
     private func makeTabbarController() -> CustomTabBarController {
         
@@ -97,6 +98,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
             
         }
+        
         return TabbarController
     }
     
@@ -167,7 +169,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     private func makeDetailVC(lostIdentifier: String, sender viewController: UIViewController) -> DetailViewController {
-        let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
+        let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier, firebaseUserService: firebaseUserService)
         
         detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] lost in
             
@@ -179,13 +181,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
         }
         
-        detailViewController.moveToChatting = {
-            print("Move to chatting")
-        }
         detailViewController.hidesBottomBarWhenPushed = true
+        
+        detailViewController.onMoveToChatting = { [weak self] userResponseDTO in
+            self?.presentMessageViewController(with: userResponseDTO)
+        }
+
         return detailViewController
     }
     
+    func presentMessageViewController(with lost: Lost) {
+
+        let chatRoomId = lost.userIdentifier
+        let senderUserIdentifier = CurrentUserInfo.shared.currentUser?.userIdentifier ?? ""
+
+        let messageViewModel = MessageViewModel(chatRoomId: chatRoomId, senderUserIdentifier: senderUserIdentifier)
+        let messageVC = MessageViewController(viewModel: messageViewModel)
+        
+        if let rootViewController = window?.rootViewController {
+            rootViewController.present(messageVC, animated: true)
+        }
+    }
+
+
     
     private func makeLostViewVC() -> LostListViewController {
         
@@ -248,23 +266,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
-    
-    private func makeChatViewController() -> ChatViewController {
-        let chatViewController = ChatViewController(firebaseFoundService: firebaseFoundService)
-        chatViewController.filterTapped = { filterModel in // 유의
-            let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
-            filterViewController.delegate = chatViewController
-            chatViewController.present(filterViewController, animated: true)
-        }
-        chatViewController.foundCellTapped = { [unowned self] found in // 유의
-            let foundDetailViewController = makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: chatViewController)
-            foundDetailViewController.hidesBottomBarWhenPushed = true
-            thirdTabNavigationController.pushViewController(foundDetailViewController, animated: true)
-        }
         
-        return chatViewController
-    }
-    
     private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
         let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, foundIdentifier: foundIdentifier)
         return foundDetailViewController

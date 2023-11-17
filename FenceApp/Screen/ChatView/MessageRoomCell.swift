@@ -72,6 +72,7 @@ class MessageRoomCell: UITableViewCell {
         
         guard let url = URL(string: urlString), let imageView = imageView else { return }
         
+
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 DispatchQueue.main.async {

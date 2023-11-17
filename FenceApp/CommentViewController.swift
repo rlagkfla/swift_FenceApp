@@ -76,7 +76,7 @@ class CommentViewController: UIViewController {
     
     func setText(text: String) async throws {
         guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser }
-        try await firebaseLostCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: text, commentDate: Date()))
+        try await firebaseLostCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.userIdentifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: text, commentDate: Date()))
     }
     
     @objc func keyboardUp(notification: NSNotification) {
@@ -114,7 +114,7 @@ class CommentViewController: UIViewController {
             do {
                 try await setText(text: comment)
                 try await getComments()
-                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
+                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.userIdentifier {
                     try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
                 }
                 mainView.writeCommentTextView.text = ""
@@ -174,7 +174,7 @@ extension CommentViewController: UICollectionViewDataSource {
         cell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
         cell.optionImageTapped = { [weak self] in
             guard let self else { return }
-            self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+            self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier
             
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)

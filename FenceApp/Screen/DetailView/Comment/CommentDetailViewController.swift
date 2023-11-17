@@ -113,7 +113,7 @@ private extension CommentDetailViewController {
         
         guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser }
         
-        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: text, commentDate: Date()))
+        try await firebaseCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.userIdentifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: text, commentDate: Date()))
     }
     
     func configureNavigationBackButton() {
@@ -160,7 +160,7 @@ extension CommentDetailViewController {
             do {
                 try await setText(text: commentDetailView.writeCommentTextView.text)
                 getCommentList()
-                guard lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier else { return }
+                guard lost.userIdentifier != CurrentUserInfo.shared.currentUser?.userIdentifier else { return }
                 try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
                 alertController.dismiss(animated: true)
             } catch {

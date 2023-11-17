@@ -168,7 +168,7 @@ class MyInfoViewController: UIViewController {
     
     private func getListenToFounds() {
         
-        firebaseFoundService.listenToUpdateOn(userIdentifier: user.identifier) { [weak self] result in
+        firebaseFoundService.listenToUpdateOn(userIdentifier: user.userIdentifier) { [weak self] result in
             
             switch result {
                 
@@ -186,7 +186,7 @@ class MyInfoViewController: UIViewController {
     
     private func getListenToLosts() {
         
-        firebaseLostService.listenToUpdateOn(userIdentifier: user.identifier) { [weak self] result in
+        firebaseLostService.listenToUpdateOn(userIdentifier: user.userIdentifier) { [weak self] result in
             
             switch result {
                 
@@ -248,7 +248,7 @@ extension MyInfoViewController: EditViewControllerDelegate {
                 
                 let imageUrl = try await FirebaseImageUploadService.uploadProfileImage(image: image)
                 
-                try await firebaseUserService.editUser(userResponseDTO: UserResponseDTO(email: currentUserInfo.email, profileImageURL: imageUrl, identifier: currentUserInfo.identifier, nickname: nickname, userFCMToken: currentUserFCMToken))
+                try await firebaseUserService.editUser(userResponseDTO: UserResponseDTO(email: currentUserInfo.email, profileImageURL: imageUrl, identifier: currentUserInfo.userIdentifier, nickname: nickname, userFCMToken: currentUserFCMToken))
             } catch {
                 print(error)
             }

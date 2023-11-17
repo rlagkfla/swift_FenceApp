@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol DetailViewControllerDelegate: AnyObject {
-    func deleteMenuTapped()
-}
+protocol DetailViewControllerDelegate: AnyObject { func deleteMenuTapped() }
 
 final class DetailViewController: UIViewController {
     
@@ -21,6 +19,7 @@ final class DetailViewController: UIViewController {
     let firebaseCommentService: FirebaseLostCommentService
     let firebaseLostService: FirebaseLostService
     let locationManager: LocationManager
+    let firebaseUserService: FirebaseUserService
     
     var pushToCommentVC: ( (Lost) -> Void )?
     
@@ -30,19 +29,22 @@ final class DetailViewController: UIViewController {
     
     var editButtonTapped: ( () -> Void )?
     
-    var moveToChatting: ( () -> Void )?
+    var moveToChatting: ((Lost) -> Void)?
+    var onMoveToChatting: ((Lost) -> Void)?
+
     
     var isYourComment = false
     
     let refreshControl = UIRefreshControl()
     
     private var menu = UIMenu()
-    
-    init(firebaseCommentService: FirebaseLostCommentService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String) {
+
+    init(firebaseCommentService: FirebaseLostCommentService, firebaseLostService: FirebaseLostService, locationManager: LocationManager, lostIdentifier: String, firebaseUserService: FirebaseUserService) {
         self.lostIdentifier = lostIdentifier
         self.firebaseCommentService = firebaseCommentService
         self.firebaseLostService = firebaseLostService
         self.locationManager = locationManager
+        self.firebaseUserService = firebaseUserService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -133,7 +135,7 @@ private extension DetailViewController {
         
         let editAction = UIAction(title: "수정하기") { [weak self] _ in
             guard let self else { return }
-            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier {
                 let erollViewController = EnrollViewController(firebaseLostService: self.firebaseLostService, locationManager: self.locationManager, lostIdentifier: self.lostIdentifier)
                 erollViewController.isEdited = true
                 erollViewController.delegate = self
@@ -154,7 +156,7 @@ private extension DetailViewController {
         
         let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
             guard let self else { return }
-            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+            if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier {
                 self.present(deleteAlertController, animated: true)
             } else {
                 self.present(impossibleAlertController, animated: true)
@@ -168,7 +170,7 @@ private extension DetailViewController {
         }
         
         
-        if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier  {
+        if self.lost.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier  {
             self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [editAction, deleteAction])
         } else {
             self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [reportAction])
@@ -247,12 +249,17 @@ extension DetailViewController: UICollectionViewDataSource {
             return imageCell
         } else if indexPath.section == 1 {
             let writerCell = collectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
+            
             writerCell.configureCell(userNickName: lost.userNickName, userProfileImageURL: lost.userProfileImageURL, postTime: "\(lost.postDate)")
+            
             writerCell.moveToChatting = { [weak self] in
-                self?.moveToChatting?()
+                if let lost = self?.lost {
+                    self?.onMoveToChatting?(lost)
+                }
             }
-            return writerCell
-        } else if indexPath.section == 2 {
+        return writerCell
+        } 
+        else if indexPath.section == 2 {
             let postCell = collectionView.dequeueReusableCell(withReuseIdentifier: PostInfoCollectionViewCell.identifier, for: indexPath) as! PostInfoCollectionViewCell
             postCell.configureCell(postTitle: lost.title, postDescription: lost.description, lostTime: lost.lostDate, lost: lost)
             return postCell
@@ -262,7 +269,7 @@ extension DetailViewController: UICollectionViewDataSource {
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
             commentCell.optionImageTapped = { [weak self] in
                 guard let self else { return }
-                self.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+                self.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier
                 
                 let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)

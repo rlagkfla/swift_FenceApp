@@ -84,7 +84,7 @@ class FounDetailViewController: UIViewController {
         deleteAlertController.addAction(confirmAction)
         
         let deleteAction = UIAction(title: "삭제하기") { [weak self] _ in
-            if self?.found.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier {
+            if self?.found.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier {
                 self!.present(deleteAlertController, animated: true)
             } else {
                 self!.present(impossibleAlertController, animated: true)
@@ -97,7 +97,7 @@ class FounDetailViewController: UIViewController {
         }
         
         
-        if self.found.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier  {
+        if self.found.userIdentifier == CurrentUserInfo.shared.currentUser?.userIdentifier  {
             self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [deleteAction])
         } else {
             self.menu = UIMenu(title: "메뉴", options: .displayInline, children: [reportAction])
