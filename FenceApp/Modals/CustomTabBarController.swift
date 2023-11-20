@@ -140,7 +140,7 @@ extension CustomTabBarController: UITabBarControllerDelegate, UIImagePickerContr
         Task {
             do {
                 let url = try await FirebaseImageUploadService.uploadeFoundImage(image: image)
-                let foundDTD = FoundResponseDTO(latitude: latitude, longitude: longitude, imageURL: url, date: Date(), userIdentifier: currentUser.identifier)
+                let foundDTD = FoundResponseDTO(latitude: latitude, longitude: longitude, imageURL: url, date: Date(), userIdentifier: currentUser.identifier, userProfileImageURL: currentUser.profileImageURL, userNickname: currentUser.nickname)
                 try await firebaseFoundSerivce.createFound(foundResponseDTO: foundDTD)
                 finishUploadingFound?(.found)
             } catch {

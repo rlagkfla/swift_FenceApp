@@ -33,7 +33,7 @@ class MyInfoViewController: UIViewController {
     var logOut: ( () -> Void )?
     var settingButton: ( () -> Void )?
     var lostCellTapped: ( (Lost) -> Void )?
-    
+    var foundCellTapped: ( (Found) -> Void)?
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -62,8 +62,9 @@ class MyInfoViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 10.0
+        
         button.layer.borderColor = UIColor.color2.cgColor
-        button.backgroundColor = UIColor.color1
+        button.backgroundColor = CustomColor.pointColor
         button.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
     
         if let titleLabel = button.titleLabel {
@@ -224,7 +225,7 @@ class MyInfoViewController: UIViewController {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         let logoutImage = UIImage(systemName: "line.3.horizontal")?.withConfiguration(largeConfig)
         let logoutButton = UIBarButtonItem(image: logoutImage, style: .plain, target: self, action: #selector(logoutTapped))
-        logoutButton.tintColor = UIColor.color1
+        logoutButton.tintColor = CustomColor.pointColor
         navigationItem.rightBarButtonItem = logoutButton
     }
 
@@ -339,9 +340,16 @@ extension MyInfoViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        lostCellTapped?(lostList[indexPath.row])
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = indexPath.section
+        
+        if section == 0 {
+            lostCellTapped?(lostList[indexPath.row])
+        }else{
+            foundCellTapped?(foundList[indexPath.row])
+        }
+               
+    }
     
 }
 
@@ -414,3 +422,4 @@ extension MyInfoViewController {
     
     
 }
+

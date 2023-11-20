@@ -45,12 +45,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-        
         Task {
             do {
-                
-                setNavigationTitle()
                 centerViewOnUserLocation()
                 
                 try await performAPIAndSetPins(segmentIndex: mainView.segmentedControl.selectedSegmentIndex)
@@ -63,7 +59,6 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -92,11 +87,6 @@ class MapViewController: UIViewController {
         mainView.mapView.setRegion(region, animated: true)
         
     }
-    
-    private func setNavigationTitle() {
-//        self.navigationItem.title = "거리 - 반경 5km 내 / 시간 - 3시간 이내"
-    }
-    
     
     
     private func getLosts() async throws {
@@ -173,9 +163,7 @@ extension MapViewController: MapMainViewDelegate {
         
         Task {
             do {
-                
                 try await performAPIAndSetPins(segmentIndex: onIndex)
-                
                 
             } catch {
                 print(error)

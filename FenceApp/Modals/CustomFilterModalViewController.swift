@@ -150,11 +150,6 @@ class CustomFilterModalViewController: UIViewController {
             
         }
     }
-    
-//    func configureNavigationBarItem() {
-//        navigationBar.items = [UINavigationItem()]
-//        navigationBar.items?[0].setRightBarButton(UIBarButtonItem(customView: applyButton), animated: true)
-//    }
 }
 
 // MARK: - Actions

@@ -19,7 +19,7 @@ struct SelectedImage {
     let index: Int
 }
 
-class EnrollViewController: UIViewController {
+class EnrollViewController: UIViewController{
     
     private let enrollView = EnrollView()
     
@@ -59,6 +59,11 @@ class EnrollViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("EnrollViewController deinit")
+        
+    }
+    
     
     override func loadView() {
         view = enrollView
@@ -71,15 +76,10 @@ class EnrollViewController: UIViewController {
         enrollView.mapView.delegate = self
         
         print(images.count)
-        
         configureNavBar()
-        
         configureAction()
-        
         configureCollectionView()
-        
         configureMap()
-        
         configureKeyboard()
         
         Task {
@@ -103,8 +103,6 @@ class EnrollViewController: UIViewController {
         // 사진 추가 버튼 클릭 시
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(customButtonTapped))
         enrollView.customBtnView.addGestureRecognizer(tapGesture)
-        // 세그먼트 클릭 시
-        enrollView.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
         // datePicker 클릭 시
         enrollView.datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
     }
@@ -157,13 +155,6 @@ class EnrollViewController: UIViewController {
         // PHPicker 화면 표시
         self.present(picker, animated: true, completion: nil)
         
-    }
-    
-    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        let selectedIndex = sender.selectedSegmentIndex
-        
-        print("Selected Index: \(selectedIndex)")
-        // 선택된 항목에 따라 원하는 작업을 수행할 수 있습니다.
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -229,7 +220,6 @@ class EnrollViewController: UIViewController {
             
             // 선택한 위치 저장
             selectedCoordinate = coordinate
-            print("location - \(selectedCoordinate!)")
             
             // 이후에 선택한 위치를 지도 중앙에 유지하려면 다음과 같이 지도 중앙을 설정합니다.
             enrollView.mapView.setCenter(coordinate, animated: true)
@@ -290,19 +280,20 @@ class EnrollViewController: UIViewController {
         
         Task{
             do {
+                let alertTitle: String = isEdited ? "수정 중입니다." : "등록 중입니다."
+                let alertController = UIAlertController(title: alertTitle, message: "잠시만 기다려주세요.", preferredStyle: .alert)
+                self.present(alertController, animated: true)
                 let url = try await FirebaseImageUploadService.uploadLostImage(image: picture)
-                //                let url = try await FirebaseImageUploadService.uploadLostImage(image: picture.image)
                 
                 guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser}
                 
-                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
+                let lostResponseDTO = LostResponseDTO(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text == "상세 내용을 입력하세요. (반려 동물의 특징, 잃어버린 위치 등)" ? "" : enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken ?? "")
                 
                 if isEdited == false {
                     try await firebaseLostService.createLost(lostResponseDTO: lostResponseDTO)
                     delegate?.popEnrollViewController()
                 } else {
-                    let editLostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
-                    let editLost = Lost(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: Date(), lostDate: enrollView.datePicker.date, imageURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
+                    let editLostResponseDTO =  LostResponseDTO(lostIdentifier: lost!.lostIdentifier, latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickName: user.nickname, title: enrollTitle, postDate: lost.postDate, lostDate: enrollView.datePicker.date, pictureURL: url, petName: enrollName, description: enrollView.textView.text, kind: kind, userFCMToken: CurrentUserInfo.shared.userToken!)
                     delegate?.popEnrollViewController()
                     try await firebaseLostService.editLost(on: editLostResponseDTO)
                 }
@@ -313,7 +304,7 @@ class EnrollViewController: UIViewController {
                 activityIndicator.stopAnimating()
                 activityIndicator.removeFromSuperview()
                 self.view.isUserInteractionEnabled = true
-                
+                alertController.dismiss(animated: true)
                 self.navigationController?.popViewController(animated: true)
                 
                 // pop시 delegate로 테이블뷰 페이지 이동
@@ -331,10 +322,8 @@ class EnrollViewController: UIViewController {
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
+
     
-    func asdsa() {
-        
-    }
 }
 
 extension EnrollViewController {
@@ -360,8 +349,7 @@ extension EnrollViewController: UICollectionViewDelegate, UICollectionViewDataSo
     private func configureCollectionView() {
         enrollView.collectionView.delegate = self
         enrollView.collectionView.dataSource = self
-        
-        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier) // CustomCollectionViewCell은 셀을 표현하기 위한 사용자 정의 셀 클래스
+        enrollView.collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
         enrollView.collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 셀 간 여백 설정
     }
     
@@ -443,6 +431,7 @@ extension EnrollViewController: PHPickerViewControllerDelegate {
         }
         
     }
+    
 }
 
 extension EnrollViewController: MKMapViewDelegate {
@@ -454,7 +443,7 @@ extension EnrollViewController: MKMapViewDelegate {
             let region = MKCoordinateRegion(center: center, span: span)
             enrollView.mapView.setRegion(region, animated: true)
             
-            //            // 현재 위치에 대한 지도 마커
+            // 현재 위치에 대한 지도 마커
             annotation.coordinate = center
             
             // 마커 추가

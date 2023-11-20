@@ -20,6 +20,7 @@ class SettingModalViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = false
+        
         return tableView
     }()
     
@@ -57,9 +58,8 @@ class SettingModalViewController: UIViewController {
         view.addSubview(settingListTableView)
         
         settingListTableView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(240)
+            $0.edges.equalToSuperview()
+
         }
     }
     
@@ -81,6 +81,18 @@ class SettingModalViewController: UIViewController {
         sendMailErrorAlert.addAction(cancleAction)
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }
+    
+    private func returnLabel(indexPath: Int) -> NSAttributedString {
+        switch indexPath {
+            
+        case 0: return NSAttributedString(string: "앱 피드백", attributes: nil)
+        case 1: return NSAttributedString(string: "서비스 이용약관", attributes: nil)
+        case 2: return NSAttributedString(string: "서비스 개인정보처리방침", attributes: nil)
+        case 3: return NSAttributedString(string: "로그아웃", attributes: [.foregroundColor: UIColor.red])
+        case 4: return NSAttributedString(string: "회원탈퇴", attributes: [.foregroundColor: UIColor.red])
+        default: return NSAttributedString(string: "", attributes: nil)
+        }
+    }
 }
 
 extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource {
@@ -90,24 +102,9 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        if indexPath.row == 0 {
-            cell.textLabel?.text = "앱 피드백"
-            return cell
-        } else if indexPath.row == 1 {
-            cell.textLabel?.text = "서비스 이용약관"
-            return cell
-        } else if indexPath.row == 2 {
-            cell.textLabel?.text = "개인정보처리방침"
-            return cell
-        } else if indexPath.row == 3 {
-            cell.textLabel?.text = "로그아웃"
-            cell.textLabel?.textColor = .red
-            return cell
-        } else {
-            cell.textLabel?.text = "회원탈퇴"
-            cell.textLabel?.textColor = .red
-            return cell
-        }
+        cell.selectionStyle = .none
+        cell.textLabel?.attributedText = returnLabel(indexPath: indexPath.row)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -117,6 +114,7 @@ extension SettingModalViewController: UITableViewDelegate, UITableViewDataSource
                 compseVC.mailComposeDelegate = self
                 compseVC.setToRecipients(["teamfenceapp@gmail.com"])
                 compseVC.setSubject("\"찾아줄개\" 앱 피드백입니다.")
+                compseVC.setMessageBody("피드백 내용을 입력해주세요.", isHTML: false)
                 self.present(compseVC, animated: true)
             } else {
                 showSendMailErrorAlert()

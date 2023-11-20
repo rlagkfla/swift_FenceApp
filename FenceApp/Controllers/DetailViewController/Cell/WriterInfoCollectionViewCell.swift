@@ -39,6 +39,17 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var chattingButton: UIButton = {
+       let button = UIButton()
+        button.setTitle("채팅하기", for: .normal)
+        button.backgroundColor = CustomColor.pointColor
+        button.layer.cornerRadius = 3
+        button.addTarget(self, action: #selector(chattingButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    var moveToChatting: ( () -> Void )?
+    
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,6 +65,10 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func chattingButtonTapped() {
+        moveToChatting?()
+    }
+    
     func configureCell(userNickName: String, userProfileImageURL: String, postTime: String) {
         writerNickNameLabel.text = userNickName
         writerProfileImageView.kf.setImage(with: URL(string: userProfileImageURL))
@@ -65,10 +80,12 @@ class WriterInfoCollectionViewCell: UICollectionViewCell {
 
 // MARK: - AutoLayout
 private extension WriterInfoCollectionViewCell {
+    
     func configureUI() {
         configureWriterProfileImageView()
         configureWriterNickNameLabel()
         configurePostWriteTimeLabel()
+        configureChattingButton()
     }
     
     func configureWriterProfileImageView() {
@@ -99,6 +116,17 @@ private extension WriterInfoCollectionViewCell {
             $0.top.equalTo(writerNickNameLabel.snp.bottom).offset(5)
             $0.leading.equalTo(writerProfileImageView.snp.trailing).offset(15)
             $0.height.equalTo(20)
+        }
+    }
+    
+    func configureChattingButton() {
+        contentView.addSubview(chattingButton)
+        
+        chattingButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(80)
+            $0.height.equalTo(40)
         }
     }
 }

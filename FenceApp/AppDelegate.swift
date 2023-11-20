@@ -4,12 +4,21 @@ import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
+#if DEBUG
+        let firebaseConfigPath = Bundle.main.path(forResource: "GoogleService-Info-Debug", ofType: "plist")
+#else
+        let firebaseConfigPath = Bundle.main.path(forResource: "GoogleService-Info-Release", ofType: "plist")
+#endif
+        
+        if let path = firebaseConfigPath, let options = FirebaseOptions(contentsOfFile: path) {
+            FirebaseApp.configure(options: options)
+        } else {
+            print("Failed to configure Firebase; check GoogleService-Info file.")
+        }
         
         registerForRemoteNotifications(application: application)
-        
         
         Messaging.messaging().delegate = self
         
@@ -20,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
-
+            
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
                 if granted {
@@ -39,18 +48,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             application.registerForRemoteNotifications()
         }
     }
-
+    
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
     }
-
+    
     // MARK: - UNUserNotificationCenterDelegate
-
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
@@ -62,12 +71,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register for remote notifications with error: \(error)")
     }
-
+    
     // MARK: - MessagingDelegate
-
+    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         CurrentUserInfo.shared.userToken = fcmToken
-//        print("Firebase registration token: \(String(describing: fcmToken))")
-        print("userToken", CurrentUserInfo.shared.userToken)
+        //        print("Firebase registration token: \(String(describing: fcmToken))")
+        print("userToken", fcmToken!)
     }
 }

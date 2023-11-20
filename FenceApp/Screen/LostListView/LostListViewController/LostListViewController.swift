@@ -48,6 +48,10 @@ class LostListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("LostVC - Deinit")
+    }
+    
     // MARK: - Life Cycle
     override func loadView() {
         view = lostListView
@@ -61,7 +65,6 @@ class LostListViewController: UIViewController {
         configureTableView()
         
         configureNavBar()
-        
     }
     
     @objc func tapRightBarBtn(){
@@ -90,6 +93,7 @@ class LostListViewController: UIViewController {
     @objc private func refreshTable() {
         lostWithDocument = nil
         getLostList()
+        
         self.refreshControl.endRefreshing()
     }
     

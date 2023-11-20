@@ -23,21 +23,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var firebaseAuthService = FirebaseAuthService(firebaseUserService: firebaseUserService, firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     
-    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService)
+    lazy var firebaseUserService = FirebaseUserService(firebaseLostService: firebaseLostService, firebaseLostCommentService: firebaseLostCommentService, firebaseFoundService: firebaseFoundService)
     lazy var firebaseLostService = FirebaseLostService(firebaseLostCommentService: firebaseLostCommentService, locationManager: locationManager)
+    lazy var firebaseCloudMessaing = FirebaseCloudMessaging()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         window = UIWindow(windowScene: windowScene)
         
-        
-//        let launchScreenVC = LaunchScreenViewController()
-//        window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         
-//        let c = LocationCalculator.coordinatesWithinDistance(lat: 37.5519, lon: 126.9918, distance: 10)
-//        print(c)
         
         Task {
             
@@ -53,8 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-                                      
-
+    
     
     private func checkUserLoggedIn() async throws {
         
@@ -79,6 +75,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    
     private func setNavigationControllers() {
         firstTabNavigationController.viewControllers = [makeMapViewVC()]
         secondTabNavigationController.viewControllers = [makeLostViewVC()]
@@ -86,21 +83,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         fourthTabNavigationController.viewControllers = [makeMyInfoViewController()]
     }
     
+    
     private func makeTabbarController() -> CustomTabBarController {
         
         setNavigationControllers()
         
         let TabbarController = CustomTabBarController(controllers: [firstTabNavigationController, secondTabNavigationController, makeDummyViewController(), thirdTabNavigationController, fourthTabNavigationController], locationManager: locationManager, firebaseFoundSerivce: firebaseFoundService)
         
-        TabbarController.finishUploadingFound = { [weak self] missingType in
+        TabbarController.finishUploadingFound = { [unowned self] missingType in
             
-            let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
+            let displayedMapViewController = (firstTabNavigationController.viewControllers.first as? MapViewController)
             
             displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
             
         }
         return TabbarController
     }
+    
     
     private func makeMapViewVC() -> MapViewController {
         
@@ -116,41 +115,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         }
         
-        mapViewController.annotationViewTapped = { [weak self] pinable in
+        mapViewController.annotationViewTapped = { [unowned self] pinable in
             
-            guard let self else { return }
             
-            let modalViewController = pinable is Lost ? self.makeLostModalVC(lost: pinable as! Lost) : self.makeFoundModalVC(found: pinable as! Found)
-
+            
+            let modalViewController = pinable is Lost ? makeLostModalVC(lost: pinable as! Lost) : makeFoundModalVC(found: pinable as! Found)
+            
             mapViewController.present(modalViewController, animated: true)
         }
         
         return mapViewController
     }
     
+    
     private func makeLostModalVC(lost: Lost) -> LostModalViewController {
         
         let lostModalViewController = LostModalViewController(lost: lost)
         
-        lostModalViewController.transitToDetailVC = { [weak self] lost in
+        lostModalViewController.transitToDetailVC = { [unowned self, weak lostModalViewController] lost in
             
-            guard let self else { return }
+            guard let lostModalViewController else { return }
             
-            let detailViewController = DetailViewController(
-                
-                                                            firebaseCommentService: self.firebaseLostCommentService,
-                                                            firebaseUserService: self.firebaseUserService,
-                                                            firebaseAuthService: self.firebaseAuthService,
-                                                            firebaseLostService: self.firebaseLostService, locationManager: self.locationManager, lostIdentifier: lost.lostIdentifier)
+            let detailViewController = makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostModalViewController)
             
             lostModalViewController.dismiss(animated: true)
             
-            self.firstTabNavigationController.pushViewController(detailViewController, animated: true)
+            firstTabNavigationController.pushViewController(detailViewController, animated: true)
             
         }
         
         return lostModalViewController
     }
+    
     
     private func makeFoundModalVC(found: Found) -> FoundModalViewController {
         
@@ -161,28 +157,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makeLoginVC() -> LoginViewController {
         
-        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, locationManager: locationManager) { [weak self] in
+        let vc = LoginViewController(firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService, locationManager: locationManager) { [unowned self] in
             
-            guard let self else { return }
             
-//            self.setNavigationControllers()
             
-            self.window?.rootViewController = self.makeTabbarController()
+            window?.rootViewController = makeTabbarController()
         }
         
         return vc
     }
     
     
-    private func makeDetailVC(lostIdentifier: String) -> DetailViewController {
-        let detailViewController = DetailViewController(
-                                                        firebaseCommentService: firebaseLostCommentService,
-                                                        firebaseUserService: firebaseUserService,
-                                                        firebaseAuthService: firebaseAuthService,
-                                                        firebaseLostService: firebaseLostService,
-                                                        locationManager: locationManager, lostIdentifier: lostIdentifier)
+    private func makeDetailVC(lostIdentifier: String, sender viewController: UIViewController) -> DetailViewController {
+        let detailViewController = DetailViewController(firebaseCommentService: firebaseLostCommentService, firebaseLostService: firebaseLostService, locationManager: locationManager, lostIdentifier: lostIdentifier)
+        
+        detailViewController.pushToCommentVC = { [unowned self, weak detailViewController] (lost, commentTo) in
+            
+            guard let detailViewController else { return }
+          
+            let commentCollectionVC = makeCommentCollectionViewController(lost: lost, commentTo: commentTo)
+            commentCollectionVC.delegate = detailViewController
+            
+            detailViewController.navigationController?.pushViewController(commentCollectionVC, animated: true)
+        }
+        
+        detailViewController.moveToChatting = {
+            
+            
+        }
+        
         detailViewController.hidesBottomBarWhenPushed = true
         return detailViewController
+        
     }
     
     
@@ -190,19 +196,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let lostListViewController = LostListViewController(fireBaseLostService: firebaseLostService)
         
-        lostListViewController.lostCellTapped = { [weak self] lost in
-            guard let self else { return }
+        lostListViewController.lostCellTapped = { [ unowned self, weak lostListViewController ] lost in
             
-            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier)
+            guard let lostListViewController else { return }
             
-//            detailViewController.hidesBottomBarWhenPushed = true
-            detailViewController.delegate = lostListViewController
+            let detailViewController = makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: lostListViewController)
             
-            self.secondTabNavigationController.pushViewController(detailViewController, animated: true)
+            lostListViewController.navigationController?.pushViewController(detailViewController, animated: true)
+            
         }
         
-        lostListViewController.plusButtonTapped = {
-            let enrollViewController = self.makeEnrollViewVC()
+        lostListViewController.plusButtonTapped = { [unowned self] in
+            
+            let enrollViewController = makeEnrollViewVC()
             
             enrollViewController.isEdited = false
             
@@ -210,7 +216,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             enrollViewController.delegate = lostListViewController
             
-            self.secondTabNavigationController.pushViewController(enrollViewController, animated: true)
+            secondTabNavigationController.pushViewController(enrollViewController, animated: true)
         }
         
         lostListViewController.filterTapped = { filterModel in
@@ -225,18 +231,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return lostListViewController
     }
     
+    
     private func makeEnrollViewVC() -> EnrollViewController {
         let vc = EnrollViewController(firebaseLostService: firebaseLostService, locationManager: locationManager)
         
-        vc.finishUploadingLost = { [weak self] missingType in
+        vc.finishUploadingLost = { [unowned self] missingType in
             
-            let displayedMapViewController = (self?.firstTabNavigationController.viewControllers.first as? MapViewController)
+            let displayedMapViewController = (firstTabNavigationController.viewControllers.first as? MapViewController)
             
             displayedMapViewController?.changeIndexAndPerformAPIThenSetPins(missingType: missingType)
+            
+            
         }
         
         return vc
     }
+    
     
     private func makeDummyViewController() -> UIViewController {
         let vc = UIViewController()
@@ -245,52 +255,73 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     private func makeChatViewController() -> ChatViewController {
-        let vc = ChatViewController(firebaseFoundService: firebaseFoundService)
-        vc.filterTapped = { filterModel in
+        let chatViewController = ChatViewController(firebaseFoundService: firebaseFoundService)
+        chatViewController.filterTapped = { filterModel in // 유의
             let filterViewController = CustomFilterModalViewController(filterModel: filterModel)
-            filterViewController.delegate = vc
-            vc.present(filterViewController, animated: true)
+            filterViewController.delegate = chatViewController
+            chatViewController.present(filterViewController, animated: true)
         }
-        return vc
+        chatViewController.foundCellTapped = { [unowned self] found in // 유의
+            let foundDetailViewController = makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: chatViewController)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            thirdTabNavigationController.pushViewController(foundDetailViewController, animated: true)
+        }
+        
+        return chatViewController
     }
     
+    private func makeFoundDetailViewController(foundIdentifier: String, sender viewController: UIViewController) -> FounDetailViewController {
+        let foundDetailViewController = FounDetailViewController(firebaseFoundService: firebaseFoundService, foundIdentifier: foundIdentifier)
+        return foundDetailViewController
+    }
     
-   
-    
+    private func makeCommentCollectionViewController(lost: Lost, commentTo: CommentTo) -> CommentViewController {
+        let commentCollectionViewController = CommentViewController(firebaseLostCommentService: firebaseLostCommentService, firebaseCloudMessaging: firebaseCloudMessaing, lost: lost, commentTo: commentTo)
+        return commentCollectionViewController
+    }
     
     private func makeMyInfoViewController() -> MyInfoViewController {
         let myInfoViewController = MyInfoViewController(firebaseLostService: firebaseLostService, firebaseFoundService: firebaseFoundService, firebaseAuthService: firebaseAuthService, firebaseUserService: firebaseUserService)
         
-
-        myInfoViewController.logOut = { [weak self] in
-            self?.window?.rootViewController = self?.makeLoginVC()
+        
+        myInfoViewController.logOut = { [unowned self] in
+            window?.rootViewController = makeLoginVC()
         }
         
-        myInfoViewController.lostCellTapped = { lost in
-            let detailViewController = self.makeDetailVC(lostIdentifier: lost.lostIdentifier)
+        myInfoViewController.lostCellTapped = { [unowned self] lost in
+            let detailViewController = makeDetailVC(lostIdentifier: lost.lostIdentifier, sender: myInfoViewController)
             
-//            detailViewController.hidesBottomBarWhenPushed = true
+            //            detailViewController.hidesBottomBarWhenPushed = true
             
-            self.fourthTabNavigationController.pushViewController(detailViewController, animated: true)
+            fourthTabNavigationController.pushViewController(detailViewController, animated: true)
         }
         
-        
-        myInfoViewController.settingButton = { [weak self] in
-            let settingModalViewController = SettingModalViewController(firebaseAuthService: self!.firebaseAuthService)
+        myInfoViewController.settingButton = { [unowned self] in
+            let settingModalViewController = SettingModalViewController(firebaseAuthService: firebaseAuthService)
             
             settingModalViewController.logOut = {
-                self?.window?.rootViewController = self?.makeLoginVC()
+                self.window?.rootViewController = self.makeLoginVC()
             }
             
             myInfoViewController.present(settingModalViewController, animated: true)
         }
         
+        myInfoViewController.foundCellTapped = { [unowned self] found in
+            let foundDetailViewController = makeFoundDetailViewController(foundIdentifier: found.foundIdentifier, sender: myInfoViewController)
+            foundDetailViewController.hidesBottomBarWhenPushed = true
+            fourthTabNavigationController.pushViewController(foundDetailViewController, animated: true)
+        }
+        
         return myInfoViewController
     }
+    
     
     func sceneDidBecomeActive(_ scene: UIScene) {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
 }
 
-
+// 로스트테이블 -> 글내용으로 들어가고 -> 수정을 누른다 -> 디테일은 변화해있다 -> 테이블뷰는 그대로있다 -> 테이블뷰를 누르면은 수정되기 전 그 로스트를 이용해서 다시 디테일을 그린다 -> 수정하기전 디테일이다
+///                                                                                                                              ->  테이블뷰를 바꿔주던가
+///                                                                                                                              -> identifier API를 새로해가지고 만들어준다 디테일 들어갈때마다 API를 한다
+///
