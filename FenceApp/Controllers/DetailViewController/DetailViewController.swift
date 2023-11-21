@@ -211,9 +211,7 @@ private extension DetailViewController {
 
 extension DetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        if indexPath.section == 4 {
-        //            print("I am five")
-        //        }
+       
     }
 }
 // MARK: - UICollectionViewDataSource
@@ -244,6 +242,7 @@ extension DetailViewController: UICollectionViewDataSource {
             imageCell.getImageUrl(urlString: lost.imageURL)
             imageCell.imageCollectionView.reloadData()
             return imageCell
+            
         } else if indexPath.section == 1 {
             let writerCell = collectionView.dequeueReusableCell(withReuseIdentifier: WriterInfoCollectionViewCell.identifier, for: indexPath) as! WriterInfoCollectionViewCell
             writerCell.configureCell(userNickName: lost.userNickName, userProfileImageURL: lost.userProfileImageURL, postTime: "\(lost.postDate)")

@@ -21,6 +21,8 @@ class CommentViewController: UIViewController {
     let commentTo: CommentTo
     weak var delegate: CommentViewControllerDelegate?
     
+    var transitToReportVC: ( () -> Void )?
+    
     var isMyComment: Bool = false
     
     init(firebaseLostCommentService: FirebaseLostCommentService, firebaseCloudMessaging: FirebaseCloudMessaging, lost: Lost, commentTo: CommentTo) {
@@ -46,20 +48,21 @@ class CommentViewController: UIViewController {
             do {
                 try await getComments()
                 mainView.collectionView.reloadData()
-                if commentTo == .last {
-                    mainView.collectionView.scrollToItem(at: IndexPath(item: comments.count - 1, section: 0), at: .bottom, animated: true)
-                } else if commentTo == .next {
-                    mainView.collectionView.scrollToItem(at: IndexPath(item: 10, section: 0), at: .top, animated: true)
-                }
-                
-              
-                
+               
             } catch {
                 print(error)
             }
         }
-        configureAction()
-        configureWriteCommentView()
+
+        
+    }
+    
+    private func collectionViewScrollTo(commentTo: CommentTo) {
+        if commentTo == .last {
+            mainView.collectionView.scrollToItem(at: IndexPath(item: comments.count - 1, section: 0), at: .bottom, animated: true)
+        } else if commentTo == .next {
+            mainView.collectionView.scrollToItem(at: IndexPath(item: 10, section: 0), at: .top, animated: true)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,7 +70,6 @@ class CommentViewController: UIViewController {
         if commentTo == .write {
             mainView.writeCommentTextView.becomeFirstResponder()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,10 +87,7 @@ class CommentViewController: UIViewController {
         delegate?.disappearCommentViewController()
     }
     
-    func configureAction() {
-        mainView.commentSendButton.addTarget(self, action: #selector(commendSendButtonTapped), for: .touchUpInside)
-        mainView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-    }
+
     
     func setText(text: String) async throws {
         guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser }
@@ -113,47 +112,11 @@ class CommentViewController: UIViewController {
         self.mainView.writeCommentView.transform = .identity
     }
     
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    @objc func commendSendButtonTapped() {
-        print(#function)
-        let commentTextView = mainView.writeCommentTextView
-        guard let comment = commentTextView.text else { return }
-        guard commentTextView.textColor == .black else { return }
-        guard commentTextView.text != "" else { return }
-        
-        let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
-        commentTextView.resignFirstResponder()
-        commentTextView.text = "댓글을 입력해주세요."
-        commentTextView.textColor = .lightGray
-        self.present(alertController, animated: true)
-        Task {
-            do {
-                try await setText(text: comment)
-                try await getComments()
-                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
-                    try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
-                }
-                mainView.collectionView.reloadData()
-                mainView.collectionView.scrollToItem(at: IndexPath(item: comments.count - 1, section: 0), at: .bottom, animated: true)
-                alertController.dismiss(animated: true)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         mainView.writeCommentTextView.resignFirstResponder()
     }
     
-    private func configureWriteCommentView() {
-        mainView.writeCommentTextView.delegate = self
-        mainView.writeCommentTextView.autocorrectionType = .no
-        mainView.writeCommentTextView.autocapitalizationType = .none
-    }
+   
     
     private func connectCollectionView() {
         mainView.collectionView.dataSource = self
@@ -193,8 +156,15 @@ extension CommentViewController: UICollectionViewDataSource {
         cell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
         cell.optionImageTapped = { [weak self] in
             guard let self else { return }
-            self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
-            
+            if CurrentUserInfo.shared.isWrittenByCurrentUser(userIdentifier: comment.userIdentifier) {
+                
+            } else {
+                
+            }
+//            self.isMyComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
+            AlertService.makeAlert { [weak self] in
+                self?.transitToReportVC?()
+            }
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             let reportAction = UIAlertAction(title: "신고하기", style: .destructive) { _ in
@@ -226,20 +196,32 @@ extension CommentViewController: UICollectionViewDataSource {
     }
 }
 
-extension CommentViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if mainView.writeCommentTextView.text == "댓글을 입력해주세요." {
-            mainView.writeCommentTextView.text = ""
-            mainView.writeCommentTextView.textColor = .black
+extension CommentViewController: CommentMainViewDelegate {
+    func commentButtonTapped(comment: String) {
+        
+        let alertController = UIAlertController(title: "댓글 작성 중입니다.", message: "잠시만 기다려주세요.", preferredStyle: .alert)
+        
+        self.present(alertController, animated: true)
+        
+        Task {
+            do {
+                guard let user = CurrentUserInfo.shared.currentUser else { throw PetError.noUser }
+                try await firebaseLostCommentService.createComment(commentResponseDTO: CommentResponseDTO(lostIdentifier: lost.lostIdentifier, userIdentifier: user.identifier, userProfileImageURL: user.profileImageURL, userNickname: user.nickname, commentDescription: comment, commentDate: Date()))
+                try await getComments()
+                if lost.userIdentifier != CurrentUserInfo.shared.currentUser?.identifier {
+                    try await firebaseCloudMessaging.sendCommentMessaing(userToken: lost.userFCMToken, title: lost.title, comment: comment)
+                }
+                mainView.collectionView.reloadData()
+                collectionViewScrollTo(commentTo: .last)
+                alertController.dismiss(animated: true)
+                
+            } catch {
+                print(error)
+            }
         }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if mainView.writeCommentTextView.text.isEmpty {
-            mainView.writeCommentTextView.text = "댓글을 입력해주세요."
-            mainView.writeCommentTextView.textColor = .lightGray
-        }
+       
     }
     
     
 }
+

@@ -23,4 +23,9 @@ class CurrentUserInfo {
     }
     
     private init() {}
+    
+    func isWrittenByCurrentUser(userIdentifier: String) -> Bool {
+        
+        return currentUser?.identifier == userIdentifier
+    }
 }
