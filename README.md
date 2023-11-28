@@ -35,7 +35,7 @@
 <img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/396708a7-c3cd-487e-8ba2-e9d62f9cf591" width = "24%" height = "25%">
 
 -----
-## 라이브러리
+## 라이브러리 & 프레임워크
 - SnapKit
     - 효율적으로 포르젝트를 진행하기 위해 **SnapKit**을 채택해 전보다 코드량을 확실히 줄였습니다.
 - MapKit, Core Location
