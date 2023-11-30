@@ -85,5 +85,5 @@
     - 앱 피드백, 회원탈퇴, 로그아웃, 개인정보 처리방침 및 서비스 이용약관 구현
 ---
 
-## Diagram
+## Flow Chart
 <img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/49634c63-46ae-43ca-a025-f4450bd6a0d0" width = "100%" height = "50%">
