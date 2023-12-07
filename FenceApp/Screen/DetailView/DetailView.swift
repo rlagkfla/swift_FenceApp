@@ -28,8 +28,6 @@ class DetailView: UIView {
         return collectionView
     }()
     
-//    let reportOptionView = ReportOptionView()
-    
     // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +44,7 @@ class DetailView: UIView {
 private extension DetailView {
     func configureUI() {
         configureCollectionView()
-//        configureReportOptionView()
+
     }
     
     func configureCollectionView() {
@@ -57,11 +55,5 @@ private extension DetailView {
         }
     }
     
-//    func configureReportOptionView() {
-//        addSubviews(reportOptionView)
-//        
-//        reportOptionView.snp.makeConstraints {
-//            $0.edges.equalToSuperview()
-//        }
-//    }
+
 }

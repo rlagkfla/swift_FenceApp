@@ -19,7 +19,7 @@ struct SelectedImage {
     let index: Int
 }
 
-class EnrollViewController: UIViewController{
+class EnrollViewController: MainViewController<EnrollView>{
     
     private let enrollView = EnrollView()
     

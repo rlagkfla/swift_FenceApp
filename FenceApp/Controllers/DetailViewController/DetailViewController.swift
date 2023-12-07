@@ -259,7 +259,7 @@ extension DetailViewController: UICollectionViewDataSource {
             let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentCell.identifier, for: indexPath) as! CommentCell
             let comment = comments[indexPath.item]
             commentCell.setLabel(urlString: comment.userProfileImageURL, nickName: comment.userNickname, description: comment.commentDescription, date: comment.commentDate)
-            commentCell.optionImageTapped = { [weak self] in
+            commentCell.alertMethod = { [weak self] in
                 guard let self else { return }
                 self.isYourComment = comment.userIdentifier == CurrentUserInfo.shared.currentUser?.identifier
                 

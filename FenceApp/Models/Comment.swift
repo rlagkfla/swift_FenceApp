@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Comment {
+struct Comment: Equatable, Hashable {
     
     let lostIdentifier: String
     let commentIdentifier: String
@@ -16,4 +16,12 @@ struct Comment {
     var userNickname: String
     var commentDescription: String
     let commentDate: Date
+    
+    static func == (lhs: Comment, rhs: Comment) -> Bool {
+        return lhs.commentIdentifier == rhs.commentIdentifier
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(commentIdentifier)
+    }
 }

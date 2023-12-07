@@ -44,6 +44,8 @@
 		D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61308072AFB16AE00BB757E /* SettingModalViewController.swift */; };
 		D615FA9A2ADFEEB2002F2C44 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D615FA992ADFEEB2002F2C44 /* RiveRuntime */; };
 		D61C2B372AF9DC080015C7C7 /* FirebaseCloudMessaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */; };
+		D624F5862B0EFC8100B666FA /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D624F5852B0EFC8100B666FA /* UIViewController+Ext.swift */; };
+		D624F5892B0EFE2600B666FA /* CommentCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D624F5882B0EFE2600B666FA /* CommentCollectionVC.swift */; };
 		D627BA8A2ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */; };
 		D62D62982AF4D8100050FE12 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62D62972AF4D8100050FE12 /* DateService.swift */; };
 		D631B9822B0204D300898441 /* CommentTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D631B9812B0204D300898441 /* CommentTextFieldView.swift */; };
@@ -73,11 +75,9 @@
 		D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B762AF75FF300F8DCFD /* FoundModalViewController.swift */; };
 		D6535B792AF7600A00F8DCFD /* FoundModalMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B782AF7600A00F8DCFD /* FoundModalMainView.swift */; };
 		D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */; };
+		D65459112B0DF67F001FA811 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65459102B0DF67F001FA811 /* MainViewController.swift */; };
 		D66470502AE5F48E0041643E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664704F2AE5F48E0041643E /* ChatView.swift */; };
 		D66470532AE5F71C0041643E /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */; };
-		D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */; };
-		D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */; };
-		D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */; };
 		D687F0912AE3EE4200E98EA4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BE2ADD1249002FDD04 /* ChatViewController.swift */; };
 		D687F0922AE3EE4200E98EA4 /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FAD9E92ADD2BC2001EDABC /* MyInfoViewController.swift */; };
 		D687F0932AE3EE4200E98EA4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65150BC2ADD123B002FDD04 /* CameraViewController.swift */; };
@@ -124,7 +124,6 @@
 		D6E10EB12AE38F270098F05D /* BatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EB02AE38F270098F05D /* BatchController.swift */; };
 		D6E10EC62AE39E7A0098F05D /* FoundResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC52AE39E7A0098F05D /* FoundResponseDTOMapper.swift */; };
 		D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */; };
-		D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ECB2AE613F80098F05D /* DummyCreator.swift */; };
 		D6E10ED12AE6C4DC0098F05D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */; };
 		D6E10ED52AEA2FA60098F05D /* LocationCaculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */; };
 		D6EE094F2ADE9AB5007E8328 /* WriterInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EE094E2ADE9AB5007E8328 /* WriterInfoCollectionViewCell.swift */; };
@@ -176,6 +175,8 @@
 		C7B109D72AF0E00100B41A09 /* MyInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		D61308072AFB16AE00BB757E /* SettingModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModalViewController.swift; sourceTree = "<group>"; };
 		D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCloudMessaging.swift; sourceTree = "<group>"; };
+		D624F5852B0EFC8100B666FA /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		D624F5882B0EFE2600B666FA /* CommentCollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionVC.swift; sourceTree = "<group>"; };
 		D627BA892ADFD7A4002C7DD6 /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		D62D62972AF4D8100050FE12 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		D631B9812B0204D300898441 /* CommentTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextFieldView.swift; sourceTree = "<group>"; };
@@ -201,11 +202,9 @@
 		D6535B762AF75FF300F8DCFD /* FoundModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundModalViewController.swift; sourceTree = "<group>"; };
 		D6535B782AF7600A00F8DCFD /* FoundModalMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundModalMainView.swift; sourceTree = "<group>"; };
 		D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ext.swift"; sourceTree = "<group>"; };
+		D65459102B0DF67F001FA811 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D664704F2AE5F48E0041643E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		D66470522AE5F71C0041643E /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
-		D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
-		D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailView.swift; sourceTree = "<group>"; };
-		D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommetnDetailTableViewCell.swift; sourceTree = "<group>"; };
 		D6D2739C2AE224E900ED3E2F /* EnrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollView.swift; sourceTree = "<group>"; };
 		D6D2739E2AE224E900ED3E2F /* EnrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollViewController.swift; sourceTree = "<group>"; };
 		D6D2739F2AE224E900ED3E2F /* CustomBtnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtnView.swift; sourceTree = "<group>"; };
@@ -247,7 +246,6 @@
 		D6E10EB02AE38F270098F05D /* BatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchController.swift; sourceTree = "<group>"; };
 		D6E10EC52AE39E7A0098F05D /* FoundResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundResponseDTOMapper.swift; sourceTree = "<group>"; };
 		D6E10EC92AE3A7370098F05D /* CommentResponseDTOMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentResponseDTOMapper.swift; sourceTree = "<group>"; };
-		D6E10ECB2AE613F80098F05D /* DummyCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyCreator.swift; sourceTree = "<group>"; };
 		D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D6E10ED42AEA2FA50098F05D /* LocationCaculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCaculator.swift; sourceTree = "<group>"; };
 		D6EE094E2ADE9AB5007E8328 /* WriterInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterInfoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -326,11 +324,20 @@
 		D61368682AE2130D00DE18DF /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				D66B12C02AE0D1DA006A9245 /* CommentDetailViewController.swift */,
-				D66B12C32AE0ECAD006A9245 /* CommetnDetailView.swift */,
-				D66B12C52AE11AC0006A9245 /* CommetnDetailTableViewCell.swift */,
 			);
 			path = Comment;
+			sourceTree = "<group>";
+		};
+		D624F5872B0EFDCB00B666FA /* CommentView */ = {
+			isa = PBXGroup;
+			children = (
+				D631B9852B02072D00898441 /* CommentViewController.swift */,
+				D6DE4A632AFBCAF40092DD43 /* CommentCompositionalLayout.swift */,
+				D631B9812B0204D300898441 /* CommentTextFieldView.swift */,
+				D6DE4A6F2AFE39F10092DD43 /* CommentMainView.swift */,
+				D624F5882B0EFE2600B666FA /* CommentCollectionVC.swift */,
+			);
+			path = CommentView;
 			sourceTree = "<group>";
 		};
 		D651508B2ADD0C8B002FDD04 /* Service */ = {
@@ -344,6 +351,7 @@
 				D6E10E9A2AE2A8CD0098F05D /* FirebaseUserService.swift */,
 				D61C2B362AF9DC070015C7C7 /* FirebaseCloudMessaging.swift */,
 				D645F3652B025B2D00E14DB8 /* ImageLoader.swift */,
+				27CF083B2B0A20A700D5A8E8 /* AlertService.swift */,
 				D6E10EB02AE38F270098F05D /* BatchController.swift */,
 				C392FDD22B0237C9004447B9 /* ImageLoader.swift */,
 				D6E10ED02AE6C4DC0098F05D /* LocationManager.swift */,
@@ -577,21 +585,17 @@
 				D6D9A73C2ADD05EF006A5B8B /* Info.plist */,
 				084D9B3B2B03404D008EF320 /* GoogleService-Info-Debug.plist */,
 				08653F9F2AF901AA00B5BCAD /* GoogleService-Info-Release.plist */,
-				D6E10ECB2AE613F80098F05D /* DummyCreator.swift */,
+				D624F5872B0EFDCB00B666FA /* CommentView */,
 				D6F1CF392AF2511800974B1F /* CurrentUserInfo.swift */,
 				D6D9A72E2ADD05EC006A5B8B /* AppDelegate.swift */,
 				D6D9A7302ADD05EC006A5B8B /* SceneDelegate.swift */,
-				D631B9852B02072D00898441 /* CommentViewController.swift */,
-				D6DE4A632AFBCAF40092DD43 /* CommentCompositionalLayout.swift */,
 				D6DE4A652AFCD07A0092DD43 /* CommentHeaderView.swift */,
 				D6DE4A672AFDAECC0092DD43 /* CommentFooterView.swift */,
 				D6DE4A692AFDB1A50092DD43 /* CommentInputView.swift */,
 				D6DE4A6B2AFDB6AF0092DD43 /* CommentNextLastView.swift */,
 				D6DE4A6D2AFDE5EC0092DD43 /* CommentNextLastCell.swift */,
-				D6DE4A6F2AFE39F10092DD43 /* CommentMainView.swift */,
-				D631B9812B0204D300898441 /* CommentTextFieldView.swift */,
 				27EA11BA2B025B9500EA01D6 /* ReportOptionView.swift */,
-				27CF083B2B0A20A700D5A8E8 /* AlertService.swift */,
+				D65459102B0DF67F001FA811 /* MainViewController.swift */,
 			);
 			path = FenceApp;
 			sourceTree = "<group>";
@@ -657,6 +661,7 @@
 				D6F1CF3F2AF329AB00974B1F /* Calendar+Ext.swift */,
 				D6535B7A2AF76EEB00F8DCFD /* Date+ext.swift */,
 				D631B9872B020A9200898441 /* UIColor+Ext.swift */,
+				D624F5852B0EFC8100B666FA /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -812,10 +817,11 @@
 				D6E10ECA2AE3A7370098F05D /* CommentResponseDTOMapper.swift in Sources */,
 				D6535B772AF75FF300F8DCFD /* FoundModalViewController.swift in Sources */,
 				D6DE4A642AFBCAF40092DD43 /* CommentCompositionalLayout.swift in Sources */,
-				D66B12C62AE11AC0006A9245 /* CommetnDetailTableViewCell.swift in Sources */,
 				D61308082AFB16AE00BB757E /* SettingModalViewController.swift in Sources */,
 				D6F1CF342AEBCB7000974B1F /* LostWithDocument.swift in Sources */,
+				D624F5862B0EFC8100B666FA /* UIViewController+Ext.swift in Sources */,
 				D6F1CF462AF3463600974B1F /* Found.swift in Sources */,
+				D624F5892B0EFE2600B666FA /* CommentCollectionVC.swift in Sources */,
 				C3F5C3262AE227AE00D6DA16 /* LostListViewController.swift in Sources */,
 				D64D76A32ADE17FD00E9815B /* ImageCollectionViewCell.swift in Sources */,
 				D6414A722ADF6B74002522D7 /* DetailViewCompositionalLayout.swift in Sources */,
@@ -837,15 +843,14 @@
 				D6F1CF402AF329AB00974B1F /* Calendar+Ext.swift in Sources */,
 				D6EE09512ADE9B74007E8328 /* PostInfoTableViewCell.swift in Sources */,
 				D6D273A02AE224EA00ED3E2F /* EnrollView.swift in Sources */,
-				D66B12C42AE0ECAD006A9245 /* CommetnDetailView.swift in Sources */,
 				D6DE4A662AFCD07A0092DD43 /* CommentHeaderView.swift in Sources */,
 				D63B23232AF6213000EFB13A /* CustomColor.swift in Sources */,
 				08DB05D62AEE620000A0C589 /* KeyboardHandler.swift in Sources */,
 				D6E10EAF2AE388AD0098F05D /* LostResponseDTOMapper.swift in Sources */,
 				D6D273A22AE224EA00ED3E2F /* CustomBtnView.swift in Sources */,
 				D6D273A12AE224EA00ED3E2F /* EnrollViewController.swift in Sources */,
+				D65459112B0DF67F001FA811 /* MainViewController.swift in Sources */,
 				D6E10E8A2AE0FF230098F05D /* CommentResponseDTO.swift in Sources */,
-				D6E10ECC2AE613F80098F05D /* DummyCreator.swift in Sources */,
 				D6DE4A6C2AFDB6B00092DD43 /* CommentNextLastView.swift in Sources */,
 				D6DE4A6A2AFDB1A50092DD43 /* CommentInputView.swift in Sources */,
 				D6E10E842AE0EE460098F05D /* LostResponseDTO.swift in Sources */,
@@ -887,7 +892,6 @@
 				08DB05CE2AEE61A100A0C589 /* AuthenticationView.swift in Sources */,
 				D6D9A7312ADD05EC006A5B8B /* SceneDelegate.swift in Sources */,
 				08DB05D42AEE61E100A0C589 /* ValidationHandler.swift in Sources */,
-				D66B12C12AE0D1DA006A9245 /* CommentDetailViewController.swift in Sources */,
 				C392FDD72B0239BB004447B9 /* FounDetailViewController.swift in Sources */,
 				D6535B7B2AF76EEB00F8DCFD /* Date+ext.swift in Sources */,
 				C726A7882AE30067000B8D6D /* EditViewController.swift in Sources */,

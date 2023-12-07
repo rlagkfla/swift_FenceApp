@@ -315,6 +315,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return myInfoViewController
     }
     
+//    private func makeReportViewController(comment: Comment, postKind: PostKind) {
+//        let reportViewController = reportviewcont
+//        return reportViewController
+//    }
+    
     
     func sceneDidBecomeActive(_ scene: UIScene) {
         UIApplication.shared.applicationIconBadgeNumber = 0

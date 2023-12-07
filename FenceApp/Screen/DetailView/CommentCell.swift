@@ -11,9 +11,13 @@ import Kingfisher
 
 class CommentCell: UICollectionViewCell {
     
+    //MARK: - Properties
+    
     static let identifier = "CommentCell"
     
-    var optionImageTapped: ( () -> Void )?
+    var alertMethod: ( () -> Void )?
+    
+    var writtenByMe: Bool!
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -22,6 +26,8 @@ class CommentCell: UICollectionViewCell {
         iv.layer.cornerRadius = 15
         return iv
     }()
+   
+    //MARK: - Helpers
     
     private let nickNameLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +56,15 @@ class CommentCell: UICollectionViewCell {
     }()
     
     @objc func optionButtonTapped() {
-        optionImageTapped?()
+        if writtenByMe {
+            AlertService.makeAlertWrittenByMe { [weak self] in
+                self?.alertMethod?()
+            }
+        } else {
+            AlertService.makeAlertWrittenByOthers { [weak self] in
+                self?.alertMethod?()
+            }
+        }
     }
     
     private let descriptionLabel: UILabel = {
@@ -69,6 +83,8 @@ class CommentCell: UICollectionViewCell {
         return label
     }()
     
+    //MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -85,6 +101,8 @@ class CommentCell: UICollectionViewCell {
         let url = URL(string: urlString)
         profileImageView.kf.setImage(with: url)
     }
+    
+    //MARK: - UI
     
     private func configureUI() {
         configureProfileImageView()
