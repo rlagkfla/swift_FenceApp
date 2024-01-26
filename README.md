@@ -1,17 +1,26 @@
-# FenceApp
+# 찾아줄개🐶
 
 ## 프로젝트 개요
 
-- 앱 이름: 찾아줄개
-- 목표 : 반려동물을 찾아주는 서비스
-- 기간 : 10.10 ~ 11.17
-- 상태 : 배포 중 / https://apps.apple.com/kr/app/%EC%B0%BE%EC%95%84%EC%A4%84%EA%B0%9C/id6471409178
-- 팀 소개
-    - 전상혁(리더)
-    - 이우준(부리더)
-    - 김하림(팀원)
-    - 전종혁(팀원)
-    - 이리연(팀원)
+- 소개 : 반려동물을 찾아주는 커뮤니티 서비스 앱
+- 상태 : 배포 중 
+- 다운로드 링크 : https://apps.apple.com/kr/app/%EC%B0%BE%EC%95%84%EC%A4%84%EA%B0%9C/id6471409178
+- 진행 기간
+    - 기획 : 2023.10.10 ~ 2023.10.20 (2주)
+    - 개발 : 2023.10.23 ~ 2023.11.17 (4주)
+    - 출시 : 2023.11.15 
+- 팀원
+    - 개발 : 전상혁, 이우준, 김하림(나), 전종혁, 이리연
+    - 서버 : 이우준
+    - 디자인 : 김하림(나)
+- 기술 스택
+    - 개발 환경
+        - Swift 5, Xcode 15.1 
+    - 라이브러리
+        - iOS : SnapKit, MapKit, Core Location, Kingfisher, MessageUI, WebKit, FirebaseCloudMessaging
+        - 서버 : Firebase
+    - Deployment Target : iOS 16.0
+
 
 ### 앱 소개
 -----
