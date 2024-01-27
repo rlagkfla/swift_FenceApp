@@ -47,7 +47,7 @@
         - 사용자의 위치의 정보를 가지고 현재 위치에서 반경 nkm까지 Mark(핀) 필터링
         - 시작, 끝 날짜를 바탕으로 Mark(핀) 필터링
         
-- ### LostView(잃어버린 동물 페이지) & EnrollView
+- ### LostView & EnrollView
 <img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/e116ce85-973e-4b76-9994-ebb310c83796" width = "22%" height = "23%">
 <img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/61bcc36d-e988-479b-bbe5-a6d6e63fe665" width = "22%" height = "23%">
 
@@ -63,7 +63,7 @@
 
     - 사진 촬영 시 현재 사용자의 위치와 촬영된 이미지를 바탕으로 발견한 반려동물 게시글 자동 생성 및 FOUND Map에 Mark(핀)을 업데이트
     
-- ### FoundView(발견한 동물 페이지)
+- ### FoundView
 <img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/cb2f5400-f4e2-449e-8ce4-8e7b09dc2ccf" width = "22%" height = "23%">
 
     - 발견한 반려동물의 게시글을 CollectionView로 보여줌
