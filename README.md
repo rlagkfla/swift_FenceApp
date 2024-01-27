@@ -28,30 +28,6 @@
     - 아키텍처 : MVC **(채택 이유 필요)**
     - Deployment Target : iOS 16.0
 
-
-### 앱 소개(삭제예정)
-----
-반려동물을 일어버리셨나요? 혹은 길 잃은 반려동물을 찾으셨나요?
-
-**"찾아줄개"** 커뮤니티 앱을 통해 반려동물을 찾아보세요!
-
-반려동물을 잃어버렸을 때 글을 작성하실 수 있으며, 길을 가다가 길 잃은 반려동물을 발견했을 때 사진 촬영 한 번으로 손 쉽게 글을 작성하실 수 있습니다.
-
-**"위치 기반 서비스"**
-를 이용하여 사용자 위치 주변의 잃어버린 반려동물, 길 잃은 반려동물들의 글들을 지도를 통해 쉽게 확인해 볼 수 있습니다.
-잃어버린 반려동물, 발견한 길 잃은 반려동물 게시글들을 각 게시판에서 리스트로 확인해볼 수 있으며, 사용자의 위치에서 거리에 따른 기능 및 날짜 선택을 통해 언제부터 어디까지 작성된 글들을 필터 기능을 통해 원하시는 정보들도 보실 수 있습니다.
-
-본인의 페이지에서 본인이 작성한 게시글들 및 닉네임, 프로필 이미지를 수정할 수 있으며, 로그아웃 및 회원탈퇴 기능들도 준비되어 있습니다.
-
-
-### 이미지(삭제예정)
-----
-<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/ed54087b-25ee-4ce8-8c2b-848656891d69" width = "24%" height = "25%">
-<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/9a1acc40-a6fb-480e-a44c-025a2510673e" width = "24%" height = "25%">
-<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/56a5a453-a59c-47bb-a8ce-a0f8d2941661" width = "24%" height = "25%">
-<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/396708a7-c3cd-487e-8ba2-e9d62f9cf591" width = "24%" height = "25%">
-
-
 ### 주요 화면 및 구현 기능(이미지 추가)
 ----
 - ### Login 
@@ -107,6 +83,9 @@
         - 삭제, 수정, 신고 기능
           
 - ### MyInfo
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/1a661ccd-f3b8-471a-bdec-665d20da68a9" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/78670fe3-38be-408d-b7f4-af23171246d6" width = "22%" height = "23%">
+
     - 프로필 이미지 및 닉네임 수정
     - 사용자가 작성한 게시글 CollectionView로 보여줌
     - 앱 피드백, 회원탈퇴, 로그아웃, 개인정보 처리방침 및 서비스 이용약관 구현
