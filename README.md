@@ -82,9 +82,12 @@
         - 시작, 끝 날짜를 바탕으로 게시글의 작성된 날짜 필터링
     - Pagination을 통한 무한 스크롤
 - ### Camera
-    - 사진 촬영 시 현재 사용자의 위치와 촬영된 이미지를 바탕으로 발견한 반려동물 게시글 자동 생성
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/b2b280e3-8b3a-45fe-b2e5-07043ec60eb6" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/c27d08a1-3502-4329-9113-ca4d9ebc2d94" width = "24%" height = "25%">
+
+    - 사진 촬영 시 현재 사용자의 위치와 촬영된 이미지를 바탕으로 발견한 반려동물 게시글 자동 생성 및 FOUND Map에 Mark(핀)을 업데이트
+    
 - ### FoundView(발견한 동물 페이지)
-    - 등록 시 사용자의 위치 정보와 사진 정보를 바탕으로 FOUND Map에 Mark(핀)을 업데이트
     - 발견한 반려동물의 게시글을 CollectionView로 보여줌
     - 거리와 날짜를 이용하여 필터된 데이터들을 바탕으로 게시글을 업데이트
         - 사용자의 위치의 정보를 가지고 현재 위치에서 반경 nkm까지 게시글 필터링
