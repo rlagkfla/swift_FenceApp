@@ -62,15 +62,18 @@
     - Firebase를 통한 로그인, 이메일 형식의 아이디로 비밀번호 찾기
   
 - ### MapView
-  
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/4fa966b0-c585-4743-89cd-67507e9f34ae" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3e0ac674-56ec-48f7-8ec8-172589b5222f" width = "24%" height = "25%">
+
     - 사용자가 작성한 게시글의 이미지와 위치 정보를 활용하여 Map에 Mark(핀)을 생성
     - 거리와 날짜를 이용하여 필터된 데이터들을 바탕으로 Mark(핀)을 업데이트
         - 사용자의 위치의 정보를 가지고 현재 위치에서 반경 nkm까지 Mark(핀) 필터링
         - 시작, 끝 날짜를 바탕으로 Mark(핀) 필터링
-- ### EnrollView
-    - 반려동물을 잃어버린 사용자가 게시글을 등록하는 뷰
-    - 
-- ### LostView(잃어버린 동물 페이지)
+        
+- ### EnrollView & LostView(잃어버린 동물 페이지)
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/4fa966b0-c585-4743-89cd-67507e9f34ae" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3e0ac674-56ec-48f7-8ec8-172589b5222f" width = "24%" height = "25%">
+
     - 등록 시 사용자의 위치 정보와 반려동물 정보를 바탕으로 **LOST Map**에 Mark(핀)을 업데이트
     - 잃어버린 반려동물의 게시글을 TableView로 보여줌
     - 거리와 날짜를 이용하여 필터된 데이터들을 바탕으로 게시글 업데이트
