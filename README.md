@@ -55,16 +55,16 @@
 ### 주요 화면 및 구현 기능(이미지 추가)
 ----
 - ### Login 
-<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/ed54087b-25ee-4ce8-8c2b-848656891d69" width = "24%" height = "25%">
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3779c356-5a02-40c9-ba8e-5f01d3deadf5" width = "24%" height = "25%">
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/ed54087b-25ee-4ce8-8c2b-848656891d69" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3779c356-5a02-40c9-ba8e-5f01d3deadf5" width = "22%" height = "23%">
 
     - 전화번호 인증을 통한 회원가입
     - Firebase를 통한 로그인, 이메일 형식의 아이디로 비밀번호 찾기
   
 - ### MapView
-<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/9a1acc40-a6fb-480e-a44c-025a2510673e" width = "24%" height = "25%">
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/4fa966b0-c585-4743-89cd-67507e9f34ae" width = "24%" height = "25%">
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3e0ac674-56ec-48f7-8ec8-172589b5222f" width = "24%" height = "25%">
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/9a1acc40-a6fb-480e-a44c-025a2510673e" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/4fa966b0-c585-4743-89cd-67507e9f34ae" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3e0ac674-56ec-48f7-8ec8-172589b5222f" width = "22%" height = "23%">
 
     - 사용자가 작성한 게시글의 이미지와 위치 정보를 활용하여 Map에 Mark(핀)을 생성
     - 거리와 날짜를 이용하여 필터된 데이터들을 바탕으로 Mark(핀)을 업데이트
@@ -72,8 +72,8 @@
         - 시작, 끝 날짜를 바탕으로 Mark(핀) 필터링
         
 - ### LostView(잃어버린 동물 페이지) & EnrollView
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/e116ce85-973e-4b76-9994-ebb310c83796" width = "24%" height = "25%">
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/61bcc36d-e988-479b-bbe5-a6d6e63fe665" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/e116ce85-973e-4b76-9994-ebb310c83796" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/61bcc36d-e988-479b-bbe5-a6d6e63fe665" width = "22%" height = "23%">
 
     - 등록 시 사용자의 위치 정보와 반려동물 정보를 바탕으로 LOST Map에 Mark(핀)을 업데이트
     - 잃어버린 반려동물의 게시글을 TableView로 보여줌
@@ -82,13 +82,13 @@
         - 시작, 끝 날짜를 바탕으로 게시글의 작성된 날짜 필터링
     - Pagination을 통한 무한 스크롤
 - ### Camera
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/b2b280e3-8b3a-45fe-b2e5-07043ec60eb6" width = "24%" height = "25%">
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/c27d08a1-3502-4329-9113-ca4d9ebc2d94" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/b2b280e3-8b3a-45fe-b2e5-07043ec60eb6" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/c27d08a1-3502-4329-9113-ca4d9ebc2d94" width = "22%" height = "23%">
 
     - 사진 촬영 시 현재 사용자의 위치와 촬영된 이미지를 바탕으로 발견한 반려동물 게시글 자동 생성 및 FOUND Map에 Mark(핀)을 업데이트
     
 - ### FoundView(발견한 동물 페이지)
-<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/cb2f5400-f4e2-449e-8ce4-8e7b09dc2ccf" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/cb2f5400-f4e2-449e-8ce4-8e7b09dc2ccf" width = "22%" height = "23%">
 
     - 발견한 반려동물의 게시글을 CollectionView로 보여줌
     - 거리와 날짜를 이용하여 필터된 데이터들을 바탕으로 게시글을 업데이트
@@ -96,14 +96,14 @@
         - 시작, 끝 날짜를 바탕으로 게시글의 작성된 날짜 필터링
         
 - ### DetailView
-<img src = "" width = "24%" height = "25%">
-<img src = "" width = "24%" height = "25%">
-<img src = "" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/bf8aa7b3-12b1-4dc0-a1d9-7387875a7190" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/1a56af7c-b868-48da-8fff-caaa4c6a6449" width = "22%" height = "23%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/ec34548c-777c-4863-aa22-02fff3ac9ae4" width = "22%" height = "23%">
 
     - 잃어버린 반려동물 게시글 및 발견한 반려동물의 게시글을 바탕으로 상세 페이지를 보여줌
     - 작성자 본인의 게시글은 삭제 및 수정이 가능하고, 다른 사용자의 글은 신고 가능
     - 댓글 기능
-        - 게시글 작성자에게 실시간으로 알림
+        - FCM 사용하여 게시글 작성자에게 실시간으로 알림
         - 삭제, 수정, 신고 기능
           
 - ### MyInfo
