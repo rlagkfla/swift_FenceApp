@@ -62,6 +62,7 @@
     - Firebase를 통한 로그인, 이메일 형식의 아이디로 비밀번호 찾기
   
 - ### MapView
+<img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/9a1acc40-a6fb-480e-a44c-025a2510673e" width = "24%" height = "25%">
 <img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/4fa966b0-c585-4743-89cd-67507e9f34ae" width = "24%" height = "25%">
 <img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3e0ac674-56ec-48f7-8ec8-172589b5222f" width = "24%" height = "25%">
 
