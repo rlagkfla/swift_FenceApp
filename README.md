@@ -54,13 +54,15 @@
 
 ### 주요 화면 및 구현 기능(이미지 추가)
 ----
-- ### Login
+- ### Login 
 <img src = "https://github.com/GaeMeee/Fence_App/assets/32815948/ed54087b-25ee-4ce8-8c2b-848656891d69" width = "24%" height = "25%">
+<img src = "https://github.com/rlagkfla/swift_FenceApp/assets/51162461/3779c356-5a02-40c9-ba8e-5f01d3deadf5" width = "24%" height = "25%">
 
     - 전화번호 인증을 통한 회원가입
     - Firebase를 통한 로그인, 이메일 형식의 아이디로 비밀번호 찾기
   
 - ### MapView
+  
     - 사용자가 작성한 게시글의 이미지와 위치 정보를 활용하여 Map에 Mark(핀)을 생성
     - 거리와 날짜를 이용하여 필터된 데이터들을 바탕으로 Mark(핀)을 업데이트
         - 사용자의 위치의 정보를 가지고 현재 위치에서 반경 nkm까지 Mark(핀) 필터링
